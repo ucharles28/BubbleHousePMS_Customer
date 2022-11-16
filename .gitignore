@@ -31,8 +31,6 @@ yarn-error.log*
 # vercel
 .vercel
 
-# static folder for DigitalOcean App Platform
-_static
-.next
-.vscode
-out
+# typescript
+*.tsbuildinfo
+next-env.d.ts
