@@ -118,7 +118,7 @@ export default function Login() {
                     </div>
 
 
-                    <div className="bg-white rounded-lg m-auto w-[1168px] py-4 px-3 flex justify-between justify-start items-center">
+                    <div className="bg-white rounded-lg m-auto w-[1168px] py-4 px-3 flex justify-between items-center">
                         <input ref={inputRef}
                             onChange={event => setQuery(event.target.value)}
                             placeholder="Enter a City"
