@@ -50,7 +50,7 @@ export default function Login() {
             redirect: false,
         });
 
-        if (response.successful) {
+        if (res.ok) {
             router.push("/")
         } else {
             alert(res.error)
@@ -103,7 +103,7 @@ export default function Login() {
                                     <button
                                         type="button"
                                         disabled={!email || !password}
-                                        className="mt-7 w-full text-center justify-center font-medium flex items-center py-2 rounded-[5px] text-sm leading-6 uppercase bg-[#F5C400] hover:bg-[#ffcc00] text-[#1a1a1a]" onClick={handleLogin}>Sign Up</button>}
+                                        className="mt-7 w-full text-center justify-center font-medium flex items-center py-2 rounded-[5px] text-sm leading-6 uppercase bg-[#F5C400] hover:bg-[#ffcc00] text-[#1a1a1a]" onClick={handleLogin}>Login</button>}
 
                                 {/* <div className='text-sm font-normal leading-6 w-full text-center mt-10'>
                                     

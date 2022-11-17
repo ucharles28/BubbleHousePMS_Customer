@@ -286,7 +286,7 @@ export default function Login() {
                         </div>
                         <div className="my-10 mr-10">
                             <div className="">
-                                <img className="object-cover w-[255.36px] h-[256px]" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
+                                <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
                             </div>
                             <div className="flex flex-col gap-y-[4px] mt-1">
                                 <p className="font-medium text-base leading-6">Hotel in Lagos</p>
@@ -296,8 +296,8 @@ export default function Login() {
                             </div>
                         </div>
                         <div className="my-10 mr-10">
-                            <div className="">
-                                <img className="object-cover w-[255.36px] h-[256px]" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
+                            <div className="rounded-lg">
+                                <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
                             </div>
                             <div className="flex flex-col gap-y-[4px] mt-1">
                                 <p className="font-medium text-base leading-6">Hotel in Lagos</p>
