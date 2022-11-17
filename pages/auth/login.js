@@ -32,29 +32,30 @@ export default function Login() {
     };
     const handleLogin = async () => {
         setIsLoading(true)
-        // const request = {
-        //     email,
-        //     password,
-        //     isSocailAuth: false
-        // }
-        // const response = await post('Auth/Customer/SignIn', request)
-        // if (response.successful) {
-        //     alert('successful')
-        // } else {
-        //     alert(response.data)
-        // }
-
-        const res = await signIn("credentials", {
+        const request = {
             email,
             password,
-            redirect: false,
-        });
-
-        if (res.ok) {
+            isSocailAuth: false
+        }
+        
+        const response = await post('Auth/Customer/SignIn', request)
+        if (response.successful) {
             router.push("/")
         } else {
-            alert(res.error)
+            alert(response.data)
         }
+
+        // const res = await signIn("credentials", {
+        //     email,
+        //     password,
+        //     redirect: false,
+        // });
+
+        // if (res.ok) {
+        //     router.push("/")
+        // } else {
+        //     alert(res.error)
+        // }
 
         setIsLoading(false)
     }
