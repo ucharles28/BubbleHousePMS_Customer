@@ -37,7 +37,7 @@ export default function Login() {
             password,
             isSocailAuth: false
         }
-        
+
         const response = await post('Auth/Customer/SignIn', request)
         if (response.successful) {
             router.push("/")
@@ -61,11 +61,15 @@ export default function Login() {
     }
 
     const handleGoogleAuth = async () => {
-        const res = await signIn('google', {
-            redirect: false
-        });
-        console.log(res)
+        // const res = await signIn('google', {
+        //     redirect: false
+        // });
+        // console.log(res)
+        router.push('/api/google')
         // signOut();
+    }
+    const handleFacebookAuth = async () => {
+        router.push('/api/facebook')
     }
     const showAlert = (alertMessage) => {
         setAlertMessage(alertMessage)
@@ -129,7 +133,7 @@ export default function Login() {
                                     </p>
                                 </button> */}
                                 <div className='flex items-center justify-center '>
-                                    <FaFacebookF color='#4267B2' size={24} />
+                                    <FaFacebookF onClick={handleFacebookAuth} color='#4267B2' size={24} />
                                     <FaTwitter color='#1DA1F2' className='mx-4 my-4' size={24} />
                                     <FcGoogle onClick={handleGoogleAuth} size={24} />
                                 </div>
