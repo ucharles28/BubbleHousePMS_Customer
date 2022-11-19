@@ -1,14 +1,14 @@
 import { Checkbox, FormControlLabel, TextField, Button, CircularProgress, Snackbar, MuiAlert } from '@mui/material'
 import { useRouter } from 'next/router';
-import { forwardRef, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { post } from '../../helpers/ApiRequest';
 import Image from "next/image";
 import { useSession, signIn, signOut } from 'next-auth/react'
 import Link from 'next/link';
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebookF, FaTwitter } from "react-icons/fa";
-
-
+import { GoogleLogin, useGoogleLogin, googleLogout } from '@react-oauth/google'
+import jwt_decode from "jwt-decode"
 
 export default function Login() {
 
@@ -20,16 +20,19 @@ export default function Login() {
     const [alertMessage, setAlertMessage] = useState('');
     const [acceptTerms, setAcceptTerms] = useState(false);
 
+
     const Alert = forwardRef(function Alert(props, ref) {
         return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     });
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
 
-        setOpen(false);
+    const onSuccess = (res) => {
+        console.log('Login Success: currentUser:', res.profileObj);
+        alert(
+            `Logged in successfully welcome ${res.profileObj.name} 😍. \n See console for full profile object.`
+        );
+        refreshTokenSetup(res);
     };
+
     const handleLogin = async () => {
         setIsLoading(true)
         const request = {
@@ -44,6 +47,8 @@ export default function Login() {
         } else {
             alert(response.data)
         }
+
+
 
         // const res = await signIn("credentials", {
         //     email,
@@ -65,9 +70,24 @@ export default function Login() {
         //     redirect: false
         // });
         // console.log(res)
-        router.push('/api/google')
+        // router.push('/api/google')
         // signOut();
+        // useGoogleLogin({
+        //     onSuccess: tokenResponse => console.log(tokenResponse),
+        // });
+        // googleLogout();
+        console.log('done')
     }
+
+    const login = useGoogleLogin({
+        onSuccess: tokenResponse => console.log(tokenResponse.access_token),
+    });
+
+    const onHandleSuccess = async (res) => {
+        const userObject = jwt_decode(res.credential);
+        console.log(userObject);
+    }
+
     const handleFacebookAuth = async () => {
         router.push('/api/facebook')
     }
@@ -77,6 +97,7 @@ export default function Login() {
     }
     return (
         <div className='h-screen font-poppins'>
+
             {/* <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                     <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
                         {alertMessage}
@@ -89,6 +110,12 @@ export default function Login() {
 
                         <div className='flex justify-center items-center p-7 w-full h-full'>
                             <div className='m-0'>
+                                {/* <GoogleLogin
+                                    onSuccess={onHandleSuccess}
+                                    onError={() => {
+                                        console.log('Login Failed');
+                                    }}
+                                /> */}
 
                                 <div className="block">
                                     <Image src="/logo.png" width={120} height={120} className="mb-2 m-auto" />
@@ -135,7 +162,7 @@ export default function Login() {
                                 <div className='flex items-center justify-center '>
                                     <FaFacebookF onClick={handleFacebookAuth} color='#4267B2' size={24} />
                                     <FaTwitter color='#1DA1F2' className='mx-4 my-4' size={24} />
-                                    <FcGoogle onClick={handleGoogleAuth} size={24} />
+                                    <FcGoogle onClick={() => login()} size={24} />
                                 </div>
 
 
