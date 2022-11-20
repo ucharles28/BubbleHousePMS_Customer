@@ -9,7 +9,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaFacebookF, FaTwitter } from "react-icons/fa";
 import { GoogleLogin, useGoogleLogin, googleLogout } from '@react-oauth/google'
 import jwt_decode from "jwt-decode"
-import FacebookLogin from 'react-facebook-login';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
 export default function Login() {
 
@@ -114,8 +114,26 @@ export default function Login() {
         setOpen(true)
     }
 
-    const responseFacebook = (response) => {
-        console.log(response);
+    const responseFacebook = async (fbResponse) => {
+        console.log(fbResponse)
+        if (!fbResponse.name) return
+        
+        setIsLoadingSocial(true)
+
+        const request = {
+            email: fbResponse.email,
+            fullName: fbResponse.name,
+            profileImageUrl: fbResponse.picture.data.url
+        }
+
+        const response = await post('Auth/Customer/SocialLogin', request);
+        if (response.successful) {
+            localStorage.setItem('user', JSON.stringify(response.data))
+            router.push("/")
+        } else {
+            alert(response.data)
+        }
+        setIsLoadingSocial(false)
     }
     return (
         <div className='h-screen font-poppins'>
@@ -125,12 +143,7 @@ export default function Login() {
                         {alertMessage}
                     </Alert>
                 </Snackbar> */}
-            <FacebookLogin
-                appId="687573586008281"
-                autoLoad={true}
-                fields="name,email,picture"
-                // scope="public_profile,user_friends,user_actions.books"
-                callback={responseFacebook} />
+
 
             <div className='item w-full h-full bg-[url(https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg)] object-fill'>
                 <div className='w-full h-full flex bg-gradient-to-t from-[#1a1a1a]/80 to-[#1a1a1a]/10'>
@@ -188,8 +201,19 @@ export default function Login() {
                                     </p>
                                 </button> */}
                                 {!isLoadingSocial ? <div className='flex items-center justify-center '>
-                                    <FaFacebookF onClick={handleFacebookAuth} color='#4267B2' size={24} />
-                                    <FaTwitter color='#1DA1F2' className='mx-4 my-4' size={24} />
+
+                                    <FacebookLogin
+                                        appId="687573586008281"
+                                        autoLoad={true}
+                                        fields="name,email,picture"
+                                        render={renderProps => {
+                                            console.log(renderProps)
+
+                                            // <button onClick={(e) => renderProps.onClick(e)}>This is my custom FB button</button>
+                                            return (<FaFacebookF className='cursor-pointer' onClick={(e) => renderProps.onClick(e)} color='#4267B2' size={24} />)
+                                        }}
+                                        callback={responseFacebook} />
+                                    <FaTwitter color='#1DA1F2' className='mx-4 my-4 cursor-pointer' size={24} />
                                     <FcGoogle className='cursor-pointer' onClick={() => googleAuthLogin()} size={24} />
                                 </div> :
                                     <div className='flex items-center justify-center '>
