@@ -1,7 +1,7 @@
 import { Checkbox, FormControlLabel, TextField, Button, CircularProgress, Snackbar, MuiAlert } from '@mui/material'
 import { useRouter } from 'next/router';
 import { forwardRef, useEffect, useState } from 'react';
-import { post } from '../../helpers/ApiRequest';
+import { post, get } from '../../helpers/ApiRequest';
 import Image from "next/image";
 import { useSession, signIn, signOut } from 'next-auth/react'
 import Link from 'next/link';
@@ -9,11 +9,13 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaFacebookF, FaTwitter } from "react-icons/fa";
 import { GoogleLogin, useGoogleLogin, googleLogout } from '@react-oauth/google'
 import jwt_decode from "jwt-decode"
+import FacebookLogin from 'react-facebook-login';
 
 export default function Login() {
 
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false);
+    const [isLoadingSocial, setIsLoadingSocial] = useState(false);
     const [email, setEmail] = useState('');
     const [fullName, setFullName] = useState('');
     const [password, setPassword] = useState('')
@@ -65,22 +67,38 @@ export default function Login() {
         setIsLoading(false)
     }
 
-    const handleGoogleAuth = async () => {
-        // const res = await signIn('google', {
-        //     redirect: false
-        // });
-        // console.log(res)
-        // router.push('/api/google')
-        // signOut();
-        // useGoogleLogin({
-        //     onSuccess: tokenResponse => console.log(tokenResponse),
-        // });
-        // googleLogout();
-        console.log('done')
-    }
 
-    const login = useGoogleLogin({
-        onSuccess: tokenResponse => console.log(tokenResponse.access_token),
+
+    const googleAuthLogin = useGoogleLogin({
+        onSuccess: async tokenResponse => {
+            setIsLoadingSocial(true)
+            const userInfo = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${tokenResponse.access_token}`
+                }
+            }).then(async (res) => {
+                return res.json()
+            })
+
+            console.log(userInfo)
+            const request = {
+                email: userInfo.email,
+                fullName: userInfo.name,
+                profileImageUrl: userInfo.picture
+            }
+
+            const response = await post('Auth/Customer/SocialLogin', request);
+            console.log(response)
+            if (response.successful) {
+                localStorage.setItem('user', JSON.stringify(response.data))
+                router.push("/")
+            } else {
+                alert(response.data)
+            }
+            setIsLoadingSocial(false)
+        },
+
     });
 
     const onHandleSuccess = async (res) => {
@@ -95,6 +113,10 @@ export default function Login() {
         setAlertMessage(alertMessage)
         setOpen(true)
     }
+
+    const responseFacebook = (response) => {
+        console.log(response);
+    }
     return (
         <div className='h-screen font-poppins'>
 
@@ -103,6 +125,12 @@ export default function Login() {
                         {alertMessage}
                     </Alert>
                 </Snackbar> */}
+            <FacebookLogin
+                appId="687573586008281"
+                autoLoad={true}
+                fields="name,email,picture"
+                // scope="public_profile,user_friends,user_actions.books"
+                callback={responseFacebook} />
 
             <div className='item w-full h-full bg-[url(https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg)] object-fill'>
                 <div className='w-full h-full flex bg-gradient-to-t from-[#1a1a1a]/80 to-[#1a1a1a]/10'>
@@ -159,11 +187,14 @@ export default function Login() {
                                         Sign in with Google
                                     </p>
                                 </button> */}
-                                <div className='flex items-center justify-center '>
+                                {!isLoadingSocial ? <div className='flex items-center justify-center '>
                                     <FaFacebookF onClick={handleFacebookAuth} color='#4267B2' size={24} />
                                     <FaTwitter color='#1DA1F2' className='mx-4 my-4' size={24} />
-                                    <FcGoogle onClick={() => login()} size={24} />
-                                </div>
+                                    <FcGoogle className='cursor-pointer' onClick={() => googleAuthLogin()} size={24} />
+                                </div> :
+                                    <div className='flex items-center justify-center '>
+                                        <CircularProgress />
+                                    </div>}
 
 
                             </div>

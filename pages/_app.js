@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
-      <GoogleOAuthProvider clientId="93183711763-boe87qj6thsf6m1m1j5v1q9773civoch.apps.googleusercontent.com">
+      <GoogleOAuthProvider clientId="922531234913-c1fo824rqu7148itrumhd7rf49krs093.apps.googleusercontent.com">
         <Meta />
         <Component {...pageProps} />
       </GoogleOAuthProvider>

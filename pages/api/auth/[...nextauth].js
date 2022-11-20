@@ -10,8 +10,8 @@ const options = {
   },
   providers: [
     GoogleProvider({
-      clientId: '93183711763-q06sgd1u4vg3dvdaibjs7dt8orh34487.apps.googleusercontent.com',
-      clientSecret: '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',
+      clientId: '922531234913-c1fo824rqu7148itrumhd7rf49krs093.apps.googleusercontent.com',
+      clientSecret: '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',
     }),
     CredentialsProvider({
       type: 'credentials',
@@ -35,21 +35,21 @@ const options = {
       pages: {
         signIn: "auth/login"
       },
-      callbacks: {
-        async jwt(token, user, account, profile, isNewUser) {
-          // update token
-          // if (params.user?.role) {
-          //   params.token.role = params.user.role;
-          // }
-          // // return final_token
-          // return params.token;
-          console.log(token)
-          console.log(user)
-          console.log(account)
-          console.log(profile)
-          console.log(isNewUser)
-        }
-      }
+      // callbacks: {
+      //   async jwt(token, user, account, profile, isNewUser) {
+      //     // update token
+      //     // if (params.user?.role) {
+      //     //   params.token.role = params.user.role;
+      //     // }
+      //     // // return final_token
+      //     // return params.token;
+      //     console.log(token)
+      //     console.log(user)
+      //     console.log(account)
+      //     console.log(profile)
+      //     console.log(isNewUser)
+      //   }
+      // }
     })
 
   ],
