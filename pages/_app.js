@@ -3,6 +3,7 @@ import '../styles/tailwind.css';
 import 'antd/dist/antd.css';
 import nProgress from "nprogress";
 import "../styles/nprogress.css";
+import '../styles/app.css'
 import Router from "next/router";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 

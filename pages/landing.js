@@ -128,11 +128,18 @@ export default function Login() {
                             <RangePicker onChange={onChange} />
 
                         </Space>
-                        <div className="w-1/4 p-2 flex flex-row items-center cursor-pointer justify-between" onClick={handleClick}>
+                        {/* <div className="w-1/4 p-2 flex flex-row items-center cursor-pointer justify-between" onClick={handleClick}>
                             <p className="mx-1 text-md font-medium">{numberOfAdults} adults</p>
                             <p className="mx-1 text-md font-medium">{numberOfChildren} children</p>
                             <p className="mx-1 text-md font-medium">.</p>
                             <p className="mx-1 text-md font-medium">{numberOfRooms} rooms</p>
+                        </div> */}
+                        <div className="flex gap-2 bg-gray-500 cursor-pointer p-2 rounded-md items-center" onClick={handleClick}>
+                            <People size={24} />
+                            <div className="flex flex-col gap-0">
+                                <p className="text-xs">{numberOfRooms} room</p>
+                                <p className="text-xs">{numberOfAdults} adults, {numberOfChildren} childern</p>
+                            </div>
                         </div>
                         <Popover
                             id={id}

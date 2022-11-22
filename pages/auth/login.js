@@ -182,7 +182,7 @@ export default function Login() {
                                     
                                 </div> */}
                                 <div className='font-normal flex justify-center item-center m-auto mt-2'>
-                                    <p className='text-[16px] m-auto flex leading-6'>New on our platform? <Link href="/auth/signup"> <span className='font-bold ml-1'>Create an account</span></Link> </p>
+                                    <p className='text-[16px] m-auto flex leading-6'>New on our platform? <Link href="/auth/signup"> <span className='font-medium ml-1'>Create an account</span></Link> </p>
                                 </div>
                                 {/* <div>
                                     <Image src="/google.png" width={50} onClick={handleGoogleAuth} height={50} className="mt-1 m-auto" />
