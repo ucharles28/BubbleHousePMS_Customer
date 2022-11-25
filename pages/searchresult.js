@@ -5,6 +5,7 @@ import { DatePicker, Space } from 'antd'
 import { People } from "iconsax-react";
 import { useRouter } from 'next/router';
 import { post } from "../helpers/ApiRequest";
+import Link from 'next/link'
 
 
 export default function Home() {
@@ -74,18 +75,18 @@ export default function Home() {
                     </ol>
                 </nav> */}
 
-                <div className="flex w-full gap-6 mt-8 justify-center items-top">
+                <div className="flex w-full gap-6 mt-8 justify-between items-top">
                     {/* Search area */}
-                    <div className="bg-[#FFCC00] p-4 mt-20 flex flex-col gap-y-3">
+                    <div className="bg-[#FFCC00] p-4 mt-20 flex flex-col gap-y-3 justify-start">
                         <p className="text-black text-2xl leading-8 font-medium">Search</p>
                         <input type="text" className="w-full rounded-md focus:outline-none p-3 text-base"
                             value={location} onChange={(e) => setLocation(e.target.value)} />
-                        <DatePicker 
-                        // value={startDate} 
-                        onChange={onChange} className="rounded-md" size='large' />
-                        <DatePicker 
-                        // value={endDate} 
-                        onChange={onChange} className="rounded-md" size='large' />
+                        <DatePicker
+                            // value={startDate} 
+                            onChange={onChange} className="rounded-md" size='large' />
+                        <DatePicker
+                            // value={endDate} 
+                            onChange={onChange} className="rounded-md" size='large' />
                         <div className="flex gap-2 bg-white p-2 rounded-md items-center">
                             <People size={24} />
                             <div className="flex flex-col gap-0">
@@ -95,9 +96,10 @@ export default function Home() {
                         </div>
                     </div>
 
-                    <div>
+                    {/* Search result */}
+                    <div className="justify-end">
                         <div className="flex justify-between">
-                            <p className="text-2xl font-medium mt-3 align-center">{hotelResults.length} {hotelResults.length === 1 ? 'Hotel': 'Hotels'} in {location.split(',')[0]}</p>
+                            <p className="text-2xl font-medium mt-3 align-center">{hotelResults.length} {hotelResults.length === 1 ? 'Hotel' : 'Hotels'} in {location.split(',')[0]}</p>
                             <FormControl sx={{ m: 1, minWidth: 120 }}>
                                 <InputLabel id="demo-simple-select-helper-label">Sort By</InputLabel>
                                 <Select
@@ -119,7 +121,7 @@ export default function Home() {
 
 
                         {hotelResults.map((hotel) => (<div className="flex mt-5 rounded-md gap-5 border w-full border-gray-300 p-4">
-                            <div className={`border rounded-md bg-cover w-[197px] h-[211px] bg-[url('${hotel.imaageUrl}')]`}>
+                            <div className={`border rounded-md bg-cover w-[197px] h-[211px] `}>
                             </div>
                             <div>
                                 <div className="flex gap-28">
@@ -135,8 +137,8 @@ export default function Home() {
                                         </div>
 
 
-                                        <div className="grid grid-cols-3 gap-2">
-                                            
+                                        <div className="grid grid-cols-4 gap-2">
+
                                             {hotel.roomTypes[0].roomAmenities.map((roomAmenity) => (<p className="leading-3 text-xs font-medium">{roomAmenity.amenity.title}</p>))}
                                             {/* <p className="leading-3 text-xs font-medium">Free WiFi</p>
                                             <p className="leading-3 text-xs font-medium">Air conditioning</p>
@@ -147,11 +149,15 @@ export default function Home() {
                                     </div>
                                     <div className="justify-end">
                                         <p className="leading-3 text-xs font-medium text-gray-400 justify-end">Includes taxes and fees</p>
-                                        <p className="leading-8 text-xl font-medium justify-end mt-2">NGN {hotel.roomTypes[0].price}</p>
+                                        <p className="leading-8 text-xl font-medium justify-end mt-2">NGN {Number(hotel.roomTypes[0].price).toLocaleString()}</p>
                                         <p className="leading-5 text-xs text-gray-500">2 nights, {numberOfAdults} adults</p>
                                         <button
                                             type="button"
-                                            className="mt-24 w-full text-center justify-center font-medium flex items-center py-2 rounded-[5px] text-sm leading-6 uppercase bg-[#F5C400] hover:bg-[#ffcc00] text-[#1a1a1a]">Book Now</button>
+                                            className="mt-24 w-full text-center justify-center font-medium flex items-center py-2 rounded-[5px] text-sm leading-6 uppercase bg-[#F5C400] hover:bg-[#ffcc00] text-[#1a1a1a]">
+                                            <Link href={'/hotel/details'}>
+                                            Book Now
+                                            </Link>
+                                        </button>
                                     </div>
                                 </div>
                             </div>

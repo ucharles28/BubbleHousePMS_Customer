@@ -5,8 +5,6 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from 'next/router';
 
-
-
 export default function Navbar() {
     const router = useRouter()
     //Popover
@@ -48,8 +46,9 @@ export default function Navbar() {
 
     return (
         <div className="bg-white fixed w-full z-10 shadow-sm font-inter">
-            <div className="flex py-6 px-10 w-full justify-between">
-                <Image className="block" src="/logo.png" width={110} height={28} alt="logo" />
+            <div className="flex py-6 px-10 w-full justify-between items-center">
+                {/* <Image className="block" src="/logo.png" width={110} height={2} alt="logo" /> */}
+                <img className="block w-[110px] h-[27.88px]" src="/logo.png" alt="logo" />
                 <div className="flex justify-end items-center">
                     {!user ? <>
                         <button

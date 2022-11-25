@@ -1,9 +1,10 @@
 import Meta from '../components/Meta'
-import '../styles/tailwind.css';
+import '../dist/output.css';
 import 'antd/dist/antd.css';
 import nProgress from "nprogress";
 import "../styles/nprogress.css";
 import '../styles/app.css'
+import '../styles/carousel.css'
 import Router from "next/router";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 

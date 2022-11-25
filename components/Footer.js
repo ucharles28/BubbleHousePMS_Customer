@@ -1,88 +1,87 @@
 import { Navbar } from 'react-bootstrap';
 import Link from 'next/link';
-import { ImFacebook2, ImTwitter, ImGoogle} from 'react-icons/im'
+import { ImFacebook2, ImTwitter, ImGoogle } from 'react-icons/im'
 import Image from 'next/image';
 import logo from '../public/logo.png'
+import { FaFacebookF, FaTwitter } from 'react-icons/fa';
+import { FcGoogle } from 'react-icons/fc';
 
 
-export default function Footer() {
+const Footer = () => {
     return (
-        <div className="bg-purple-1000 text-white font-inter">
-            <div className="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-                    <div>
-                        <Navbar.Brand href="/">
-                            <span className='w-36 flex items-center'><Image src={logo} alt='bcloud' /></span>
-                        </Navbar.Brand>
-                        <p className="max-w-xs mt-0 text-sm text-white">
-                            Be sure to take a look at our Terms of Use and Privacy Policy
-                        </p>
-                        <div className="flex mt-8 space-x-6 text-white">
-                            <a className="hover:text-white" href="" target="_blank" rel="noreferrer">
-                                <ImFacebook2 className='hover:text-white' />
-                            </a>
-                            <a className="hover:text-white" href="" target="_blank" rel="noreferrer">
-                                <ImTwitter className='hover:text-white' />
-                            </a>
-                            <a className="hover:text-white" href="" target="_blank" rel="noreferrer">
-                                <ImGoogle className='hover:text-white' />
-                            </a>
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-10 lg:col-span-2 sm:grid-cols-4 lg:grid-cols-4">
-                        <div>
-                            <p className="font-bold text-lg leading-5">
-                                Products
-                            </p>
-                            <nav className="flex flex-col mt-4 space-y-2 text-sm text-white">
-                                <Link href="../jobs" className="hover:text-white">Voices</Link>
-                                {/* <Link href="../jobs" ><a className="hover:text-white"> Translators</a></Link>
-                                <Link href="../signup" ><a className="hover:text-white"> Join AVO as a Voice Over talent </a></Link>
-                                <Link href="../signup" ><a className="hover:text-white"> Join AVO as a Translators </a></Link>
-                                <Link href="../signup" ><a className="hover:text-white"> Post a VO Project </a></Link>
-                                <Link href="../upgrade" ><a className="hover:text-white"> Membership Options </a></Link> */}
-                            </nav>
-                        </div>
-
-                        <div>
-                            <p className="font-bold text-lg leading-5">
-                                Resources
-                            </p>
-                            <nav className="flex flex-col mt-4 space-y-2 text-sm text-white">
-                                {/* <Link href="#" ><a className="hover:text-white"> Help Center </a></Link>
-                                <Link href="#" ><a className="hover:text-white"> FAQ </a></Link>
-                                <Link href="#" ><a className="hover:text-white"> Rates </a></Link> */}
-                            </nav>
-                        </div>
-
-                        <div>
-                            <p className="font-bold text-lg leading-5">
-                                Helpful Links
-                            </p>
-                            <nav className="flex flex-col mt-4 space-y-2 text-sm text-white">
-                                {/* <Link href="#" ><a className="hover:text-white"> Careers </a></Link>
-                                <Link href="#" ><a className="hover:text-white"> About Us </a></Link>
-                                <Link href="#" ><a className="hover:text-white"> Contact Us </a></Link> */}
-                            </nav>
-                        </div>
-
-                        <div>
-                            <p className="font-bold text-lg leading-5">
-                                Legal
-                            </p>
-                            <nav className="flex flex-col mt-4 space-y-2 text-sm text-white">
-                                {/* <Link href="#"><a className="hover:text-white"> Privacy Policy </a></Link>
-                                <Link href="#" ><a className="hover:text-white"> Terms &#38; Conditions </a></Link>
-                                <Link href="#" ><a className="hover:text-white"> Accessibility </a></Link> */}
-                            </nav>
-                        </div>
-                    </div>
+        <div className="relative bg-white border-t-[1px_solid_rgba(26,_26,_26,_0.26)] border-r-[0px_solid_rgba(26,_26,_26,_0.26)] border-b-[0px_solid_rgba(26,_26,_26,_0.26)] border-l-[0px_solid_rgba(26,_26,_26,_0.26)] box-border w-full flex flex-col items-start justify-start text-left text-base font-poppins">
+            <hr className='w-full my-20' />
+            <div className='flex w-full py-0'>
+                <div className='mr-48 ml-20'>
+                    <img
+                        className="w-[130px] h-[30.88px]"
+                        alt=""
+                        src="logo.png"
+                    />
                 </div>
-                <p className="mt-8 text-sm text-white">
-                    &copy; 2022 Africanvo
-                </p>
+                <div className='flex text-xl leading-5 gap-16'>
+                    <div className='w-1/4'>
+                        <p className='text-[#1A1A1AAD] mb-10'>Company</p>
+                        <nav className="flex flex-col mt-4 space-y-6 ">
+                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> About Us</a></Link>
+                            <Link href="../jobs" legacyBehavior><a className="hover:text-[#F5C400]"> Privacy Policy</a></Link>
+                            <Link href="../signup" legacyBehavior><a className="hover:text-[#F5C400]"> Terms of Service </a></Link>
+                            <Link href="../signup" legacyBehavior><a className="hover:text-[#F5C400]"> How it Works </a></Link>
+                        </nav>
+                    </div>
+
+                    <div className='w-1/4'>
+                        <p className='text-[#1A1A1AAD] mb-10'>Top Cities</p>
+                        <nav className="flex flex-col mt-4 space-y-6">
+                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Hotels in Lagos</a></Link>
+                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Hotels in Awka</a></Link>
+                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Hotels in Calabar </a></Link>
+                            <Link href="" legacyBehavior><a className="hover:text-[#F5C400]"> Hotels in Abuja </a></Link>
+                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Hotels in Jos </a></Link>
+                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Hotels in Owerri </a></Link>
+                        </nav>
+                    </div>
+
+                    <div className='w-1/4'>
+                        <p className='text-[#1A1A1AAD] mb-10'>Top Destinations</p>
+                        <nav className="flex flex-col mt-4 space-y-6">
+                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Lagos</a></Link>
+                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Awka</a></Link>
+                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Calabar </a></Link>
+                            <Link href="" legacyBehavior><a className="hover:text-[#F5C400]"> Abuja </a></Link>
+                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Jos </a></Link>
+                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Owerri </a></Link>
+                        </nav>
+                    </div>
+
+                    <div className='w-1/4'>
+                        <p className='text-[#1A1A1AAD] mb-10'>Top Destinations</p>
+                        <nav className="flex flex-col mt-4 space-y-6">
+                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Raddison Hotel</a></Link>
+                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Grand Range Gold</a></Link>
+                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Beni Hotel </a></Link>
+                            <Link href="" legacyBehavior><a className="hover:text-[#F5C400]"> Bcloud Hotel </a></Link>
+                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Pee Hotel </a></Link>
+                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Golden Tulip Hotel </a></Link>
+                        </nav>
+                    </div>
+
+                </div>
+            </div>
+
+            
+            <hr className='border-2' />
+
+            <div className='flex justify-between w-full px-20 py-16 mt-6'>
+                <p>Copyright © 2022 Bcloud All Rights Reserved</p>
+                <div className='flex gap-4'>
+                    <FaFacebookF className='cursor-pointer' color='#4267B2' size={24} />
+                    <FaTwitter className='cursor-pointer' color='#1DA1F2' size={24} />
+                    <FcGoogle className='cursor-pointer' size={24} />
+                </div>
             </div>
         </div>
-    )
-}
+    );
+};
+
+export default Footer;
