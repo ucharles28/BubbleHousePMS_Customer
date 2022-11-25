@@ -1,5 +1,6 @@
 import Meta from '../components/Meta'
-import '../dist/output.css';
+// import '../dist/output.css';
+import '../styles/tailwind.css'
 import 'antd/dist/antd.css';
 import nProgress from "nprogress";
 import "../styles/nprogress.css";
