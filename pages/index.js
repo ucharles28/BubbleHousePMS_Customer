@@ -146,7 +146,7 @@ export default function Home() {
                 <Navbar />
                 <div className="w-full bg-[url('/hero@3x.png')] bg-cover bg-no-repeat bg-[top] py-20">
                     <div className="">
-                        <div className="mt-[164px] mb-16 flex flex-col text-white justify-center items-center">
+                        <div className="mt-[164px] mb-16 mx-6 flex flex-col text-white justify-center items-center">
                             <p className="text-5xl leading-[56px]">Find deals from you favourite hotels in Nigeria</p>
                             <p className="text-2xl leading-[56px] item-start">Try searching for a city, A specific hotel or even a landmark!</p>
                         </div>
