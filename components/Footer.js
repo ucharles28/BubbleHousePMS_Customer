@@ -19,7 +19,7 @@ const Footer = () => {
                         src="logo.png"
                     />
                 </div>
-                <div className='flex text-xl leading-5 gap-16'>
+                <div className='flex text-sm leading-5 gap-16'>
                     <div className='w-1/4'>
                         <p className='text-[#1A1A1AAD] mb-10'>Company</p>
                         <nav className="flex flex-col mt-4 space-y-6 ">

@@ -121,7 +121,7 @@ export default function Home() {
 
 
                         {hotelResults.map((hotel) => (<div className="flex mt-5 rounded-md gap-5 border w-full border-gray-300 p-4">
-                            <div className={`border rounded-md bg-cover w-[197px] h-[211px] `}>
+                            <div style={{'var(--image-url)': hotel.imaageUrl}} className={`border rounded-md bg-cover bg-[url('image:var(--image-url)')]  w-[197px] h-[211px] `}>
                             </div>
                             <div>
                                 <div className="flex gap-28">
