@@ -1,13 +1,8 @@
-// import { TextField } from "@mui/material";
-
-// import Typography from "@mui/material/Typography";
-// import Button from "@mui/material/Button";
 import Footer from "../components/Footer";
-
 import Navbar from "../components/Navbar";
-
 import Carousel from "../components/Carousel";
 import Hero from "../components/Hero";
+import HotelList from "../components/HotelList";
 
 // import Carousel from 'react-multi-carousel';
 // import 'react-multi-carousel/lib/styles.css';
@@ -15,7 +10,6 @@ import Hero from "../components/Hero";
 export default function Home() {
   const responsive = {
     superLargeDesktop: {
-      //
       // the naming can be any, depends on you.
       breakpoint: { max: 4000, min: 3000 },
       items: 4,
@@ -42,99 +36,7 @@ export default function Home() {
         <Navbar />
         <Hero />
         {/* Top Hotels */}
-        <div className="px-20 py-10 mt-10">
-          <div className="flex justify-between">
-            <p className="text-3xl font-medium">Today’s Top Hotel Deals</p>
-            <p className="text-base font-medium items-end">See more</p>
-          </div>
-
-          <div className="flex flex-row">
-            <div className="my-10 mr-10">
-              <div className="rounded-lg">
-                <img
-                  className="object-cover w-[255.36px] h-[256px]"
-                  alt="name"
-                  src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg"
-                />
-              </div>
-              <div className="flex flex-col gap-y-[4px] mt-1">
-                <p className="font-medium text-base leading-6">
-                  Wintess Hotel and Suites
-                </p>
-                <p className="text-sm text-[#1A1A1AAD] leading-6">
-                  Ifite-Awka, Anambra State.
-                </p>
-                <p className="text-sm text-[#1A1A1AAD] leading-6">
-                  Starting from{" "}
-                  <span className="text-black font-medium">NGN 5,000</span>
-                </p>
-              </div>
-            </div>
-            <div className="my-10 mr-10">
-              <div className="">
-                <img
-                  className="object-cover w-[255.36px] h-[256px]"
-                  alt="name"
-                  src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg"
-                />
-              </div>
-              <div className="flex flex-col gap-y-[4px] mt-1">
-                <p className="font-medium text-base leading-6">
-                  Wintess Hotel and Suites
-                </p>
-                <p className="text-sm text-[#1A1A1AAD] leading-6">
-                  Ifite-Awka, Anambra State.
-                </p>
-                <p className="text-sm text-[#1A1A1AAD] leading-6">
-                  Starting from{" "}
-                  <span className="text-black font-medium">NGN 5,000</span>
-                </p>
-              </div>
-            </div>
-            <div className="my-10 mr-10">
-              <div className="">
-                <img
-                  className="object-cover w-[255.36px] h-[256px]"
-                  alt="name"
-                  src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg"
-                />
-              </div>
-              <div className="flex flex-col gap-y-[4px] mt-1">
-                <p className="font-medium text-base leading-6">
-                  Wintess Hotel and Suites
-                </p>
-                <p className="text-sm text-[#1A1A1AAD] leading-6">
-                  Ifite-Awka, Anambra State.
-                </p>
-                <p className="text-sm text-[#1A1A1AAD] leading-6">
-                  Starting from{" "}
-                  <span className="text-black font-medium">NGN 5,000</span>
-                </p>
-              </div>
-            </div>
-            <div className="my-10 mr-10">
-              <div className="">
-                <img
-                  className="object-cover w-[255.36px] h-[256px]"
-                  alt="name"
-                  src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg"
-                />
-              </div>
-              <div className="flex flex-col">
-                <p className="font-medium text-base leading-6">
-                  Wintess Hotel and Suites
-                </p>
-                <p className="text-sm text-[#1A1A1AAD] leading-6">
-                  Ifite-Awka, Anambra State.
-                </p>
-                <p className="text-sm text-[#1A1A1AAD] leading-6">
-                  Starting from{" "}
-                  <span className="text-black font-medium">NGN 5,000</span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <HotelList />
 
         {/* Top cities */}
         <div className="px-20 py-10">
