@@ -1,9 +1,14 @@
 import Image from "next/image";
 import { useRef, useEffect, useState } from "react";
+import "react-date-range/dist/styles.css"; // main css file
+import "react-date-range/dist/theme/default.css"; // theme css file
+import { DateRange } from "react-date-range";
+import { format } from "date-fns";
+import { BsCalendar } from "react-icons/bs";
 import Script from "next/script";
 import { useRouter } from "next/router";
 import Popover from "@mui/material/Popover";
-import { DatePicker, Space } from "antd";
+// import { DatePicker, Space } from "antd";
 import { People } from "iconsax-react";
 
 const HotelSearch = () => {
@@ -14,7 +19,21 @@ const HotelSearch = () => {
   const [numberOfAdults, setNumberOfAdults] = useState(2);
   const [numberOfChildren, setNumberOfChildren] = useState(0);
   const [numberOfRooms, setNumberOfRooms] = useState(1);
-  const [dateRange, setDateRange] = useState([]);
+
+  // State for displaying date library
+  const [dateRange, setDateRange] = useState([
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: "selection",
+    },
+  ]);
+
+  const [openDate, setOpenDate] = useState(false);
+
+  const datePickerHandler = () => {
+    setOpenDate(!openDate);
+  };
 
   //Popover
   const [anchorEl, setAnchorEl] = useState(null);
@@ -29,12 +48,6 @@ const HotelSearch = () => {
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
-
-  const onChange = (value, dateString) => {
-    setDateRange(value);
-    console.log("Selected Time: ", value);
-    console.log("Formatted Selected Time: ", dateString);
-  };
 
   const loadScript = (url, callback) => {
     let script = document.createElement("script");
@@ -109,37 +122,63 @@ const HotelSearch = () => {
     );
   }, []);
 
-  const { RangePicker } = DatePicker;
+  //   const { RangePicker } = DatePicker;
 
   return (
     <>
       <Script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8QN-9BQ2Gto1h0GfSOG78AzL-qHhDyPg&libraries=places" />
-      <div className="bg-white text-black rounded-lg flex justify-between items-center py-[2px] px-5">
-        <input
-          ref={inputRef}
-          onChange={(event) => setQuery(event.target.value)}
-          placeholder="Enter a City"
-          className="border-1 text-md p-2 bg-[#E0E0E0] rounded-md outline-0 w-1/3"
-          value={query}
-        />
 
-        <Space
-          direction="horizontal"
-          className="max-w-[1/2] mx-auto "
-          size={12}
-        >
-          <RangePicker onChange={onChange} />
-        </Space>
+      <form className="lg:bg-white bg-transparent text-black rounded-lg  items-center py-[2px] lg:py-0 lg:px-5 lg:mx-auto grid lg:flex mx-2 relative">
+        <div className="text-start lg:grow">
+          <input
+            ref={inputRef}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Enter a City"
+            className="border-1 text-md p-2 bg-[#E0E0E0] rounded-md outline-0 w-full text-base font-bold"
+            value={query}
+          />
+        </div>
+        <div className="lg:grow lg:ml-3 cursor-pointer">
+          <div className="grid lg:flex  items-start lg:items-center space-y-3 lg:space-y-0 my-3 lg:my-0">
+            <div
+              className="w-full flex items-center justify-start bg-[#E0E0E0]  py-[.5px] gap-2 px-5 rounded-md"
+              onClick={datePickerHandler}
+            >
+              <BsCalendar size={19} />
+
+              <div className="relative">
+                <small className="text-[11px] font-bold text-[gray]">
+                  Check In / Check out
+                </small>
+                <h6 className="text-[13px] font-extrabold">
+                  {`${format(dateRange[0].startDate, "dd-MM-yyy")} - ${format(
+                    dateRange[0].endDate,
+                    "dd-MM-yyy"
+                  )}`}
+                </h6>
+              </div>
+            </div>
+            {openDate && (
+              <DateRange
+                editableDateInputs={true}
+                onChange={(item) => setDateRange([item.selection])}
+                moveRangeOnFirstSelection={false}
+                ranges={dateRange}
+                className="absolute top-[90px] lg:top-[60px] lg:left-[30%]"
+              />
+            )}
+          </div>
+        </div>
 
         <div
-          className="flex gap-2 cursor-pointer p-2 rounded-md items-center"
+          className="flex gap-2 cursor-pointer lg:p-2 rounded-md items-center lg:grow"
           onClick={handleClick}
         >
-          <div className="flex gap-0 bg-[#E0E0E0] items-center space-x-3 py-[3.5px] px-5 justify-between rounded-md mr-2">
-            <People size={20} className="mr-3" />
+          <div className="w-full flex gap-0 bg-[#E0E0E0] items-center space-x-3 py-[4.5px] lg:justify-center justify-start rounded-md pl-5 lg:pl-0 lg:grow">
+            <People size={20} className="lg:mr-1" />
             <div className="flex-col text-[gray]">
-              <p className="text-xs font-semibold">Rooms</p>
-              <p className="text-xs font-semibold text-black">Guests</p>
+              <p className="text-[10px] font-extrabold">Rooms</p>
+              <p className="text-[12px] font-extrabold text-black">Guests</p>
             </div>
           </div>
         </div>
@@ -223,11 +262,11 @@ const HotelSearch = () => {
         <button
           type="button"
           onClick={handleSearch}
-          className="border py-2 px-7 bg-[#404040;] text-white rounded-md"
+          className="w-full lg:w-fit py-3 lg:py-2 px-7 bg-[#404040;] text-white rounded-md mt-2 text-base lg:grow lg:mb-2"
         >
           Search
         </button>
-      </div>
+      </form>
     </>
   );
 };
