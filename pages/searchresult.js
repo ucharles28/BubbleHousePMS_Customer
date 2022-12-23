@@ -137,7 +137,7 @@ export default function Home() {
           <div className=" flex-auto w-64">
             <div className="flex justify-between items-center">
               <h1 className="text-xl font-bold">3,345 Hotels in Lagos</h1>
-              <div className="bg-white p-2 border-2 rounded-lg  flex justify-between space-x-3 items-center cursor-pointer relative">
+              <div className="bg-white p-2 border-2 rounded-lg  flex justify-between space-x-3 items-center cursor-pointer relative z-10">
                 <span onClick={viewMenuHandler}>
                   <small className="opacity-50 text-[11px]">Sort by </small>:
                   <strong className="text-[12px]">Top Viewed</strong>

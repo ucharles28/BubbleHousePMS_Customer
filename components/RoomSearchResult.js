@@ -1,58 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
+import { roomDetails } from "./RoomDetailsData";
 
 const RoomSearchResult = () => {
-  const roomDetails = [
-    {
-      imgSrc: "/Hotel-img.png",
-      name: "Raddison Blue Hotel and Suites",
-      address: {
-        area: "Surelere, Lagos",
-        street: "Plot 37 Ahmed Onibudo Street",
-      },
-      roomType: "Deluxe Room",
-      bedSpace: "1 bed (1 queen)",
-      cancellation: "Free Cancellation",
-      amenities: ["Free Wifi", "Air conditioning", "Pool", "Restaurant"],
-      taxes: "Includes taxes and fees",
-      price: "NGN 30,000",
-      time: "avg/night",
-      id: 1,
-    },
-    {
-      imgSrc: "/Hotel-img.png",
-      name: "Raddison Blue Hotel and Suites",
-      address: {
-        area: "Surelere, Lagos",
-        street: "Plot 37 Ahmed Onibudo Street",
-      },
-      roomType: "Deluxe Room",
-      bedSpace: "1 bed (1 queen)",
-      cancellation: "Free Cancellation",
-      amenities: ["Free Wifi", "Air conditioning", "Pool", "Restaurant"],
-      taxes: "Includes taxes and fees",
-      price: "NGN 30,000",
-      time: "avg/night",
-      id: 2,
-    },
-    {
-      imgSrc: "/Hotel-img.png",
-      name: "Wintess",
-      address: {
-        area: "Awka, Anambra",
-        street: "Plot 37 Ahmed Onibudo Street",
-      },
-      roomType: "Deluxe Room",
-      bedSpace: "1 bed (1 queen)",
-      cancellation: "Free Cancellation",
-      amenities: ["Free Wifi", "Air conditioning", "Pool", "Restaurant"],
-      taxes: "Includes taxes and fees",
-      price: "NGN 30,000",
-      time: "avg/night",
-      id: 2,
-    },
-  ];
-
-  console.log(roomDetails);
+  const roomInfo = roomDetails;
+  console.log(roomInfo);
 
   return (
     <>
@@ -104,9 +56,14 @@ const RoomSearchResult = () => {
                 <p className="font-bold text-end">{room.price}</p>
                 <p className="text-end text-xs">{room.time}</p>
               </div>
-              <button className="text-end  py-1 px-5 rounded-lg bg-[#FFCC00]">
-                Book Now
-              </button>
+              <Link href="/singleRoom">
+                <button
+                  type="button"
+                  className="text-end  py-1 px-5 rounded-lg bg-[#FFCC00]"
+                >
+                  Book Now
+                </button>
+              </Link>
             </div>
           </div>
         );
