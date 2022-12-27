@@ -1,6 +1,10 @@
 import { Heart, Location } from "iconsax-react";
+import { Add, Minus } from "iconsax-react";
 import React from "react";
+import Amenities from "../components/Amenities";
 import Carousel from "../components/Carousel";
+import RoomType from "../components/RoomType";
+import HotelList from "../components/HotelList";
 
 const singleRoom = () => {
   const responsive = {
@@ -144,6 +148,77 @@ const singleRoom = () => {
             vitae cursus consectetur risus donec eget. Augue nunc morbi ornare
             aliquam orci lorem.
           </p>
+        </div>
+        {/* popular destinations */}
+        <div className="my-3">
+          <h3 className="font-semibold">Most popular facilities</h3>
+          <div className="mt-5 w-[65%]">
+            <hr />
+            <Amenities />
+            <hr />
+          </div>
+          <div className="max-w-[75%]">
+            <h3 className="my-6">Room Types from Raddison Blue</h3>
+            <div className="space-y-3">
+              <div className="border border-[#FFCC0080]/50 p-3 rounded-md flex justify-between items-baseline">
+                <RoomType />
+                <div className="space-x-3 flex items-center">
+                  <span
+                    className="border border-[#FFCC00]/50 bg-[#FFCC00]/10 align-middle cursor-pointer"
+                    style={{ borderRadius: "50%" }}
+                  >
+                    <Minus />
+                  </span>
+                  <span className="border rounded-md py-1 px-3 text-xs  border-[#FFCC00]/50">
+                    2
+                  </span>
+                  <span
+                    className="border border-[#FFCC00]/50 bg-[#FFCC00]/10 text-3xl align-middle cursor-pointer"
+                    style={{ borderRadius: "50%" }}
+                  >
+                    <Add />
+                  </span>
+                </div>
+              </div>
+              <div className="border border-[#FFCC0080]/50 p-3 rounded-md flex justify-between items-baseline">
+                <RoomType />
+
+                <button
+                  type="button"
+                  className="py-[5px] px-14 border  border-[#FFCC0080]/50 text-[#FFCC0080] uppercase font-bold  rounded-sm text-[13.5px]"
+                >
+                  Reserve
+                </button>
+              </div>
+              <div className="border border-[#FFCC0080]/50 p-3 rounded-md flex justify-between items-baseline">
+                <RoomType />
+
+                <button
+                  type="button"
+                  className="py-[5px] px-14 border  border-[#FFCC0080]/50 text-[#FFCC0080] uppercase font-bold rounded-sm text-[13.5px]"
+                >
+                  Reserve
+                </button>
+              </div>
+            </div>
+            <div className="text-center mt-7 space-y-3 font-semibold">
+              <p>
+                <span>2 Rooms </span> ,<span>1 Night</span>
+              </p>
+              <p>
+                Total Price:<span> ₦60,000</span>
+              </p>
+              <button
+                type="button"
+                className="rounded-md w-[70%] py-[7px] bg-[#FFCC00]"
+              >
+                Book Now
+              </button>
+            </div>
+          </div>
+          <div className="my-5">
+            <HotelList title="Nearby Hotels to {Current Hotel Name}" />
+          </div>
         </div>
       </div>
     </section>

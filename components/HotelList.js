@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const HotelList = () => {
+const HotelList = ({ title }) => {
   const HotelData = [
     {
       name: "Wintess Hotel and Suites",
@@ -40,9 +40,7 @@ const HotelList = () => {
   console.log(HotelData);
   return (
     <article className="mt-24">
-      <h4 className="text-2xl font-bold mb-8 lg:mb-5 mx-7">
-        Today’s Top Hotel Deals
-      </h4>
+      <h4 className="text-2xl font-bold mb-8 lg:mb-5">{title}</h4>
       <div className="grid md:grid-cols-3 lg:flex lg:grow md:gap-3 lg:gap-4 w-full mx-auto">
         {HotelData.map((hotel) => {
           return (

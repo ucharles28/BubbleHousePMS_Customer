@@ -36,7 +36,7 @@ export default function Home() {
         <Navbar />
         <Hero />
         {/* Top Hotels */}
-        <HotelList />
+        <HotelList title="Today’s Top Hotel Deals" />
 
         {/* Top cities */}
         <div className="px-20 py-10">

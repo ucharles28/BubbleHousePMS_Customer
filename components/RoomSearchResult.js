@@ -56,7 +56,7 @@ const RoomSearchResult = () => {
                 <p className="font-bold text-end">{room.price}</p>
                 <p className="text-end text-xs">{room.time}</p>
               </div>
-              <Link href="/singleRoom">
+              <Link href="/singleRoom" className="text-end">
                 <button
                   type="button"
                   className="text-end  py-1 px-5 rounded-lg bg-[#FFCC00]"
