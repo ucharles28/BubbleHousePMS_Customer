@@ -7,10 +7,26 @@ import { format } from "date-fns";
 import { BsCalendar } from "react-icons/bs";
 import Script from "next/script";
 import { useRouter } from "next/router";
+import data from "../pages/api/HotelSerMockData/MOCK_DATA.json";
 
 // import { DatePicker, Space } from "antd";
 import { People } from "iconsax-react";
 import PopoverDisplay from "./PopoverDisplay";
+
+const dommyData = data;
+
+const dropDown = {
+  backgroundColor: "white",
+  display: "flex",
+  flexDirection: "column",
+  border: "1px solid gray",
+};
+
+const dropDownRow = {
+  cursor: "pointer",
+  textAlign: "start",
+  margin: "2px 0",
+};
 
 const HotelSearch = () => {
   const router = useRouter();
@@ -20,6 +36,17 @@ const HotelSearch = () => {
   const [numberOfAdults, setNumberOfAdults] = useState(2);
   const [numberOfChildren, setNumberOfChildren] = useState(0);
   const [numberOfRooms, setNumberOfRooms] = useState(1);
+
+  // State to search
+  const [value, setValue] = useState("");
+
+  const onChange = (event) => {
+    setValue(event.target.value);
+  };
+
+  const onSearch = (searchTerm) => {
+    setValue(searchTerm);
+  };
 
   // State for displaying date library
   const [dateRange, setDateRange] = useState([
@@ -42,78 +69,78 @@ const HotelSearch = () => {
     setAnchorEl(event.currentTarget);
   };
 
-  const loadScript = (url, callback) => {
-    let script = document.createElement("script");
-    script.type = "text/javascript";
+  // const loadScript = (url, callback) => {
+  //   let script = document.createElement("script");
+  //   script.type = "text/javascript";
 
-    if (script.readyState) {
-      script.onreadystatechange = function () {
-        if (
-          script.readyState === "loaded" ||
-          script.readyState === "complete"
-        ) {
-          script.onreadystatechange = null;
-          callback();
-        }
-      };
-    } else {
-      script.onload = () => callback();
-    }
+  //   if (script.readyState) {
+  //     script.onreadystatechange = function () {
+  //       if (
+  //         script.readyState === "loaded" ||
+  //         script.readyState === "complete"
+  //       ) {
+  //         script.onreadystatechange = null;
+  //         callback();
+  //       }
+  //     };
+  //   } else {
+  //     script.onload = () => callback();
+  //   }
 
-    script.src = url;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  };
+  //   script.src = url;
+  //   document.getElementsByTagName("head")[0].appendChild(script);
+  // };
 
-  function handleScriptLoad(updateQuery, inputRef) {
-    autoCompleteRef.current = new window.google.maps.places.Autocomplete(
-      inputRef.current,
-      { types: ["(cities)"], componentRestrictions: { country: "ng" } }
-    );
-    autoCompleteRef.current.setFields([
-      "address_components",
-      "formatted_address",
-      "geometry",
-    ]);
-    autoCompleteRef.current.addListener("place_changed", () =>
-      handlePlaceSelect(updateQuery)
-    );
-  }
+  // function handleScriptLoad(updateQuery, inputRef) {
+  //   autoCompleteRef.current = new window.google.maps.places.Autocomplete(
+  //     inputRef.current,
+  //     { types: ["(cities)"], componentRestrictions: { country: "ng" } }
+  //   );
+  //   autoCompleteRef.current.setFields([
+  //     "address_components",
+  //     "formatted_address",
+  //     "geometry",
+  //   ]);
+  //   autoCompleteRef.current.addListener("place_changed", () =>
+  //     handlePlaceSelect(updateQuery)
+  //   );
+  // }
 
-  async function handlePlaceSelect(updateQuery) {
-    const addressObject = autoCompleteRef.current.getPlace();
-    console.log(addressObject);
-    console.log(addressObject.geometry.location.lat());
-    const query = addressObject.formatted_address;
-    updateQuery(query);
-    console.log(addressObject);
-  }
+  // async function handlePlaceSelect(updateQuery) {
+  //   const addressObject = autoCompleteRef.current.getPlace();
+  //   console.log(addressObject);
+  //   console.log(addressObject.geometry.location.lat());
+  //   const query = addressObject.formatted_address;
+  //   updateQuery(query);
+  //   console.log(addressObject);
+  // }
 
-  const options = {
-    componentRestrictions: { country: "ng" },
-    fields: ["address_components", "geometry", "icon", "name"],
-    types: ["(cities)"],
-  };
+  // const options = {
+  //   componentRestrictions: { country: "ng" },
+  //   fields: ["address_components", "geometry", "icon", "name"],
+  //   types: ["(cities)"],
+  // };
 
-  const handleSearch = () => {
-    router.push({
-      pathname: "/searchresult",
-      query: {
-        location: query,
-        startDate: String(dateRange[0]),
-        endDate: String(dateRange[1]),
-        adults: numberOfAdults,
-        children: numberOfChildren,
-        rooms: numberOfRooms,
-      },
-    });
-  };
+  // const handleSearch = () => {
+  //   router.push({
+  //     pathname: "/searchresult",
+  //     query: {
+  //       location: query,
+  //       startDate: String(dateRange[0]),
+  //       endDate: String(dateRange[1]),
+  //       adults: numberOfAdults,
+  //       children: numberOfChildren,
+  //       rooms: numberOfRooms,
+  //     },
+  //   });
+  // };
 
-  useEffect(() => {
-    loadScript(
-      `https://maps.googleapis.com/maps/api/js?key=AIzaSyB8QN-9BQ2Gto1h0GfSOG78AzL-qHhDyPg&libraries=places`,
-      () => handleScriptLoad(setQuery, inputRef)
-    );
-  }, []);
+  // useEffect(() => {
+  //   loadScript(
+  //     `https://maps.googleapis.com/maps/api/js?key=AIzaSyB8QN-9BQ2Gto1h0GfSOG78AzL-qHhDyPg&libraries=places`,
+  //     () => handleScriptLoad(setQuery, inputRef)
+  //   );
+  // }, []);
 
   return (
     <>
@@ -123,11 +150,37 @@ const HotelSearch = () => {
         <div className="text-start lg:grow">
           <input
             ref={inputRef}
-            onChange={(event) => setQuery(event.target.value)}
+            // onChange={(event) => setQuery(event.target.value)}
             placeholder="Enter a City"
             className="border-1 text-md p-2 bg-[#E0E0E0] rounded-md outline-0 w-full text-base font-bold"
-            value={query}
+            type="text"
+            value={value}
+            onChange={onChange}
           />
+          <div className="" style={dropDown}>
+            {dommyData
+              .filter((item) => {
+                const searchTerm = value.toLowerCase();
+                const fullName = item.full_name.toLowerCase();
+
+                return (
+                  searchTerm &&
+                  fullName.startsWith(searchTerm) &&
+                  fullName !== searchTerm
+                );
+              })
+              .slice(0, 10)
+              .map((item) => (
+                <div
+                  onClick={() => onSearch(item.full_name)}
+                  className=""
+                  key={item.full_name}
+                  style={dropDownRow}
+                >
+                  {item.full_name}
+                </div>
+              ))}
+          </div>
         </div>
         <div className="lg:grow lg:ml-3 cursor-pointer">
           <div className="grid lg:flex  items-start lg:items-center space-y-3 lg:space-y-0 my-3 lg:my-0">
@@ -185,7 +238,7 @@ const HotelSearch = () => {
         />
         <button
           type="button"
-          onClick={handleSearch}
+          // onClick={handleSearch}
           className="w-full lg:w-fit py-3 lg:py-2 px-7 bg-[#404040;] text-white rounded-md mt-2 text-base lg:grow lg:mb-2"
         >
           Search

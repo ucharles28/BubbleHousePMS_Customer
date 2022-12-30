@@ -52,7 +52,7 @@ export default function Navbar() {
   }, []);
 
   return (
-    <div className="bg-white fixed w-full z-10 shadow-md font-inter">
+    <div className="bg-white fixed w-full z-10 shadow-md font-inter z-20">
       <div className="flex w-full justify-between items-center py-3 px-5">
         <Link href="/">
           <Image src="/logo.png" width={100} height={2}></Image>
