@@ -23,6 +23,28 @@
   gap: 5px;
   padding: 10px 8px;
 }
+
+.dropdownRowTitle {
+  text-align: start;
+  margin: 2px 0;
+  gap: 5px;
+  padding: 10px 8px;
+  color: #dbb005;
+}
+
+.dropdownRowLoader {
+  text-align: end;
+  gap: 5px;
+  padding: 10px 8px;
+}
+
+.dropdownRow {
+  cursor: pointer;
+  text-align: start;
+  margin: 2px 0;
+  gap: 5px;
+  padding: 10px 8px;
+}
 .dropdownRow:hover {
   background-color: rgb(121, 121, 121);
   max-width: 100%;

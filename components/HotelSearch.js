@@ -10,12 +10,13 @@ import { useRouter } from "next/router";
 import { get } from "../helpers/ApiRequest";
 import data from "../pages/api/HotelSerMockData/MOCK_DATA.json";
 import styles from "../styles/HotelSearch.module.css";
-var axios = require('axios');
 
 // import { DatePicker, Space } from "antd";
 import { People } from "iconsax-react";
 import PopoverDisplay from "./PopoverDisplay";
 import { style } from "@mui/system";
+import { Puff } from "react-loader-spinner";
+import { SentimentVeryDissatisfiedOutlined } from "@mui/icons-material";
 
 const dommyData = data;
 
@@ -27,45 +28,96 @@ const HotelSearch = () => {
   const [numberOfAdults, setNumberOfAdults] = useState(2);
   const [numberOfChildren, setNumberOfChildren] = useState(0);
   const [numberOfRooms, setNumberOfRooms] = useState(1);
+  const [searchIsLoading, setSearchIsLoading] = useState(false);
+  const [hotels, setHotels] = useState([]);
+  const [places, setPlaces] = useState([]);
+  const [selectedPlace, setSelectedPlace] = useState();
+  const [selectedHotel, setSelectedHotel] = useState();
 
   // State to search
   const [value, setValue] = useState("");
 
   const onChange = async (event) => {
+    setSearchIsLoading(true)
     const query = event.target.value;
     setValue(query);
 
-    var config = {
-      method: 'get',
-      url: 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=Vict&types=geocode&language=fr&key=AIzaSyB8QN-9BQ2Gto1h0GfSOG78AzL-qHhDyPg&libraries=places',
-      headers: {}
-    };
+
     const responses = await Promise.all([
-      axios(config)
-        .then(function (response) {
-          return response.data;
-        })
-        .catch(function (error) {
-          console.log(error);
-        }),
+      getPlacesPredition(query),
       get(`Hotel/Query/${query}`)
     ]
     );
 
-    if (responses[0]) {
-      console.log(responses[0].data)
-    }
-
     if (responses[1].successful) {
-      console.log(responses[1].data)
+      setHotels(responses[1].data)
     }
-  };
 
-  const onSearch = async (searchTerm) => {
-    setValue(searchTerm);
-
+    setSearchIsLoading(false)
 
   };
+
+  const onSelectHotel = async (hotel) => {
+    setValue(hotel.name);
+    setHotels([])
+    setPlaces([])
+    setSelectedHotel(hotel)
+  };
+  
+  const onSelectPlace = async (place) => {
+    setValue(searchTerm.description);
+    setHotels([])
+    setPlaces([])
+    setSelectedPlace(place)
+  };
+
+  useEffect(() => {
+    loadScript(
+      `https://maps.googleapis.com/maps/api/js?key=AIzaSyB8QN-9BQ2Gto1h0GfSOG78AzL-qHhDyPg&libraries=places`,
+      () => handleScriptLoad()
+    );
+  }, []);
+
+  const loadScript = (url, callback) => {
+    let script = document.createElement("script");
+    script.type = "text/javascript";
+
+    if (script.readyState) {
+      script.onreadystatechange = function () {
+        if (script.readyState === "loaded" || script.readyState === "complete") {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else {
+      script.onload = () => callback();
+    }
+
+    script.src = url;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  };
+
+  function getPlacesPredition(query) {
+    let result = []
+    const service = new google.maps.places.AutocompleteService();
+    service.getPlacePredictions({
+      input: query,
+      types: ["(cities)"],
+      componentRestrictions: {
+        country: 'ng'
+      }
+    },
+      (suggestions) => console.log(suggestions)
+    );
+    console.log(result)
+    return result
+  }
+
+  function handleScriptLoad() {
+    console.log('loaded')
+  }
+
+
 
   // State for displaying date library
   const [dateRange, setDateRange] = useState([
@@ -193,30 +245,50 @@ const HotelSearch = () => {
             Search
           </button>
         </form>
-        <div className={styles.dropdown}>
-          {dommyData
-            .filter((item) => {
-              const searchTerm = value?.toLowerCase();
-              const fullName = item.full_name?.toLowerCase();
-
-              return (
-                searchTerm &&
-                fullName?.startsWith(searchTerm) &&
-                fullName !== searchTerm
-              );
-            })
-            .slice(0, 9)
-            .map((item) => (
-              <div className={styles.dropdownRow}>
-                <ul
-                  onClick={() => onSearch(item.full_name)}
-                  key={item.full_name}
-                >
-                  <li>{item.full_name}</li>
-                </ul>
-              </div>
-            ))}
-        </div>
+        {searchIsLoading && places.length > 0 || hotels.length > 0 && <div className={styles.dropdown}>
+          {searchIsLoading && <div className="flex flex-col items-end m-0 p-0 justify-start">
+            <Puff
+              heigth={20}
+              width={20}
+              color="#FFCC00"
+              ariaLabel="loading-indicator"
+            />
+          </div>}
+          {!searchIsLoading && places.length > 0 && <div className={styles.dropdownRowTitle}>
+            <ul
+              key={'location'}
+            >
+              <li>Locations</li>
+            </ul>
+          </div>}
+          {!searchIsLoading && places.map((item, index) => (
+            <div className={styles.dropdownRow}>
+              <ul
+                onClick={() => onSelectPlace(item)}
+                key={index}
+              >
+                <li>{item.description}</li>
+              </ul>
+            </div>
+          ))}
+          {!searchIsLoading && hotels.length > 0 && <div className={styles.dropdownRowTitle}>
+            <ul
+              key={'hotels'}
+            >
+              <li>Hotels</li>
+            </ul>
+          </div>}
+          {!searchIsLoading && hotels.map((item, index) => (
+            <div className={styles.dropdownRow}>
+              <ul
+                onClick={() => onSelectHotel(item)}
+                key={index}
+              >
+                <li>{item.name}</li>
+              </ul>
+            </div>
+          ))}
+        </div>}
       </section>
     </>
   );
