@@ -62,7 +62,7 @@ const HotelSearch = () => {
     <>
       <section className="relative">
         <form className="lg:bg-white bg-transparent text-black rounded-lg  items-center py-[2px] lg:py-0 lg:px-5 lg:mx-auto grid lg:flex mx-2 relative">
-          <div className="text-start lg:grow relative ">
+          <div className="text-start lg:grow">
             <input
               ref={inputRef}
               // onChange={(event) => setQuery(event.target.value)}
@@ -72,30 +72,6 @@ const HotelSearch = () => {
               value={value}
               onChange={onChange}
             />
-            <div className={styles.dropdown}>
-              {dommyData
-                .filter((item) => {
-                  const searchTerm = value?.toLowerCase();
-                  const fullName = item.full_name?.toLowerCase();
-
-                  return (
-                    searchTerm &&
-                    fullName?.startsWith(searchTerm) &&
-                    fullName !== searchTerm
-                  );
-                })
-                .slice(0, 9)
-                .map((item) => (
-                  <div className={styles.dropdownRow}>
-                    <ul
-                      onClick={() => onSearch(item.full_name)}
-                      key={item.full_name}
-                    >
-                      <li>{item.full_name}</li>
-                    </ul>
-                  </div>
-                ))}
-            </div>
           </div>
           <div className="lg:grow lg:ml-3 cursor-pointer">
             <div className="grid lg:flex  items-start lg:items-center space-y-3 lg:space-y-0 my-3 lg:my-0">
