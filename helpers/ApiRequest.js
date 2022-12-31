@@ -127,8 +127,8 @@ export async function postData(url = '', request = {}, token) {
   return response;
 }
 
-export async function get(url = '', token) {
-  const response  = await fetch(`${baseUrl}${url}`, {
+export async function get(url = '', token, isFullUrl) {
+  const response  = await fetch(isFullUrl ? url : `${baseUrl}${url}`, {
     method: 'GET',
     // mode: 'cors',
     cache: 'no-cache',
@@ -140,16 +140,6 @@ export async function get(url = '', token) {
   })
     .then(async (res) => {
       console.log('res', res)
-      // console.log('status', res.status)
-      // if (!res.ok) {
-      //   const response = await get(`Auth/RenewToken/${token}`, '')
-      //   if (response.successful) {
-      //     localStorage.setItem('token', response.data.Token);
-      //     localStorage.setItem('tokenExpiryDate', response.data.TokenExpiryDate);
-      //     localStorage.setItem('user', JSON.stringify(response.data));
-      //   }
-      //   return await get(url, response.data.Token);
-      // }
       const responseObject = {
         successful: res.ok,
         data: await res?.json(),

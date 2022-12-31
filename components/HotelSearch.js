@@ -7,8 +7,10 @@ import { format } from "date-fns";
 import { BsCalendar } from "react-icons/bs";
 import Script from "next/script";
 import { useRouter } from "next/router";
+import { get } from "../helpers/ApiRequest";
 import data from "../pages/api/HotelSerMockData/MOCK_DATA.json";
 import styles from "../styles/HotelSearch.module.css";
+var axios = require('axios');
 
 // import { DatePicker, Space } from "antd";
 import { People } from "iconsax-react";
@@ -29,12 +31,40 @@ const HotelSearch = () => {
   // State to search
   const [value, setValue] = useState("");
 
-  const onChange = (event) => {
-    setValue(event.target.value);
+  const onChange = async (event) => {
+    const query = event.target.value;
+    setValue(query);
+
+    var config = {
+      method: 'get',
+      url: 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=Vict&types=geocode&language=fr&key=AIzaSyB8QN-9BQ2Gto1h0GfSOG78AzL-qHhDyPg&libraries=places',
+      headers: {}
+    };
+    const responses = await Promise.all([
+      axios(config)
+        .then(function (response) {
+          return response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        }),
+      get(`Hotel/Query/${query}`)
+    ]
+    );
+
+    if (responses[0]) {
+      console.log(responses[0].data)
+    }
+
+    if (responses[1].successful) {
+      console.log(responses[1].data)
+    }
   };
 
-  const onSearch = (searchTerm) => {
+  const onSearch = async (searchTerm) => {
     setValue(searchTerm);
+
+
   };
 
   // State for displaying date library
@@ -58,6 +88,10 @@ const HotelSearch = () => {
     setAnchorEl(event.currentTarget);
   };
 
+  // useEffect(() => {
+
+  // })
+
   return (
     <>
       <section className="relative">
@@ -72,7 +106,7 @@ const HotelSearch = () => {
               value={value}
               onChange={onChange}
             />
-            <div className={styles.dropdown}>
+            {/* <div className={styles.dropdown}>
               {dommyData
                 .filter((item) => {
                   const searchTerm = value?.toLowerCase();
@@ -95,7 +129,7 @@ const HotelSearch = () => {
                     </ul>
                   </div>
                 ))}
-            </div>
+            </div> */}
           </div>
           <div className="lg:grow lg:ml-3 cursor-pointer">
             <div className="grid lg:flex  items-start lg:items-center space-y-3 lg:space-y-0 my-3 lg:my-0">
