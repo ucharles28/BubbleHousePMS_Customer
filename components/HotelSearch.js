@@ -1,7 +1,5 @@
 import Image from "next/image";
 import { useRef, useEffect, useState } from "react";
-import "react-date-range/dist/styles.css"; // main css file
-import "react-date-range/dist/theme/default.css"; // theme css file
 import { DateRange } from "react-date-range";
 import { format } from "date-fns";
 import { BsCalendar } from "react-icons/bs";
@@ -51,6 +49,7 @@ const HotelSearch = () => {
 
     if (responses[1].successful) {
       setHotels(responses[1].data)
+      console.log(responses[1].data)
     }
 
     setSearchIsLoading(false)
@@ -62,13 +61,15 @@ const HotelSearch = () => {
     setHotels([])
     setPlaces([])
     setSelectedHotel(hotel)
+    setSelectedPlace(null)
   };
-  
+
   const onSelectPlace = async (place) => {
-    setValue(searchTerm.description);
+    setValue(place.description);
+    setSelectedPlace(place)
+    setSelectedHotel(null)
     setHotels([])
     setPlaces([])
-    setSelectedPlace(place)
   };
 
   useEffect(() => {
@@ -107,14 +108,35 @@ const HotelSearch = () => {
         country: 'ng'
       }
     },
-      (suggestions) => console.log(suggestions)
+      (suggestions) => {
+        console.log(suggestions)
+        setPlaces(suggestions)
+      }
     );
-    console.log(result)
     return result
   }
 
   function handleScriptLoad() {
     console.log('loaded')
+  }
+
+  function handleSearch() {
+    if (!value) {
+      return;
+    }
+
+    router.push({
+      pathname: '/search',
+      query: {
+        hotel: selectedHotel ? selectedHotel.name : '',
+        location: selectedPlace ? selectedPlace.description : '',
+        startDate: String(dateRange[0].startDate),
+        endDate: String(dateRange[0].endDate),
+        adults: numberOfAdults,
+        children: numberOfChildren,
+        rooms: numberOfRooms,
+      }
+    })
   }
 
 
@@ -123,7 +145,7 @@ const HotelSearch = () => {
   const [dateRange, setDateRange] = useState([
     {
       startDate: new Date(),
-      endDate: new Date(),
+      endDate: new Date(new Date().setDate(new Date().getDate() + 1)),
       key: "selection",
     },
   ]);
@@ -236,16 +258,17 @@ const HotelSearch = () => {
             numberOfChildren={numberOfChildren}
             setNumberOfChildren={setNumberOfChildren}
             setNumberOfRooms={setNumberOfRooms}
+            numberOfRooms={numberOfRooms}
           />
           <button
             type="button"
-            // onClick={handleSearch}
+            onClick={handleSearch}
             className="w-full lg:w-fit py-3 lg:py-2 px-7 bg-[#404040;] text-white rounded-md mt-2 text-base lg:grow lg:mb-2"
           >
             Search
           </button>
         </form>
-        {searchIsLoading && places.length > 0 || hotels.length > 0 && <div className={styles.dropdown}>
+        {searchIsLoading || places.length > 0 && <div className={styles.dropdown}>
           {searchIsLoading && <div className="flex flex-col items-end m-0 p-0 justify-start">
             <Puff
               heigth={20}

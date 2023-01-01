@@ -37,7 +37,7 @@ const PopoverDisplay = ({
 
           <div className="flex justify-center items-center gap-3">
             <button
-              onClick={() => setNumberOfAdults(numberOfAdults - 1)}
+              onClick={() => setNumberOfAdults(Number(numberOfAdults) - 1)}
               disabled={numberOfAdults < 2}
               className="text-center flex justify-center items-center border border-black rounded-full px-3"
             >
@@ -46,7 +46,7 @@ const PopoverDisplay = ({
 
             <p className="text-lg mx-2">{numberOfAdults}</p>
             <button
-              onClick={() => setNumberOfAdults(numberOfAdults + 1)}
+              onClick={() => setNumberOfAdults(Number(numberOfAdults) + 1)}
               className="text-center flex justify-center items-center border border-black rounded-full px-2"
             >
               <span className="font-medium text-xl mb-1">+</span>
@@ -58,7 +58,7 @@ const PopoverDisplay = ({
 
           <div className="flex justify-center items-center gap-3">
             <button
-              onClick={() => setNumberOfChildren(numberOfChildren - 1)}
+              onClick={() => setNumberOfChildren(Number(numberOfChildren) - 1)}
               disabled={numberOfChildren < 1}
               className="text-center flex justify-center items-center border border-black rounded-full px-3"
             >

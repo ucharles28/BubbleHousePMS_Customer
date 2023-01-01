@@ -6,6 +6,8 @@ import nProgress from "nprogress";
 import "../styles/nprogress.css";
 import '../styles/app.css'
 import '../styles/carousel.css'
+import "react-date-range/dist/styles.css"; // main css file
+import "react-date-range/dist/theme/default.css"; // theme css file
 import Router from "next/router";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 

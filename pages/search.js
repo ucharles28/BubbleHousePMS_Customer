@@ -15,6 +15,11 @@ import { People } from "iconsax-react";
 import { useRouter } from "next/router";
 import { post } from "../helpers/ApiRequest";
 import Link from "next/link";
+import { format } from "date-fns";
+import { DateRange } from "react-date-range";
+import PopoverDisplay from "../components/PopoverDisplay";
+
+
 
 import RoomSearchResult from "../components/RoomSearchResult";
 
@@ -29,17 +34,57 @@ export default function Home() {
   const [hotelResults, setHotelResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [openView, setOpenView] = useState(false);
+  const [dateRange, setDateRange] = useState();
+  const [openDate, setOpenDate] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const router = useRouter();
+
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
   const { query } = useRouter();
+  console.log(query)
+
+
+  const datePickerHandler = () => {
+    setOpenDate(!openDate);
+  };
 
   const viewMenuHandler = () => {
     setOpenView(!openView);
   };
 
+  function gotoDetails(id) {    
+    router.push({
+      pathname: '/hotel/details',
+      query: {
+        hotelId: id,
+        startDate: String(dateRange[0].startDate),
+        endDate: String(dateRange[0].endDate),
+        adults: numberOfAdults,
+        children: numberOfChildren,
+        rooms: numberOfRooms,
+      }
+    })
+  }
+
   useEffect(() => {
-    if (query.location) {
+    if (query) {
+      const a = [
+        {
+          startDate: new Date(query.startDate),
+          endDate: new Date(query.endDate),
+          key: "selection",
+        },
+      ]
+
+      console.log(a)
+      setDateRange(a)
+
       setLocation(query.location);
-      setStartDate(Date(query.startDate));
-      setEndDate(new Date(query.endDate));
       setNumberOfAdults(query.adults);
       setNumberOfChildren(query.children);
       setNumberOfRooms(query.rooms);
@@ -51,6 +96,7 @@ export default function Home() {
   const handleSearchHotel = async (query) => {
     const request = {
       location: query.location,
+      hotelName: query.hotel,
       checkInDate: new Date(query.startDate),
       checkOutDate: new Date(query.endDate),
       numberOfAdults: query.adults,
@@ -94,29 +140,38 @@ export default function Home() {
                   />
                 </div>
               </div>
-              <div className="w-full bg-white rounded-md mb-2 cursor-pointer">
+              <div onClick={datePickerHandler} className="w-full bg-white rounded-md mb-2 cursor-pointer">
                 <div className="flex items-center space-x-2 p-[2.5px]">
                   <BsCalendar className="text-[16px] ml-1" />
                   <span>
                     <small className="text-[10px] opacity-30 font-bold">
                       Check-In Date
                     </small>
-                    <p className="text-[11px] font-extrabold">5/12/22</p>
+                    <p className="text-[11px] font-extrabold">{dateRange && `${format(dateRange[0].startDate, "dd-MM-yyy")}`}</p>
                   </span>
                 </div>
               </div>
-              <div className="w-full bg-white rounded-md mb-2 cursor-pointer">
+              <div onClick={datePickerHandler} className="w-full bg-white rounded-md mb-2 cursor-pointer">
                 <div className="flex items-center space-x-2 p-[2.5px]">
                   <BsCalendar className="text-[16px] ml-1" />
                   <span>
                     <small className="text-[10px] opacity-30 font-bold">
                       Check-Out Date
                     </small>
-                    <p className="text-[11px] font-extrabold">5/12/22</p>
+                    <p className="text-[11px] font-extrabold">{dateRange && `${format(dateRange[0].endDate, "dd-MM-yyy")}`}</p>
                   </span>
                 </div>
               </div>
-              <div className="w-full bg-white rounded-md mb-2 cursor-pointer">
+              {openDate && (
+                <DateRange
+                  editableDateInputs={true}
+                  onChange={(item) => setDateRange([item.selection])}
+                  moveRangeOnFirstSelection={false}
+                  ranges={dateRange}
+                  className="absolute top-[90px] lg:top-[60px] lg:left-[30%]"
+                />
+              )}
+              <div className="w-full bg-white rounded-md mb-2 cursor-pointer" onClick={handleClick}>
                 <div className="flex items-center space-x-2 p-[2.5px]">
                   <People className=" ml-1" size={20} />
                   <span>
@@ -127,6 +182,17 @@ export default function Home() {
                   </span>
                 </div>
               </div>
+              <PopoverDisplay
+                handleClick={handleClick}
+                anchorEl={anchorEl}
+                setAnchorEl={setAnchorEl}
+                numberOfAdults={numberOfAdults}
+                setNumberOfAdults={setNumberOfAdults}
+                numberOfChildren={numberOfChildren}
+                setNumberOfChildren={setNumberOfChildren}
+                setNumberOfRooms={setNumberOfRooms}
+                numberOfRooms={numberOfRooms}
+              />
               <div className="w-full bg-[#404040] rounded-md cursor-pointer">
                 <button className="text-center w-full p-2 text-white">
                   Search
@@ -152,7 +218,7 @@ export default function Home() {
               </div>
             </div>
             <div className="">
-              <RoomSearchResult />
+              <RoomSearchResult hotels={hotelResults} gotoDetails={gotoDetails} />
             </div>
           </div>
         </div>

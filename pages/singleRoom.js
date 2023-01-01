@@ -5,6 +5,7 @@ import Amenities from "../components/Amenities";
 import Carousel from "../components/Carousel";
 import RoomType from "../components/RoomType";
 import HotelList from "../components/HotelList";
+import Navbar from "../components/Navbar";
 
 const singleRoom = () => {
   const responsive = {
@@ -30,7 +31,10 @@ const singleRoom = () => {
     },
   };
   return (
-    <section className="relative">
+    <section className="font-poppins">
+      <div className="relative">
+        <Navbar />
+      </div>
       <div className="max-w-[1200px] mx-auto px-10">
         <div className="header mt-5 flex justify-between items-center mx-3">
           <div className="hotelInfo">
