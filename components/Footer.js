@@ -2,83 +2,88 @@ import { Navbar } from 'react-bootstrap';
 import Link from 'next/link';
 import { ImFacebook2, ImTwitter, ImGoogle } from 'react-icons/im'
 import Image from 'next/image';
-import logo from '../public/logo.png'
+import bcloud1 from '../public/bcloud1.png'
 import { FaFacebookF, FaTwitter } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 
 
 const Footer = () => {
     return (
-        <div className="relative bg-white border-t-[1px_solid_rgba(26,_26,_26,_0.26)] border-r-[0px_solid_rgba(26,_26,_26,_0.26)] border-b-[0px_solid_rgba(26,_26,_26,_0.26)] border-l-[0px_solid_rgba(26,_26,_26,_0.26)] box-border w-full flex flex-col items-start justify-start text-left text-base font-poppins">
-            <hr className='w-full my-20' />
-            <div className='flex w-full py-0'>
-                <div className='mr-48 ml-20'>
-                    <img
-                        className="w-[130px] h-[30.88px]"
-                        alt=""
-                        src="logo.png"
-                    />
+        <div className="font-poppins">
+            <div className='relative w-full bg-white flex flex-col items-center justify-start border-t border-sec-main/20 mt-20 pt-16 px-20'>
+
+                <div className='flex flex-row gap-2 w-full mb-10'>
+
+                    <div className='item w-1/3'>
+                        {/* <img
+                            className="w-[130px] h-[30.88px]"
+                            alt=""
+                            src="logo.png"
+                        /> */}
+                        <Image className="block" src={bcloud1} width={100} height={2} alt="blcoud" />
+                    </div>
+
+                    <div className='item w-full flex flex-row justify-between text-sm leading-5'>
+
+                        <div className='flex flex-col gap-4'>
+                            <p className='text-sec-main/50 font-medium'>Company</p>
+                            <div className="flex flex-col space-y-4 text-sec-main">
+                                <Link href="#" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> About Us</a></Link>
+                                <Link href="../jobs" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> Privacy Policy</a></Link>
+                                <Link href="../signup" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> Terms of Service </a></Link>
+                                <Link href="../signup" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> How it Works </a></Link>
+                            </div>
+                        </div>
+
+                        <div className='flex flex-col gap-4'>
+                            <p className='text-sec-main/50 font-medium'>Top Cities</p>
+                            <nav className="flex flex-col space-y-4 text-sec-main">
+                                <Link href="#" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> Hotels in Lagos</a></Link>
+                                <Link href="#" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> Hotels in Awka</a></Link>
+                                <Link href="#" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> Hotels in Calabar </a></Link>
+                                <Link href="" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> Hotels in Abuja </a></Link>
+                                <Link href="#" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> Hotels in Jos </a></Link>
+                                <Link href="#" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> Hotels in Owerri </a></Link>
+                            </nav>
+                        </div>
+
+                        <div className='flex flex-col gap-4'>
+                            <p className='text-sec-main/50 font-medium'>Top Destinations</p>
+                            <nav className="flex flex-col space-y-4 text-sec-main">
+                                <Link href="#" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> Lagos</a></Link>
+                                <Link href="#" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> Awka</a></Link>
+                                <Link href="#" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> Calabar </a></Link>
+                                <Link href="" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> Abuja </a></Link>
+                                <Link href="#" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> Jos </a></Link>
+                                <Link href="#" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> Owerri </a></Link>
+                            </nav>
+                        </div>
+
+                        <div className='flex flex-col gap-4'>
+                            <p className='text-sec-main/50 font-medium'>Top Destinations</p>
+                            <nav className="flex flex-col space-y-4 text-sec-main">
+                                <Link href="#" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> Raddison Hotel</a></Link>
+                                <Link href="#" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> Grand Range Gold</a></Link>
+                                <Link href="#" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> Beni Hotel </a></Link>
+                                <Link href="" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> Bcloud Hotel </a></Link>
+                                <Link href="#" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> Pee Hotel </a></Link>
+                                <Link href="#" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> Golden Tulip Hotel </a></Link>
+                            </nav>
+                        </div>
+
+                    </div>
+
                 </div>
-                <div className='flex text-sm leading-5 gap-16'>
-                    <div className='w-1/4'>
-                        <p className='text-[#1A1A1AAD] mb-10'>Company</p>
-                        <nav className="flex flex-col mt-4 space-y-6 ">
-                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> About Us</a></Link>
-                            <Link href="../jobs" legacyBehavior><a className="hover:text-[#F5C400]"> Privacy Policy</a></Link>
-                            <Link href="../signup" legacyBehavior><a className="hover:text-[#F5C400]"> Terms of Service </a></Link>
-                            <Link href="../signup" legacyBehavior><a className="hover:text-[#F5C400]"> How it Works </a></Link>
-                        </nav>
-                    </div>
 
-                    <div className='w-1/4'>
-                        <p className='text-[#1A1A1AAD] mb-10'>Top Cities</p>
-                        <nav className="flex flex-col mt-4 space-y-6">
-                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Hotels in Lagos</a></Link>
-                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Hotels in Awka</a></Link>
-                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Hotels in Calabar </a></Link>
-                            <Link href="" legacyBehavior><a className="hover:text-[#F5C400]"> Hotels in Abuja </a></Link>
-                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Hotels in Jos </a></Link>
-                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Hotels in Owerri </a></Link>
-                        </nav>
+                <div className='flex items-center justify-between w-full border-t py-4'>
+                    <p className='text-sm font-normal leading-6 text-sec-main/50'>Copyright © 2022 Bcloud. All Rights Reserved</p>
+                    <div className='flex flex-row items-center gap-4'>
+                        <FaFacebookF className='cursor-pointer' color='#4267B2' size={18} />
+                        <FaTwitter className='cursor-pointer' color='#1DA1F2' size={19} />
+                        <FcGoogle className='cursor-pointer' size={18} />
                     </div>
-
-                    <div className='w-1/4'>
-                        <p className='text-[#1A1A1AAD] mb-10'>Top Destinations</p>
-                        <nav className="flex flex-col mt-4 space-y-6">
-                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Lagos</a></Link>
-                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Awka</a></Link>
-                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Calabar </a></Link>
-                            <Link href="" legacyBehavior><a className="hover:text-[#F5C400]"> Abuja </a></Link>
-                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Jos </a></Link>
-                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Owerri </a></Link>
-                        </nav>
-                    </div>
-
-                    <div className='w-1/4'>
-                        <p className='text-[#1A1A1AAD] mb-10'>Top Destinations</p>
-                        <nav className="flex flex-col mt-4 space-y-6">
-                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Raddison Hotel</a></Link>
-                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Grand Range Gold</a></Link>
-                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Beni Hotel </a></Link>
-                            <Link href="" legacyBehavior><a className="hover:text-[#F5C400]"> Bcloud Hotel </a></Link>
-                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Pee Hotel </a></Link>
-                            <Link href="#" legacyBehavior><a className="hover:text-[#F5C400]"> Golden Tulip Hotel </a></Link>
-                        </nav>
-                    </div>
-
                 </div>
-            </div>
 
-            
-            <hr className='border-2' />
-
-            <div className='flex justify-between w-full px-20 py-16 mt-6'>
-                <p>Copyright © 2022 Bcloud All Rights Reserved</p>
-                <div className='flex gap-4'>
-                    <FaFacebookF className='cursor-pointer' color='#4267B2' size={24} />
-                    <FaTwitter className='cursor-pointer' color='#1DA1F2' size={24} />
-                    <FcGoogle className='cursor-pointer' size={24} />
-                </div>
             </div>
         </div>
     );

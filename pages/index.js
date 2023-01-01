@@ -1,14 +1,14 @@
 import Image from "next/image";
-import { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import Script from 'next/script'
 // import { TextField } from "@mui/material";
 import { DatePicker, Space } from 'antd';
 import Popover from '@mui/material/Popover';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Footer from "../components/Footer";
+// import Typography from '@mui/material/Typography';
+// import Button from '@mui/material/Button';
 import { useRouter } from "next/router";
-import Navbar from "../components/Navbar";
 import { People } from "iconsax-react";
 import Carousel from "../components/Carousel";
 // import Carousel from 'react-multi-carousel';
@@ -140,172 +140,179 @@ export default function Home() {
     }, []);
 
     return (
-        <>
+        <div className='h-screen font-poppins'>
             {/* <Script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8QN-9BQ2Gto1h0GfSOG78AzL-qHhDyPg&libraries=places" /> */}
-            <div className='h-screen font-poppins'>
-                <Navbar />
-                <div className="w-full bg-[url('/hero@3x.png')] bg-cover bg-no-repeat bg-[top] py-20">
-                    <div className="">
-                        <div className="mt-[164px] mb-16 mx-6 flex flex-col text-white justify-center items-center">
-                            <p className="text-5xl leading-[56px]">Find deals from you favourite hotels in Nigeria</p>
-                            <p className="text-2xl leading-[56px] item-start">Try searching for a city, A specific hotel or even a landmark!</p>
-                        </div>
 
+            <Navbar />
 
-                        <div className="bg-white rounded-lg mb-[150px] m-auto w-[1168px] py-4 px-3 flex justify-between items-center">
-                            <input ref={inputRef}
-                                onChange={event => setQuery(event.target.value)}
-                                placeholder="Enter a City"
-                                className="border-1 text-lg p-2 w-1/4"
-                                value={query} />
-                            <Space direction="horizontal" className="w-1/4" size={12}>
-                                <RangePicker onChange={onChange} />
+            <div className="w-full bg-[url('/hero@3x.png')] bg-cover bg-no-repeat bg-[top] py-24">
+                <div className="flex flex-col items-center gap-12 pt-40 pb-16">
 
-                            </Space>
-                            {/* <div className="w-1/4 p-2 flex flex-row items-center cursor-pointer justify-between" onClick={handleClick}>
+                    <div className="flex flex-col text-white items-center">
+                        <p className="text-5xl font-medium">Find deals from you favorite hotels in Nigeria</p>
+                        <p className="text-2xl font-normal">Try searching for a city, A specific hotel or even a landmark!</p>
+                    </div>
+
+                    <div className="bg-white rounded-lg w-[1168px] py-4 px-6 flex gap-2 items-center text-sec-main">
+                        <input ref={inputRef}
+                            onChange={event => setQuery(event.target.value)}
+                            placeholder="Enter a City"
+                            className="border-2 border-gray-200 bg-white text-sm placeholder:text-sm p-2 rounded-md outline-none w-2/6"
+                            value={query}
+                        />
+                        {/* <Space direction="horizontal" className="w-1/4" size={12}> */}
+                        <RangePicker onChange={onChange} />
+                        {/* </Space> */}
+                        {/* <div className="w-1/4 p-2 flex flex-row items-center cursor-pointer justify-between" onClick={handleClick}>
                                 <p className="mx-1 text-md font-medium">{numberOfAdults} adults</p>
                                 <p className="mx-1 text-md font-medium">{numberOfChildren} children</p>
                                 <p className="mx-1 text-md font-medium">.</p>
                                 <p className="mx-1 text-md font-medium">{numberOfRooms} rooms</p>
                             </div> */}
-                            <div className="flex gap-2 cursor-pointer p-2 rounded-md items-center" onClick={handleClick}>
-                                <People size={24} />
-                                <div className="flex flex-col gap-0">
-                                    <p className="text-xs">{numberOfRooms} room</p>
-                                    <p className="text-xs">{numberOfAdults} adults, {numberOfChildren} childern</p>
-                                </div>
-                            </div>
-                            <Popover
-                                id={id}
-                                open={open}
-                                anchorEl={anchorEl}
-                                onClose={handleClose}
-                                anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'left',
-                                }}
-                                sx={{
-                                    width: 320
-                                }}
-                            >
-                                <div className="flex justify-between items-center gap-11 py-[15px] px-[16px]">
-                                    <p className="text-base ">Adult</p>
-
-                                    <div className="flex justify-center items-center gap-3">
-                                        <button onClick={() => setNumberOfAdults(numberOfAdults - 1)} disabled={numberOfAdults < 2} className="text-center flex justify-center items-center border border-black rounded-full px-3">
-                                            <span className="font-medium text-xl mb-1">-</span>
-                                        </button>
-
-                                        <p className="text-lg mx-2">{numberOfAdults}</p>
-                                        <button onClick={() => setNumberOfAdults(numberOfAdults + 1)} className="text-center flex justify-center items-center border border-black rounded-full px-2">
-                                            <span className="font-medium text-xl mb-1">+</span>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className="flex justify-between items-center gap-11 py-[6px] px-[16px]">
-                                    <p className="text-base ">Children</p>
-
-                                    <div className="flex justify-center items-center gap-3">
-                                        <button onClick={() => setNumberOfChildren(numberOfChildren - 1)} disabled={numberOfChildren < 1} className="text-center flex justify-center items-center border border-black rounded-full px-3">
-                                            <span className="font-medium text-xl mb-1">-</span>
-                                        </button>
-
-                                        <p className="text-lg mx-2">{numberOfChildren}</p>
-                                        <button onClick={() => setNumberOfChildren(numberOfChildren + 1)} className="text-center flex justify-center items-center border border-black rounded-full px-2">
-                                            <span className="font-medium text-xl mb-1">+</span>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className="flex justify-between items-center gap-11 py-[6px] px-[16px]">
-                                    <p className="text-base ">Rooms</p>
-
-                                    <div className="flex justify-center items-center gap-3">
-                                        <button onClick={() => setNumberOfRooms(numberOfRooms - 1)} disabled={numberOfRooms < 2} className="text-center flex justify-center items-center border border-black rounded-full px-3">
-                                            <span className="font-medium text-xl mb-1">-</span>
-                                        </button>
-
-                                        <p className="text-lg mx-2">{numberOfRooms}</p>
-                                        <button onClick={() => setNumberOfRooms(numberOfRooms + 1)} className="text-center flex justify-center items-center border border-black rounded-full px-2">
-                                            <span className="font-medium text-xl mb-1">+</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </Popover>
-                            <button
-                                type="button"
-                                onClick={handleSearch}
-                                className="text-center justify-center font-medium flex items-center px-4 py-2 rounded-[5px] text-sm leading-6 uppercase bg-[#F5C400] hover:bg-[#ffcc00] text-[#1a1a1a]">Search</button>
-                        </div>
-
-                    </div>
-                </div>
-
-                {/* Top Hotels */}
-                <div className="px-20 py-10 mt-10">
-                    <div className="flex justify-between">
-                        <p className="text-3xl font-medium">Today’s Top Hotel Deals</p>
-                        <p className="text-base font-medium items-end">See more</p>
-                    </div>
-
-                    <div className="flex flex-row">
-                        <div className="my-10 mr-10">
-                            <div className="rounded-lg">
-                                <img className="object-cover w-[255.36px] h-[256px]" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
-                            </div>
-                            <div className="flex flex-col gap-y-[4px] mt-1">
-                                <p className="font-medium text-base leading-6">Wintess Hotel and Suites</p>
-                                <p className="text-sm text-[#1A1A1AAD] leading-6">Ifite-Awka, Anambra State.</p>
-                                <p className="text-sm text-[#1A1A1AAD] leading-6">Starting from  <span className="text-black font-medium">NGN 5,000</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div className="my-10 mr-10">
-                            <div className="">
-                                <img className="object-cover w-[255.36px] h-[256px]" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
-                            </div>
-                            <div className="flex flex-col gap-y-[4px] mt-1">
-                                <p className="font-medium text-base leading-6">Wintess Hotel and Suites</p>
-                                <p className="text-sm text-[#1A1A1AAD] leading-6">Ifite-Awka, Anambra State.</p>
-                                <p className="text-sm text-[#1A1A1AAD] leading-6">Starting from  <span className="text-black font-medium">NGN 5,000</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div className="my-10 mr-10">
-                            <div className="">
-                                <img className="object-cover w-[255.36px] h-[256px]" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
-                            </div>
-                            <div className="flex flex-col gap-y-[4px] mt-1">
-                                <p className="font-medium text-base leading-6">Wintess Hotel and Suites</p>
-                                <p className="text-sm text-[#1A1A1AAD] leading-6">Ifite-Awka, Anambra State.</p>
-                                <p className="text-sm text-[#1A1A1AAD] leading-6">Starting from  <span className="text-black font-medium">NGN 5,000</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div className="my-10 mr-10">
-                            <div className="">
-                                <img className="object-cover w-[255.36px] h-[256px]" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
-                            </div>
+                        <div className="flex items-center gap-2 cursor-pointer py-1.5 rounded-md px-4 w-1/4" onClick={handleClick}>
+                            <People size={24} />
                             <div className="flex flex-col">
-                                <p className="font-medium text-base leading-6">Wintess Hotel and Suites</p>
-                                <p className="text-sm text-[#1A1A1AAD] leading-6">Ifite-Awka, Anambra State.</p>
-                                <p className="text-sm text-[#1A1A1AAD] leading-6">Starting from  <span className="text-black font-medium">NGN 5,000
-                                </span>
-                                </p>
+                                <p className="text-xs text-sec-main/50 mb-[0]">{numberOfRooms} room</p>
+                                <p className="text-xs mb-[0]">{numberOfAdults} adults, {numberOfChildren} children</p>
                             </div>
                         </div>
+
+                        <Popover
+                            id={id}
+                            open={open}
+                            anchorEl={anchorEl}
+                            onClose={handleClose}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'left',
+                            }}
+                            sx={{
+                                width: 320
+                            }}
+                        >
+                            <div className="flex justify-between items-center gap-11 py-[15px] px-[16px]">
+                                <p className="text-base ">Adult</p>
+
+                                <div className="flex justify-center items-center gap-3">
+                                    <button onClick={() => setNumberOfAdults(numberOfAdults - 1)} disabled={numberOfAdults < 2} className="text-center flex justify-center items-center border border-black rounded-full px-3">
+                                        <span className="font-medium text-xl mb-1">-</span>
+                                    </button>
+
+                                    <p className="text-lg mx-2">{numberOfAdults}</p>
+                                    <button onClick={() => setNumberOfAdults(numberOfAdults + 1)} className="text-center flex justify-center items-center border border-black rounded-full px-2">
+                                        <span className="font-medium text-xl mb-1">+</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="flex justify-between items-center gap-11 py-[6px] px-[16px]">
+                                <p className="text-base ">Children</p>
+
+                                <div className="flex justify-center items-center gap-3">
+                                    <button onClick={() => setNumberOfChildren(numberOfChildren - 1)} disabled={numberOfChildren < 1} className="text-center flex justify-center items-center border border-black rounded-full px-3">
+                                        <span className="font-medium text-xl mb-1">-</span>
+                                    </button>
+
+                                    <p className="text-lg mx-2">{numberOfChildren}</p>
+                                    <button onClick={() => setNumberOfChildren(numberOfChildren + 1)} className="text-center flex justify-center items-center border border-black rounded-full px-2">
+                                        <span className="font-medium text-xl mb-1">+</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="flex justify-between items-center gap-11 py-[6px] px-[16px]">
+                                <p className="text-base ">Rooms</p>
+
+                                <div className="flex justify-center items-center gap-3">
+                                    <button onClick={() => setNumberOfRooms(numberOfRooms - 1)} disabled={numberOfRooms < 2} className="text-center flex justify-center items-center border border-black rounded-full px-3">
+                                        <span className="font-medium text-xl mb-1">-</span>
+                                    </button>
+
+                                    <p className="text-lg mx-2">{numberOfRooms}</p>
+                                    <button onClick={() => setNumberOfRooms(numberOfRooms + 1)} className="text-center flex justify-center items-center border border-black rounded-full px-2">
+                                        <span className="font-medium text-xl mb-1">+</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </Popover>
+
+                        <button
+                            type="button"
+                            onClick={handleSearch}
+                            className="flex w-1/6 text-sm leading-6 justify-center font-medium px-4 py-2.5 rounded-[5px] bg-pri-cont hover:bg-pri-main text-sec-main"
+                        >
+                            Search
+                        </button>
+
                     </div>
 
                 </div>
+            </div>
 
-                {/* Top cities */}
-                <div className="px-20 py-10">
-                    <p className="text-3xl font-medium mb-1">Top cities</p>
-                    <div className="flex justify-between">
-                        <p className="text-xl font-medium">See the top destinations people are traveling to</p>
-                        <p className="text-base font-medium items-end">See more</p>
+            {/* Top Hotels */}
+            <div className="px-20 py-10 mt-10">
+                <div className="flex justify-between">
+                    <p className="text-3xl font-medium">Today’s Top Hotel Deals</p>
+                    <p className="text-base font-medium items-end">See more</p>
+                </div>
+
+                <div className="flex flex-row">
+                    <div className="my-10 mr-10">
+                        <div className="rounded-lg">
+                            <img className="object-cover w-[255.36px] h-[256px]" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
+                        </div>
+                        <div className="flex flex-col gap-y-[4px] mt-1">
+                            <p className="font-medium text-base leading-6">Wintess Hotel and Suites</p>
+                            <p className="text-sm text-[#1A1A1AAD] leading-6">Ifite-Awka, Anambra State.</p>
+                            <p className="text-sm text-[#1A1A1AAD] leading-6">Starting from  <span className="text-black font-medium">NGN 5,000</span>
+                            </p>
+                        </div>
                     </div>
+                    <div className="my-10 mr-10">
+                        <div className="">
+                            <img className="object-cover w-[255.36px] h-[256px]" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
+                        </div>
+                        <div className="flex flex-col gap-y-[4px] mt-1">
+                            <p className="font-medium text-base leading-6">Wintess Hotel and Suites</p>
+                            <p className="text-sm text-[#1A1A1AAD] leading-6">Ifite-Awka, Anambra State.</p>
+                            <p className="text-sm text-[#1A1A1AAD] leading-6">Starting from  <span className="text-black font-medium">NGN 5,000</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div className="my-10 mr-10">
+                        <div className="">
+                            <img className="object-cover w-[255.36px] h-[256px]" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
+                        </div>
+                        <div className="flex flex-col gap-y-[4px] mt-1">
+                            <p className="font-medium text-base leading-6">Wintess Hotel and Suites</p>
+                            <p className="text-sm text-[#1A1A1AAD] leading-6">Ifite-Awka, Anambra State.</p>
+                            <p className="text-sm text-[#1A1A1AAD] leading-6">Starting from  <span className="text-black font-medium">NGN 5,000</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div className="my-10 mr-10">
+                        <div className="">
+                            <img className="object-cover w-[255.36px] h-[256px]" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
+                        </div>
+                        <div className="flex flex-col">
+                            <p className="font-medium text-base leading-6">Wintess Hotel and Suites</p>
+                            <p className="text-sm text-[#1A1A1AAD] leading-6">Ifite-Awka, Anambra State.</p>
+                            <p className="text-sm text-[#1A1A1AAD] leading-6">Starting from  <span className="text-black font-medium">NGN 5,000
+                            </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
 
-                    {/* <Carousel>
+            </div>
+
+            {/* Top cities */}
+            <div className="px-20 py-10">
+                <p className="text-3xl font-medium mb-1">Top cities</p>
+                <div className="flex justify-between">
+                    <p className="text-xl font-medium">See the top destinations people are traveling to</p>
+                    <p className="text-base font-medium items-end">See more</p>
+                </div>
+
+                {/* <Carousel>
                         <div className="my-10 mr-10">
                             <div className="">
                                 <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
@@ -385,7 +392,7 @@ export default function Home() {
                         </div>
                     </Carousel> */}
 
-                    {/* <Carousel responsive={responsive}>
+                {/* <Carousel responsive={responsive}>
                         <div className="">
                             <div className="rounded-lg">
                                 <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
@@ -509,147 +516,147 @@ export default function Home() {
                         </div>
                     </Carousel> */}
 
-                    <div style={{ maxWidth: 1200, marginLeft: 'auto', marginRight: 'auto', marginTop: 64 }}>
-                        <Carousel
-                            show={4}
-                            responsive={responsive}
-                        >
-                            <div className="">
-                                <div className="rounded-lg">
-                                    <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
-                                </div>
-                                <div className="flex flex-col gap-y-[4px] mt-1">
-                                    <p className="font-medium text-base leading-6">Hotel in Lagos</p>
-                                    <p className="text-sm text-[#1A1A1AAD] leading-6">10,003 Hotels  <span className="text-black font-medium">Avg. NGN 5,000
-                                    </span>
-                                    </p>
-                                </div>
+                <div style={{ maxWidth: 1200, marginLeft: 'auto', marginRight: 'auto', marginTop: 64 }}>
+                    <Carousel
+                        show={4}
+                        responsive={responsive}
+                    >
+                        <div className="">
+                            <div className="rounded-lg">
+                                <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
                             </div>
-                            <div className="">
-                                <div className="rounded-lg">
-                                    <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
-                                </div>
-                                <div className="flex flex-col gap-y-[4px] mt-1">
-                                    <p className="font-medium text-base leading-6">Hotel in Lagos</p>
-                                    <p className="text-sm text-[#1A1A1AAD] leading-6">10,003 Hotels  <span className="text-black font-medium">Avg. NGN 5,000
-                                    </span>
-                                    </p>
-                                </div>
+                            <div className="flex flex-col gap-y-[4px] mt-1">
+                                <p className="font-medium text-base leading-6">Hotel in Lagos</p>
+                                <p className="text-sm text-[#1A1A1AAD] leading-6">10,003 Hotels  <span className="text-black font-medium">Avg. NGN 5,000
+                                </span>
+                                </p>
                             </div>
-                            <div className="">
-                                <div className="rounded-lg">
-                                    <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
-                                </div>
-                                <div className="flex flex-col gap-y-[4px] mt-1">
-                                    <p className="font-medium text-base leading-6">Hotel in Lagos</p>
-                                    <p className="text-sm text-[#1A1A1AAD] leading-6">10,003 Hotels  <span className="text-black font-medium">Avg. NGN 5,000
-                                    </span>
-                                    </p>
-                                </div>
+                        </div>
+                        <div className="">
+                            <div className="rounded-lg">
+                                <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
                             </div>
-                            <div className="">
-                                <div className="rounded-lg">
-                                    <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
-                                </div>
-                                <div className="flex flex-col gap-y-[4px] mt-1">
-                                    <p className="font-medium text-base leading-6">Hotel in Lagos</p>
-                                    <p className="text-sm text-[#1A1A1AAD] leading-6">10,003 Hotels  <span className="text-black font-medium">Avg. NGN 5,000
-                                    </span>
-                                    </p>
-                                </div>
+                            <div className="flex flex-col gap-y-[4px] mt-1">
+                                <p className="font-medium text-base leading-6">Hotel in Lagos</p>
+                                <p className="text-sm text-[#1A1A1AAD] leading-6">10,003 Hotels  <span className="text-black font-medium">Avg. NGN 5,000
+                                </span>
+                                </p>
                             </div>
-                            <div className="">
-                                <div className="rounded-lg">
-                                    <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
-                                </div>
-                                <div className="flex flex-col gap-y-[4px] mt-1">
-                                    <p className="font-medium text-base leading-6">Hotel in Lagos</p>
-                                    <p className="text-sm text-[#1A1A1AAD] leading-6">10,003 Hotels  <span className="text-black font-medium">Avg. NGN 5,000
-                                    </span>
-                                    </p>
-                                </div>
+                        </div>
+                        <div className="">
+                            <div className="rounded-lg">
+                                <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
                             </div>
-                            <div className="">
-                                <div className="rounded-lg">
-                                    <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
-                                </div>
-                                <div className="flex flex-col gap-y-[4px] mt-1">
-                                    <p className="font-medium text-base leading-6">Hotel in Lagos</p>
-                                    <p className="text-sm text-[#1A1A1AAD] leading-6">10,003 Hotels  <span className="text-black font-medium">Avg. NGN 5,000
-                                    </span>
-                                    </p>
-                                </div>
+                            <div className="flex flex-col gap-y-[4px] mt-1">
+                                <p className="font-medium text-base leading-6">Hotel in Lagos</p>
+                                <p className="text-sm text-[#1A1A1AAD] leading-6">10,003 Hotels  <span className="text-black font-medium">Avg. NGN 5,000
+                                </span>
+                                </p>
                             </div>
-                            <div className="">
-                                <div className="rounded-lg">
-                                    <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
-                                </div>
-                                <div className="flex flex-col gap-y-[4px] mt-1">
-                                    <p className="font-medium text-base leading-6">Hotel in Lagos</p>
-                                    <p className="text-sm text-[#1A1A1AAD] leading-6">10,003 Hotels  <span className="text-black font-medium">Avg. NGN 5,000
-                                    </span>
-                                    </p>
-                                </div>
+                        </div>
+                        <div className="">
+                            <div className="rounded-lg">
+                                <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
                             </div>
-                            <div className="">
-                                <div className="rounded-lg">
-                                    <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
-                                </div>
-                                <div className="flex flex-col gap-y-[4px] mt-1">
-                                    <p className="font-medium text-base leading-6">Hotel in Lagos</p>
-                                    <p className="text-sm text-[#1A1A1AAD] leading-6">10,003 Hotels  <span className="text-black font-medium">Avg. NGN 5,000
-                                    </span>
-                                    </p>
-                                </div>
+                            <div className="flex flex-col gap-y-[4px] mt-1">
+                                <p className="font-medium text-base leading-6">Hotel in Lagos</p>
+                                <p className="text-sm text-[#1A1A1AAD] leading-6">10,003 Hotels  <span className="text-black font-medium">Avg. NGN 5,000
+                                </span>
+                                </p>
                             </div>
-                            <div className="">
-                                <div className="rounded-lg">
-                                    <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
-                                </div>
-                                <div className="flex flex-col gap-y-[4px] mt-1">
-                                    <p className="font-medium text-base leading-6">Hotel in Lagos</p>
-                                    <p className="text-sm text-[#1A1A1AAD] leading-6">10,003 Hotels  <span className="text-black font-medium">Avg. NGN 5,000
-                                    </span>
-                                    </p>
-                                </div>
+                        </div>
+                        <div className="">
+                            <div className="rounded-lg">
+                                <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
                             </div>
-                            <div className="">
-                                <div className="rounded-lg">
-                                    <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
-                                </div>
-                                <div className="flex flex-col gap-y-[4px] mt-1">
-                                    <p className="font-medium text-base leading-6">Hotel in Lagos</p>
-                                    <p className="text-sm text-[#1A1A1AAD] leading-6">10,003 Hotels  <span className="text-black font-medium">Avg. NGN 5,000
-                                    </span>
-                                    </p>
-                                </div>
+                            <div className="flex flex-col gap-y-[4px] mt-1">
+                                <p className="font-medium text-base leading-6">Hotel in Lagos</p>
+                                <p className="text-sm text-[#1A1A1AAD] leading-6">10,003 Hotels  <span className="text-black font-medium">Avg. NGN 5,000
+                                </span>
+                                </p>
                             </div>
-                            <div className="">
-                                <div className="rounded-lg">
-                                    <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
-                                </div>
-                                <div className="flex flex-col gap-y-[4px] mt-1">
-                                    <p className="font-medium text-base leading-6">Hotel in Lagos</p>
-                                    <p className="text-sm text-[#1A1A1AAD] leading-6">10,003 Hotels  <span className="text-black font-medium">Avg. NGN 5,000
-                                    </span>
-                                    </p>
-                                </div>
+                        </div>
+                        <div className="">
+                            <div className="rounded-lg">
+                                <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
                             </div>
-                            <div className="">
-                                <div className="rounded-lg">
-                                    <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
-                                </div>
-                                <div className="flex flex-col gap-y-[4px] mt-1">
-                                    <p className="font-medium text-base leading-6">Hotel in Lagos</p>
-                                    <p className="text-sm text-[#1A1A1AAD] leading-6">10,003 Hotels  <span className="text-black font-medium">Avg. NGN 5,000
-                                    </span>
-                                    </p>
-                                </div>
+                            <div className="flex flex-col gap-y-[4px] mt-1">
+                                <p className="font-medium text-base leading-6">Hotel in Lagos</p>
+                                <p className="text-sm text-[#1A1A1AAD] leading-6">10,003 Hotels  <span className="text-black font-medium">Avg. NGN 5,000
+                                </span>
+                                </p>
                             </div>
-                        </Carousel>
-                    </div>
+                        </div>
+                        <div className="">
+                            <div className="rounded-lg">
+                                <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
+                            </div>
+                            <div className="flex flex-col gap-y-[4px] mt-1">
+                                <p className="font-medium text-base leading-6">Hotel in Lagos</p>
+                                <p className="text-sm text-[#1A1A1AAD] leading-6">10,003 Hotels  <span className="text-black font-medium">Avg. NGN 5,000
+                                </span>
+                                </p>
+                            </div>
+                        </div>
+                        <div className="">
+                            <div className="rounded-lg">
+                                <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
+                            </div>
+                            <div className="flex flex-col gap-y-[4px] mt-1">
+                                <p className="font-medium text-base leading-6">Hotel in Lagos</p>
+                                <p className="text-sm text-[#1A1A1AAD] leading-6">10,003 Hotels  <span className="text-black font-medium">Avg. NGN 5,000
+                                </span>
+                                </p>
+                            </div>
+                        </div>
+                        <div className="">
+                            <div className="rounded-lg">
+                                <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
+                            </div>
+                            <div className="flex flex-col gap-y-[4px] mt-1">
+                                <p className="font-medium text-base leading-6">Hotel in Lagos</p>
+                                <p className="text-sm text-[#1A1A1AAD] leading-6">10,003 Hotels  <span className="text-black font-medium">Avg. NGN 5,000
+                                </span>
+                                </p>
+                            </div>
+                        </div>
+                        <div className="">
+                            <div className="rounded-lg">
+                                <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
+                            </div>
+                            <div className="flex flex-col gap-y-[4px] mt-1">
+                                <p className="font-medium text-base leading-6">Hotel in Lagos</p>
+                                <p className="text-sm text-[#1A1A1AAD] leading-6">10,003 Hotels  <span className="text-black font-medium">Avg. NGN 5,000
+                                </span>
+                                </p>
+                            </div>
+                        </div>
+                        <div className="">
+                            <div className="rounded-lg">
+                                <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
+                            </div>
+                            <div className="flex flex-col gap-y-[4px] mt-1">
+                                <p className="font-medium text-base leading-6">Hotel in Lagos</p>
+                                <p className="text-sm text-[#1A1A1AAD] leading-6">10,003 Hotels  <span className="text-black font-medium">Avg. NGN 5,000
+                                </span>
+                                </p>
+                            </div>
+                        </div>
+                        <div className="">
+                            <div className="rounded-lg">
+                                <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
+                            </div>
+                            <div className="flex flex-col gap-y-[4px] mt-1">
+                                <p className="font-medium text-base leading-6">Hotel in Lagos</p>
+                                <p className="text-sm text-[#1A1A1AAD] leading-6">10,003 Hotels  <span className="text-black font-medium">Avg. NGN 5,000
+                                </span>
+                                </p>
+                            </div>
+                        </div>
+                    </Carousel>
+                </div>
 
-                    {/* <div className="flex flex-row">
+                {/* <div className="flex flex-row">
                         <div className="my-10 mr-10">
                             <div className="rounded-lg">
                                 <img className="object-cover w-[255.36px] h-[256px] rounded-lg" alt="name" src="https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg" />
@@ -696,10 +703,9 @@ export default function Home() {
                         </div>
                     </div> */}
 
-                </div>
+            </div>
 
             <Footer />
-            </div>
-        </>
+        </div>
     );
 }
