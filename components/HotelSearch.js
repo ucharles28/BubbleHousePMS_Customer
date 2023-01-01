@@ -170,7 +170,7 @@ const HotelSearch = () => {
     <>
       <section className="relative">
         <form className="lg:bg-white bg-transparent text-black rounded-lg  items-center py-[2px] lg:py-0 lg:px-5 lg:mx-auto grid lg:flex mx-2 relative">
-          <div className="text-start lg:grow relative ">
+          <div className="text-start lg:grow">
             <input
               ref={inputRef}
               // onChange={(event) => setQuery(event.target.value)}
