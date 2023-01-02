@@ -26,7 +26,7 @@
     "google-auth-library": "^8.7.0",
     "iconsax-react": "^0.0.8",
     "jwt-decode": "^3.1.2",
-    "next": "13.0.1",
+    "next": "^13.1.1",
     "next-auth": "^4.16.4",
     "nprogress": "^0.2.0",
     "passport": "^0.6.0",

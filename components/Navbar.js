@@ -75,7 +75,6 @@ export default function Navbar() {
                 <img src={user.profileImageUrl} alt="avatar" border="0" className="mx-auto object-cover rounded-full h-8 w-8" />
               </div>
               <span className="font-medium text-md mx-1 text-center flex items-center gap-1">{user.fullName} <ArrowDown2 size="14" className="mt-1" color="#1a1a1a" /></span>
-
             </div>
           </div>}
         </div>
@@ -134,7 +133,6 @@ export default function Navbar() {
           </Link>
         </div>
       </Popover>
-      {/* </Link> */}
     </div>
   );
 };
