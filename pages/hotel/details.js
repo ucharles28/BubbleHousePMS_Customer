@@ -21,11 +21,14 @@ export default function HotelDetails() {
     const [roomTypeImages, setRoomTypeImages] = useState();
     const [selectRooms, setSelectedRooms] = useState({});
     const [roomImages, setRoomImages] = useState([]);
+    // const [amenties, setRoomImages] = useState([]);
     const [totalAmount, setTotalAmount] = useState(0);
+    const [numberOfRooms, setNumberOfRooms] = useState(0);
+    const [numberOfDays, setNumberOfDays] = useState(0);
+    const [dateRange, setDateRange] = useState();
 
 
     const updateNumberOfRooms = async (isAdd, index) => {
-        debugger
         const obj = { ...selectRooms }
         if (obj[index]) {
             if (!isAdd && obj[index] < 1) {
@@ -37,6 +40,15 @@ export default function HotelDetails() {
         }
         setSelectedRooms(obj)
     }
+
+    function dateDiffInDays(a, b) {
+        const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+        // Discard the time and time-zone information.
+        const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+        const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+      
+        return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+      }
 
     const responsive = {
         superLargeDesktop: {
@@ -64,19 +76,34 @@ export default function HotelDetails() {
     useEffect(() => {
         if (query) {
             getHotelById(query.hotelId)
+            setDateRange([
+                {
+                  startDate: new Date(query.startDate),
+                  endDate: new Date(query.endDate),
+                  key: "selection",
+                },
+              ])
         }
     }, [query])
 
     useEffect(() => {
+        console.log('aa')
         let totalAmount = 0
+        let numberOfRooms = 0
         Object.keys(selectRooms).map((key) => {
-            if (selectRooms[key] || selectRooms[key] < 1) {
+            if (!selectRooms[key] || selectRooms[key] < 1) {
                 return;
             }
 
+            numberOfRooms += Number(selectRooms[key])
             totalAmount += Number(hotel.roomTypes[key].price) * Number(selectRooms[key])
         })
+        setNumberOfRooms(numberOfRooms)
         setTotalAmount(totalAmount)
+        if (dateRange) {
+            setNumberOfDays(dateDiffInDays(dateRange[0].startDate, dateRange[0].endDate))
+        }
+
     }, [selectRooms])
 
     const getHotelById = async (id) => {
@@ -156,7 +183,7 @@ export default function HotelDetails() {
                     </div>
                     <div className="text-center mt-7 space-y-3 font-semibold">
                         <p>
-                            <span>2 Rooms </span> ,<span>1 Night</span>
+                            <span>{numberOfRooms} Rooms </span> ,<span>{numberOfDays} Night</span>
                         </p>
                         <p>
                             Total Price:<span> ₦{totalAmount.toLocaleString()}</span>
