@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Add, Minus } from "iconsax-react";
 const RoomType = ({ roomTypes, updateNumberOfRooms, selectRooms }) => {
   return (
-    roomTypes.map((roomType, index) => (<div className="border border-[#FFCC0080]/50 p-3 rounded-md flex justify-between items-baseline">
+    roomTypes.map((roomType, index) => (<div className="border border-[#FFCC0080]/50 p-3 rounded-md flex mb-6 justify-between items-baseline">
       <div className="flex gap-3">
         {/* <Image width={180} height={175} src="/hotelimage.png" /> */}
         <img src={roomType.images[0].imageUrl} className="w-[180px] h-[175px] rounded-md" />

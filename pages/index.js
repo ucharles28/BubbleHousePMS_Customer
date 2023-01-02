@@ -30,6 +30,8 @@ export default function Home() {
       items: 1,
     },
   };
+
+
   return (
     <>
       <div className="h-full w-full font-poppins overflow-hidden">
