@@ -7,3 +7,17 @@
 .img {
   background-image: url("/public/bedroom.png");
 }
+
+/* PROGRESS BAR */
+.progressbar {
+  width: 400px;
+  height: 10px;
+  background-color: white;
+  margin-bottom: 50px;
+}
+
+.progressbar div {
+  width: 33.3%;
+  height: 100%;
+  background-color: #f5c400;
+}
