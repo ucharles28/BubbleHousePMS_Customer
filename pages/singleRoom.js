@@ -5,7 +5,6 @@ import Amenities from "../components/Amenities";
 import Carousel from "../components/Carousel";
 import RoomType from "../components/RoomType";
 import HotelList from "../components/HotelList";
-import Navbar from "../components/Navbar";
 
 const singleRoom = () => {
   const responsive = {
@@ -31,10 +30,7 @@ const singleRoom = () => {
     },
   };
   return (
-    <section className="font-poppins">
-      <div className="relative">
-        <Navbar />
-      </div>
+    <section className="relative">
       <div className="max-w-[1200px] mx-auto px-10">
         <div className="header mt-5 flex justify-between items-center mx-3">
           <div className="hotelInfo">
@@ -161,12 +157,27 @@ const singleRoom = () => {
             <Amenities />
             <hr />
           </div>
-          <div className="max-w-[75%]">
+          <div className="max-w-[80%]">
             <h3 className="my-6">Room Types from Raddison Blue</h3>
             <div className="space-y-3">
-              <div className="">
-                <RoomType />
-              </div>
+              <RoomType />
+              <RoomType />
+              <RoomType />
+              <RoomType />
+            </div>
+            <div className="text-center mt-7 space-y-3 font-semibold">
+              <p>
+                <span>2 Rooms </span> ,<span>1 Night</span>
+              </p>
+              <p>
+                Total Price:<span> ₦60,000</span>
+              </p>
+              <button
+                type="button"
+                className="rounded-md w-[70%] py-[7px] bg-[#FFCC00]"
+              >
+                Book Now
+              </button>
             </div>
           </div>
           <div className="my-5">
