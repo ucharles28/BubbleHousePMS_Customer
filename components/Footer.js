@@ -10,7 +10,7 @@ import { FcGoogle } from 'react-icons/fc';
 const Footer = () => {
     return (
         <div className="font-poppins">
-            <div className='relative w-full bg-white flex flex-col items-center justify-start border-t border-sec-main/20 mt-20 pt-16 px-20'>
+            <div className='relative w-full bg-gray-100/30 flex flex-col items-center justify-start border-t border-sec-main/10 mt-20 pt-16 px-20'>
 
                 <div className='flex flex-row gap-2 w-full mb-10'>
 

@@ -17,12 +17,12 @@ Router.events.on("routeChangeComplete", nProgress.done);
 function MyApp({ Component, pageProps }) {
 
   return (
-    <>
+    <div className='font-poppins'>
       <GoogleOAuthProvider clientId="922531234913-c1fo824rqu7148itrumhd7rf49krs093.apps.googleusercontent.com">
         <Meta />
-        <Component {...pageProps} />
+        <Component {...pageProps}/>
       </GoogleOAuthProvider>
-    </>
+    </div>
   )
 }
 
