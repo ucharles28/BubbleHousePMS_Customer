@@ -21,9 +21,7 @@ export default function SignUp() {
     const [alertMessage, setAlertMessage] = useState('');
     const [acceptTerms, setAcceptTerms] = useState(false);
 
-    const Alert = forwardRef(function Alert(props, ref) {
-        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-    });
+   
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;

@@ -22,11 +22,6 @@ export default function Login() {
     const [alertMessage, setAlertMessage] = useState('');
     const [acceptTerms, setAcceptTerms] = useState(false);
 
-
-    const Alert = forwardRef(function Alert(props, ref) {
-        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-    });
-
     const onSuccess = (res) => {
         console.log('Login Success: currentUser:', res.profileObj);
         alert(

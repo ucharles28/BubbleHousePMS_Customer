@@ -21,11 +21,12 @@ export default function HotelDetails() {
     const [roomTypeImages, setRoomTypeImages] = useState();
     const [selectRooms, setSelectedRooms] = useState({});
     const [roomImages, setRoomImages] = useState([]);
+    const [totalAmount, setTotalAmount] = useState(0);
 
 
     const updateNumberOfRooms = async (isAdd, index) => {
         debugger
-        const obj = {...selectRooms}
+        const obj = { ...selectRooms }
         if (obj[index]) {
             if (!isAdd && obj[index] < 1) {
                 return;
@@ -65,6 +66,18 @@ export default function HotelDetails() {
             getHotelById(query.hotelId)
         }
     }, [query])
+
+    useEffect(() => {
+        let totalAmount = 0
+        Object.keys(selectRooms).map((key) => {
+            if (selectRooms[key] || selectRooms[key] < 1) {
+                return;
+            }
+
+            totalAmount += Number(hotel.roomTypes[key].price) * Number(selectRooms[key])
+        })
+        setTotalAmount(totalAmount)
+    }, [selectRooms])
 
     const getHotelById = async (id) => {
         const response = await get(`Hotel/${id}`)
@@ -140,6 +153,20 @@ export default function HotelDetails() {
                                 <RoomType roomTypes={hotel.roomTypes} updateNumberOfRooms={updateNumberOfRooms} selectRooms={selectRooms} />
                             </div>
                         </div>
+                    </div>
+                    <div className="text-center mt-7 space-y-3 font-semibold">
+                        <p>
+                            <span>2 Rooms </span> ,<span>1 Night</span>
+                        </p>
+                        <p>
+                            Total Price:<span> ₦{totalAmount.toLocaleString()}</span>
+                        </p>
+                        <button
+                            type="button"
+                            className="rounded-md w-[70%] py-[7px] bg-[#FFCC00]"
+                        >
+                            Book Now
+                        </button>
                     </div>
                     <div className="my-5">
                         <HotelList title={`Nearby Hotels to ${hotel.name}`} />
