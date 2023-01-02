@@ -1,13 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './pages/**/*.{html,js}',
-    './components/*.{html,js}',
+    "./pages/**/*.{html,js}",
+    "./components/*.{html,js}",
     "./pages/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     fontFamily: {
-      poppins: ['Poppins', 'sans-serif'],
+      poppins: ["Poppins", "sans-serif"],
     },
 
     // fontFamily: { poppins: "Poppins" },
@@ -38,7 +38,11 @@ module.exports = {
       black: "#000",
       gold: "#ffcc00",
     },
-
+    extend: {
+      screens: {
+        sm: "480px",
+      },
+    },
   },
   plugins: [],
-}
+};

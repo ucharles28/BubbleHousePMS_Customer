@@ -9,6 +9,9 @@ import { useSession, signIn, signOut } from 'next-auth/react'
 import { FaFacebookF, FaTwitter } from "react-icons/fa";
 import { FcGoogle } from 'react-icons/fc';
 import Link from 'next/link';
+import { GoogleLogin, useGoogleLogin, googleLogout } from '@react-oauth/google'
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+
 
 
 export default function SignUp() {
@@ -20,17 +23,46 @@ export default function SignUp() {
     const [password, setPassword] = useState('')
     const [alertMessage, setAlertMessage] = useState('');
     const [acceptTerms, setAcceptTerms] = useState(false);
+    const [isLoadingSocial, setIsLoadingSocial] = useState(false);
 
-    const Alert = forwardRef(function Alert(props, ref) {
-        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    const googleAuthLogin = useGoogleLogin({
+        onSuccess: async tokenResponse => {
+            setIsLoadingSocial(true)
+            const userInfo = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${tokenResponse.access_token}`
+                }
+            }).then(async (res) => {
+                return res.json()
+            })
+
+            console.log(userInfo)
+            const request = {
+                email: userInfo.email,
+                fullName: userInfo.name,
+                profileImageUrl: userInfo.picture
+            }
+
+            const response = await post('Auth/Customer/SocialLogin', request);
+            console.log(response)
+            if (response.successful) {
+                // Request is successful
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem(
+                    'tokenExpiry',
+                    JSON.stringify(response.data.tokenExpiryDate)
+                );
+                localStorage.setItem('user', JSON.stringify(response.data));
+                router.push("/")
+            } else {
+                alert(response.data)
+            }
+            setIsLoadingSocial(false)
+        },
+
     });
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
 
-        setOpen(false);
-    };
     const handleLogin = async () => {
         setIsLoading(true)
         const request = {
@@ -41,20 +73,43 @@ export default function SignUp() {
         }
         const response = await post('Auth/Customer/SignUp', request)
         if (response.successful) {
-            router.push('/auth/login')
+            // Request is successful
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem(
+                'tokenExpiry',
+                JSON.stringify(response.data.tokenExpiryDate)
+            );
+            localStorage.setItem('user', JSON.stringify(response.data));
+            router.push("/")
         } else {
             alert(response.data)
         }
         setIsLoading(false)
     }
 
-    const handleGoogleAuth = () => {
-        signIn();
+    const responseFacebook = async (fbResponse) => {
+        console.log(fbResponse)
+        if (!fbResponse.name) return
+
+        setIsLoadingSocial(true)
+
+        const request = {
+            email: fbResponse.email,
+            fullName: fbResponse.name,
+            profileImageUrl: fbResponse.picture.data.url
+        }
+
+        const response = await post('Auth/Customer/SocialLogin', request);
+        if (response.successful) {
+            localStorage.setItem('user', JSON.stringify(response.data))
+            router.push("/")
+        } else {
+            alert(response.data)
+        }
+        setIsLoadingSocial(false)
     }
-    const showAlert = (alertMessage) => {
-        setAlertMessage(alertMessage)
-        setOpen(true)
-    }
+
+
     return (
         <div className='h-screen font-poppins'>
             {/* <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
@@ -82,7 +137,7 @@ export default function SignUp() {
                                     <TextField id="outlined-basic" type={'password'} value={password} onChange={(e) => setPassword(e.target.value)} className='w-full' InputProps={{ sx: { height: 56 } }} label="Password" variant="outlined" />
                                 </div>
                                 <div className='flex justify-between items-center'>
-                                    <FormControlLabel control={<Checkbox size='small' checked={acceptTerms} onChange={(e) => setAcceptTerms(e.target.value)}  />} label="I agree to privacy policy & terms" className='text-[12px]' />
+                                    <FormControlLabel control={<Checkbox size='small' checked={acceptTerms} onChange={(e) => setAcceptTerms(e.target.value)} />} label="I agree to privacy policy & terms" className='text-[12px]' />
                                     {/* <p className='text-xs leading-6 font-normal text-[#1a1a1a]/50'>Forgot password?</p> */}
                                 </div>
                                 {isLoading ? <div className='flex justify-center'><CircularProgress /></div> :
@@ -100,11 +155,25 @@ export default function SignUp() {
                                 <div className='font-normal flex justify-center item-center m-auto mt-2'>
                                     <p className='text-[16px] m-auto flex leading-6'>Already have an account? <Link href="/auth/login"> <span className='font-medium ml-1'>Sign in instead</span></Link> </p>
                                 </div>
-                                <div className='flex items-center justify-center '>
-                                     <FaFacebookF color='#4267B2' size={24} />
-                                   <FaTwitter color='#1DA1F2' className='mx-4 my-4' size={24} />
-                                    <FcGoogle onClick={handleGoogleAuth} size={24} />
-                                </div>
+                                {!isLoadingSocial ? <div className='flex items-center justify-center '>
+
+                                    <FacebookLogin
+                                        appId="687573586008281"
+                                        autoLoad={true}
+                                        fields="name,email,picture"
+                                        render={renderProps => {
+                                            console.log(renderProps)
+
+                                            // <button onClick={(e) => renderProps.onClick(e)}>This is my custom FB button</button>
+                                            return (<FaFacebookF className='cursor-pointer' onClick={(e) => renderProps.onClick(e)} color='#4267B2' size={24} />)
+                                        }}
+                                        callback={responseFacebook} />
+                                    <FaTwitter color='#1DA1F2' className='mx-4 my-4 cursor-pointer' size={24} />
+                                    <FcGoogle className='cursor-pointer' onClick={() => googleAuthLogin()} size={24} />
+                                </div> :
+                                    <div className='flex items-center justify-center '>
+                                        <CircularProgress />
+                                    </div>}
 
 
                             </div>

@@ -1,152 +1,222 @@
 import { Heart, Location } from "iconsax-react";
+
+import React from "react";
+import Amenities from "../../components/Amenities";
 import Carousel from "../../components/Carousel";
+import RoomType from "../../components/RoomType";
+import HotelList from "../../components/HotelList";
+import Navbar from "../../components/Navbar";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { get } from "../../helpers/ApiRequest";
+import HotelSearch from "../../components/HotelSearch";
+import { CircularProgress } from "@mui/material";
+
 
 export default function HotelDetails() {
-    const responsive = {
-        desktop: {//desktop
-            items: 2
-        },
-        tablet: {//tablet
-            items: 1
-        },
-        mobile: {//mobile
-            items: 1
+    const router = useRouter();
+    const { query } = router;
+
+    const [hotel, setHotel] = useState();
+    const [roomTypeImages, setRoomTypeImages] = useState();
+    const [selectRooms, setSelectedRooms] = useState({});
+    const [roomImages, setRoomImages] = useState([]);
+    // const [amenties, setRoomImages] = useState([]);
+    const [totalAmount, setTotalAmount] = useState(0);
+    const [numberOfRooms, setNumberOfRooms] = useState(0);
+    const [numberOfDays, setNumberOfDays] = useState(0);
+    const [dateRange, setDateRange] = useState();
+    const [isSaved, setIsSaved] = useState();
+
+
+    const updateNumberOfRooms = async (isAdd, index) => {
+        const obj = { ...selectRooms }
+        if (obj[index]) {
+            if (!isAdd && obj[index] < 1) {
+                return;
+            }
+            obj[index] = isAdd ? obj[index] + 1 : obj[index] - 1;
+        } else {
+            obj[index] = 1;
         }
+        setSelectedRooms(obj)
+    }
+
+    // const updateNumberOfRooms = async (isAdd, index) => {
+    //     const obj = { ...selectRooms }
+    //     if (obj[index]) {
+    //         if (!isAdd && obj[index] < 1) {
+    //             return;
+    //         }
+    //         obj[index] = isAdd ? obj[index] + 1 : obj[index] - 1;
+    //     } else {
+    //         obj[index] = 1;
+    //     }
+    //     setSelectedRooms(obj)
+    // }
+
+    function dateDiffInDays(a, b) {
+        const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+        // Discard the time and time-zone information.
+        const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+        const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+        return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+    }
+
+    const responsive = {
+        superLargeDesktop: {
+            // the naming can be any, depends on you.
+            breakpoint: { max: 4000, min: 3000 },
+            items: 4,
+        },
+        desktop: {
+            //desktop
+            breakpoint: { max: 3000, min: 1024 },
+            items: 3,
+        },
+        tablet: {
+            //tablet
+            breakpoint: { max: 1024, min: 464 },
+            items: 2,
+        },
+        mobile: {
+            //mobile
+            breakpoint: { max: 464, min: 0 },
+            items: 1,
+        },
     };
+
+    useEffect(() => {
+        if (query) {
+            getHotelById(query.hotelId)
+            setDateRange([
+                {
+                    startDate: new Date(query.startDate),
+                    endDate: new Date(query.endDate),
+                    key: "selection",
+                },
+            ])
+        }
+    }, [query])
+
+    useEffect(() => {
+        console.log('aa')
+        let totalAmount = 0
+        let numberOfRooms = 0
+        Object.keys(selectRooms).map((key) => {
+            if (!selectRooms[key] || selectRooms[key] < 1) {
+                return;
+            }
+
+            numberOfRooms += Number(selectRooms[key])
+            totalAmount += Number(hotel.roomTypes[key].price) * Number(selectRooms[key])
+        })
+        setNumberOfRooms(numberOfRooms)
+        setTotalAmount(totalAmount)
+        if (dateRange) {
+            setNumberOfDays(dateDiffInDays(dateRange[0].startDate, dateRange[0].endDate))
+        }
+
+    }, [selectRooms])
+
+    const getHotelById = async (id) => {
+        const response = await get(`Hotel/${id}`)
+
+        if (response.successful) {
+            console.log(response.data)
+            setHotel(response.data)
+            const images = []
+            response.data.roomTypes.map((roomType) => {
+                roomType.images.map((image) => {
+                    images.push(image.imageUrl)
+                })
+            })
+
+            setRoomImages(images)
+        }
+    }
+
     return (
-        <div className="w-full flex flex-col h-full font-poppins">
-            <div className="flex flex-row justify-between mx-20 mt-10 mb-10">
-                <div className="flex-col">
-                    <p className="text-2xl font-medium">Raddison Blue</p>
-                    <div className="flex gap-1 mt-1">
-                        <Location
-                            size={20} className="items-center" />
-                        <div className="max-w-[562px]">
-                            <p className="text-sm leading-[20px]">No.1, Bisi Oladipo Street, Aviation Estate, Off Murtala Mohammed International Airport Road, Lagos., 100261 Lagos, Nigeria</p>
+        <section className="font-poppins">
+            {hotel && <div className="max-w-[1200px] mx-auto px-10">
+                <div className="header mt-5 flex justify-between items-center mx-3">
+                    <div className="hotelInfo">
+                        <h3 className="text-[1rem] font-bold">{hotel.name}</h3>
+
+                        <div className="text-[12px] flex items-center">
+                            <span className="mr-1">
+                                <Location size={17} />
+                            </span>
+                            <p className="text-[11.7px]">
+                                {hotel.address.line}
+                            </p>
                         </div>
                     </div>
+                    <div className="book flex items-center ">
+                        <div className="p-2 flex items-center justify-center hover:bg-[#ffcc006b] mr-2 cursor-pointer">
+                            <Heart size={20} className="" />
+                            {/* <CircularProgress sx={{ height: 10, width: 10}}/> */}
+                        </div>
+                        <button
+                            type="button"
+                            className="text-end  py-[7px] px-5 rounded-[5px] bg-[#FFCC00]"
+                        >
+                            Book Now
+                        </button>
+                    </div>
                 </div>
-                <div className="flex items-center gap-2">
-                    <Heart
-                        size={24} 
-                        />
-                    <button
-                        type="button"
-                        className="text-center font-medium px-3 py-2 rounded-[5px] text-sm leading-6 uppercase bg-[#F5C400] hover:bg-[#ffcc00] text-[#1a1a1a]">Book Now</button>
-                </div>
-            </div>
-
-            {/* Room Images Carousel */}
-            <div className="mx-4">
-                <Carousel show={2} responsive={responsive}>
-                    <img
-                        className="relative rounded-[6px] w-[576.95px] h-[565.01px] shrink-0 object-cover"
-                        alt=""
-                        src="../img2@2x.png"
-                    />
-                    <img
-                        className="relative rounded-[6px] w-[576.95px] h-[565.01px] shrink-0 object-cover"
-                        alt=""
-                        src="../img2@2x.png"
-                    />
-                    <img
-                        className="relative rounded-[6px] w-[576.95px] h-[565.01px] shrink-0 object-cover"
-                        alt=""
-                        src="../img2@2x.png"
-                    />
-                    <img
-                        className="relative rounded-[6px] w-[576.95px] h-[565.01px] shrink-0 object-cover"
-                        alt=""
-                        src="../img2@2x.png"
-                    />
-                    <img
-                        className="relative rounded-[6px] w-[576.95px] h-[565.01px] shrink-0 object-cover"
-                        alt=""
-                        src="../img2@2x.png"
-                    />
-                    <img
-                        className="relative rounded-[6px] w-[576.95px] h-[565.01px] shrink-0 object-cover"
-                        alt=""
-                        src="../img2@2x.png"
-                    />
-                    <img
-                        className="relative rounded-[6px] w-[576.95px] h-[565.01px] shrink-0 object-cover"
-                        alt=""
-                        src="../img2@2x.png"
-                    />
-                    <img
-                        className="relative rounded-[6px] w-[576.95px] h-[565.01px] shrink-0 object-cover"
-                        alt=""
-                        src="../img2@2x.png"
-                    />
-                    <img
-                        className="relative rounded-[6px] w-[576.95px] h-[565.01px] shrink-0 object-cover"
-                        alt=""
-                        src="../img2@2x.png"
-                    />
-                    <img
-                        className="relative rounded-[6px] w-[576.95px] h-[565.01px] shrink-0 object-cover"
-                        alt=""
-                        src="../img2@2x.png"
-                    />
-                    <img
-                        className="relative rounded-[6px] w-[576.95px] h-[565.01px] shrink-0 object-cover"
-                        alt=""
-                        src="../img2@2x.png"
-                    />
-                    <img
-                        className="relative rounded-[6px] w-[576.95px] h-[565.01px] shrink-0 object-cover"
-                        alt=""
-                        src="../img2@2x.png"
-                    />
-                    <img
-                        className="relative rounded-[6px] w-[576.95px] h-[565.01px] shrink-0 object-cover"
-                        alt=""
-                        src="../img2@2x.png"
-                    />
-                    <img
-                        className="relative rounded-[6px] w-[576.95px] h-[565.01px] shrink-0 object-cover"
-                        alt=""
-                        src="../img2@2x.png"
-                    />
-                    <img
-                        className="relative rounded-[6px] w-[576.95px] h-[565.01px] shrink-0 object-cover"
-                        alt=""
-                        src="../img2@2x.png"
-                    />
+                <Carousel show={4} responsive={responsive}>
+                    {roomImages.map((image) => (<div className="md:mt-3">
+                        <div className="rounded-lg mr-3">
+                            <img
+                                className="object-cover w-[500px] h-[300px] rounded-lg"
+                                alt="name"
+                                src={image}
+                            />
+                        </div>
+                    </div>))}
                 </Carousel>
-            </div>
-
-            {/* Description */}
-            <div className="flex mx-20 justify-between my-10 gap-14">
-                <div className="w-[813px]">
-                    <p className="text-sm">
-                        Lorem ipsum dolor sit amet consectetur. Aliquet malesuada malesuada maecenas sit turpis non quis. Sodales ornare egestas auctor eget. Sit adipiscing sodales in quis consequat morbi sollicitudin duis scelerisque. Amet dolor fringilla sociis augue ipsum.
-                        Et orci at eget aliquam sed pretium sit laoreet. Odio pellentesque ultricies hac id montes amet amet. Facilisis curabitur quis et volutpat mattis magnis tristique.
-                        Nam sed rhoncus risus netus vulputate vestibulum aenean orci. Massa nunc fringilla purus mollis est nisl sed aliquet. Est arcu condimentum habitasse leo gravida arcu bibendum suscipit sed. Eu commodo est ornare faucibus erat sagittis. Dignissim adipiscing vestibulum condimentum egestas. Est turpis a amet nibh sed dignissim massa.
-                        Parturient volutpat in sed pretium enim ut dui. Scelerisque elementum semper sagittis adipiscing eget vivamus facilisi nibh enim. Elit purus eu eget ac magna. Aliquam pharetra sed sem sed eget at nec. Sit tempus sed quam placerat accumsan. Malesuada rhoncus vitae a enim nulla nisl feugiat. Gravida mauris integer volutpat eu auctor in proin cursus et. Enim tellus risus dictum diam.
-                        Blandit pellentesque dolor ornare euismod adipiscing placerat neque sem massa. A euismod at maecenas sed quam lacus lorem. Viverra ullamcorper mi enim hendrerit sagittis erat pharetra. Pulvinar sed vitae cursus consectetur risus donec eget. Augue nunc morbi ornare aliquam orci lorem.
+                <div>
+                    <p className="my-3">
+                        {hotel.description}
                     </p>
-
                 </div>
-                <div className="bg-[#1A1A1A0A] h-[228px] flex flex-col w-[343px] h-[288px] rounded-[6px] p-4">
-                    <p className="text-base leading-[175%] font-medium">Reservation Highlights</p>
-                    <div className="mt-5 mb-9">
-                        <p className="text-[13px] leading-[18px] font-medium">Free Private Parking Available On Site</p>
-                        <p className="text-[13px] leading-[18px] font-medium">Free Wifi</p>
+                {/* popular destinations */}
+                <div className="my-3">
+                    <h3 className="font-semibold">Most popular facilities</h3>
+                    <div className="mt-5 w-[65%]">
+                        <hr />
+                        <Amenities />
+                        <hr />
                     </div>
-
-                    <button type="button"
-                        className="text-center font-medium px-3 py-2 w-full rounded-[5px] text-sm leading-6 uppercase bg-[#F5C400] hover:bg-[#ffcc00] text-[#1a1a1a]">
-                        Book Now
-                    </button>
-                    <div className="flex justify-center gap-2 mt-3">
-                        <Heart size={20} />
-                        <span className="text-sm leading-5">Like this property</span>
+                    <div className="max-w-[75%]">
+                        <h3 className="my-6">Room Types from {hotel.name}</h3>
+                        <div className="space-y-3">
+                            <div className="">
+                                <RoomType roomTypes={hotel.roomTypes} updateNumberOfRooms={updateNumberOfRooms} selectRooms={selectRooms} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="text-center mt-7 space-y-3 font-semibold">
+                        <p>
+                            <span>{numberOfRooms} Rooms </span> ,<span>{numberOfDays} Night</span>
+                        </p>
+                        <p>
+                            Total Price:<span> ₦{totalAmount.toLocaleString()}</span>
+                        </p>
+                        <button
+                            type="button"
+                            className="rounded-md w-[70%] py-[7px] bg-[#FFCC00]"
+                        >
+                            Book Now
+                        </button>
+                    </div>
+                    <div className="my-5">
+                        <HotelList title={`Nearby Hotels to ${hotel.name}`} />
                     </div>
                 </div>
-
-            </div>
-        </div>
+            </div>}
+        </section>
     );
 };

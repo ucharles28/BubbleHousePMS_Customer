@@ -22,11 +22,6 @@ export default function Login() {
     const [alertMessage, setAlertMessage] = useState('');
     const [acceptTerms, setAcceptTerms] = useState(false);
 
-
-    const Alert = forwardRef(function Alert(props, ref) {
-        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-    });
-
     const onSuccess = (res) => {
         console.log('Login Success: currentUser:', res.profileObj);
         alert(
@@ -91,7 +86,13 @@ export default function Login() {
             const response = await post('Auth/Customer/SocialLogin', request);
             console.log(response)
             if (response.successful) {
-                localStorage.setItem('user', JSON.stringify(response.data))
+                // Request is successful
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem(
+                    'tokenExpiry',
+                    JSON.stringify(response.data.tokenExpiryDate)
+                );
+                localStorage.setItem('user', JSON.stringify(response.data));
                 router.push("/")
             } else {
                 alert(response.data)
@@ -117,7 +118,7 @@ export default function Login() {
     const responseFacebook = async (fbResponse) => {
         console.log(fbResponse)
         if (!fbResponse.name) return
-        
+
         setIsLoadingSocial(true)
 
         const request = {
@@ -213,7 +214,7 @@ export default function Login() {
                                             return (<FaFacebookF className='cursor-pointer' onClick={(e) => renderProps.onClick(e)} color='#4267B2' size={24} />)
                                         }}
                                         callback={responseFacebook} />
-                                    <FaTwitter color='#1DA1F2' className='mx-4 my-4 cursor-pointer' size={24} />
+                                    {/* <FaTwitter color='#1DA1F2' className='mx-4 my-4 cursor-pointer' size={24} /> */}
                                     <FcGoogle className='cursor-pointer' onClick={() => googleAuthLogin()} size={24} />
                                 </div> :
                                     <div className='flex items-center justify-center '>

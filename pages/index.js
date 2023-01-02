@@ -11,146 +11,45 @@ import Popover from '@mui/material/Popover';
 import { useRouter } from "next/router";
 import { People } from "iconsax-react";
 import Carousel from "../components/Carousel";
+import Hero from "../components/Hero";
+import HotelList from "../components/HotelList";
+
 // import Carousel from 'react-multi-carousel';
 // import 'react-multi-carousel/lib/styles.css';
 
-const { RangePicker } = DatePicker;
-
 export default function Home() {
     const responsive = {
-        superLargeDesktop: {//
+        superLargeDesktop: {
             // the naming can be any, depends on you.
             breakpoint: { max: 4000, min: 3000 },
-            items: 4
+            items: 4,
         },
-        desktop: {//desktop
+        desktop: {
+            //desktop
             breakpoint: { max: 3000, min: 1024 },
-            items: 4
+            items: 4,
         },
-        tablet: {//tablet
+        tablet: {
+            //tablet
             breakpoint: { max: 1024, min: 464 },
-            items: 2
+            items: 2,
         },
-        mobile: {//mobile
+        mobile: {
+            //mobile
             breakpoint: { max: 464, min: 0 },
-            items: 1
-        }
+            items: 1,
+        },
     };
 
-    const router = useRouter()
-    const inputRef = useRef(null);
-    const autoCompleteRef = useRef(null);
-    const [query, setQuery] = useState("");
-    const [numberOfAdults, setNumberOfAdults] = useState(2);
-    const [numberOfChildren, setNumberOfChildren] = useState(0);
-    const [numberOfRooms, setNumberOfRooms] = useState(1);
-    const [dateRange, setDateRange] = useState([]);
-
-    //Popover
-    const [anchorEl, setAnchorEl] = useState(null);
-
-
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
-
-
-
-    const onChange = (
-        value,
-        dateString
-    ) => {
-        setDateRange(value)
-        console.log('Selected Time: ', value);
-        console.log('Formatted Selected Time: ', dateString);
-    };
-
-    const loadScript = (url, callback) => {
-        let script = document.createElement("script");
-        script.type = "text/javascript";
-
-        if (script.readyState) {
-            script.onreadystatechange = function () {
-                if (script.readyState === "loaded" || script.readyState === "complete") {
-                    script.onreadystatechange = null;
-                    callback();
-                }
-            };
-        } else {
-            script.onload = () => callback();
-        }
-
-        script.src = url;
-        document.getElementsByTagName("head")[0].appendChild(script);
-    };
-
-    function handleScriptLoad(updateQuery, inputRef) {
-        autoCompleteRef.current = new window.google.maps.places.Autocomplete(
-            inputRef.current,
-            { types: ["(cities)"], componentRestrictions: { country: "ng" } }
-        );
-        autoCompleteRef.current.setFields(["address_components", "formatted_address", "geometry"]);
-        autoCompleteRef.current.addListener("place_changed", () =>
-            handlePlaceSelect(updateQuery)
-        );
-    }
-
-    async function handlePlaceSelect(updateQuery) {
-        const addressObject = autoCompleteRef.current.getPlace();
-        console.log(addressObject)
-        console.log(addressObject.geometry.location.lat())
-        const query = addressObject.formatted_address;
-        updateQuery(query);
-        console.log(addressObject);
-    }
-
-
-    const options = {
-        componentRestrictions: { country: "ng" },
-        fields: ["address_components", "geometry", "icon", "name"],
-        types: ["(cities)"]
-    };
-
-    const handleSearch = () => {
-        router.push({
-            pathname: '/searchresult',
-            query: {
-                location: query,
-                startDate: String(dateRange[0]),
-                endDate: String(dateRange[1]),
-                adults: numberOfAdults,
-                children: numberOfChildren,
-                rooms: numberOfRooms,
-            }
-        })
-    }
-
-    useEffect(() => {
-        loadScript(
-            `https://maps.googleapis.com/maps/api/js?key=AIzaSyB8QN-9BQ2Gto1h0GfSOG78AzL-qHhDyPg&libraries=places`,
-            () => handleScriptLoad(setQuery, inputRef)
-        );
-    }, []);
 
     return (
         <div className='h-screen font-poppins'>
-            {/* <Script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8QN-9BQ2Gto1h0GfSOG78AzL-qHhDyPg&libraries=places" /> */}
-
             <Navbar />
-
-            <div className="w-full bg-[url('/hero@3x.png')] bg-cover bg-no-repeat bg-[top] py-24">
-                <div className="flex flex-col items-center gap-12 pt-40 pb-16">
-
-                    <div className="flex flex-col text-white items-center">
-                        <p className="text-5xl font-medium">Find deals from you favorite hotels in Nigeria</p>
-                        <p className="text-2xl font-normal">Try searching for a city, A specific hotel or even a landmark!</p>
+            <div className="w-full bg-[url('/hero@3x.png')] bg-cover bg-no-repeat bg-[top] py-20">
+                <div className="">
+                    <div className="mt-[164px] mb-16 mx-6 flex flex-col text-white justify-center items-center">
+                        <p className="text-5xl leading-[56px]">Find deals from you favourite hotels in Nigeria</p>
+                        <p className="text-2xl leading-[56px] item-start">Try searching for a city, A specific hotel or even a landmark!</p>
                     </div>
 
                     <div className="bg-white rounded-lg w-[1168px] py-4 px-6 flex gap-2 items-center text-sec-main">
@@ -529,7 +428,7 @@ export default function Home() {
                     </Carousel> */}
 
                     <div
-                    className="flex max-w-6xl w-full"
+                        className="flex max-w-6xl w-full"
                     // style={{ maxWidth: 1200, marginLeft: 'auto', marginRight: 'auto', marginTop: 64 }}
                     >
                         <Carousel
@@ -665,9 +564,8 @@ export default function Home() {
 
                 </div>
 
+                <Footer />
             </div>
-
-            <Footer />
-        </div >
+        </div>
     );
 }
