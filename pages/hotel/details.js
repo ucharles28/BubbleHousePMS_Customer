@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { get } from "../../helpers/ApiRequest";
 import HotelSearch from "../../components/HotelSearch";
-
+import { CircularProgress } from "@mui/material";
 
 
 export default function HotelDetails() {
@@ -26,6 +26,7 @@ export default function HotelDetails() {
     const [numberOfRooms, setNumberOfRooms] = useState(0);
     const [numberOfDays, setNumberOfDays] = useState(0);
     const [dateRange, setDateRange] = useState();
+    const [isSaved, setIsSaved] = useState();
 
 
     const updateNumberOfRooms = async (isAdd, index) => {
@@ -41,14 +42,27 @@ export default function HotelDetails() {
         setSelectedRooms(obj)
     }
 
+    // const updateNumberOfRooms = async (isAdd, index) => {
+    //     const obj = { ...selectRooms }
+    //     if (obj[index]) {
+    //         if (!isAdd && obj[index] < 1) {
+    //             return;
+    //         }
+    //         obj[index] = isAdd ? obj[index] + 1 : obj[index] - 1;
+    //     } else {
+    //         obj[index] = 1;
+    //     }
+    //     setSelectedRooms(obj)
+    // }
+
     function dateDiffInDays(a, b) {
         const _MS_PER_DAY = 1000 * 60 * 60 * 24;
         // Discard the time and time-zone information.
         const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
         const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
-      
+
         return Math.floor((utc2 - utc1) / _MS_PER_DAY);
-      }
+    }
 
     const responsive = {
         superLargeDesktop: {
@@ -78,11 +92,11 @@ export default function HotelDetails() {
             getHotelById(query.hotelId)
             setDateRange([
                 {
-                  startDate: new Date(query.startDate),
-                  endDate: new Date(query.endDate),
-                  key: "selection",
+                    startDate: new Date(query.startDate),
+                    endDate: new Date(query.endDate),
+                    key: "selection",
                 },
-              ])
+            ])
         }
     }, [query])
 
@@ -140,10 +154,13 @@ export default function HotelDetails() {
                         </div>
                     </div>
                     <div className="book flex items-center ">
-                        <Heart size={17} className="mr-2 cursor-pointer" />
+                        <div className="p-2 flex items-center justify-center hover:bg-[#ffcc006b] mr-2 cursor-pointer">
+                            <Heart size={20} className="" />
+                            {/* <CircularProgress sx={{ height: 10, width: 10}}/> */}
+                        </div>
                         <button
                             type="button"
-                            className="text-end  py-1 px-5 rounded-lg bg-[#FFCC00]"
+                            className="text-end  py-[7px] px-5 rounded-[5px] bg-[#FFCC00]"
                         >
                             Book Now
                         </button>
