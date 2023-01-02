@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 
 export default function Home() {
     return (
-        <div className="w-full h-screen bg-[#F8F8F8]">
+        <div className="w-full h-full bg-[#F8F8F8]">
             {/* <Navbar /> */}
             <div className="mb-6">
                 <div className="pt-11 ml-28">
