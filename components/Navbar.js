@@ -55,7 +55,7 @@ export default function Navbar() {
 
   return (
     <div className="bg-white fixed w-full z-10 shadow-sm font-poppins">
-      <div className="flex py-4 px-20 w-full justify-between items-center">
+      <div className="flex py-4 lg:px-20 px-4 w-full justify-between items-center">
         <Link href='/'>
           <Image className="block" src={bcloud1} width={100} height={2} alt="blcoud" />
         </Link>

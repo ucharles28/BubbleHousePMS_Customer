@@ -10,9 +10,9 @@ import { FcGoogle } from 'react-icons/fc';
 const Footer = () => {
     return (
         <div className="font-poppins">
-            <div className='relative w-full bg-gray-100/30 flex flex-col items-center justify-start border-t border-sec-main/10 mt-20 pt-16 px-20'>
+            <div className='w-full bg-gray-100/30 flex flex-col items-center justify-end border-t border-sec-main/10 pt-16 lg:px-20 px-4 z-10'>
 
-                <div className='flex flex-row gap-2 w-full mb-10'>
+                <div className='lg:flex lg:flex-row lg:gap-2 grid grid-cols-1 gap-6 w-full mb-10'>
 
                     <div className='item w-1/3'>
                         {/* <img
@@ -23,7 +23,7 @@ const Footer = () => {
                         <Image className="block" src={bcloud1} width={100} height={2} alt="blcoud" />
                     </div>
 
-                    <div className='item w-full flex flex-row justify-between text-sm leading-5'>
+                    <div className='item w-full lg:flex lg:flex-row grid grid-cols-2 lg:gap-0 gap-6 justify-between text-sm leading-5'>
 
                         <div className='flex flex-col gap-4'>
                             <p className='text-sec-main/50 font-medium'>Company</p>
@@ -75,7 +75,7 @@ const Footer = () => {
 
                 </div>
 
-                <div className='flex items-center justify-between w-full border-t py-4'>
+                <div className='lg:flex lg:items-center lg:justify-between lg:gap-0 grid grid-cols-1 gap-2 w-full border-t py-4'>
                     <p className='text-sm font-normal leading-6 text-sec-main/50'>Copyright © 2022 Bcloud. All Rights Reserved</p>
                     <div className='flex flex-row items-center gap-4'>
                         <FaFacebookF className='cursor-pointer' color='#4267B2' size={18} />

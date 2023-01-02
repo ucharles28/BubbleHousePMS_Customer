@@ -522,7 +522,7 @@ export default function Home() {
                 </div>
             </div>
 
-            <div className="flex flex-col items-center py-12 gap-20 w-full">
+            <div className="flex flex-col items-center py-12 gap-20 pb-20 w-full">
 
                 {/* Top hotel deals */}
                 <div className="flex flex-col">
