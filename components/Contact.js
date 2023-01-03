@@ -6,18 +6,18 @@ import { format } from "date-fns";
 function SignUpInfo({ formData, setFormData, bookingInfo, hotel, setPage }) {
   return (
     <div className="h-full font-poppins">
-      <Navbar />
+      {/* <Navbar /> */}
 
-      <div className="flex flex-col items-center w-full h-full pt-20 pb-20 lg:px-24 px-4">
+      <div className="flex flex-col items-center w-full h-full pt-20 lg:px-24 px-4">
 
         <div className="w-11/12 lg:w-2/6 mx-auto mt-4 lg:mb-8 mb-4">
           <div className="flex justify-between items-center pb-2 flex-col">
-            <p className="text-sm font-bold text-gray-800">Add your contact details and select payment method</p>
+            <p className="text-sm font-bold text-sec-main">Add your contact details and select payment method</p>
           </div>
           <div className="flex items-center">
-            <div className="w-1/4 bg-pri-main h-2 rounded-tl rounded-bl mr-1"></div>
-            <div className="w-1/4 bg-pri-main h-2 mr-1"></div>
-            <div className="w-1/4 bg-gray-200 h-1 rounded-tr rounded-br"></div>
+            <div className="w-1/3 bg-pri-main h-2 rounded-tl rounded-bl mr-1"></div>
+            <div className="w-1/3 bg-pri-main h-2 mr-1"></div>
+            <div className="w-1/3 bg-gray-200 h-1 rounded-tr rounded-br"></div>
           </div>
         </div>
 
@@ -101,56 +101,98 @@ function SignUpInfo({ formData, setFormData, bookingInfo, hotel, setPage }) {
                   {/* <p className="font-medium">Surulere, Lagos</p> */}
                   <p className="text-sec-main/70">{hotel.address.line}</p>
                 </div>
+
+                <div className="text-xs flex flex-col gap-1">
+                  <p className="font-medium uppercase">Deluxe room</p>
+                  <p className="font-normal text-sec-main/70">1 bed (1 queen)</p>
+                  <p className="font-normal">Free Cancellation</p>
+                </div>
+
+                <div className="text-xs flex lg:flex-row flex-col gap-1 lg:gap-2 font-medium">
+                  <p>Free parking</p>
+                  <p>Free wifi</p>
+                  <p>Air conditioning</p>
+                  <p>Swimming pool</p>
+                </div>
+
               </div>
             </div>
 
             <div className="border-[1.5px] p-3 space-y-3 w-full rounded-md">
               <p className="text-base font-medium">Enter your details</p>
-              <div className="grid lg:grid-cols-2 grid-cols-1 justify-between gap-4 mb-6">
-                <input
-                  className="border-[1.5px] rounded-md text-sm outline-0 w-full p-2"
-                  type="text"
-                  placeholder="First name"
-                  value={formData.firstName}
-                  onChange={(event) =>
-                    setFormData({ ...formData, firstName: event.target.value })
-                  }
-                />
-                <input
-                  className="border-[1.5px] rounded-md text-sm outline-0 w-full p-2"
-                  type="text"
-                  placeholder="Last name"
-                  value={formData.lastName}
-                  onChange={(event) =>
-                    setFormData({ ...formData, lastName: event.target.value })
-                  }
-                />
-                <input
-                  className="border-[1.5px] rounded-md text-sm outline-0 w-full p-2"
-                  type="email"
-                  placeholder="Email Address"
-                  value={formData.email}
-                  onChange={(event) =>
-                    setFormData({
-                      ...formData,
-                      email: event.target.value,
-                    })
-                  }
-                />
+              <div className="grid lg:grid-cols-2 grid-cols-1 justify-between gap-4">
+
+                <div>
+                  <label htmlFor="" className="text-sm">
+                    First Name
+                  </label>
+                  <input
+                    className="border-[1.5px] rounded-md text-sm outline-0 w-full p-2"
+                    type="text"
+                    // placeholder="First name"
+                    value={formData.firstName}
+                    onChange={(event) =>
+                      setFormData({ ...formData, firstName: event.target.value })
+                    }
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="" className="text-sm">
+                    Last Name
+                  </label>
+                  <input
+                    className="border-[1.5px] rounded-md text-sm outline-0 w-full p-2"
+                    type="text"
+                    // placeholder="Last name"
+                    value={formData.lastName}
+                    onChange={(event) =>
+                      setFormData({ ...formData, lastName: event.target.value })
+                    }
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="" className="text-sm">
+                    Email Address
+                  </label>
+                  <input
+                    className="border-[1.5px] rounded-md text-sm outline-0 w-full p-2"
+                    type="email"
+                    // placeholder="Email Address"
+                    value={formData.email}
+                    onChange={(event) =>
+                      setFormData({
+                        ...formData,
+                        email: event.target.value,
+                      })
+                    }
+                  />
+                </div>
+
               </div>
 
               {!formData.isMainGuest && <>
                 <p className="text-base font-medium">Enter guest details</p>
                 <div className="grid lg:grid-cols-2 grid-cols-1 justify-between gap-4">
+                <div>
+                <label htmlFor="" className="text-sm">
+                    Guest Full Name
+                  </label>
                   <input
                     className="border-[1.5px] rounded-md text-sm outline-0 w-full p-2"
                     type="text"
-                    placeholder="Guest Full Name"
+                    placeholder="First name, Last name"
                     value={formData.guestFullName}
                     onChange={(event) =>
                       setFormData({ ...formData, guestFullName: event.target.value })
                     }
                   />
+                </div>
+                  <div>
+                  <label htmlFor="" className="text-sm">
+                    Email Address
+                  </label>
                   <input
                     className="border-[1.5px] rounded-md text-sm outline-0 w-full p-2"
                     type="text"
@@ -160,6 +202,7 @@ function SignUpInfo({ formData, setFormData, bookingInfo, hotel, setPage }) {
                       setFormData({ ...formData, guestEmail: event.target.value })
                     }
                   />
+                  </div>
                 </div>
               </>}
 
@@ -252,8 +295,9 @@ function SignUpInfo({ formData, setFormData, bookingInfo, hotel, setPage }) {
             </div>
 
             <div className="flex justify-end">
-              <button className="disabled:bg-[#FFDD55] py-[7px] mt-10 px-[89px] rounded-md bg-[#FFCC00]"
+              <button className="disabled:bg-[#FFDD55] mb-10 py-[7px] mt-10 px-[89px] rounded-md bg-[#FFCC00]"
               // disabled={(!bookingInfo.firstName || bookingInfo.lastName || bookingInfo.email)}
+              onClick={() => setPage(1)}
               >
                 CONTINUE
               </button>
@@ -265,7 +309,7 @@ function SignUpInfo({ formData, setFormData, bookingInfo, hotel, setPage }) {
 
       </div>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
