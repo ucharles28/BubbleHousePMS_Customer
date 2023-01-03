@@ -9,12 +9,11 @@ function Form() {
   const [page, setPage] = useState(0);
   const [formData, setFormData] = useState({
     email: "",
-    password: "",
-    confirmPassword: "",
+    phoneNumber: "",
     firstName: "",
     lastName: "",
     username: "",
-    nationality: "",
+    country: "",
     other: "",
   });
 
@@ -36,7 +35,7 @@ function Form() {
 
   return (
     <div className="h-[screen] font-poppins">
-      {/* <Navbar /> */}
+      <Navbar />
 
       {/* <div className="progressbar">
         <h1 className="font-bold my-2">{FormTitles[page]}</h1>
@@ -48,20 +47,22 @@ function Form() {
       {/* <div className="form-container"> */}
       {/* <div className="header"></div> */}
       {/* <div> */}
-      {PageDisplay()}
-      {/* </div> */}
-      {/* </div> */}
-      {/* <div className="footer text-center mt-3 space-x-2 flex items-center justify-center">
+      {/* <div> */}
+        {PageDisplay()}
+        {/* </div> */}
+        {/* </div> */}
+        <div className="text-center space-x-2 flex items-center justify-end lg:px-24 px-4 pb-20 pt-6">
           <button
+            className="py-2.5 px-6 rounded-md text-sm font-medium text-sec-main"
             disabled={page == 0}
             onClick={() => {
               setPage((currPage) => currPage - 1);
             }}
           >
-            Prev
+            Back
           </button>
           <button
-            className="bg-[#FFCC00] py-2 px-7"
+            className="bg-pri-main p-3 lg:w-1/6 w-1/2 rounded-md text-sm font-medium text-sec-main hover:bg-pri-cont"
             onClick={() => {
               if (page === FormTitles.length - 1) {
                 alert("FORM SUBMITTED");
@@ -71,12 +72,13 @@ function Form() {
               }
             }}
           >
-            {page === FormTitles.length - 1 ? "Submit" : "Next"}
+            {page === FormTitles.length - 1 ? "Complete Booking" : "Continue"}
           </button>
-        </div> */}
+        </div>
+      {/* </div> */}
       {/* </div> */}
 
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }
