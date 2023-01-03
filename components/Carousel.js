@@ -69,7 +69,7 @@ const Carousel = ({ children, show, responsive }) => {
                     onTouchMove={handleTouchMove}
                 >
                     <div
-                        className={`carousel-content lg:w-1/${responsive.desktop.items} md:w-1/${responsive.tablet.items} sm:w-1/${responsive.mobile.items}`}
+                        className={`carousel-content lg:w-1/${responsive.desktop.items} md:w-1/${responsive.tablet.items} sm:w-full`}
                         style={{ transform: `translateX(-${currentIndex * (100 / show)}%)` }}
                     >
                         {children}

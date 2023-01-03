@@ -421,18 +421,18 @@ export default function Home() {
                 </div>
             </div> */}
             <div className="w-full bg-[url('/hero@3x.png')] bg-cover bg-no-repeat bg-[top] py-24">
-                <div className="flex flex-col items-center gap-12 pt-40 pb-16">
+                <div className="flex flex-col items-center gap-12 pt-40 pb-16 lg:px-0 px-4">
 
                     <div className="flex flex-col text-white items-center">
-                        <p className="text-5xl font-medium">Find deals from you favorite hotels in Nigeria</p>
-                        <p className="text-2xl font-normal">Try searching for a city, A specific hotel or even a landmark!</p>
+                        <p className="lg:text-5xl text-2xl font-medium">Find deals from you favorite hotels in Nigeria</p>
+                        <p className="lg:text-2xl text-base font-normal">Try searching for a city, A specific hotel or even a landmark!</p>
                     </div>
 
-                    <div className="bg-white rounded-lg w-[1168px] py-4 px-6 flex gap-2 items-center text-sec-main">
+                    <div className="bg-white rounded-lg lg:w-[1168px] p-3 lg:py-4 lg:px-6 lg:flex lg:gap-2 gap-3 lg:items-center grid grid-cols-1 text-sec-main">
                         <input ref={inputRef}
                             onChange={event => setQuery(event.target.value)}
                             placeholder="Enter a City"
-                            className="border-2 border-gray-200 bg-white text-sm placeholder:text-sm p-2 rounded-md outline-none w-2/6"
+                            className="placeholder:text-sec-main/80 bg-sec-main/5 text-sm placeholder:text-sm lg:p-2 p-3 rounded-md outline-none lg:w-2/6 w-full"
                             value={query}
                         />
                         {/* <Space direction="horizontal" className="w-1/4" size={12}> */}
@@ -444,7 +444,7 @@ export default function Home() {
                                 <p className="mx-1 text-md font-medium">.</p>
                                 <p className="mx-1 text-md font-medium">{numberOfRooms} rooms</p>
                             </div> */}
-                        <div className="flex items-center gap-2 cursor-pointer py-1.5 rounded-md px-4 w-1/4" onClick={handleClick}>
+                        <div className="bg-sec-main/5 flex items-center gap-2 cursor-pointer lg:py-1.5 py-2 rounded-md px-4 lg:w-1/4 w-full" onClick={handleClick}>
                             <People size={24} />
                             <div className="flex flex-col">
                                 <p className="text-xs text-sec-main/50 mb-[0]">{numberOfRooms} room</p>
@@ -512,7 +512,7 @@ export default function Home() {
                         <button
                             type="button"
                             onClick={handleSearch}
-                            className="flex w-1/6 text-sm leading-6 justify-center font-medium px-4 py-2.5 rounded-[5px] bg-pri-cont hover:bg-pri-main text-sec-main"
+                            className="flex lg:w-1/6 w-full text-sm leading-6 justify-center font-medium px-4 py-2.5 rounded-[5px] bg-pri-cont hover:bg-pri-main text-sec-main"
                         >
                             Search
                         </button>
