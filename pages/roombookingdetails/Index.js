@@ -19,7 +19,6 @@ function Form() {
   const FormTitles = [
     "Add your contact details and select payment method",
     "Confirm your details to complete your booking",
-    "Other",
   ];
 
   const PageDisplay = () => {
@@ -33,28 +32,37 @@ function Form() {
   };
 
   return (
-    <div className="form p-3">
-      <div className="progressbar">
+    <div className="form p-3 w-full">
+      <div className="progressbar text-center">
         <h1 className="font-bold my-2">{FormTitles[page]}</h1>
         <div
-          style={{ width: page === 0 ? "66.6%" : page == 1 ? "33.4%" : "100%" }}
+          className="progress text-center"
+          style={{ width: page === 0 ? "50%" : page == 1 && "100%" }}
         ></div>
       </div>
-      <div className="form-container">
+      <div className="form-container w-full">
         <div className="header"></div>
         <div className="body">{PageDisplay()}</div>
       </div>
       <div className="footer text-center mt-3 space-x-2 flex items-center justify-center">
+        {page == 1 && (
+          <button
+            className="bg-[#FFCC00] py-2 px-7"
+            disabled={page == 0}
+            onClick={() => {
+              setPage((currPage) => currPage - 1);
+            }}
+          >
+            Prev
+          </button>
+        )}
+
         <button
-          disabled={page == 0}
-          onClick={() => {
-            setPage((currPage) => currPage - 1);
-          }}
-        >
-          Prev
-        </button>
-        <button
-          className="bg-[#FFCC00] py-2 px-7"
+          className={
+            page === 0
+              ? "w-[30%] items-end bg-[#FFCC00] py-2 px-7 ml-14"
+              : "bg-[#FFCC00] py-2 px-7"
+          }
           onClick={() => {
             if (page === FormTitles.length - 1) {
               alert("FORM SUBMITTED");
@@ -64,7 +72,7 @@ function Form() {
             }
           }}
         >
-          {page === FormTitles.length - 1 ? "Submit" : "Next"}
+          {page === FormTitles.length - 1 ? "Confirm Booking" : "Continue"}
         </button>
       </div>
     </div>
