@@ -214,7 +214,7 @@ export default function Login() {
                                             return (<FaFacebookF className='cursor-pointer' onClick={(e) => renderProps.onClick(e)} color='#4267B2' size={24} />)
                                         }}
                                         callback={responseFacebook} />
-                                    {/* <FaTwitter color='#1DA1F2' className='mx-4 my-4 cursor-pointer' size={24} /> */}
+                                    <FaTwitter color='#1DA1F2' className='mx-4 my-4 cursor-pointer' size={24} />
                                     <FcGoogle className='cursor-pointer' onClick={() => googleAuthLogin()} size={24} />
                                 </div> :
                                     <div className='flex items-center justify-center '>

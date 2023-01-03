@@ -57,7 +57,7 @@ const RoomSearchResult = ({ hotels, gotoDetails }) => {
               {/* <Link href="/singleRoom" className="text-end"> */}
               <button
                 type="button"
-                className="text-end  py-1 px-5 rounded-lg bg-[#FFCC00]"
+                className="text-center py-1 px-5 rounded-lg bg-[#FFCC00]"
                 onClick={(e) => gotoDetails(hotel.id)}
               >
                 Book Now
