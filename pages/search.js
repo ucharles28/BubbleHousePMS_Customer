@@ -22,6 +22,7 @@ import PopoverDisplay from "../components/PopoverDisplay";
 
 
 import RoomSearchResult from "../components/RoomSearchResult";
+import { BounceLoader } from "react-spinners";
 
 export default function Home() {
   const [age, setAge] = useState("");
@@ -35,8 +36,10 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [openView, setOpenView] = useState(false);
   const [dateRange, setDateRange] = useState();
+  const [hotel, setHotel] = useState('');
   const [openDate, setOpenDate] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [hotelsCount, setHotelsCount] = useState(0);
 
   const router = useRouter();
 
@@ -49,15 +52,14 @@ export default function Home() {
   console.log(query)
 
 
-  const datePickerHandler = () => {
-    setOpenDate(!openDate);
-  };
+  
+  
 
   const viewMenuHandler = () => {
     setOpenView(!openView);
   };
 
-  function gotoDetails(id) {    
+  function gotoDetails(id) {
     router.push({
       pathname: '/hotel/details',
       query: {
@@ -70,6 +72,11 @@ export default function Home() {
       }
     })
   }
+
+  const datePickerHandler = () => {
+    console.log(openDate)
+    setOpenDate(!openDate);
+  };
 
   useEffect(() => {
     if (query) {
@@ -85,6 +92,7 @@ export default function Home() {
       setDateRange(a)
 
       setLocation(query.location);
+      setHotel(query.hotel);
       setNumberOfAdults(query.adults);
       setNumberOfChildren(query.children);
       setNumberOfRooms(query.rooms);
@@ -94,6 +102,7 @@ export default function Home() {
   }, [query]);
 
   const handleSearchHotel = async (query) => {
+    setIsLoading(true)
     const request = {
       location: query.location,
       hotelName: query.hotel,
@@ -108,8 +117,11 @@ export default function Home() {
     if (response.successful) {
       console.log(response.data);
       setHotelResults(response.data);
+      setHotelsCount(response.data.length);
     } else {
     }
+    setIsLoading(false)
+
   };
 
   const handleChange = (event) => {
@@ -200,9 +212,11 @@ export default function Home() {
               </div>
             </form>
           </div>
-          <div className=" flex-auto w-64">
+          {!isLoading ? <div className=" flex-auto w-64">
             <div className="flex justify-between items-center">
-              <h1 className="text-xl font-bold">3,345 Hotels in Lagos</h1>
+              {location ? 
+              <h1 className="text-xl font-bold">{hotelsCount} Hotels in {location.split(',')[0]}</h1>
+              : <h1 className="text-xl font-bold">{hotelsCount} Hotel found searching for {hotel}</h1>}
               <div className="bg-white p-2 border-2 rounded-lg  flex justify-between space-x-3 items-center cursor-pointer relative z-10">
                 <span onClick={viewMenuHandler}>
                   <small className="opacity-50 text-[11px]">Sort by </small>:
@@ -220,7 +234,22 @@ export default function Home() {
             <div className="">
               <RoomSearchResult hotels={hotelResults} gotoDetails={gotoDetails} />
             </div>
+          </div> :
+          <div className="w-full">
+          <div className="flex flex-col items-center justify-center">
+            <div className="lg:w-2/5 md:w-1/2 pt-10 pl-4 pr-4 justify-center lg:my-16 sm:my-5">
+              <div className="m-12 pt-14 flex flex-col items-center justify-center">
+                <BounceLoader
+                  heigth={200}
+                  width={200}
+                  color="#FFCC00"
+                  ariaLabel="loading-indicator"
+                />
+              </div>
+            </div>
           </div>
+          </div>}
+
         </div>
       </div>
     </section>

@@ -1,8 +1,9 @@
 import Image from "next/image";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
+import { format } from "date-fns";
 
-function SignUpInfo({ formData, setFormData }) {
+function SignUpInfo({ formData, setFormData, bookingInfo, hotel, setPage }) {
   return (
     <div className="h-full font-poppins">
       {/* <Navbar /> */}
@@ -15,12 +16,12 @@ function SignUpInfo({ formData, setFormData }) {
           </div>
           <div className="flex items-center">
             <div className="w-1/3 bg-pri-main h-2 rounded-tl rounded-bl mr-1"></div>
-            <div className="w-1/3 bg-gray-200 h-1 mr-1"></div>
+            <div className="w-1/3 bg-pri-main h-2 mr-1"></div>
             <div className="w-1/3 bg-gray-200 h-1 rounded-tr rounded-br"></div>
           </div>
         </div>
 
-        <div className="lg:flex grid grid-cols-1 w-full h-full gap-4">
+        {bookingInfo && <div className="lg:flex grid grid-cols-1 w-full h-full gap-4">
 
           <div className="lg:flex lg:flex-col grid grid-cols-1 h-auto lg:w-2/5 w-full text-sec-main gap-4">
 
@@ -32,22 +33,22 @@ function SignUpInfo({ formData, setFormData }) {
 
                 <div className="box w-full gap-1">
                   <p className="text-xs font-normal text-sec-main/70">Check-in</p>
-                  <span className="text-sm font-normal text-sec-main">Fri, 27 Aug, 2022</span>
+                  <span className="text-sm font-normal text-sec-main">{bookingInfo.checkIn && format(bookingInfo.checkIn, "d MMM, yyyy")}</span>
                 </div>
 
                 <div className="box w-full gap-1">
                   <p className="text-xs font-normal text-sec-main/70">Check-out</p>
-                  <span className="text-sm font-normal text-sec-main">Sat, 28 Aug, 2022</span>
+                  <span className="text-sm font-normal text-sec-main">{bookingInfo.checkIn && format(bookingInfo.checkOut, "d MMM, yyyy")}</span>
                 </div>
 
                 <div className="box w-full gap-1">
                   <p className="text-xs font-normal text-sec-main/70">Guest</p>
-                  <span className="text-sm font-normal text-sec-main">2 adults</span>
+                  <span className="text-sm font-normal text-sec-main">{bookingInfo.adults} adults {bookingInfo.children > 0 ? `${bookingInfo.children} children` : null}</span>
                 </div>
 
                 <div className="box w-full gap-1">
                   <p className="text-xs font-normal text-sec-main/70">Rooms</p>
-                  <span className="text-sm font-normal text-sec-main">1 room</span>
+                  <span className="text-sm font-normal text-sec-main">{bookingInfo.rooms} room</span>
                 </div>
 
               </div>
@@ -61,17 +62,17 @@ function SignUpInfo({ formData, setFormData }) {
               <div className="flex flex-col gap-2 w-full">
                 <div className="flex justify-between">
                   <p className="text-xs font-normal text-sec-main/70">Room price</p>
-                  <p className="text-xs font-medium text-sec-main">NGN 60,000</p>
+                  <p className="text-xs font-medium text-sec-main">NGN {Number(bookingInfo.totalAmount).toLocaleString()}</p>
                 </div>
 
                 <div className="flex justify-between">
                   <p className="text-xs font-normal text-sec-main/70">7.5 % VAT</p>
-                  <p className="text-xs font-medium text-sec-main">NGN 4,500</p>
+                  <p className="text-xs font-medium text-sec-main">NGN {bookingInfo.vat.toLocaleString()}</p>
                 </div>
 
                 <div className="flex justify-between">
                   <p className="text-xs font-normal text-sec-main/70">5 % State Tax</p>
-                  <p className="text-xs font-medium text-sec-main">NGN 3,000</p>
+                  <p className="text-xs font-medium text-sec-main">NGN {bookingInfo.stateTax.toLocaleString()}</p>
                 </div>
               </div>
 
@@ -79,7 +80,7 @@ function SignUpInfo({ formData, setFormData }) {
 
               <div className="flex justify-between w-full text-base font-medium text-sec-main">
                 <p>Total</p>
-                <p>NGN 67,500</p>
+                <p>NGN {bookingInfo.totalAmount + bookingInfo.vat + bookingInfo.stateTax}</p>
               </div>
 
               <div className="flex flex-col w-full gap-1 text-xs font-normal text-sec-main">
@@ -93,16 +94,16 @@ function SignUpInfo({ formData, setFormData }) {
           <div className="flex flex-col h-full w-full gap-4 text-sec-main">
 
             <div className="border-[1.5px] p-3 flex gap-3 rounded-md w-full">
-              <Image width={200} height={200} src="/img.png" className="object-cover rounded-md" />
+              {/* <Image width={200} height={200} src="/img.png" className="object-cover rounded-md" /> */}
+              <img src={hotel.imageUrl} className="w-[200px] h-[200px] object-cover rounded-md" />
               <div className="flex flex-col gap-2 w-full">
-                <p className="lg:text-xl text-base font-medium">Raddison Blue Hotel and Suites</p>
-
+                <p className="lg:text-xl text-base font-medium">{hotel.name}</p>
                 <div className="lg:flex lg:items-center grid grid-cols-1 lg:gap-3 gap-1 text-xs">
-                  <p className="font-medium">Surulere, Lagos</p>
-                  <p className="text-sec-main/70">Plot 37 Ahmed Onibudo Street</p>
+                  {/* <p className="font-medium">Surulere, Lagos</p> */}
+                  <p className="text-sec-main/70">{hotel.address.line}</p>
                 </div>
 
-                <div className="text-xs flex flex-col gap-1">
+                {/* <div className="text-xs flex flex-col gap-1">
                   <p className="font-medium uppercase">Deluxe room</p>
                   <p className="font-normal text-sec-main/70">1 bed (1 queen)</p>
                   <p className="font-normal">Free Cancellation</p>
@@ -113,7 +114,7 @@ function SignUpInfo({ formData, setFormData }) {
                   <p>Free wifi</p>
                   <p>Air conditioning</p>
                   <p>Swimming pool</p>
-                </div>
+                </div> */}
 
               </div>
             </div>
@@ -172,11 +173,45 @@ function SignUpInfo({ formData, setFormData }) {
 
               </div>
 
+              {!formData.isMainGuest && <>
+                <p className="text-base font-medium">Enter guest details</p>
+                <div className="grid lg:grid-cols-2 grid-cols-1 justify-between gap-4">
+                <div>
+                <label htmlFor="" className="text-sm">
+                    Guest Full Name
+                  </label>
+                  <input
+                    className="border-[1.5px] rounded-md text-sm outline-0 w-full p-2"
+                    type="text"
+                    placeholder="First name, Last name"
+                    value={formData.guestFullName}
+                    onChange={(event) =>
+                      setFormData({ ...formData, guestFullName: event.target.value })
+                    }
+                  />
+                </div>
+                  <div>
+                  <label htmlFor="" className="text-sm">
+                    Email Address
+                  </label>
+                  <input
+                    className="border-[1.5px] rounded-md text-sm outline-0 w-full p-2"
+                    type="text"
+                    placeholder="Guest Email"
+                    value={formData.guestEmail}
+                    onChange={(event) =>
+                      setFormData({ ...formData, guestEmail: event.target.value })
+                    }
+                  />
+                  </div>
+                </div>
+              </>}
+
               <div className="space-y-2">
                 <p className="text-sm font-medium">Who are you booking for?</p>
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center space-x-1">
-                    <input type="radio" name="" id="main guest" value="main_guest" />
+                    <input type="radio" name="main" id="main guest" value="main_guest" checked={formData.isMainGuest} onChange={(e) => setFormData({ ...formData, isMainGuest: true })} />
                     <label htmlFor="main guest" className="text-[12px]">
                       I'm the main guest
                     </label>
@@ -184,9 +219,11 @@ function SignUpInfo({ formData, setFormData }) {
                   <div className="flex items-center space-x-1">
                     <input
                       type="radio"
-                      name=""
+                      name="main"
                       id="for someone"
                       value="for_someone"
+                      onChange={(e) => setFormData({ ...formData, isMainGuest: false })}
+                      checked={!formData.isMainGuest}
                     />
                     <label htmlFor="for someone" className="text-[12px]">
                       I’m booking for someone
@@ -231,16 +268,45 @@ function SignUpInfo({ formData, setFormData }) {
                 </label>
 
                 <select id="cars" className="border-[1.5px] rounded-md text-xs outline-0 lg:w-1/2 w-full p-2">
-                  <option value="volvo">Select time</option>
-                  <option value="saab">Saab</option>
-                  <option value="opel">Opel</option>
-                  <option value="audi">Audi</option>
+                  <option value="" disabled="" selected="">Please select</option>
+                  <option value="-1">I don't know</option>
+                  <option value="5">5:00AM – 6:00AM </option>
+                  <option value="6">6:00AM – 7:00AM </option>
+                  <option value="7">7:00AM – 8:00AM </option>
+                  <option value="8">8:00AM – 9:00AM </option>
+                  <option value="9">9:00AM – 10:00AM </option>
+                  <option value="10">10:00AM – 11:00AM </option>
+                  <option value="11">11:00AM – 12:00PM </option>
+                  <option value="12">12:00PM – 1:00PM </option>
+                  <option value="13">1:00PM – 2:00PM </option>
+                  <option value="14">2:00PM – 3:00PM </option>
+                  <option value="15">3:00PM – 4:00PM </option>
+                  <option value="16">4:00PM – 5:00PM </option>
+                  <option value="17">5:00PM – 6:00PM </option>
+                  <option value="18">6:00PM – 7:00PM </option>
+                  <option value="19">7:00PM – 8:00PM </option>
+                  <option value="20">8:00PM – 9:00PM </option>
+                  <option value="21">9:00PM – 10:00PM </option>
+                  <option value="22">10:00PM – 11:00PM </option>
+                  <option value="23">11:00PM – 12:00AM </option>
+                  <option value="24">12:00AM – 1:00AM (the next day)</option>
+                  <option value="25">1:00AM – 2:00AM (the next day)</option>
                 </select>
               </div>
             </div>
 
+            <div className="flex justify-end">
+              <button className="disabled:bg-[#FFDD55] mb-10 py-[7px] mt-10 px-[89px] rounded-md bg-[#FFCC00]"
+              // disabled={(!bookingInfo.firstName || bookingInfo.lastName || bookingInfo.email)}
+              onClick={() => setPage(1)}
+              >
+                CONTINUE
+              </button>
+            </div>
+
+
           </div>
-        </div>
+        </div>}
 
       </div>
 
