@@ -169,6 +169,7 @@ export default function HotelDetails() {
                 roomTypeId: hotel.roomTypes[key].id
             });
         })
+        console.log(roomTypesInfo)
         router.push({
             pathname: '/booking',
             query: {

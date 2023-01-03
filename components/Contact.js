@@ -94,7 +94,8 @@ function SignUpInfo({ formData, setFormData, bookingInfo, hotel, setPage }) {
           <div className="flex flex-col h-full w-full gap-4 text-sec-main">
 
             <div className="border-[1.5px] p-3 flex gap-3 rounded-md w-full">
-              <Image width={200} height={200} src="/img.png" className="object-cover rounded-md" />
+              {/* <Image width={200} height={200} src="/img.png" className="object-cover rounded-md" /> */}
+              <img src={hotel.imageUrl} className="w-[200px] h-[200px] object-cover rounded-md" />
               <div className="flex flex-col gap-2 w-full">
                 <p className="lg:text-xl text-base font-medium">{hotel.name}</p>
                 <div className="lg:flex lg:items-center grid grid-cols-1 lg:gap-3 gap-1 text-xs">
@@ -102,7 +103,7 @@ function SignUpInfo({ formData, setFormData, bookingInfo, hotel, setPage }) {
                   <p className="text-sec-main/70">{hotel.address.line}</p>
                 </div>
 
-                <div className="text-xs flex flex-col gap-1">
+                {/* <div className="text-xs flex flex-col gap-1">
                   <p className="font-medium uppercase">Deluxe room</p>
                   <p className="font-normal text-sec-main/70">1 bed (1 queen)</p>
                   <p className="font-normal">Free Cancellation</p>
@@ -113,7 +114,7 @@ function SignUpInfo({ formData, setFormData, bookingInfo, hotel, setPage }) {
                   <p>Free wifi</p>
                   <p>Air conditioning</p>
                   <p>Swimming pool</p>
-                </div>
+                </div> */}
 
               </div>
             </div>
