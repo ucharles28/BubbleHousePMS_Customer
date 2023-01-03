@@ -115,6 +115,8 @@ export default function HotelDetails() {
                     key: "selection",
                 },
             ])
+            setNumberOfChildren(Number(query.children))
+            setNumberOfAdults(Number(query.adults))
         }
     }, [query])
 
@@ -152,6 +154,35 @@ export default function HotelDetails() {
 
             setRoomImages(images)
         }
+    }
+
+
+    const bookNow = () => {
+        const roomTypesInfo = []
+        Object.keys(selectRooms).map((key) => {
+            if (!selectRooms[key] || selectRooms[key] < 1) {
+                return;
+            }
+            roomTypesInfo.push({
+                bookedRoooms: Number(selectRooms[key]),
+                roomPrice: Number(hotel.roomTypes[key].price),
+                roomTypeId: hotel.roomTypes[key].id
+            });
+        })
+        router.push({
+            pathname: '/booking',
+            query: {
+              hotelId: hotel.id,
+              startDate: String(dateRange[0].startDate),
+              endDate: String(dateRange[0].endDate),
+              adults: numberOfAdults,
+              children: numberOfChildren,
+              rooms: numberOfRooms,
+              nights: numberOfDays,
+              total: totalAmount,
+              roomTypesInfo: JSON.stringify(roomTypesInfo)
+            }
+          })
     }
 
     return (
@@ -209,7 +240,7 @@ export default function HotelDetails() {
                     </div>
                     <div className="max-w-[75%]">
                         <p className="my-6 text-base text-black font-medium">Select a room</p>
-                        <div className="flex gap-[39px] mb-9">
+                        {/* <div className="flex gap-[39px] mb-9">
                             <div onClick={datePickerHandler} className="flex cursor-pointer gap-2 items-center py-[10px] pl-4 pr-[158px] border-[#1A1A1A14] border rounded-md">
                                 <Calendar
                                     size={20}
@@ -249,7 +280,7 @@ export default function HotelDetails() {
                                 setNumberOfRooms={setNumberOfRooms}
                                 numberOfRooms={numberOfRooms}
                             />
-                        </div>
+                        </div> */}
                         <div className="space-y-3">
                             <div className="">
                                 <RoomType roomTypes={hotel.roomTypes} updateNumberOfRooms={updateNumberOfRooms} selectRooms={selectRooms} />
@@ -265,7 +296,9 @@ export default function HotelDetails() {
                         </p>
                         <button
                             type="button"
-                            className="rounded-md w-[70%] py-[7px] bg-[#FFCC00]"
+                            className="disabled:bg-[#FFDD55] rounded-md w-[70%] py-[7px] bg-[#FFCC00]"
+                            onClick={bookNow}
+                            disabled={totalAmount < 1}
                         >
                             Book Now
                         </button>

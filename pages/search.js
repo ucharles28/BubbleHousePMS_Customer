@@ -73,6 +73,11 @@ export default function Home() {
     })
   }
 
+  const datePickerHandler = () => {
+    console.log(openDate)
+    setOpenDate(!openDate);
+  };
+
   useEffect(() => {
     if (query) {
       const a = [
