@@ -2,25 +2,30 @@ import { Calendar, Heart, Location, People } from "iconsax-react";
 
 import React from "react";
 import Amenities from "../../components/Amenities";
-import Carousel from "../../components/Carousel";
+// import Carousel from "../../components/Carousel";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 import RoomType from "../../components/RoomType";
 import HotelList from "../../components/HotelList";
 import Navbar from "../../components/Navbar";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { get } from "../../helpers/ApiRequest";
+import { deleteData, get, post } from "../../helpers/ApiRequest";
 import HotelSearch from "../../components/HotelSearch";
 import { CircularProgress } from "@mui/material";
 import Footer from "../../components/Footer";
-import { ClipLoader } from "react-spinners";
+import { BounceLoader, ClipLoader } from "react-spinners";
 import { format } from "date-fns";
 import PopoverDisplay from "../../components/PopoverDisplay";
 import { DateRange } from "@mui/icons-material";
+import { useUser } from '../../context/user';
 
 
 export default function HotelDetails() {
     const router = useRouter();
     const { query } = router;
+    const { user } = useUser();
+
 
     const [hotel, setHotel] = useState();
     const [roomTypeImages, setRoomTypeImages] = useState();
@@ -31,7 +36,9 @@ export default function HotelDetails() {
     const [numberOfRooms, setNumberOfRooms] = useState(0);
     const [numberOfDays, setNumberOfDays] = useState(0);
     const [dateRange, setDateRange] = useState();
-    const [isSaved, setIsSaved] = useState();
+    const [isSaved, setIsSaved] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [saveHotelIsLoading, setSaveHotelIsLoading] = useState(false);
     const [numberOfAdults, setNumberOfAdults] = useState(0);
     const [numberOfChildren, setNumberOfChildren] = useState(0);
     const [rooms, setRooms] = useState(0);
@@ -41,6 +48,8 @@ export default function HotelDetails() {
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
+
+
 
     const updateNumberOfRooms = async (isAdd, index) => {
         const obj = { ...selectRooms }
@@ -55,23 +64,10 @@ export default function HotelDetails() {
         setSelectedRooms(obj)
     }
 
-    // const updateNumberOfRooms = async (isAdd, index) => {
-    //     const obj = { ...selectRooms }
-    //     if (obj[index]) {
-    //         if (!isAdd && obj[index] < 1) {
-    //             return;
-    //         }
-    //         obj[index] = isAdd ? obj[index] + 1 : obj[index] - 1;
-    //     } else {
-    //         obj[index] = 1;
-    //     }
-    //     setSelectedRooms(obj)
-    // }
-
     const datePickerHandler = () => {
         console.log(openDate)
         setOpenDate(!openDate);
-      };
+    };
 
     function dateDiffInDays(a, b) {
         const _MS_PER_DAY = 1000 * 60 * 60 * 24;
@@ -86,28 +82,25 @@ export default function HotelDetails() {
         superLargeDesktop: {
             // the naming can be any, depends on you.
             breakpoint: { max: 4000, min: 3000 },
-            items: 4,
+            items: 5
         },
         desktop: {
-            //desktop
             breakpoint: { max: 3000, min: 1024 },
-            items: 3,
+            items: 3
         },
         tablet: {
-            //tablet
             breakpoint: { max: 1024, min: 464 },
-            items: 2,
+            items: 2
         },
         mobile: {
-            //mobile
             breakpoint: { max: 464, min: 0 },
-            items: 1,
-        },
+            items: 1
+        }
     };
 
     useEffect(() => {
         if (query) {
-            getHotelById(query.hotelId)
+            getHotelDetails(query.hotelId)
             setDateRange([
                 {
                     startDate: new Date(query.startDate),
@@ -139,25 +132,77 @@ export default function HotelDetails() {
 
     }, [selectRooms])
 
-    const getHotelById = async (id) => {
-        const response = await get(`Hotel/${id}`)
+    const getHotelDetails = async (id) => {
+        setIsLoading(true)
+        if (user) {
+            const responses = await Promise.all([
+                get(`Hotel/${id}`),
+                get(`SavedHotel?customerId=${user.id}&hotelId=${id}`)
+            ])
 
-        if (response.successful) {
-            console.log(response.data)
-            setHotel(response.data)
-            const images = []
-            response.data.roomTypes.map((roomType) => {
-                roomType.images.map((image) => {
-                    images.push(image.imageUrl)
-                })
-            })
+            if (responses[0].successful) {
+                setHotel(responses[0].data)
+                getRoomImages(responses[0].data.roomTypes)
+            }
 
-            setRoomImages(images)
+            if (responses[1].successful) {
+                setIsSaved(responses[1].data)
+            }
+
+        } else {
+            const response = await get(`Hotel/${id}`)
+
+            if (response.successful) {
+                setHotel(response.data)
+                getRoomImages(response.data.roomTypes)
+            }
         }
+        setIsLoading(false)
+    }
+
+    const getRoomImages = (roomTypes) => {
+        const images = []
+        roomTypes.map((roomType) => {
+            roomType.images.map((image) => {
+                images.push(image.imageUrl)
+            })
+        })
+
+        setRoomImages(images)
+    }
+
+    const saveHotel = async () => {
+        setSaveHotelIsLoading(true)
+        if (!isSaved) {
+            if (user) {
+                const request = {
+                    hotelId: hotel.id,
+                    userId: user.id
+                }
+                const response = await post('SavedHotel', request)
+                if (response.successful) {
+                    setIsSaved(true);
+                }
+            } else {
+                setTimeout(() => {
+                    setIsSaved(true);
+                }, 2000);
+            }
+        } else {
+            const response = await deleteData(`SavedHotel?customerId=${user.id}&hotelId=${hotel.id}`)
+            if (response.successful) {
+                setIsSaved(false);
+            } else {
+                setTimeout(() => {
+                    setIsSaved(false);
+                }, 2000);
+            }
+        }
+        setSaveHotelIsLoading(false)
     }
 
 
-    const bookNow = () => {
+    const gotoBookingInfo = () => {
         const roomTypesInfo = []
         Object.keys(selectRooms).map((key) => {
             if (!selectRooms[key] || selectRooms[key] < 1) {
@@ -173,22 +218,22 @@ export default function HotelDetails() {
         router.push({
             pathname: '/booking',
             query: {
-              hotelId: hotel.id,
-              startDate: String(dateRange[0].startDate),
-              endDate: String(dateRange[0].endDate),
-              adults: numberOfAdults,
-              children: numberOfChildren,
-              rooms: numberOfRooms,
-              nights: numberOfDays,
-              total: totalAmount,
-              roomTypesInfo: JSON.stringify(roomTypesInfo)
+                hotelId: hotel.id,
+                startDate: String(dateRange[0].startDate),
+                endDate: String(dateRange[0].endDate),
+                adults: numberOfAdults,
+                children: numberOfChildren,
+                rooms: numberOfRooms,
+                nights: numberOfDays,
+                total: totalAmount,
+                roomTypesInfo: JSON.stringify(roomTypesInfo)
             }
-          })
+        })
     }
 
     return (
         <section className="font-poppins">
-            {hotel && <div className="max-w-[1200px] mx-auto px-10">
+            {!isLoading ? hotel && <div className="max-w-[1200px] mx-auto px-10">
                 <div className="header mt-5 flex justify-between items-center mx-3">
                     <div className="hotelInfo">
                         <h3 className="text-2xl font-bold">{hotel.name}</h3>
@@ -203,9 +248,9 @@ export default function HotelDetails() {
                         </div>
                     </div>
                     <div className="book flex items-center ">
-                        <div className="p-2 flex items-center justify-center hover:bg-[#ffcc006b] mr-2 cursor-pointer">
-                            {/* <Heart size={20} className="" /> */}
-                            <ClipLoader size={20} color="#FFCC00" />
+                        <div onClick={saveHotel} className="p-2 flex items-center justify-center hover:bg-[#ffcc003b] mr-2 cursor-pointer">
+                            {!saveHotelIsLoading ? <Heart size={20} color={isSaved ? "#FE4164" : "#1A1A1ADE"} variant={isSaved ? "Bold" : "Outline"} />
+                                : <ClipLoader size={20} color="#FFCC00" />}
                         </div>
                         <button
                             type="button"
@@ -215,7 +260,19 @@ export default function HotelDetails() {
                         </button>
                     </div>
                 </div>
-                <Carousel show={4} responsive={responsive}>
+                <Carousel swipeable={true}
+                    draggable={false}
+                    // showDots={true}
+                    responsive={responsive}
+                    ssr={true} // means to render carousel on server-side.
+                    // infinite={true}
+                    arrows={true}
+                    customTransition="all .5"
+                    transitionDuration={500}
+                    containerClass="carousel-container"
+                    removeArrowOnDeviceType={["tablet", "mobile"]}
+                    dotListClass="custom-dot-list-style"
+                    itemClass="carousel-item-padding-40-px">
                     {roomImages.map((image) => (<div className="md:mt-3">
                         <div className="rounded-lg mr-3">
                             <img
@@ -298,7 +355,7 @@ export default function HotelDetails() {
                         <button
                             type="button"
                             className="disabled:bg-[#FFDD55] rounded-md w-[70%] py-[7px] bg-[#FFCC00]"
-                            onClick={bookNow}
+                            onClick={gotoBookingInfo}
                             disabled={totalAmount < 1}
                         >
                             Book Now
@@ -306,6 +363,19 @@ export default function HotelDetails() {
                     </div>
                     <div className="my-5">
                         <HotelList title={`Nearby Hotels to ${hotel.name}`} />
+                    </div>
+                </div>
+            </div> : <div className="w-full">
+                <div className="flex flex-col items-center justify-center">
+                    <div className="lg:w-2/5 md:w-1/2 pt-10 pl-4 pr-4 justify-center lg:my-16 sm:my-5">
+                        <div className="m-12 pt-14 flex flex-col items-center justify-center">
+                            <BounceLoader
+                                heigth={200}
+                                width={200}
+                                color="#FFCC00"
+                                ariaLabel="loading-indicator"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>}

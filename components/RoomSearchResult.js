@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { roomDetails } from "./RoomDetailsData";
 
-const RoomSearchResult = ({ hotels, gotoDetails }) => {
+const RoomSearchResult = ({ hotels, gotoDetails, children, adults, rooms, dateRange }) => {
   const roomInfo = roomDetails;
   console.log(roomInfo);
 
@@ -21,7 +21,19 @@ const RoomSearchResult = ({ hotels, gotoDetails }) => {
               />
               <div className="space-y-4">
                 <div>
-                  <h4 className="font-extrabold">{hotel.name}</h4>
+                  <Link href={{
+                    pathname: '/hotel/details',
+                    query: {
+                      hotelId: hotel.id,
+                      startDate: String(dateRange[0].startDate),
+                      endDate: String(dateRange[0].endDate),
+                      adults: adults,
+                      children: children,
+                      rooms: rooms,
+                    }
+                  }}>
+                    <h4 className="font-extrabold">{hotel.name}</h4>
+                  </Link>
                   <span className="my-2 space-x-2">
                     <small className="text-[10.7px] font-semibold">
                       {hotel.address.area}

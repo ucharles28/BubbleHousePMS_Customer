@@ -18,14 +18,11 @@ import { SentimentVeryDissatisfiedOutlined } from "@mui/icons-material";
 
 const dommyData = data;
 
-const HotelSearch = () => {
+const HotelSearch = ({numberOfAdults, setNumberOfAdults, numberOfChildren, setNumberOfChildren, numberOfRooms, setNumberOfRooms, dateRange, setDateRange}) => {
   const router = useRouter();
   const inputRef = useRef(null);
   const autoCompleteRef = useRef(null);
   const [query, setQuery] = useState("");
-  const [numberOfAdults, setNumberOfAdults] = useState(2);
-  const [numberOfChildren, setNumberOfChildren] = useState(0);
-  const [numberOfRooms, setNumberOfRooms] = useState(1);
   const [searchIsLoading, setSearchIsLoading] = useState(false);
   const [hotels, setHotels] = useState([]);
   const [places, setPlaces] = useState([]);
@@ -140,14 +137,7 @@ const HotelSearch = () => {
     });
   }
 
-  // State for displaying date library
-  const [dateRange, setDateRange] = useState([
-    {
-      startDate: new Date(),
-      endDate: new Date(new Date().setDate(new Date().getDate() + 1)),
-      key: "selection",
-    },
-  ]);
+  
 
   const [openDate, setOpenDate] = useState(false);
 

@@ -232,7 +232,8 @@ export default function Home() {
               </div>
             </div>
             <div className="">
-              <RoomSearchResult hotels={hotelResults} gotoDetails={gotoDetails} />
+              <RoomSearchResult hotels={hotelResults} gotoDetails={gotoDetails} children={numberOfChildren} adults={numberOfAdults} 
+              rooms={numberOfRooms} dateRange={dateRange}/>
             </div>
           </div> :
           <div className="w-full">
