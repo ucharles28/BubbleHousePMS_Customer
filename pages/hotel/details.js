@@ -18,247 +18,247 @@ import { BounceLoader, ClipLoader } from "react-spinners";
 import { format } from "date-fns";
 import PopoverDisplay from "../../components/PopoverDisplay";
 import { DateRange } from "@mui/icons-material";
-import { useUser } from '../../context/user';
-
+import { useUser } from "../../context/user";
 
 export default function HotelDetails() {
-    const router = useRouter();
-    const { query } = router;
-    const { user } = useUser();
+  const router = useRouter();
+  const { query } = router;
+  const { user } = useUser();
 
+  const [hotel, setHotel] = useState();
+  const [roomTypeImages, setRoomTypeImages] = useState();
+  const [selectRooms, setSelectedRooms] = useState({});
+  const [roomImages, setRoomImages] = useState([]);
+  // const [amenties, setRoomImages] = useState([]);
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [numberOfRooms, setNumberOfRooms] = useState(0);
+  const [numberOfDays, setNumberOfDays] = useState(0);
+  const [dateRange, setDateRange] = useState();
+  const [isSaved, setIsSaved] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [saveHotelIsLoading, setSaveHotelIsLoading] = useState(false);
+  const [numberOfAdults, setNumberOfAdults] = useState(0);
+  const [numberOfChildren, setNumberOfChildren] = useState(0);
+  const [rooms, setRooms] = useState(0);
+  const [openDate, setOpenDate] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
 
-    const [hotel, setHotel] = useState();
-    const [roomTypeImages, setRoomTypeImages] = useState();
-    const [selectRooms, setSelectedRooms] = useState({});
-    const [roomImages, setRoomImages] = useState([]);
-    // const [amenties, setRoomImages] = useState([]);
-    const [totalAmount, setTotalAmount] = useState(0);
-    const [numberOfRooms, setNumberOfRooms] = useState(0);
-    const [numberOfDays, setNumberOfDays] = useState(0);
-    const [dateRange, setDateRange] = useState();
-    const [isSaved, setIsSaved] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-    const [saveHotelIsLoading, setSaveHotelIsLoading] = useState(false);
-    const [numberOfAdults, setNumberOfAdults] = useState(0);
-    const [numberOfChildren, setNumberOfChildren] = useState(0);
-    const [rooms, setRooms] = useState(0);
-    const [openDate, setOpenDate] = useState(false);
-    const [anchorEl, setAnchorEl] = useState(null);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-
-
-    const updateNumberOfRooms = async (isAdd, index) => {
-        const obj = { ...selectRooms }
-        if (obj[index]) {
-            if (!isAdd && obj[index] < 1) {
-                return;
-            }
-            obj[index] = isAdd ? obj[index] + 1 : obj[index] - 1;
-        } else {
-            obj[index] = 1;
-        }
-        setSelectedRooms(obj)
+  const updateNumberOfRooms = async (isAdd, index) => {
+    const obj = { ...selectRooms };
+    if (obj[index]) {
+      if (!isAdd && obj[index] < 1) {
+        return;
+      }
+      obj[index] = isAdd ? obj[index] + 1 : obj[index] - 1;
+    } else {
+      obj[index] = 1;
     }
+    setSelectedRooms(obj);
+  };
 
-    const datePickerHandler = () => {
-        console.log(openDate)
-        setOpenDate(!openDate);
-    };
+  const datePickerHandler = () => {
+    console.log(openDate);
+    setOpenDate(!openDate);
+  };
 
-    function dateDiffInDays(a, b) {
-        const _MS_PER_DAY = 1000 * 60 * 60 * 24;
-        // Discard the time and time-zone information.
-        const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
-        const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+  function dateDiffInDays(a, b) {
+    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+    // Discard the time and time-zone information.
+    const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+    const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
 
-        return Math.floor((utc2 - utc1) / _MS_PER_DAY);
-    }
+    return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+  }
 
-    const responsive = {
-        superLargeDesktop: {
-            // the naming can be any, depends on you.
-            breakpoint: { max: 4000, min: 3000 },
-            items: 5
+  const responsive = {
+    superLargeDesktop: {
+      // the naming can be any, depends on you.
+      breakpoint: { max: 4000, min: 3000 },
+      items: 5,
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 3,
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2,
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+    },
+  };
+
+  useEffect(() => {
+    if (query) {
+      getHotelDetails(query.hotelId);
+      setDateRange([
+        {
+          startDate: new Date(query.startDate),
+          endDate: new Date(query.endDate),
+          key: "selection",
         },
-        desktop: {
-            breakpoint: { max: 3000, min: 1024 },
-            items: 3
-        },
-        tablet: {
-            breakpoint: { max: 1024, min: 464 },
-            items: 2
-        },
-        mobile: {
-            breakpoint: { max: 464, min: 0 },
-            items: 1
-        }
-    };
-
-    useEffect(() => {
-        if (query) {
-            getHotelDetails(query.hotelId)
-            setDateRange([
-                {
-                    startDate: new Date(query.startDate),
-                    endDate: new Date(query.endDate),
-                    key: "selection",
-                },
-            ])
-            setNumberOfChildren(Number(query.children))
-            setNumberOfAdults(Number(query.adults))
-        }
-    }, [query])
-
-    useEffect(() => {
-        let totalAmount = 0
-        let numberOfRooms = 0
-        Object.keys(selectRooms).map((key) => {
-            if (!selectRooms[key] || selectRooms[key] < 1) {
-                return;
-            }
-
-            numberOfRooms += Number(selectRooms[key])
-            totalAmount += Number(hotel.roomTypes[key].price) * Number(selectRooms[key])
-        })
-        setNumberOfRooms(numberOfRooms)
-        setTotalAmount(totalAmount)
-        if (dateRange) {
-            setNumberOfDays(dateDiffInDays(dateRange[0].startDate, dateRange[0].endDate))
-        }
-
-    }, [selectRooms])
-
-    const getHotelDetails = async (id) => {
-        setIsLoading(true)
-        if (user) {
-            const responses = await Promise.all([
-                get(`Hotel/${id}`),
-                get(`SavedHotel?customerId=${user.id}&hotelId=${id}`)
-            ])
-
-            if (responses[0].successful) {
-                setHotel(responses[0].data)
-                getRoomImages(responses[0].data.roomTypes)
-            }
-
-            if (responses[1].successful) {
-                setIsSaved(responses[1].data)
-            }
-
-        } else {
-            const response = await get(`Hotel/${id}`)
-
-            if (response.successful) {
-                setHotel(response.data)
-                getRoomImages(response.data.roomTypes)
-            }
-        }
-        setIsLoading(false)
+      ]);
+      setNumberOfChildren(Number(query.children));
+      setNumberOfAdults(Number(query.adults));
     }
+  }, [query]);
 
-    const getRoomImages = (roomTypes) => {
-        const images = []
-        roomTypes.map((roomType) => {
-            roomType.images.map((image) => {
-                images.push(image.imageUrl)
-            })
-        })
+  useEffect(() => {
+    let totalAmount = 0;
+    let numberOfRooms = 0;
+    Object.keys(selectRooms).map((key) => {
+      if (!selectRooms[key] || selectRooms[key] < 1) {
+        return;
+      }
 
-        setRoomImages(images)
+      numberOfRooms += Number(selectRooms[key]);
+      totalAmount +=
+        Number(hotel.roomTypes[key].price) * Number(selectRooms[key]);
+    });
+    setNumberOfRooms(numberOfRooms);
+    setTotalAmount(totalAmount);
+    if (dateRange) {
+      setNumberOfDays(
+        dateDiffInDays(dateRange[0].startDate, dateRange[0].endDate)
+      );
     }
+  }, [selectRooms]);
 
-    const saveHotel = async () => {
-        setSaveHotelIsLoading(true)
-        if (!isSaved) {
-            if (user) {
-                const request = {
-                    hotelId: hotel.id,
-                    userId: user.id
-                }
-                const response = await post('SavedHotel', request)
-                if (response.successful) {
-                    setIsSaved(true);
-                }
-            } else {
-                setTimeout(() => {
-                    setIsSaved(true);
-                }, 2000);
-            }
-        } else {
-            const response = await deleteData(`SavedHotel?customerId=${user.id}&hotelId=${hotel.id}`)
-            if (response.successful) {
-                setIsSaved(false);
-            } else {
-                setTimeout(() => {
-                    setIsSaved(false);
-                }, 2000);
-            }
+  const getHotelDetails = async (id) => {
+    setIsLoading(true);
+    if (user) {
+      const responses = await Promise.all([
+        get(`Hotel/${id}`),
+        get(`SavedHotel?customerId=${user.id}&hotelId=${id}`),
+      ]);
+
+      if (responses[0].successful) {
+        setHotel(responses[0].data);
+        getRoomImages(responses[0].data.roomTypes);
+      }
+
+      if (responses[1].successful) {
+        setIsSaved(responses[1].data);
+      }
+    } else {
+      const response = await get(`Hotel/${id}`);
+
+      if (response.successful) {
+        setHotel(response.data);
+        getRoomImages(response.data.roomTypes);
+      }
+    }
+    setIsLoading(false);
+  };
+
+  const getRoomImages = (roomTypes) => {
+    const images = [];
+    roomTypes.map((roomType) => {
+      roomType.images.map((image) => {
+        images.push(image.imageUrl);
+      });
+    });
+
+    setRoomImages(images);
+  };
+
+  const saveHotel = async () => {
+    setSaveHotelIsLoading(true);
+    if (!isSaved) {
+      if (user) {
+        const request = {
+          hotelId: hotel.id,
+          userId: user.id,
+        };
+        const response = await post("SavedHotel", request);
+        if (response.successful) {
+          setIsSaved(true);
         }
-        setSaveHotelIsLoading(false)
+      } else {
+        setTimeout(() => {
+          setIsSaved(true);
+        }, 2000);
+      }
+    } else {
+      const response = await deleteData(
+        `SavedHotel?customerId=${user.id}&hotelId=${hotel.id}`
+      );
+      if (response.successful) {
+        setIsSaved(false);
+      } else {
+        setTimeout(() => {
+          setIsSaved(false);
+        }, 2000);
+      }
     }
+    setSaveHotelIsLoading(false);
+  };
 
+  const gotoBookingInfo = () => {
+    const roomTypesInfo = [];
+    Object.keys(selectRooms).map((key) => {
+      if (!selectRooms[key] || selectRooms[key] < 1) {
+        return;
+      }
+      roomTypesInfo.push({
+        bookedRoooms: Number(selectRooms[key]),
+        roomPrice: Number(hotel.roomTypes[key].price),
+        roomTypeId: hotel.roomTypes[key].id,
+      });
+    });
+    console.log(roomTypesInfo);
+    router.push({
+      pathname: "/booking",
+      query: {
+        hotelId: hotel.id,
+        startDate: String(dateRange[0].startDate),
+        endDate: String(dateRange[0].endDate),
+        adults: numberOfAdults,
+        children: numberOfChildren,
+        rooms: numberOfRooms,
+        nights: numberOfDays,
+        total: totalAmount,
+        roomTypesInfo: JSON.stringify(roomTypesInfo),
+      },
+    });
+  };
 
-    const gotoBookingInfo = () => {
-        const roomTypesInfo = []
-        Object.keys(selectRooms).map((key) => {
-            if (!selectRooms[key] || selectRooms[key] < 1) {
-                return;
-            }
-            roomTypesInfo.push({
-                bookedRoooms: Number(selectRooms[key]),
-                roomPrice: Number(hotel.roomTypes[key].price),
-                roomTypeId: hotel.roomTypes[key].id
-            });
-        })
-        console.log(roomTypesInfo)
-        router.push({
-            pathname: '/booking',
-            query: {
-                hotelId: hotel.id,
-                startDate: String(dateRange[0].startDate),
-                endDate: String(dateRange[0].endDate),
-                adults: numberOfAdults,
-                children: numberOfChildren,
-                rooms: numberOfRooms,
-                nights: numberOfDays,
-                total: totalAmount,
-                roomTypesInfo: JSON.stringify(roomTypesInfo)
-            }
-        })
-    }
+  return (
+    <section className="font-poppins">
+      {!isLoading ? (
+        hotel && (
+          <div className="max-w-[1200px] md:mx-auto md:px-10 mx-4">
+            <div className="header mt-5 flex justify-between md:items-center mx-3">
+              <div className="hotelInfo">
+                <h3 className=" text-lg md:text-2xl font-bold">{hotel.name}</h3>
 
-    return (
-        <section className="font-poppins">
-            {!isLoading ? hotel && <div className="max-w-[1200px] mx-auto px-10">
-                <div className="header mt-5 flex justify-between items-center mx-3">
-                    <div className="hotelInfo">
-                        <h3 className="text-2xl font-bold">{hotel.name}</h3>
-
-                        <div className="text-[12px] flex items-center">
-                            <span className="mr-1">
-                                <Location size={17} />
-                            </span>
-                            <p className="text-sm">
-                                {hotel.address.line}
-                            </p>
-                        </div>
-                    </div>
-                    <div className="book flex items-center ">
-                        <div onClick={saveHotel} className="p-2 flex items-center justify-center hover:bg-[#ffcc003b] mr-2 cursor-pointer">
-                            {!saveHotelIsLoading ? <Heart size={20} color={isSaved ? "#FE4164" : "#1A1A1ADE"} variant={isSaved ? "Bold" : "Outline"} />
-                                : <ClipLoader size={20} color="#FFCC00" />}
-                        </div>
-                        <button
-                            type="button"
-                            className="text-end  py-[7px] px-5 rounded-[5px] bg-[#FFCC00]"
-                        >
-                            BOOK NOW
-                        </button>
-                    </div>
+                <div className="text-[12px] mt-2 mt:0 flex items-center">
+                  <span className="mr-1">
+                    <Location size={17} />
+                  </span>
+                  <p className="text-xs">{hotel.address.line}</p>
+                </div>
+              </div>
+              <div className="book flex items-center ">
+                <div
+                  onClick={saveHotel}
+                  className="p-2 flex items-center justify-center hover:bg-[#ffcc003b] md:mr-2 cursor-pointer"
+                >
+                  {!saveHotelIsLoading ? (
+                    <Heart
+                      size={20}
+                      color={isSaved ? "#FE4164" : "#1A1A1ADE"}
+                      variant={isSaved ? "Bold" : "Outline"}
+                    />
+                  ) : (
+                    <ClipLoader size={20} color="#FFCC00" />
+                  )}
                 </div>
                 <Carousel containerClass="container" responsive={responsive}>
                     {roomImages.map((image) => (<div className="md:mt-3">
@@ -272,21 +272,61 @@ export default function HotelDetails() {
                     </div>))}
                 </Carousel>
                 <div>
-                    <p className="my-3">
-                        {hotel.description}
-                    </p>
+                  <button
+                    type="button"
+                    className="text-end py-[7px] px-5 rounded-[5px] bg-[#FFCC00] hidden md:block"
+                  >
+                    BOOK NOW
+                  </button>
+                  <span className="block md:hidden border rounded-t-xl p-2 pb-1 text-[13px] font-bold bg-[#139CE0] text-white">
+                    8.2
+                  </span>
                 </div>
-                {/* popular destinations */}
-                <div className="my-3">
-                    <h3 className="font-semibold">Most popular facilities</h3>
-                    <div className="mt-5 w-[65%]">
-                        <hr />
-                        <Amenities />
-                        <hr />
-                    </div>
-                    <div className="max-w-[75%]">
-                        <p className="my-6 text-base text-black font-medium">Select a room</p>
-                        {/* <div className="flex gap-[39px] mb-9">
+              </div>
+            </div>
+            <Carousel
+              swipeable={true}
+              draggable={false}
+              // showDots={true}
+              responsive={responsive}
+              ssr={true} // means to render carousel on server-side.
+              // infinite={true}
+              arrows={true}
+              customTransition="all .5"
+              transitionDuration={500}
+              containerClass="carousel-container"
+              removeArrowOnDeviceType={["tablet", "mobile"]}
+              dotListClass="custom-dot-list-style"
+              itemClass="carousel-item-padding-40-px"
+            >
+              {roomImages.map((image) => (
+                <div className="md:mt-3">
+                  <div className="rounded-lg mr-3">
+                    <img
+                      className="object-cover w-[500px] h-[300px] rounded-lg"
+                      alt="name"
+                      src={image}
+                    />
+                  </div>
+                </div>
+              ))}
+            </Carousel>
+            <div>
+              <p className="my-3">{hotel.description}</p>
+            </div>
+            {/* popular destinations */}
+            <div className="my-3">
+              <h3 className="font-semibold">Most popular facilities</h3>
+              <div className="mt-5 w-[100%] md:w-[65%]">
+                <hr />
+                <Amenities />
+                <hr />
+              </div>
+              <div className="max-w-[75%]">
+                <p className="my-6 text-base text-black font-medium">
+                  Select a room
+                </p>
+                {/* <div className="flex gap-[39px] mb-9">
                             <div onClick={datePickerHandler} className="flex cursor-pointer gap-2 items-center py-[10px] pl-4 pr-[158px] border-[#1A1A1A14] border rounded-md">
                                 <Calendar
                                     size={20}
@@ -327,47 +367,56 @@ export default function HotelDetails() {
                                 numberOfRooms={numberOfRooms}
                             />
                         </div> */}
-                        <div className="space-y-3">
-                            <div className="">
-                                <RoomType roomTypes={hotel.roomTypes} updateNumberOfRooms={updateNumberOfRooms} selectRooms={selectRooms} />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="text-center mt-7 space-y-3 font-semibold">
-                        <p>
-                            <span>{numberOfRooms} Rooms </span> ,<span>{numberOfDays} Night</span>
-                        </p>
-                        <p>
-                            Total Price:<span> ₦{totalAmount.toLocaleString()}</span>
-                        </p>
-                        <button
-                            type="button"
-                            className="disabled:bg-[#FFDD55] rounded-md w-[70%] py-[7px] bg-[#FFCC00]"
-                            onClick={gotoBookingInfo}
-                            disabled={totalAmount < 1}
-                        >
-                            Book Now
-                        </button>
-                    </div>
-                    <div className="my-5">
-                        <HotelList title={`Nearby Hotels to ${hotel.name}`} />
-                    </div>
+                <div className="space-y-3">
+                  <div className="">
+                    <RoomType
+                      roomTypes={hotel.roomTypes}
+                      updateNumberOfRooms={updateNumberOfRooms}
+                      selectRooms={selectRooms}
+                    />
+                  </div>
                 </div>
-            </div> : <div className="w-full">
-                <div className="flex flex-col items-center justify-center">
-                    <div className="lg:w-2/5 md:w-1/2 pt-10 pl-4 pr-4 justify-center lg:my-16 sm:my-5">
-                        <div className="m-12 pt-14 flex flex-col items-center justify-center">
-                            <BounceLoader
-                                heigth={200}
-                                width={200}
-                                color="#FFCC00"
-                                ariaLabel="loading-indicator"
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>}
-            <Footer />
-        </section>
-    );
-};
+              </div>
+              <div className="text-center mt-7 space-y-3 font-semibold">
+                <p>
+                  <span>{numberOfRooms} Rooms </span> ,
+                  <span>{numberOfDays} Night</span>
+                </p>
+                <p>
+                  Total Price:<span> ₦{totalAmount.toLocaleString()}</span>
+                </p>
+                <button
+                  type="button"
+                  className="disabled:bg-[#FFDD55] rounded-md w-[70%] py-[7px] bg-[#FFCC00]"
+                  onClick={gotoBookingInfo}
+                  disabled={totalAmount < 1}
+                >
+                  Book Now
+                </button>
+              </div>
+              <div className="my-5">
+                <HotelList title={`Nearby Hotels to ${hotel.name}`} />
+              </div>
+            </div>
+          </div>
+        )
+      ) : (
+        <div className="w-full">
+          <div className="flex flex-col items-center justify-center">
+            <div className="lg:w-2/5 md:w-1/2 pt-10 pl-4 pr-4 justify-center lg:my-16 sm:my-5">
+              <div className="m-12 pt-14 flex flex-col items-center justify-center">
+                <BounceLoader
+                  heigth={200}
+                  width={200}
+                  color="#FFCC00"
+                  ariaLabel="loading-indicator"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      <Footer />
+    </section>
+  );
+}
