@@ -8,17 +8,16 @@ import { useRouter } from "next/router";
 import { get } from "../helpers/ApiRequest";
 import data from "../pages/api/HotelSerMockData/MOCK_DATA.json";
 import styles from "../styles/HotelSearch.module.css";
-
-// import { DatePicker, Space } from "antd";
 import { People } from "iconsax-react";
 import PopoverDisplay from "./PopoverDisplay";
 import { style } from "@mui/system";
 import { Puff } from "react-loader-spinner";
+import { BounceLoader } from "react-spinners";
 import { SentimentVeryDissatisfiedOutlined } from "@mui/icons-material";
 
 const dommyData = data;
 
-const HotelSearch = ({numberOfAdults, setNumberOfAdults, numberOfChildren, setNumberOfChildren, numberOfRooms, setNumberOfRooms, dateRange, setDateRange}) => {
+const HotelSearch = ({ numberOfAdults, setNumberOfAdults, numberOfChildren, setNumberOfChildren, numberOfRooms, setNumberOfRooms, dateRange, setDateRange }) => {
   const router = useRouter();
   const inputRef = useRef(null);
   const autoCompleteRef = useRef(null);
@@ -137,7 +136,7 @@ const HotelSearch = ({numberOfAdults, setNumberOfAdults, numberOfChildren, setNu
     });
   }
 
-  
+
 
   const [openDate, setOpenDate] = useState(false);
 
@@ -262,7 +261,7 @@ const HotelSearch = ({numberOfAdults, setNumberOfAdults, numberOfChildren, setNu
             <div className={styles.dropdown}>
               {searchIsLoading && (
                 <div className="flex flex-col items-end m-0 p-0 justify-start">
-                  <Puff
+                  <BounceLoader
                     heigth={20}
                     width={20}
                     color="#FFCC00"

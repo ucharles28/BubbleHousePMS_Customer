@@ -10,6 +10,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { BsCalendar } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import { DatePicker, Space } from "antd";
 import { People } from "iconsax-react";
 import { useRouter } from "next/router";
@@ -18,7 +19,6 @@ import Link from "next/link";
 import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import PopoverDisplay from "../components/PopoverDisplay";
-
 import RoomSearchResult from "../components/RoomSearchResult";
 import { BounceLoader } from "react-spinners";
 
@@ -125,11 +125,9 @@ export default function Home() {
   };
 
   return (
-    <section className="font-poppins">
-      <div className="relative">
-        <Navbar />
-      </div>
-      <div className="absolute top-20 w-full">
+    <div className="h-screen font-poppins">
+      <Navbar />
+      <div className="w-full py-24 mx-auto lg:px-10 px-4">
         <div className="max-w-[100%] md:max-w-[85%] md:mx-auto w-full flex-wrap mx-4 flex gap-5">
           <div className="md:block">
             <form className=" bg-[#FFCC00] p-3 space-y-3 rounded-lg sticky top-20 ">
@@ -274,7 +272,8 @@ export default function Home() {
           )}
         </div>
       </div>
-    </section>
+      <Footer />
+    </div>
   );
 
   {
