@@ -260,19 +260,7 @@ export default function HotelDetails() {
                         </button>
                     </div>
                 </div>
-                <Carousel swipeable={true}
-                    draggable={false}
-                    // showDots={true}
-                    responsive={responsive}
-                    ssr={true} // means to render carousel on server-side.
-                    // infinite={true}
-                    arrows={true}
-                    customTransition="all .5"
-                    transitionDuration={500}
-                    containerClass="carousel-container"
-                    removeArrowOnDeviceType={["tablet", "mobile"]}
-                    dotListClass="custom-dot-list-style"
-                    itemClass="carousel-item-padding-40-px">
+                <Carousel containerClass="container" responsive={responsive}>
                     {roomImages.map((image) => (<div className="md:mt-3">
                         <div className="rounded-lg mr-3">
                             <img
