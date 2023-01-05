@@ -2,7 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { roomDetails } from "./RoomDetailsData";
 
-const RoomSearchResult = ({ hotels, gotoDetails, children, adults, rooms, dateRange }) => {
+const RoomSearchResult = ({
+  hotels,
+  gotoDetails,
+  children,
+  adults,
+  rooms,
+  dateRange,
+}) => {
   const roomInfo = roomDetails;
   console.log(roomInfo);
 
@@ -11,7 +18,7 @@ const RoomSearchResult = ({ hotels, gotoDetails, children, adults, rooms, dateRa
       {hotels.map((hotel) => {
         return (
           <div
-            className="border-2 my-3 py-3 px-4 flex justify-between"
+            className="border-2 my-3 py-3 px-4 flex-wrap md:flex justify-between"
             key={hotel.id}
           >
             <div className="left flex space-x-3">
@@ -21,17 +28,19 @@ const RoomSearchResult = ({ hotels, gotoDetails, children, adults, rooms, dateRa
               />
               <div className="space-y-4">
                 <div>
-                  <Link href={{
-                    pathname: '/hotel/details',
-                    query: {
-                      hotelId: hotel.id,
-                      startDate: String(dateRange[0].startDate),
-                      endDate: String(dateRange[0].endDate),
-                      adults: adults,
-                      children: children,
-                      rooms: rooms,
-                    }
-                  }}>
+                  <Link
+                    href={{
+                      pathname: "/hotel/details",
+                      query: {
+                        hotelId: hotel.id,
+                        startDate: String(dateRange[0].startDate),
+                        endDate: String(dateRange[0].endDate),
+                        adults: adults,
+                        children: children,
+                        rooms: rooms,
+                      },
+                    }}
+                  >
                     <h4 className="font-extrabold">{hotel.name}</h4>
                   </Link>
                   <span className="my-2 space-x-2">
@@ -51,7 +60,12 @@ const RoomSearchResult = ({ hotels, gotoDetails, children, adults, rooms, dateRa
                 </div>
 
                 <div className="font-bold flex flex-wrap w-[70%]">
-                  {hotel.roomType.roomAmenities && hotel.roomType.roomAmenities.map((amenties) => (<span className="mr-3 font-semibold text-xs">{amenties.amenity.title}</span>))}
+                  {hotel.roomType.roomAmenities &&
+                    hotel.roomType.roomAmenities.map((amenties) => (
+                      <span className="mr-3 font-semibold text-xs">
+                        {amenties.amenity.title}
+                      </span>
+                    ))}
                   {/* <span className="mr-3 font-semibold text-xs">
                     Air conditioning
                   </span>
@@ -61,15 +75,19 @@ const RoomSearchResult = ({ hotels, gotoDetails, children, adults, rooms, dateRa
               </div>
             </div>
             <div className="right flex flex-col justify-between">
-              <div className="">
-                <small className="opacity-50">Includes taxes and fees</small>
-                <p className="font-bold text-end">NGN {hotel.averagePrice}</p>
-                <p className="text-end text-xs">avg/night</p>
+              <div className="text-end">
+                <small className="opacity-50 text-center">
+                  Includes taxes and fees
+                </small>
+                <div className="text-end">
+                  <p className="font-bold">NGN {hotel.averagePrice}</p>
+                  <p className=" text-xs">avg/night</p>
+                </div>
               </div>
               {/* <Link href="/singleRoom" className="text-end"> */}
               <button
                 type="button"
-                className="text-center py-1 px-5 rounded-lg bg-[#FFCC00]"
+                className="text-center py-1 px-5 mt-2 lg:mt-0 rounded-lg bg-[#FFCC00]"
                 onClick={(e) => gotoDetails(hotel.id)}
               >
                 Book Now

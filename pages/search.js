@@ -19,8 +19,6 @@ import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import PopoverDisplay from "../components/PopoverDisplay";
 
-
-
 import RoomSearchResult from "../components/RoomSearchResult";
 import { BounceLoader } from "react-spinners";
 
@@ -36,24 +34,19 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [openView, setOpenView] = useState(false);
   const [dateRange, setDateRange] = useState();
-  const [hotel, setHotel] = useState('');
+  const [hotel, setHotel] = useState("");
   const [openDate, setOpenDate] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [hotelsCount, setHotelsCount] = useState(0);
 
   const router = useRouter();
 
-
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
   const { query } = useRouter();
-  console.log(query)
-
-
-  
-  
+  console.log(query);
 
   const viewMenuHandler = () => {
     setOpenView(!openView);
@@ -61,7 +54,7 @@ export default function Home() {
 
   function gotoDetails(id) {
     router.push({
-      pathname: '/hotel/details',
+      pathname: "/hotel/details",
       query: {
         hotelId: id,
         startDate: String(dateRange[0].startDate),
@@ -69,12 +62,12 @@ export default function Home() {
         adults: numberOfAdults,
         children: numberOfChildren,
         rooms: numberOfRooms,
-      }
-    })
+      },
+    });
   }
 
   const datePickerHandler = () => {
-    console.log(openDate)
+    console.log(openDate);
     setOpenDate(!openDate);
   };
 
@@ -86,10 +79,10 @@ export default function Home() {
           endDate: new Date(query.endDate),
           key: "selection",
         },
-      ]
+      ];
 
-      console.log(a)
-      setDateRange(a)
+      console.log(a);
+      setDateRange(a);
 
       setLocation(query.location);
       setHotel(query.hotel);
@@ -102,7 +95,7 @@ export default function Home() {
   }, [query]);
 
   const handleSearchHotel = async (query) => {
-    setIsLoading(true)
+    setIsLoading(true);
     const request = {
       location: query.location,
       hotelName: query.hotel,
@@ -120,8 +113,7 @@ export default function Home() {
       setHotelsCount(response.data.length);
     } else {
     }
-    setIsLoading(false)
-
+    setIsLoading(false);
   };
 
   const handleChange = (event) => {
@@ -138,9 +130,9 @@ export default function Home() {
         <Navbar />
       </div>
       <div className="absolute top-20 w-full">
-        <div className="max-w-[95%] md:max-w-[85%] mx-auto flex gap-5">
-          <div className="flex-1 max-w-[250px] hidden md:block">
-            <form className=" bg-[#FFCC00] p-3 space-y-3 rounded-lg sticky top-20">
+        <div className="max-w-[100%] md:max-w-[85%] md:mx-auto w-full flex-wrap mx-4 flex gap-5">
+          <div className="md:block">
+            <form className=" bg-[#FFCC00] p-3 space-y-3 rounded-lg sticky top-20 ">
               <h1 className="font-bold ">Search</h1>
               <div className="w-full bg-white rounded-md mb-2 cursor-pointer">
                 <div className="flex items-center">
@@ -148,29 +140,41 @@ export default function Home() {
                   <input
                     type="text"
                     placeholder="Lagos"
-                    className="m-2 outline-none text-base"
+                    className="p-2 outline-none text-base"
                   />
                 </div>
               </div>
-              <div onClick={datePickerHandler} className="w-full bg-white rounded-md mb-2 cursor-pointer">
+              <div
+                onClick={datePickerHandler}
+                className="w-full bg-white rounded-md mb-2 cursor-pointer"
+              >
                 <div className="flex items-center space-x-2 p-[2.5px]">
                   <BsCalendar className="text-[16px] ml-1" />
                   <span>
                     <small className="text-[10px] opacity-30 font-bold">
                       Check-In Date
                     </small>
-                    <p className="text-[11px] font-extrabold">{dateRange && `${format(dateRange[0].startDate, "dd-MM-yyy")}`}</p>
+                    <p className="text-[11px] font-extrabold">
+                      {dateRange &&
+                        `${format(dateRange[0].startDate, "dd-MM-yyy")}`}
+                    </p>
                   </span>
                 </div>
               </div>
-              <div onClick={datePickerHandler} className="w-full bg-white rounded-md mb-2 cursor-pointer">
+              <div
+                onClick={datePickerHandler}
+                className="w-full bg-white rounded-md mb-2 cursor-pointer"
+              >
                 <div className="flex items-center space-x-2 p-[2.5px]">
                   <BsCalendar className="text-[16px] ml-1" />
                   <span>
                     <small className="text-[10px] opacity-30 font-bold">
                       Check-Out Date
                     </small>
-                    <p className="text-[11px] font-extrabold">{dateRange && `${format(dateRange[0].endDate, "dd-MM-yyy")}`}</p>
+                    <p className="text-[11px] font-extrabold">
+                      {dateRange &&
+                        `${format(dateRange[0].endDate, "dd-MM-yyy")}`}
+                    </p>
                   </span>
                 </div>
               </div>
@@ -183,7 +187,10 @@ export default function Home() {
                   className="absolute top-[90px] lg:top-[60px] lg:left-[30%]"
                 />
               )}
-              <div className="w-full bg-white rounded-md mb-2 cursor-pointer" onClick={handleClick}>
+              <div
+                className="w-full bg-white rounded-md mb-2 cursor-pointer"
+                onClick={handleClick}
+              >
                 <div className="flex items-center space-x-2 p-[2.5px]">
                   <People className=" ml-1" size={20} />
                   <span>
@@ -212,45 +219,59 @@ export default function Home() {
               </div>
             </form>
           </div>
-          {!isLoading ? <div className=" flex-auto w-64">
-            <div className="flex justify-between items-center">
-              {location ? 
-              <h1 className="text-xl font-bold">{hotelsCount} Hotels in {location.split(',')[0]}</h1>
-              : <h1 className="text-xl font-bold">{hotelsCount} Hotel found searching for {hotel}</h1>}
-              <div className="bg-white p-2 border-2 rounded-lg  flex justify-between space-x-3 items-center cursor-pointer relative z-10">
-                <span onClick={viewMenuHandler}>
-                  <small className="opacity-50 text-[11px]">Sort by </small>:
-                  <strong className="text-[12px]">Top Viewed</strong>
-                </span>
-                <KeyboardArrowDownIcon className="text-[14px]" />
-                {openView && (
-                  <div className="bg-white absolute top-10 border-2 rounded-md px-5 py-2 cursor-pointer">
-                    <p className="border-b w-full">Top Viewed</p>
-                    <p>Top Viewed</p>
-                  </div>
+          {!isLoading ? (
+            <div className=" flex-auto w-64">
+              <div className="flex justify-between items-center">
+                {location ? (
+                  <h1 className="text-xl font-bold">
+                    {hotelsCount} Hotels in {location.split(",")[0]}
+                  </h1>
+                ) : (
+                  <h1 className="text-xl font-bold">
+                    {hotelsCount} Hotel found searching for {hotel}
+                  </h1>
                 )}
+                <div className="bg-white hidden p-2 border-2 rounded-lg  justify-between space-x-3 items-center cursor-pointer relative z-10">
+                  <span onClick={viewMenuHandler}>
+                    <small className="opacity-50 text-[11px]">Sort by </small>:
+                    <strong className="text-[12px]">Top Viewed</strong>
+                  </span>
+                  <KeyboardArrowDownIcon className="text-[14px]" />
+                  {openView && (
+                    <div className="bg-white absolute top-10 border-2 rounded-md px-5 py-2 cursor-pointer">
+                      <p className="border-b w-full">Top Viewed</p>
+                      <p>Top Viewed</p>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-            <div className="">
-              <RoomSearchResult hotels={hotelResults} gotoDetails={gotoDetails} children={numberOfChildren} adults={numberOfAdults} 
-              rooms={numberOfRooms} dateRange={dateRange}/>
-            </div>
-          </div> :
-          <div className="w-full">
-          <div className="flex flex-col items-center justify-center">
-            <div className="lg:w-2/5 md:w-1/2 pt-10 pl-4 pr-4 justify-center lg:my-16 sm:my-5">
-              <div className="m-12 pt-14 flex flex-col items-center justify-center">
-                <BounceLoader
-                  heigth={200}
-                  width={200}
-                  color="#FFCC00"
-                  ariaLabel="loading-indicator"
+              <div className="">
+                <RoomSearchResult
+                  hotels={hotelResults}
+                  gotoDetails={gotoDetails}
+                  children={numberOfChildren}
+                  adults={numberOfAdults}
+                  rooms={numberOfRooms}
+                  dateRange={dateRange}
                 />
               </div>
             </div>
-          </div>
-          </div>}
-
+          ) : (
+            <div className="w-full">
+              <div className="flex flex-col items-center justify-center">
+                <div className="lg:w-2/5 md:w-1/2 pt-10 pl-4 pr-4 justify-center lg:my-16 sm:my-5">
+                  <div className="m-12 pt-14 flex flex-col items-center justify-center">
+                    <BounceLoader
+                      heigth={200}
+                      width={200}
+                      color="#FFCC00"
+                      ariaLabel="loading-indicator"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </section>
