@@ -16,6 +16,7 @@ module.exports = {
       pri: {
         "main": "#ffcc00",
         "cont": "#f5c400",
+        "adark": "#D4AA00",
       },
       sec: {
         "main": "#1a1a1a",

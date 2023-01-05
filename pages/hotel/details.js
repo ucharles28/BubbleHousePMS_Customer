@@ -232,73 +232,82 @@ export default function HotelDetails() {
     }
 
     return (
-        <section className="font-poppins">
-            {!isLoading ? hotel && <div className="max-w-[1200px] mx-auto px-10">
-                <div className="header mt-5 flex justify-between items-center mx-3">
-                    <div className="hotelInfo">
-                        <h3 className="text-2xl font-bold">{hotel.name}</h3>
+        <div className="h-screen font-poppins">
+            <Navbar />
+            {!isLoading ? hotel &&
+                <div className="max-w-[1200px] py-24 mx-auto lg:px-10 px-4">
+                    <div className="flex flex-col gap-8 text-sec-main">
 
-                        <div className="text-[12px] flex items-center">
-                            <span className="mr-1">
-                                <Location size={17} />
-                            </span>
-                            <p className="text-sm">
-                                {hotel.address.line}
-                            </p>
-                        </div>
-                    </div>
-                    <div className="book flex items-center ">
-                        <div onClick={saveHotel} className="p-2 flex items-center justify-center hover:bg-[#ffcc003b] mr-2 cursor-pointer">
-                            {!saveHotelIsLoading ? <Heart size={20} color={isSaved ? "#FE4164" : "#1A1A1ADE"} variant={isSaved ? "Bold" : "Outline"} />
-                                : <ClipLoader size={20} color="#FFCC00" />}
-                        </div>
-                        <button
+                        <div className="flex flex-col gap-2 w-full">
+                            <div className="flex justify-between items-center">
+                                <div className="hotelInfo">
+                                    <h3 className="lg:text-2xl text-lg font-semibold">{hotel.name}</h3>
+
+                                    <div className="text-xs flex items-center gap-1">
+                                        <span>
+                                            <Location size={17} />
+                                        </span>
+                                        <p>
+                                            {hotel.address.line}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="book flex items-center ">
+                                    <div onClick={saveHotel} className="p-2 flex items-center justify-center hover:bg-[#ffcc003b] mr-2 cursor-pointer">
+                                        {!saveHotelIsLoading ? <Heart size={20} color={isSaved ? "#FE4164" : "#1A1A1ADE"} variant={isSaved ? "Bold" : "Outline"} />
+                                            : <ClipLoader size={20} color="#FFCC00" />}
+                                    </div>
+                                    {/* <button
                             type="button"
                             className="text-end  py-[7px] px-5 rounded-[5px] bg-[#FFCC00]"
                         >
                             BOOK NOW
-                        </button>
-                    </div>
-                </div>
-                <Carousel swipeable={true}
-                    draggable={false}
-                    // showDots={true}
-                    responsive={responsive}
-                    ssr={true} // means to render carousel on server-side.
-                    // infinite={true}
-                    arrows={true}
-                    customTransition="all .5"
-                    transitionDuration={500}
-                    containerClass="carousel-container"
-                    removeArrowOnDeviceType={["tablet", "mobile"]}
-                    dotListClass="custom-dot-list-style"
-                    itemClass="carousel-item-padding-40-px">
-                    {roomImages.map((image) => (<div className="md:mt-3">
-                        <div className="rounded-lg mr-3">
-                            <img
-                                className="object-cover w-[500px] h-[300px] rounded-lg"
-                                alt="name"
-                                src={image}
-                            />
+                        </button> */}
+                                </div>
+                            </div>
+
+                            <Carousel
+                                // swipeable={true}
+                                containerClass="container" responsive={responsive}
+                                draggable={true}
+                                infinite={true}
+                            >
+                                {roomImages.map((image) => (<div className="md:mt-3">
+                                    <div className="rounded-lg mr-3">
+                                        <img
+                                            className="object-cover w-[500px] h-[300px] rounded-lg"
+                                            alt="name"
+                                            src={image}
+                                        />
+                                    </div>
+                                </div>))}
+                            </Carousel>
                         </div>
-                    </div>))}
-                </Carousel>
-                <div>
-                    <p className="my-3">
-                        {hotel.description}
-                    </p>
-                </div>
-                {/* popular destinations */}
-                <div className="my-3">
-                    <h3 className="font-semibold">Most popular facilities</h3>
-                    <div className="mt-5 w-[65%]">
-                        <hr />
-                        <Amenities />
-                        <hr />
-                    </div>
-                    <div className="max-w-[75%]">
-                        <p className="my-6 text-base text-black font-medium">Select a room</p>
-                        {/* <div className="flex gap-[39px] mb-9">
+
+                        <div className="">
+                            <p className="text-sm font-normal text-sec-main">
+                                {hotel.description}
+                                <br />
+                                {hotel.description}
+                                {hotel.description}
+                                <br />
+                                {hotel.description}
+                                {hotel.description}
+                                <br />
+                                {hotel.description}
+                            </p>
+                        </div>
+
+                        {/* popular destinations */}
+                        <div className="flex flex-col w-full gap-4">
+                            <p className="text-base font-medium pb-2 border-b-[1.5px]">Most popular facilities</p>
+
+                            <Amenities />
+                        </div>
+
+                        <div className="flex flex-col w-full gap-4">
+                            <p className="text-base font-medium pb-2 border-b-[1.5px]">Select a room</p>
+                            {/* <div className="flex gap-[39px] mb-9">
                             <div onClick={datePickerHandler} className="flex cursor-pointer gap-2 items-center py-[10px] pl-4 pr-[158px] border-[#1A1A1A14] border rounded-md">
                                 <Calendar
                                     size={20}
@@ -339,47 +348,53 @@ export default function HotelDetails() {
                                 numberOfRooms={numberOfRooms}
                             />
                         </div> */}
-                        <div className="space-y-3">
-                            <div className="">
+                            {/* <div className="space-y-3"> */}
+                            <div className="w-full lg:w-3/4">
                                 <RoomType roomTypes={hotel.roomTypes} updateNumberOfRooms={updateNumberOfRooms} selectRooms={selectRooms} />
+                            </div>
+                            {/* </div> */}
+
+                        </div>
+
+                        <div className="text-center mt-7 space-y-3 font-semibold">
+                            <p>
+                                <span>{numberOfRooms} Rooms </span> ,<span>{numberOfDays} Night</span>
+                            </p>
+                            <p>
+                                Total Price:<span> ₦{totalAmount.toLocaleString()}</span>
+                            </p>
+                            <button
+                                type="button"
+                                className="disabled:bg-[#FFDD55] rounded-md w-[70%] py-[7px] bg-[#FFCC00]"
+                                onClick={gotoBookingInfo}
+                                disabled={totalAmount < 1}
+                            >
+                                Book Now
+                            </button>
+                        </div>
+                        <div className="my-5">
+                            <HotelList title={`Nearby Hotels to ${hotel.name}`} />
+                        </div>
+                    </div>
+                </div> :
+
+                <div className="w-full">
+                    <div className="flex flex-col items-center justify-center">
+                        <div className="lg:w-2/5 md:w-1/2 pt-10 pl-4 pr-4 justify-center lg:my-16 sm:my-5">
+                            <div className="m-12 pt-14 flex flex-col items-center justify-center">
+                                <BounceLoader
+                                    heigth={200}
+                                    width={200}
+                                    color="#FFCC00"
+                                    ariaLabel="loading-indicator"
+                                />
                             </div>
                         </div>
                     </div>
-                    <div className="text-center mt-7 space-y-3 font-semibold">
-                        <p>
-                            <span>{numberOfRooms} Rooms </span> ,<span>{numberOfDays} Night</span>
-                        </p>
-                        <p>
-                            Total Price:<span> ₦{totalAmount.toLocaleString()}</span>
-                        </p>
-                        <button
-                            type="button"
-                            className="disabled:bg-[#FFDD55] rounded-md w-[70%] py-[7px] bg-[#FFCC00]"
-                            onClick={gotoBookingInfo}
-                            disabled={totalAmount < 1}
-                        >
-                            Book Now
-                        </button>
-                    </div>
-                    <div className="my-5">
-                        <HotelList title={`Nearby Hotels to ${hotel.name}`} />
-                    </div>
                 </div>
-            </div> : <div className="w-full">
-                <div className="flex flex-col items-center justify-center">
-                    <div className="lg:w-2/5 md:w-1/2 pt-10 pl-4 pr-4 justify-center lg:my-16 sm:my-5">
-                        <div className="m-12 pt-14 flex flex-col items-center justify-center">
-                            <BounceLoader
-                                heigth={200}
-                                width={200}
-                                color="#FFCC00"
-                                ariaLabel="loading-indicator"
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>}
+
+            }
             <Footer />
-        </section>
+        </div >
     );
 };
