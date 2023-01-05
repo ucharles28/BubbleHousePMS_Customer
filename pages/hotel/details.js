@@ -253,7 +253,7 @@ export default function HotelDetails() {
                                     </div>
                                 </div>
                                 <div className="book flex items-center ">
-                                    <div onClick={saveHotel} className="p-2 flex items-center justify-center hover:bg-[#ffcc003b] mr-2 cursor-pointer">
+                                    <div onClick={saveHotel} className="p-2 flex items-center justify-center mr-2 cursor-pointer">
                                         {!saveHotelIsLoading ? <Heart size={20} color={isSaved ? "#FE4164" : "#1A1A1ADE"} variant={isSaved ? "Bold" : "Outline"} />
                                             : <ClipLoader size={20} color="#FFCC00" />}
                                     </div>
@@ -286,14 +286,6 @@ export default function HotelDetails() {
 
                         <div className="">
                             <p className="text-sm font-normal text-sec-main">
-                                {hotel.description}
-                                <br />
-                                {hotel.description}
-                                {hotel.description}
-                                <br />
-                                {hotel.description}
-                                {hotel.description}
-                                <br />
                                 {hotel.description}
                             </p>
                         </div>

@@ -35,72 +35,74 @@ const RoomType = ({ roomTypes, updateNumberOfRooms, selectRooms }) => {
 
       </div>
 
-      <div className="flex justify-between gap-3 lg:hidden">
+      <div className="flex flex-col gap-8 lg:hidden">
 
-        <div className="flex flex-col gap-6 w-full">
-          <div className="flex flex-col gap-1">
-            <p className="text-lg font-semibold">Deluxe Grande Room</p>
+        <div className="flex justify-between gap-3">
+          <div className="flex flex-col gap-6 w-full">
+            <div className="flex flex-col gap-1">
+              <p className="text-lg font-semibold">Deluxe Grande Room</p>
 
-            <div className="space-x-3 text-sec-main/70 text-xs font-medium flex items-center">
-              <p>1 bed (1 queen)</p>
-              <p>Sleeps 2</p>
+              <div className="space-x-3 text-sec-main/70 text-xs font-medium flex items-center">
+                <p>1 bed (1 queen)</p>
+                <p>Sleeps 2</p>
+              </div>
+
+              <div className="space-x-3 text-sec-main/70 text-xs font-medium flex items-center">
+                {roomType.roomAmenities.map((amenity) => (<small>{amenity.amenity.title}</small>))}
+              </div>
+
+              <span className="font-medium text-xs">Free Cancellation</span>
             </div>
 
-            <div className="space-x-3 text-sec-main/70 text-xs font-medium flex items-center">
-              {roomType.roomAmenities.map((amenity) => (<small>{amenity.amenity.title}</small>))}
+            <div className="flex flex-col">
+              <p className="text-sec-main/50 text-xs font-medium">
+                Includes taxes and fees
+              </p>
+              <p className="text-lg font-semibold">NGN {Number(roomType.price).toLocaleString()}</p>
+              <p className="text-sec-main/70 text-xs font-medium">avg/nights</p>
             </div>
-
-            <span className="font-medium text-xs">Free Cancellation</span>
           </div>
 
-          <div className="flex flex-col">
-            <p className="text-sec-main/50 text-xs font-medium">
-              Includes taxes and fees
-            </p>
-            <p className="text-lg font-semibold">NGN {Number(roomType.price).toLocaleString()}</p>
-            <p className="text-sec-main/70 text-xs font-medium">avg/nights</p>
-          </div>
+          <img src={roomType.images[0].imageUrl} className="w-24 h-24 object-cover rounded-md" />
         </div>
 
-        <img src={roomType.images[0].imageUrl} className="w-24 h-24 object-cover rounded-md" />
+        <div className="flex items-center justify-end">
+          {(!selectRooms[index] || selectRooms[index] < 1) && <button
+            type="button"
+            onClick={() => updateNumberOfRooms(true, index)}
+            className="border-[1.5px] group-hover:bg-white hover:bg-white border-[#D4AA00]/50 py-2 px-5 text-sm font-medium text-pri-adark rounded-md w-full"
+          >
+            Reserve
+          </button>}
+          {(selectRooms[index] || selectRooms[index] > 0) && <div className="flex items-center gap-2">
+            <span
+              className="border border-[#FFCC00]/50 bg-[#FFCC00]/10 align-middle cursor-pointer"
+              style={{ borderRadius: "50%" }}
+            >
+              <Minus onClick={() => updateNumberOfRooms(false, index)} />
+            </span>
+            <span className="border rounded-md py-1 px-3 text-xs  border-[#FFCC00]/50">
+              {selectRooms[index]}
+            </span>
+            <span
+              className="border border-[#FFCC00]/50 bg-[#FFCC00]/10 text-3xl align-middle cursor-pointer"
+              style={{ borderRadius: "50%" }}
+            >
+              <Add onClick={() => updateNumberOfRooms(true, index)} />
+            </span>
+          </div>}
+        </div>
 
       </div>
 
       <div className="clear-left lg:flex hidden items-end">
         {(!selectRooms[index] || selectRooms[index] < 1) && <button
-            type="button"
-            onClick={() => updateNumberOfRooms(true, index)}
-            className="border-[1.5px] group-hover:bg-white hover:bg-white border-[#D4AA00]/50 py-2 px-5 text-sm font-medium text-pri-adark rounded-md"
-          >
-            Reserve
-          </button>}
-        {(selectRooms[index] || selectRooms[index] > 0) && <>
-          <span
-            className="border border-[#FFCC00]/50 bg-[#FFCC00]/10 align-middle cursor-pointer"
-            style={{ borderRadius: "50%" }}
-          >
-            <Minus onClick={() => updateNumberOfRooms(false, index)} />
-          </span>
-          <span className="border rounded-md py-1 px-3 text-xs  border-[#FFCC00]/50">
-            {selectRooms[index]}
-          </span>
-          <span
-            className="border border-[#FFCC00]/50 bg-[#FFCC00]/10 text-3xl align-middle cursor-pointer"
-            style={{ borderRadius: "50%" }}
-          >
-            <Add onClick={() => updateNumberOfRooms(true, index)} />
-          </span>
-        </>}
-      </div>
-
-      <div className="clear-left flex lg:hidden items-end">
-        {(!selectRooms[index] || selectRooms[index] < 1) && <button
-            type="button"
-            onClick={() => updateNumberOfRooms(true, index)}
-            className="border-[1.5px] group-hover:bg-white hover:bg-white border-[#D4AA00]/50 py-2 px-5 text-sm font-medium text-pri-adark rounded-md"
-          >
-            Reserve
-          </button>}
+          type="button"
+          onClick={() => updateNumberOfRooms(true, index)}
+          className="border-[1.5px] group-hover:bg-white hover:bg-white border-[#D4AA00]/50 py-2 px-5 text-sm font-medium text-pri-adark rounded-md"
+        >
+          Reserve
+        </button>}
         {(selectRooms[index] || selectRooms[index] > 0) && <div className="flex items-center gap-2">
           <span
             className="border border-[#FFCC00]/50 bg-[#FFCC00]/10 align-middle cursor-pointer"
@@ -120,7 +122,6 @@ const RoomType = ({ roomTypes, updateNumberOfRooms, selectRooms }) => {
         </div>}
       </div>
 
-      
     </div>))
   );
 };
