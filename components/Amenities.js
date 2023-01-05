@@ -1,4 +1,4 @@
-import { Wifi } from "iconsax-react";
+import { Wifi, Star1 } from "iconsax-react";
 
 const Amenities = () => {
   return (
@@ -73,13 +73,8 @@ const Amenities = () => {
           </span>
           <p className="text-sm lg:font-medium font-normal"> Free Parking</p>
         </div>
-        <div className="flex items-center space-x-1">
-          <span>
-            <Star1 size="16" color="black" variant="Bold" />
-          </span>
-          <p className="text-[13px] font-semibold"> Free WiFi</p>
-        </div>
-        <div className="flex items-center space-x-1">
+
+        {/* <div className="flex items-center space-x-1">
           <span className="bg-[#FEFBEB] rounded-full p-2">
             <Wifi size="23" color="#FF8A65" />
           </span>
@@ -114,7 +109,7 @@ const Amenities = () => {
             <Wifi size="23" color="#FF8A65" />
           </span>
           <p className="text-[13px] font-semibold"> Air Conditioning</p>
-        </div>
+        </div> */}
       </div>
     </>
   );
