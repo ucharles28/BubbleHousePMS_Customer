@@ -221,7 +221,7 @@ export default function Home() {
         },
         mobile: {//mobile
             breakpoint: { max: 464, min: 0 },
-            items: 1
+            items: 2
         }
     };
 
@@ -550,7 +550,7 @@ export default function Home() {
                 </div>
             </div>
 
-            <div className="flex flex-col items-center justify-center py-12 gap-20 pb-20 w-full">
+            <div className="flex flex-col mx-5 lg:items-center justify-center py-12 gap-20 pb-20 w-full">
 
                 {/* Top hotel deals */}
                 <div className="flex flex-col">
@@ -564,7 +564,7 @@ export default function Home() {
 
                         {featuredHotels.map((hotel) => (<div className="flex flex-col gap-2">
 
-                            <img src={hotel.imageUrl} className="object-cover w-64 h-64 rounded-md" alt="bcloud" />
+                            <img src={hotel.imageUrl} className="object-cover w-[180px] h-[180px] lg:w-64 lg:h-64 rounded-md" alt="bcloud" />
 
                             <div className="flex flex-col text-sec-main gap-1.5">
                                 <Link href={{
@@ -578,10 +578,10 @@ export default function Home() {
                                         rooms: numberOfRooms,
                                     }
                                 }}>
-                                    <p className="font-normal text-base mb-[0]">{hotel.name}</p>
+                                    <p className="font-normal text-sm lg:text-base mb-[0]">{hotel.name}</p>
                                 </Link>
-                                <p className="text-sm text-sec-main/50 mb-[0] w-52">{hotel.address.line}</p>
-                                <p className="text-sm text-sec-main/50 mb-[0]">Starting from  <span className="text-sec-main font-medium">NGN {hotel.averagePrice}</span>
+                                <p className="text-xs lg:text-sm text-sec-main/50 mb-[0] truncate block w-44">{hotel.address.line}</p>
+                                <p className="text-xs lg:text-sm text-sec-main/50 mb-[0]">Starting from  <span className="text-sec-main font-medium">NGN {hotel.averagePrice}</span>
                                 </p>
                             </div>
 
@@ -592,12 +592,11 @@ export default function Home() {
                 </div>
 
                 {/* Top cities */}
-                <div className="flex flex-col px-36">
+                <div className="flex flex-col">
 
                     <div className="flex flex-col w-full gap-2">
                         <p className="text-xl font-medium text-sec-main mb-[0]">Top cities</p>
                         <p className="text-sm font-medium text-sec-main/70">See the top destinations people are traveling to</p>
-                        {/* <p className="text-sm font-medium text-sec-main/50">See more</p> */}
                     </div>
 
 
@@ -606,7 +605,7 @@ export default function Home() {
                     <Carousel containerClass="container" responsive={responsive}>
                         <div className="flex flex-col gap-2">
 
-                            <img src="lagos.png" className="object-cover w-64 h-64 rounded-md" alt="bcloud" />
+                            <img src="lagos.png" className="object-cover w-[180px] h-[180px] lg:w-64 lg:h-64 rounded-md" alt="bcloud" />
 
                             <div className="flex flex-col text-sec-main gap-1.5">
                                 <Link href={{
@@ -621,16 +620,16 @@ export default function Home() {
                                         rooms: numberOfRooms,
                                     },
                                 }}>
-                                    <p className="font-normal text-base mb-[0]">Hotels in Lagos</p>
+                                    <p className="font-normal text-sm lg:text-base mb-[0]">Hotels in Lagos</p>
                                 </Link>
-                                {/* <p className="text-sm text-sec-main/50 mb-[0]">10,003 Hotels <span className="text-sec-main font-medium">Avg. NGN 5,000</span></p> */}
+                                
                             </div>
 
                         </div>
 
                         <div className="flex flex-col gap-2">
 
-                            <img src="awka.png" className="object-cover w-64 h-64 rounded-md" alt="bcloud" />
+                            <img src="awka.png" className="object-cover w-[180px] h-[180px] lg:w-64 lg:h-64 rounded-md" alt="bcloud" />
 
                             <div className="flex flex-col text-sec-main gap-1.5">
                                 <Link href={{
@@ -645,16 +644,16 @@ export default function Home() {
                                         rooms: numberOfRooms,
                                     },
                                 }}>
-                                    <p className="font-normal text-base mb-[0]">Hotels in Awka</p>
+                                    <p className="font-normal text-sm lg:text-base mb-[0]">Hotels in Awka</p>
                                 </Link>
-                                {/* <p className="text-sm text-sec-main/50 mb-[0]">10,003 Hotels <span className="text-sec-main font-medium">Avg. NGN 5,000</span></p> */}
+                                
                             </div>
 
                         </div>
 
                         <div className="flex flex-col gap-2">
 
-                            <img src="ph-city.png" className="object-cover w-64 h-64 rounded-md" alt="bcloud" />
+                            <img src="ph-city.png" className="object-cover w-[180px] h-[180px] lg:w-64 lg:h-64 rounded-md" alt="bcloud" />
 
                             <div className="flex flex-col text-sec-main gap-1.5">
                                 <Link href={{
@@ -669,16 +668,16 @@ export default function Home() {
                                         rooms: numberOfRooms,
                                     },
                                 }}>
-                                    <p className="font-normal text-base mb-[0]">Hotels in Port Harcourt</p>
+                                    <p className="font-normal text-sm lg:text-base mb-[0]">Hotels in Port Harcourt</p>
                                 </Link>
-                                {/* <p className="text-sm text-sec-main/50 mb-[0]">10,003 Hotels <span className="text-sec-main font-medium">Avg. NGN 5,000</span></p> */}
+                                
                             </div>
 
                         </div>
 
                         <div className="flex flex-col gap-2">
 
-                            <img src="owerri.png" className="object-cover w-64 h-64 rounded-md" alt="bcloud" />
+                            <img src="owerri.png" className="object-cover w-[180px] h-[180px] lg:w-64 lg:h-64 rounded-md" alt="bcloud" />
 
                             <div className="flex flex-col text-sec-main gap-1.5">
                                 <Link href={{
@@ -693,16 +692,16 @@ export default function Home() {
                                         rooms: numberOfRooms,
                                     },
                                 }}>
-                                    <p className="font-normal text-base mb-[0]">Hotels in Owerri</p>
+                                    <p className="font-normal text-sm lg:text-base mb-[0]">Hotels in Owerri</p>
                                 </Link>
-                                {/* <p className="text-sm text-sec-main/50 mb-[0]">10,003 Hotels <span className="text-sec-main font-medium">Avg. NGN 5,000</span></p> */}
+                                
                             </div>
 
                         </div>
 
                         <div className="flex flex-col gap-2">
 
-                            <img src="abuja.png" className="object-cover w-64 h-64 rounded-md" alt="bcloud" />
+                            <img src="abuja.png" className="object-cover w-[180px] h-[180px] lg:w-64 lg:h-64 rounded-md" alt="bcloud" />
 
                             <div className="flex flex-col text-sec-main gap-1.5">
                                 <Link href={{
@@ -717,16 +716,16 @@ export default function Home() {
                                         rooms: numberOfRooms,
                                     },
                                 }}>
-                                    <p className="font-normal text-base mb-[0]">Hotels in Abuja</p>
+                                    <p className="font-normal text-sm lg:text-base mb-[0]">Hotels in Abuja</p>
                                 </Link>
-                                {/* <p className="text-sm text-sec-main/50 mb-[0]">10,003 Hotels <span className="text-sec-main font-medium">Avg. NGN 5,000</span></p> */}
+                                
                             </div>
 
                         </div>
 
                         <div className="flex flex-col gap-2">
 
-                            <img src="kano.png" className="object-cover w-64 h-64 rounded-md" alt="bcloud" />
+                            <img src="kano.png" className="object-cover w-[180px] h-[180px] lg:w-64 lg:h-64 rounded-md" alt="bcloud" />
 
                             <div className="flex flex-col text-sec-main gap-1.5">
                                 <Link href={{
@@ -741,9 +740,9 @@ export default function Home() {
                                         rooms: numberOfRooms,
                                     },
                                 }}>
-                                    <p className="font-normal text-base mb-[0]">Hotel in Kano</p>
+                                    <p className="font-normal text-sm lg:text-base mb-[0]">Hotel in Kano</p>
                                 </Link>
-                                {/* <p className="text-sm text-sec-main/50 mb-[0]">10,003 Hotels <span className="text-sec-main font-medium">Avg. NGN 5,000</span></p> */}
+                                
                             </div>
 
                         </div>
