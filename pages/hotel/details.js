@@ -18,216 +18,218 @@ import { BounceLoader, ClipLoader } from "react-spinners";
 import { format } from "date-fns";
 import PopoverDisplay from "../../components/PopoverDisplay";
 import { DateRange } from "@mui/icons-material";
-import { useUser } from "../../context/user";
+import { useUser } from '../../context/user';
+
 
 export default function HotelDetails() {
-  const router = useRouter();
-  const { query } = router;
-  const { user } = useUser();
+    const router = useRouter();
+    const { query } = router;
+    const { user } = useUser();
 
-  const [hotel, setHotel] = useState();
-  const [roomTypeImages, setRoomTypeImages] = useState();
-  const [selectRooms, setSelectedRooms] = useState({});
-  const [roomImages, setRoomImages] = useState([]);
-  // const [amenties, setRoomImages] = useState([]);
-  const [totalAmount, setTotalAmount] = useState(0);
-  const [numberOfRooms, setNumberOfRooms] = useState(0);
-  const [numberOfDays, setNumberOfDays] = useState(0);
-  const [dateRange, setDateRange] = useState();
-  const [isSaved, setIsSaved] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [saveHotelIsLoading, setSaveHotelIsLoading] = useState(false);
-  const [numberOfAdults, setNumberOfAdults] = useState(0);
-  const [numberOfChildren, setNumberOfChildren] = useState(0);
-  const [rooms, setRooms] = useState(0);
-  const [openDate, setOpenDate] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+    const [hotel, setHotel] = useState();
+    const [roomTypeImages, setRoomTypeImages] = useState();
+    const [selectRooms, setSelectedRooms] = useState({});
+    const [roomImages, setRoomImages] = useState([]);
+    // const [amenties, setRoomImages] = useState([]);
+    const [totalAmount, setTotalAmount] = useState(0);
+    const [numberOfRooms, setNumberOfRooms] = useState(0);
+    const [numberOfDays, setNumberOfDays] = useState(0);
+    const [dateRange, setDateRange] = useState();
+    const [isSaved, setIsSaved] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [saveHotelIsLoading, setSaveHotelIsLoading] = useState(false);
+    const [numberOfAdults, setNumberOfAdults] = useState(0);
+    const [numberOfChildren, setNumberOfChildren] = useState(0);
+    const [rooms, setRooms] = useState(0);
+    const [openDate, setOpenDate] = useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
 
-  const updateNumberOfRooms = async (isAdd, index) => {
-    const obj = { ...selectRooms };
-    if (obj[index]) {
-      if (!isAdd && obj[index] < 1) {
-        return;
-      }
-      obj[index] = isAdd ? obj[index] + 1 : obj[index] - 1;
-    } else {
-      obj[index] = 1;
-    }
-    setSelectedRooms(obj);
-  };
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
 
-  const datePickerHandler = () => {
-    console.log(openDate);
-    setOpenDate(!openDate);
-  };
 
-  function dateDiffInDays(a, b) {
-    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
-    // Discard the time and time-zone information.
-    const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
-    const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
 
-    return Math.floor((utc2 - utc1) / _MS_PER_DAY);
-  }
-
-  const responsive = {
-    superLargeDesktop: {
-      // the naming can be any, depends on you.
-      breakpoint: { max: 4000, min: 3000 },
-      items: 5,
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 3,
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 2,
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1,
-    },
-  };
-
-  useEffect(() => {
-    if (query) {
-      getHotelDetails(query.hotelId);
-      setDateRange([
-        {
-          startDate: new Date(query.startDate),
-          endDate: new Date(query.endDate),
-          key: "selection",
-        },
-      ]);
-      setNumberOfChildren(Number(query.children));
-      setNumberOfAdults(Number(query.adults));
-    }
-  }, [query]);
-
-  useEffect(() => {
-    let totalAmount = 0;
-    let numberOfRooms = 0;
-    Object.keys(selectRooms).map((key) => {
-      if (!selectRooms[key] || selectRooms[key] < 1) {
-        return;
-      }
-
-      numberOfRooms += Number(selectRooms[key]);
-      totalAmount +=
-        Number(hotel.roomTypes[key].price) * Number(selectRooms[key]);
-    });
-    setNumberOfRooms(numberOfRooms);
-    setTotalAmount(totalAmount);
-    if (dateRange) {
-      setNumberOfDays(
-        dateDiffInDays(dateRange[0].startDate, dateRange[0].endDate)
-      );
-    }
-  }, [selectRooms]);
-
-  const getHotelDetails = async (id) => {
-    setIsLoading(true);
-    if (user) {
-      const responses = await Promise.all([
-        get(`Hotel/${id}`),
-        get(`SavedHotel?customerId=${user.id}&hotelId=${id}`),
-      ]);
-
-      if (responses[0].successful) {
-        setHotel(responses[0].data);
-        getRoomImages(responses[0].data.roomTypes);
-      }
-
-      if (responses[1].successful) {
-        setIsSaved(responses[1].data);
-      }
-    } else {
-      const response = await get(`Hotel/${id}`);
-
-      if (response.successful) {
-        setHotel(response.data);
-        getRoomImages(response.data.roomTypes);
-      }
-    }
-    setIsLoading(false);
-  };
-
-  const getRoomImages = (roomTypes) => {
-    const images = [];
-    roomTypes.map((roomType) => {
-      roomType.images.map((image) => {
-        images.push(image.imageUrl);
-      });
-    });
-
-    setRoomImages(images);
-  };
-
-  const saveHotel = async () => {
-    setSaveHotelIsLoading(true);
-    if (!isSaved) {
-      if (user) {
-        const request = {
-          hotelId: hotel.id,
-          userId: user.id,
-        };
-        const response = await post("SavedHotel", request);
-        if (response.successful) {
-          setIsSaved(true);
+    const updateNumberOfRooms = async (isAdd, index) => {
+        const obj = { ...selectRooms }
+        if (obj[index]) {
+            if (!isAdd && obj[index] < 1) {
+                return;
+            }
+            obj[index] = isAdd ? obj[index] + 1 : obj[index] - 1;
+        } else {
+            obj[index] = 1;
         }
-      } else {
-        setTimeout(() => {
-          setIsSaved(true);
-        }, 2000);
-      }
-    } else {
-      const response = await deleteData(
-        `SavedHotel?customerId=${user.id}&hotelId=${hotel.id}`
-      );
-      if (response.successful) {
-        setIsSaved(false);
-      } else {
-        setTimeout(() => {
-          setIsSaved(false);
-        }, 2000);
-      }
+        setSelectedRooms(obj)
     }
-    setSaveHotelIsLoading(false);
-  };
 
-  const gotoBookingInfo = () => {
-    const roomTypesInfo = [];
-    Object.keys(selectRooms).map((key) => {
-      if (!selectRooms[key] || selectRooms[key] < 1) {
-        return;
-      }
-      roomTypesInfo.push({
-        bookedRoooms: Number(selectRooms[key]),
-        roomPrice: Number(hotel.roomTypes[key].price),
-        roomTypeId: hotel.roomTypes[key].id,
-      });
-    });
-    console.log(roomTypesInfo);
-    router.push({
-      pathname: "/booking",
-      query: {
-        hotelId: hotel.id,
-        startDate: String(dateRange[0].startDate),
-        endDate: String(dateRange[0].endDate),
-        adults: numberOfAdults,
-        children: numberOfChildren,
-        rooms: numberOfRooms,
-        nights: numberOfDays,
-        total: totalAmount,
-        roomTypesInfo: JSON.stringify(roomTypesInfo),
-      },
-    });
-  };
+    const datePickerHandler = () => {
+        console.log(openDate)
+        setOpenDate(!openDate);
+    };
+
+    function dateDiffInDays(a, b) {
+        const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+        // Discard the time and time-zone information.
+        const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+        const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+        return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+    }
+
+    const responsive = {
+        superLargeDesktop: {
+            // the naming can be any, depends on you.
+            breakpoint: { max: 4000, min: 3000 },
+            items: 5
+        },
+        desktop: {
+            breakpoint: { max: 3000, min: 1024 },
+            items: 3
+        },
+        tablet: {
+            breakpoint: { max: 1024, min: 464 },
+            items: 2
+        },
+        mobile: {
+            breakpoint: { max: 464, min: 0 },
+            items: 1
+        }
+    };
+
+    useEffect(() => {
+        if (query) {
+            getHotelDetails(query.hotelId)
+            setDateRange([
+                {
+                    startDate: new Date(query.startDate),
+                    endDate: new Date(query.endDate),
+                    key: "selection",
+                },
+            ])
+            setNumberOfChildren(Number(query.children))
+            setNumberOfAdults(Number(query.adults))
+        }
+    }, [query])
+
+    useEffect(() => {
+        let totalAmount = 0
+        let numberOfRooms = 0
+        Object.keys(selectRooms).map((key) => {
+            if (!selectRooms[key] || selectRooms[key] < 1) {
+                return;
+            }
+
+            numberOfRooms += Number(selectRooms[key])
+            totalAmount += Number(hotel.roomTypes[key].price) * Number(selectRooms[key])
+        })
+        setNumberOfRooms(numberOfRooms)
+        setTotalAmount(totalAmount)
+        if (dateRange) {
+            setNumberOfDays(dateDiffInDays(dateRange[0].startDate, dateRange[0].endDate))
+        }
+
+    }, [selectRooms])
+
+    const getHotelDetails = async (id) => {
+        setIsLoading(true)
+        if (user) {
+            const responses = await Promise.all([
+                get(`Hotel/${id}`),
+                get(`SavedHotel?customerId=${user.id}&hotelId=${id}`)
+            ])
+
+            if (responses[0].successful) {
+                setHotel(responses[0].data)
+                getRoomImages(responses[0].data.roomTypes)
+            }
+
+            if (responses[1].successful) {
+                setIsSaved(responses[1].data)
+            }
+
+        } else {
+            const response = await get(`Hotel/${id}`)
+
+            if (response.successful) {
+                setHotel(response.data)
+                getRoomImages(response.data.roomTypes)
+            }
+        }
+        setIsLoading(false)
+    }
+
+    const getRoomImages = (roomTypes) => {
+        const images = []
+        roomTypes.map((roomType) => {
+            roomType.images.map((image) => {
+                images.push(image.imageUrl)
+            })
+        })
+
+        setRoomImages(images)
+    }
+
+    const saveHotel = async () => {
+        setSaveHotelIsLoading(true)
+        if (!isSaved) {
+            if (user) {
+                const request = {
+                    hotelId: hotel.id,
+                    userId: user.id
+                }
+                const response = await post('SavedHotel', request)
+                if (response.successful) {
+                    setIsSaved(true);
+                }
+            } else {
+                setTimeout(() => {
+                    setIsSaved(true);
+                }, 2000);
+            }
+        } else {
+            const response = await deleteData(`SavedHotel?customerId=${user.id}&hotelId=${hotel.id}`)
+            if (response.successful) {
+                setIsSaved(false);
+            } else {
+                setTimeout(() => {
+                    setIsSaved(false);
+                }, 2000);
+            }
+        }
+        setSaveHotelIsLoading(false)
+    }
+
+
+    const gotoBookingInfo = () => {
+        const roomTypesInfo = []
+        Object.keys(selectRooms).map((key) => {
+            if (!selectRooms[key] || selectRooms[key] < 1) {
+                return;
+            }
+            roomTypesInfo.push({
+                bookedRoooms: Number(selectRooms[key]),
+                roomPrice: Number(hotel.roomTypes[key].price),
+                roomTypeId: hotel.roomTypes[key].id
+            });
+        })
+        console.log(roomTypesInfo)
+        router.push({
+            pathname: '/booking',
+            query: {
+                hotelId: hotel.id,
+                startDate: String(dateRange[0].startDate),
+                endDate: String(dateRange[0].endDate),
+                adults: numberOfAdults,
+                children: numberOfChildren,
+                rooms: numberOfRooms,
+                nights: numberOfDays,
+                total: totalAmount,
+                roomTypesInfo: JSON.stringify(roomTypesInfo)
+            }
+        })
+    }
 
     return (
         <div className="h-screen font-poppins">
@@ -393,6 +395,6 @@ export default function HotelDetails() {
 
             }
             <Footer />
-        </div >
+        </div>
     );
 };
