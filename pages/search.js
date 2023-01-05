@@ -130,8 +130,8 @@ export default function Home() {
         <Navbar />
       </div>
       <div className="absolute top-20 w-full">
-        <div className="max-w-[100%] md:max-w-[85%] md:mx-auto flex-wrap mx-4 flex gap-5">
-          <div className=" md:block">
+        <div className="max-w-[100%] md:max-w-[85%] md:mx-auto w-full flex-wrap mx-4 flex gap-5">
+          <div className="md:block">
             <form className=" bg-[#FFCC00] p-3 space-y-3 rounded-lg sticky top-20 ">
               <h1 className="font-bold ">Search</h1>
               <div className="w-full bg-white rounded-md mb-2 cursor-pointer">

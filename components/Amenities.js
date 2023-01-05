@@ -1,56 +1,56 @@
-import { Star1 } from "iconsax-react";
+import { Wifi } from "iconsax-react";
 
 const Amenities = () => {
   return (
     <>
-      <div className="my-5 grid grid-cols-4 gap-4">
+      <div className="my-5 grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="flex items-center space-x-1">
-          <span>
-            <Star1 size="16" color="black" variant="Bold" />
+          <span className="bg-[#FEFBEB] rounded-full p-2">
+            <Wifi size="23" color="#FF8A65" />
           </span>
           <p className="text-[13px] font-semibold"> Free Parking</p>
         </div>
         <div className="flex items-center space-x-1">
-          <span>
-            <Star1 size="16" color="black" variant="Bold" />
-          </span>
-          <p className="text-[13px] font-semibold"> Free WiFi</p>
-        </div>
-        <div className="flex items-center space-x-1">
-          <span>
-            <Star1 size="16" color="black" variant="Bold" />
-          </span>
-          <p className="text-[13px] font-semibold"> Restuarant</p>
-        </div>
-        <div className="flex items-center space-x-1">
-          <span>
-            <Star1 size="16" color="black" variant="Bold" />
-          </span>
-          <p className="text-[13px] font-semibold"> Air Conditioning</p>
-        </div>
-        <div className="flex items-center space-x-1">
-          <span>
-            <Star1 size="16" color="black" variant="Bold" />
+          <span className="bg-[#FEFBEB] rounded-full p-2">
+            <Wifi size="23" color="#FF8A65" />
           </span>
           <p className="text-[13px] font-semibold"> Free Parking</p>
         </div>
         <div className="flex items-center space-x-1">
-          <span>
-            <Star1 size="16" color="black" variant="Bold" />
+          <span className="bg-[#FEFBEB] rounded-full p-2">
+            <Wifi size="23" color="#FF8A65" />
           </span>
-          <p className="text-[13px] font-semibold"> Free WiFi</p>
+          <p className="text-[13px] font-semibold"> Free Parking</p>
         </div>
         <div className="flex items-center space-x-1">
-          <span>
-            <Star1 size="16" color="black" variant="Bold" />
+          <span className="bg-[#FEFBEB] rounded-full p-2">
+            <Wifi size="23" color="#FF8A65" />
           </span>
-          <p className="text-[13px] font-semibold">Restuarant</p>
+          <p className="text-[13px] font-semibold"> Free Parking</p>
         </div>
         <div className="flex items-center space-x-1">
-          <span>
-            <Star1 size="16" color="black" variant="Bold" />
+          <span className="bg-[#FEFBEB] rounded-full p-2">
+            <Wifi size="23" color="#FF8A65" />
           </span>
-          <p className="text-[13px] font-semibold"> Air Conditioning</p>
+          <p className="text-[13px] font-semibold"> Free Parking</p>
+        </div>
+        <div className="flex items-center space-x-1">
+          <span className="bg-[#FEFBEB] rounded-full p-2">
+            <Wifi size="23" color="#FF8A65" />
+          </span>
+          <p className="text-[13px] font-semibold"> Free Parking</p>
+        </div>
+        <div className="flex items-center space-x-1">
+          <span className="bg-[#FEFBEB] rounded-full p-2">
+            <Wifi size="23" color="#FF8A65" />
+          </span>
+          <p className="text-[13px] font-semibold"> Free Parking</p>
+        </div>
+        <div className="flex items-center space-x-1">
+          <span className="bg-[#FEFBEB] rounded-full p-2">
+            <Wifi size="23" color="#FF8A65" />
+          </span>
+          <p className="text-[13px] font-semibold"> Free Parking</p>
         </div>
       </div>
     </>
