@@ -10,6 +10,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { BsCalendar } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import { DatePicker, Space } from "antd";
 import { People } from "iconsax-react";
 import { useRouter } from "next/router";
@@ -18,7 +19,6 @@ import Link from "next/link";
 import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import PopoverDisplay from "../components/PopoverDisplay";
-
 import RoomSearchResult from "../components/RoomSearchResult";
 import { BounceLoader } from "react-spinners";
 
@@ -274,6 +274,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <Footer />
     </section>
   );
 
