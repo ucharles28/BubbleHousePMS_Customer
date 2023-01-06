@@ -9,9 +9,9 @@ import { FcGoogle } from "react-icons/fc";
 const Footer = () => {
   return (
     <div className="font-poppins">
-      {/* <div className="w-full bg-gray-100/30 border-t border-sec-main/10 ">
+      <div className="w-full bg-gray-100/30 flex flex-col items-center justify-end border-t border-sec-main/10 p-6">
         <div className="lg:flex lg:flex-row lg:gap-2 grid grid-cols-1 gap-6 w-full mb-10">
-          <div className=" flex justify-between px-5">
+          <div className="item w-1/3">
             <Image
               className="block"
               src={bcloud1}
@@ -19,40 +19,32 @@ const Footer = () => {
               height={2}
               alt="blcoud"
             />
-            <div className="flex flex-row items-center gap-4">
-              <FaFacebookF
-                className="cursor-pointer"
-                color="#4267B2"
-                size={18}
-              />
-              <FaTwitter className="cursor-pointer" color="#1DA1F2" size={19} />
-              <FcGoogle className="cursor-pointer" size={18} />
-            </div>
           </div>
+
           <div className="item w-full lg:flex lg:flex-row grid grid-cols-2 lg:gap-0 gap-6 justify-between text-sm leading-5">
             <div className="flex flex-col gap-4">
               <p className="text-sec-main/50 font-medium">Company</p>
               <div className="flex flex-col space-y-4 text-sec-main">
                 <Link href="#" legacyBehavior>
-                  <a className="text-sec-main/70 hover:text-sec-main">
+                  <a className="text-sec-main/70 hover:text-sec-main text-[13px]">
                     {" "}
                     About Us
                   </a>
                 </Link>
                 <Link href="../jobs" legacyBehavior>
-                  <a className="text-sec-main/70 hover:text-sec-main">
+                  <a className="text-sec-main/70 hover:text-sec-main text-[13px]">
                     {" "}
                     Privacy Policy
                   </a>
                 </Link>
                 <Link href="../signup" legacyBehavior>
-                  <a className="text-sec-main/70 hover:text-sec-main">
+                  <a className="text-sec-main/70 hover:text-sec-main text-[13px]">
                     {" "}
                     Terms of Service{" "}
                   </a>
                 </Link>
                 <Link href="../signup" legacyBehavior>
-                  <a className="text-sec-main/70 hover:text-sec-main">
+                  <a className="text-sec-main/70 hover:text-sec-main text-[13px]">
                     {" "}
                     How it Works{" "}
                   </a>
@@ -70,31 +62,31 @@ const Footer = () => {
                   </a>
                 </Link>
                 <Link href="#" legacyBehavior>
-                  <a className="text-sec-main/70 hover:text-sec-main">
+                  <a className="text-sec-main/70 hover:text-sec-main text-[13px]">
                     {" "}
                     Hotels in Awka
                   </a>
                 </Link>
                 <Link href="#" legacyBehavior>
-                  <a className="text-sec-main/70 hover:text-sec-main">
+                  <a className="text-sec-main/70 hover:text-sec-main text-[13px]">
                     {" "}
                     Hotels in Calabar{" "}
                   </a>
                 </Link>
                 <Link href="" legacyBehavior>
-                  <a className="text-sec-main/70 hover:text-sec-main">
+                  <a className="text-sec-main/70 hover:text-sec-main text-[13px]">
                     {" "}
                     Hotels in Abuja{" "}
                   </a>
                 </Link>
                 <Link href="#" legacyBehavior>
-                  <a className="text-sec-main/70 hover:text-sec-main">
+                  <a className="text-sec-main/70 hover:text-sec-main text-[13px]">
                     {" "}
                     Hotels in Jos{" "}
                   </a>
                 </Link>
                 <Link href="#" legacyBehavior>
-                  <a className="text-sec-main/70 hover:text-sec-main">
+                  <a className="text-sec-main/70 hover:text-sec-main text-[13px]">
                     {" "}
                     Hotels in Owerri{" "}
                   </a>
@@ -183,8 +175,13 @@ const Footer = () => {
           <p className="text-sm font-normal leading-6 text-sec-main/50">
             Copyright © 2022 Bcloud. All Rights Reserved
           </p>
+          <div className="flex flex-row items-center gap-4">
+            <FaFacebookF className="cursor-pointer" color="#4267B2" size={18} />
+            <FaTwitter className="cursor-pointer" color="#1DA1F2" size={19} />
+            <FcGoogle className="cursor-pointer" size={18} />
+          </div>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };
