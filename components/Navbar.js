@@ -55,7 +55,7 @@ export default function Navbar() {
 
   return (
     <div className="bg-white fixed w-full z-20 shadow-sm font-poppins">
-      <div className="flex py-4 lg:px-16 px-4 w-full justify-between items-center ">
+      <div className="flex py-2 lg:px-16 px-3 w-full justify-between items-center ">
         <Link href="/">
           <Image
             className="block"

@@ -10,6 +10,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { BsCalendar } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import { DatePicker, Space } from "antd";
 import { People } from "iconsax-react";
 import { useRouter } from "next/router";
@@ -18,7 +19,6 @@ import Link from "next/link";
 import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import PopoverDisplay from "../components/PopoverDisplay";
-
 import RoomSearchResult from "../components/RoomSearchResult";
 import { BounceLoader } from "react-spinners";
 
@@ -128,152 +128,153 @@ export default function Home() {
     <section className="font-poppins">
       <div className="relative">
         <Navbar />
-      </div>
-      <div className="absolute top-20 w-full">
-        <div className="max-w-[100%] md:max-w-[85%] md:mx-auto w-full flex-wrap mx-4 flex gap-5">
-          <div className="md:block">
-            <form className=" bg-[#FFCC00] p-3 space-y-3 rounded-lg sticky top-20 ">
-              <h1 className="font-bold ">Search</h1>
-              <div className="w-full bg-white rounded-md mb-2 cursor-pointer">
-                <div className="flex items-center">
-                  <LocationOnIcon style={{ fontSize: "20px" }} />
-                  <input
-                    type="text"
-                    placeholder="Lagos"
-                    className="p-2 outline-none text-base"
-                  />
-                </div>
-              </div>
-              <div
-                onClick={datePickerHandler}
-                className="w-full bg-white rounded-md mb-2 cursor-pointer"
-              >
-                <div className="flex items-center space-x-2 p-[2.5px]">
-                  <BsCalendar className="text-[16px] ml-1" />
-                  <span>
-                    <small className="text-[10px] opacity-30 font-bold">
-                      Check-In Date
-                    </small>
-                    <p className="text-[11px] font-extrabold">
-                      {dateRange &&
-                        `${format(dateRange[0].startDate, "dd-MM-yyy")}`}
-                    </p>
-                  </span>
-                </div>
-              </div>
-              <div
-                onClick={datePickerHandler}
-                className="w-full bg-white rounded-md mb-2 cursor-pointer"
-              >
-                <div className="flex items-center space-x-2 p-[2.5px]">
-                  <BsCalendar className="text-[16px] ml-1" />
-                  <span>
-                    <small className="text-[10px] opacity-30 font-bold">
-                      Check-Out Date
-                    </small>
-                    <p className="text-[11px] font-extrabold">
-                      {dateRange &&
-                        `${format(dateRange[0].endDate, "dd-MM-yyy")}`}
-                    </p>
-                  </span>
-                </div>
-              </div>
-              {openDate && (
-                <DateRange
-                  editableDateInputs={true}
-                  onChange={(item) => setDateRange([item.selection])}
-                  moveRangeOnFirstSelection={false}
-                  ranges={dateRange}
-                  className="absolute top-[90px] lg:top-[60px] lg:left-[30%]"
-                />
-              )}
-              <div
-                className="w-full bg-white rounded-md mb-2 cursor-pointer"
-                onClick={handleClick}
-              >
-                <div className="flex items-center space-x-2 p-[2.5px]">
-                  <People className=" ml-1" size={20} />
-                  <span>
-                    <small className="text-[10px] opacity-30 font-bold">
-                      Rooms
-                    </small>
-                    <p className="text-[12px] font-extrabold">Guests</p>
-                  </span>
-                </div>
-              </div>
-              <PopoverDisplay
-                handleClick={handleClick}
-                anchorEl={anchorEl}
-                setAnchorEl={setAnchorEl}
-                numberOfAdults={numberOfAdults}
-                setNumberOfAdults={setNumberOfAdults}
-                numberOfChildren={numberOfChildren}
-                setNumberOfChildren={setNumberOfChildren}
-                setNumberOfRooms={setNumberOfRooms}
-                numberOfRooms={numberOfRooms}
-              />
-              <div className="w-full bg-[#404040] rounded-md cursor-pointer">
-                <button className="text-center w-full p-2 text-white">
-                  Search
-                </button>
-              </div>
-            </form>
-          </div>
-          {!isLoading ? (
-            <div className=" flex-auto w-64">
-              <div className="flex justify-between items-center">
-                {location ? (
-                  <h1 className="text-xl font-bold">
-                    {hotelsCount} Hotels in {location.split(",")[0]}
-                  </h1>
-                ) : (
-                  <h1 className="text-xl font-bold">
-                    {hotelsCount} Hotel found searching for {hotel}
-                  </h1>
-                )}
-                <div className="bg-white hidden p-2 border-2 rounded-lg  justify-between space-x-3 items-center cursor-pointer relative z-10">
-                  <span onClick={viewMenuHandler}>
-                    <small className="opacity-50 text-[11px]">Sort by </small>:
-                    <strong className="text-[12px]">Top Viewed</strong>
-                  </span>
-                  <KeyboardArrowDownIcon className="text-[14px]" />
-                  {openView && (
-                    <div className="bg-white absolute top-10 border-2 rounded-md px-5 py-2 cursor-pointer">
-                      <p className="border-b w-full">Top Viewed</p>
-                      <p>Top Viewed</p>
-                    </div>
-                  )}
-                </div>
-              </div>
-              <div className="">
-                <RoomSearchResult
-                  hotels={hotelResults}
-                  gotoDetails={gotoDetails}
-                  children={numberOfChildren}
-                  adults={numberOfAdults}
-                  rooms={numberOfRooms}
-                  dateRange={dateRange}
-                />
-              </div>
-            </div>
-          ) : (
-            <div className="w-full">
-              <div className="flex flex-col items-center justify-center">
-                <div className="lg:w-2/5 md:w-1/2 pt-10 pl-4 pr-4 justify-center lg:my-16 sm:my-5">
-                  <div className="m-12 pt-14 flex flex-col items-center justify-center">
-                    <BounceLoader
-                      heigth={200}
-                      width={200}
-                      color="#FFCC00"
-                      ariaLabel="loading-indicator"
+        <div className="w-full absolute top-20">
+          <div className="max-w-[100%] md:max-w-[85%] md:mx-auto flex-wrap mx-4 flex gap-5">
+            <div className="md:block flex-none w-full md:w-auto">
+              <form className=" bg-[#FFCC00] p-3 space-y-3 rounded-lg sticky top-20 w-full">
+                <h1 className="font-bold ">Search</h1>
+                <div className="w-full bg-white rounded-md mb-2 cursor-pointer">
+                  <div className="flex items-center">
+                    <LocationOnIcon style={{ fontSize: "20px" }} />
+                    <input
+                      type="text"
+                      placeholder="Lagos"
+                      className="p-2 outline-none text-base"
                     />
                   </div>
                 </div>
-              </div>
+                <div
+                  onClick={datePickerHandler}
+                  className="w-full bg-white rounded-md mb-2 cursor-pointer"
+                >
+                  <div className="flex items-center space-x-2 p-[2.5px]">
+                    <BsCalendar className="text-[16px] ml-1" />
+                    <span>
+                      <small className="text-[10px] opacity-30 font-bold">
+                        Check-In Date
+                      </small>
+                      <p className="text-[11px] font-extrabold">
+                        {dateRange &&
+                          `${format(dateRange[0].startDate, "dd-MM-yyy")}`}
+                      </p>
+                    </span>
+                  </div>
+                </div>
+                <div
+                  onClick={datePickerHandler}
+                  className="w-full bg-white rounded-md mb-2 cursor-pointer"
+                >
+                  <div className="flex items-center space-x-2 p-[2.5px]">
+                    <BsCalendar className="text-[16px] ml-1" />
+                    <span>
+                      <small className="text-[10px] opacity-30 font-bold">
+                        Check-Out Date
+                      </small>
+                      <p className="text-[11px] font-extrabold">
+                        {dateRange &&
+                          `${format(dateRange[0].endDate, "dd-MM-yyy")}`}
+                      </p>
+                    </span>
+                  </div>
+                </div>
+                {openDate && (
+                  <DateRange
+                    editableDateInputs={true}
+                    onChange={(item) => setDateRange([item.selection])}
+                    moveRangeOnFirstSelection={false}
+                    ranges={dateRange}
+                    className="absolute top-[90px] lg:top-[60px] lg:left-[30%]"
+                  />
+                )}
+                <div
+                  className="w-full bg-white rounded-md mb-2 cursor-pointer"
+                  onClick={handleClick}
+                >
+                  <div className="flex items-center space-x-2 p-[2.5px]">
+                    <People className=" ml-1" size={20} />
+                    <span>
+                      <small className="text-[10px] opacity-30 font-bold">
+                        Rooms
+                      </small>
+                      <p className="text-[12px] font-extrabold">Guests</p>
+                    </span>
+                  </div>
+                </div>
+                <PopoverDisplay
+                  handleClick={handleClick}
+                  anchorEl={anchorEl}
+                  setAnchorEl={setAnchorEl}
+                  numberOfAdults={numberOfAdults}
+                  setNumberOfAdults={setNumberOfAdults}
+                  numberOfChildren={numberOfChildren}
+                  setNumberOfChildren={setNumberOfChildren}
+                  setNumberOfRooms={setNumberOfRooms}
+                  numberOfRooms={numberOfRooms}
+                />
+                <div className="w-full bg-[#404040] rounded-md cursor-pointer">
+                  <button className="text-center w-full p-2 text-white">
+                    Search
+                  </button>
+                </div>
+              </form>
             </div>
-          )}
+            {!isLoading ? (
+              <div className=" flex-auto w-64">
+                <div className="flex justify-between items-center">
+                  {location ? (
+                    <h1 className="text-xl font-bold">
+                      {hotelsCount} Hotels in {location.split(",")[0]}
+                    </h1>
+                  ) : (
+                    <h1 className="text-xl font-bold">
+                      {hotelsCount} Hotel found searching for {hotel}
+                    </h1>
+                  )}
+                  <div className="bg-white hidden p-2 border-2 rounded-lg  justify-between space-x-3 items-center cursor-pointer relative z-10">
+                    <span onClick={viewMenuHandler}>
+                      <small className="opacity-50 text-[11px]">Sort by </small>
+                      :<strong className="text-[12px]">Top Viewed</strong>
+                    </span>
+                    <KeyboardArrowDownIcon className="text-[14px]" />
+                    {openView && (
+                      <div className="bg-white absolute top-10 border-2 rounded-md px-5 py-2 cursor-pointer">
+                        <p className="border-b w-full">Top Viewed</p>
+                        <p>Top Viewed</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="">
+                  <RoomSearchResult
+                    hotels={hotelResults}
+                    gotoDetails={gotoDetails}
+                    children={numberOfChildren}
+                    adults={numberOfAdults}
+                    rooms={numberOfRooms}
+                    dateRange={dateRange}
+                  />
+                </div>
+              </div>
+            ) : (
+              <div className="w-full">
+                <div className="flex flex-col items-center justify-center">
+                  <div className="lg:w-2/5 md:w-1/2 pt-10 pl-4 pr-4 justify-center lg:my-16 sm:my-5">
+                    <div className="m-12 pt-14 flex flex-col items-center justify-center">
+                      <BounceLoader
+                        heigth={200}
+                        width={200}
+                        color="#FFCC00"
+                        ariaLabel="loading-indicator"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
+      <Footer />
     </section>
   );
 
