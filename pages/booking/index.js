@@ -49,6 +49,7 @@ function Form() {
         adults: query.adults,
         children: query.children,
         rooms: query.rooms,
+        isReservation: query.isReservation,
         roomTypesInfo: JSON.parse(query.roomTypesInfo)
       })
 
