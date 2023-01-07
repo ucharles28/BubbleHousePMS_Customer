@@ -126,9 +126,9 @@ export default function Home() {
 
   return (
     <section className="font-poppins">
-      <div className="relative">
+      {/* <div className="relative"> */}
         <Navbar />
-        <div className="w-full absolute top-20">
+        <div className="w-full py-20">
           <div className="max-w-[100%] md:max-w-[85%] md:mx-auto flex-wrap mx-4 flex gap-5">
             <div className="md:block flex-none w-full md:w-auto">
               <form className=" bg-[#FFCC00] p-3 space-y-3 rounded-lg sticky top-20 w-full">
@@ -273,7 +273,7 @@ export default function Home() {
             )}
           </div>
         </div>
-      </div>
+      {/* </div> */}
       <Footer />
     </section>
   );
