@@ -18,382 +18,387 @@ import { BounceLoader, ClipLoader } from "react-spinners";
 import { format } from "date-fns";
 import PopoverDisplay from "../../components/PopoverDisplay";
 import { DateRange } from "@mui/icons-material";
-import { useUser } from "../../context/user";
+import { useUser } from '../../context/user';
+import Image from "next/image";
+
 
 export default function HotelDetails() {
-  const router = useRouter();
-  const { query } = router;
-  const { user } = useUser();
+    const router = useRouter();
+    const { query } = router;
+    const { user } = useUser();
 
-  const [hotel, setHotel] = useState();
-  const [roomTypeImages, setRoomTypeImages] = useState();
-  const [selectRooms, setSelectedRooms] = useState({});
-  const [roomImages, setRoomImages] = useState([]);
-  // const [amenties, setRoomImages] = useState([]);
-  const [totalAmount, setTotalAmount] = useState(0);
-  const [numberOfRooms, setNumberOfRooms] = useState(0);
-  const [numberOfDays, setNumberOfDays] = useState(0);
-  const [dateRange, setDateRange] = useState();
-  const [isSaved, setIsSaved] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [saveHotelIsLoading, setSaveHotelIsLoading] = useState(false);
-  const [numberOfAdults, setNumberOfAdults] = useState(0);
-  const [numberOfChildren, setNumberOfChildren] = useState(0);
-  const [rooms, setRooms] = useState(0);
-  const [openDate, setOpenDate] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+    const [hotel, setHotel] = useState();
+    const [roomTypeImages, setRoomTypeImages] = useState();
+    const [selectRooms, setSelectedRooms] = useState({});
+    const [roomImages, setRoomImages] = useState([]);
+    // const [amenties, setRoomImages] = useState([]);
+    const [totalAmount, setTotalAmount] = useState(0);
+    const [numberOfRooms, setNumberOfRooms] = useState(0);
+    const [numberOfDays, setNumberOfDays] = useState(0);
+    const [dateRange, setDateRange] = useState();
+    const [isSaved, setIsSaved] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [saveHotelIsLoading, setSaveHotelIsLoading] = useState(false);
+    const [numberOfAdults, setNumberOfAdults] = useState(0);
+    const [numberOfChildren, setNumberOfChildren] = useState(0);
+    const [rooms, setRooms] = useState(0);
+    const [openDate, setOpenDate] = useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
 
-  const updateNumberOfRooms = async (isAdd, index) => {
-    const obj = { ...selectRooms };
-    if (obj[index]) {
-      if (!isAdd && obj[index] < 1) {
-        return;
-      }
-      obj[index] = isAdd ? obj[index] + 1 : obj[index] - 1;
-    } else {
-      obj[index] = 1;
-    }
-    setSelectedRooms(obj);
-  };
 
-  const datePickerHandler = () => {
-    console.log(openDate);
-    setOpenDate(!openDate);
-  };
+    const [modal, setModal] = useState(false);
+    const toggleModal = () => {
+        setModal(!modal);
+    };
 
-  function dateDiffInDays(a, b) {
-    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
-    // Discard the time and time-zone information.
-    const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
-    const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
 
-    return Math.floor((utc2 - utc1) / _MS_PER_DAY);
-  }
-
-  const responsive = {
-    superLargeDesktop: {
-      // the naming can be any, depends on you.
-      breakpoint: { max: 4000, min: 3000 },
-      items: 5,
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 3,
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 2,
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1,
-    },
-  };
-
-  useEffect(() => {
-    if (query) {
-      getHotelDetails(query.hotelId);
-      setDateRange([
-        {
-          startDate: new Date(query.startDate),
-          endDate: new Date(query.endDate),
-          key: "selection",
-        },
-      ]);
-      setNumberOfChildren(Number(query.children));
-      setNumberOfAdults(Number(query.adults));
-    }
-  }, [query]);
-
-  useEffect(() => {
-    let totalAmount = 0;
-    let numberOfRooms = 0;
-    Object.keys(selectRooms).map((key) => {
-      if (!selectRooms[key] || selectRooms[key] < 1) {
-        return;
-      }
-
-      numberOfRooms += Number(selectRooms[key]);
-      totalAmount +=
-        Number(hotel.roomTypes[key].price) * Number(selectRooms[key]);
-    });
-    setNumberOfRooms(numberOfRooms);
-    setTotalAmount(totalAmount);
-    if (dateRange) {
-      setNumberOfDays(
-        dateDiffInDays(dateRange[0].startDate, dateRange[0].endDate)
-      );
-    }
-  }, [selectRooms]);
-
-  const getHotelDetails = async (id) => {
-    setIsLoading(true);
-    if (user) {
-      const responses = await Promise.all([
-        get(`Hotel/${id}`),
-        get(`SavedHotel?customerId=${user.id}&hotelId=${id}`),
-      ]);
-
-      if (responses[0].successful) {
-        setHotel(responses[0].data);
-        getRoomImages(responses[0].data.roomTypes);
-      }
-
-      if (responses[1].successful) {
-        setIsSaved(responses[1].data);
-      }
-    } else {
-      const response = await get(`Hotel/${id}`);
-
-      if (response.successful) {
-        setHotel(response.data);
-        getRoomImages(response.data.roomTypes);
-      }
-    }
-    setIsLoading(false);
-  };
-
-  const getRoomImages = (roomTypes) => {
-    const images = [];
-    roomTypes.map((roomType) => {
-      roomType.images.map((image) => {
-        images.push(image.imageUrl);
-      });
-    });
-
-    setRoomImages(images);
-  };
-
-  const saveHotel = async () => {
-    setSaveHotelIsLoading(true);
-    if (!isSaved) {
-      if (user) {
-        const request = {
-          hotelId: hotel.id,
-          userId: user.id,
-        };
-        const response = await post("SavedHotel", request);
-        if (response.successful) {
-          setIsSaved(true);
+    const updateNumberOfRooms = async (isAdd, index) => {
+        const obj = { ...selectRooms }
+        if (obj[index]) {
+            if (!isAdd && obj[index] < 1) {
+                return;
+            }
+            obj[index] = isAdd ? obj[index] + 1 : obj[index] - 1;
+        } else {
+            obj[index] = 1;
         }
-      } else {
-        setTimeout(() => {
-          setIsSaved(true);
-        }, 2000);
-      }
-    } else {
-      const response = await deleteData(
-        `SavedHotel?customerId=${user.id}&hotelId=${hotel.id}`
-      );
-      if (response.successful) {
-        setIsSaved(false);
-      } else {
-        setTimeout(() => {
-          setIsSaved(false);
-        }, 2000);
-      }
+        setSelectedRooms(obj)
     }
-    setSaveHotelIsLoading(false);
-  };
 
-  const gotoBookingInfo = () => {
-    const roomTypesInfo = [];
-    Object.keys(selectRooms).map((key) => {
-      if (!selectRooms[key] || selectRooms[key] < 1) {
-        return;
-      }
-      roomTypesInfo.push({
-        bookedRoooms: Number(selectRooms[key]),
-        roomPrice: Number(hotel.roomTypes[key].price),
-        roomTypeId: hotel.roomTypes[key].id,
-      });
-    });
-    console.log(roomTypesInfo);
-    router.push({
-      pathname: "/booking",
-      query: {
-        hotelId: hotel.id,
-        startDate: String(dateRange[0].startDate),
-        endDate: String(dateRange[0].endDate),
-        adults: numberOfAdults,
-        children: numberOfChildren,
-        rooms: numberOfRooms,
-        nights: numberOfDays,
-        total: totalAmount,
-        roomTypesInfo: JSON.stringify(roomTypesInfo),
-      },
-    });
-  };
+    const datePickerHandler = () => {
+        console.log(openDate)
+        setOpenDate(!openDate);
+    };
 
-  return (
-    <div className="h-screen font-poppins">
-      <Navbar />
-      {!isLoading ? (
-        hotel && (
+    function dateDiffInDays(a, b) {
+        const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+        // Discard the time and time-zone information.
+        const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+        const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
 
-          <div className="py-24">
-            <div className="lg:flex hidden flex-col gap-2 w-full">
-              <div className="flex justify-between items-center gap-2 w-full lg:px-24 px-4">
-                <div className="hotelInfo">
-                  <h3 className="lg:text-2xl text-lg font-semibold">
-                    {hotel.name}
-                  </h3>
+        return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+    }
 
-                  <div className="text-xs flex items-center gap-1">
-                    <span>
-                      <Location size={17} />
-                    </span>
-                    <p>{hotel.address.line}</p>
-                  </div>
-                </div>
-                <div className="flex items-center lg:gap-3 gap-2">
-                  <div
-                    onClick={saveHotel}
-                    className="flex items-center justify-center cursor-pointer"
-                  >
-                    {!saveHotelIsLoading ? (
-                      <Heart
-                        size={20}
-                        color={isSaved ? "#FE4164" : "#1A1A1ADE"}
-                        variant={isSaved ? "Bold" : "Outline"}
-                      />
-                    ) : (
-                      <ClipLoader size={20} color="#FFCC00" />
-                    )}
-                  </div>
-                  <div className="flex gap-2 items-center">
-                    <div className="p-1.5 rounded-t-md bg-[#139CE0]">
-                      <p className="text-sm font-medium text-white">8.2</p>
-                    </div>
-                    <div className="lg:flex hidden flex-col">
-                      <p className="text-sm text-sec-main">Pleasant</p>
-                      <span className="text-xs text-sec-main/70">225 reviews</span>
-                    </div>
-                  </div>
-                  {/* <button
+    const responsive = {
+        superLargeDesktop: {
+            // the naming can be any, depends on you.
+            breakpoint: { max: 4000, min: 3000 },
+            items: 5
+        },
+        desktop: {
+            breakpoint: { max: 3000, min: 1024 },
+            items: 3
+        },
+        tablet: {
+            breakpoint: { max: 1024, min: 464 },
+            items: 2
+        },
+        mobile: {
+            breakpoint: { max: 464, min: 0 },
+            items: 1
+        }
+    };
+
+    useEffect(() => {
+        if (query) {
+            getHotelDetails(query.hotelId)
+            setDateRange([
+                {
+                    startDate: new Date(query.startDate),
+                    endDate: new Date(query.endDate),
+                    key: "selection",
+                },
+            ])
+            setNumberOfChildren(Number(query.children))
+            setNumberOfAdults(Number(query.adults))
+        }
+    }, [query])
+
+    useEffect(() => {
+        let totalAmount = 0
+        let numberOfRooms = 0
+        Object.keys(selectRooms).map((key) => {
+            if (!selectRooms[key] || selectRooms[key] < 1) {
+                return;
+            }
+
+            numberOfRooms += Number(selectRooms[key])
+            totalAmount += Number(hotel.roomTypes[key].price) * Number(selectRooms[key])
+        })
+        setNumberOfRooms(numberOfRooms)
+        setTotalAmount(totalAmount)
+        if (dateRange) {
+            setNumberOfDays(dateDiffInDays(dateRange[0].startDate, dateRange[0].endDate))
+        }
+
+    }, [selectRooms])
+
+    const getHotelDetails = async (id) => {
+        setIsLoading(true)
+        if (user) {
+            const responses = await Promise.all([
+                get(`Hotel/${id}`),
+                get(`SavedHotel?customerId=${user.id}&hotelId=${id}`)
+            ])
+
+            if (responses[0].successful) {
+                setHotel(responses[0].data)
+                getRoomImages(responses[0].data.roomTypes)
+            }
+
+            if (responses[1].successful) {
+                setIsSaved(responses[1].data)
+            }
+
+        } else {
+            const response = await get(`Hotel/${id}`)
+
+            if (response.successful) {
+                setHotel(response.data)
+                getRoomImages(response.data.roomTypes)
+            }
+        }
+        setIsLoading(false)
+    }
+
+    const getRoomImages = (roomTypes) => {
+        const images = []
+        roomTypes.map((roomType) => {
+            roomType.images.map((image) => {
+                images.push(image.imageUrl)
+            })
+        })
+
+        setRoomImages(images)
+    }
+
+    const saveHotel = async () => {
+        setSaveHotelIsLoading(true);
+        if (!isSaved) {
+            if (user) {
+                const request = {
+                    hotelId: hotel.id,
+                    userId: user.id,
+                };
+                const response = await post("SavedHotel", request);
+                if (response.successful) {
+                    setIsSaved(true);
+                }
+            } else {
+                setTimeout(() => {
+                    setIsSaved(true);
+                }, 2000);
+            }
+        } else {
+            const response = await deleteData(
+                `SavedHotel?customerId=${user.id}&hotelId=${hotel.id}`
+            );
+            if (response.successful) {
+                setIsSaved(false);
+            } else {
+                setTimeout(() => {
+                    setIsSaved(false);
+                }, 2000);
+            }
+        }
+
+        const datePickerHandler = () => {
+            console.log(openDate)
+            setOpenDate(!openDate);
+        };
+    };
+
+    const gotoBookingInfo = () => {
+        const roomTypesInfo = []
+        Object.keys(selectRooms).map((key) => {
+            if (!selectRooms[key] || selectRooms[key] < 1) {
+                return;
+            }
+            roomTypesInfo.push({
+                bookedRoooms: Number(selectRooms[key]),
+                roomPrice: Number(hotel.roomTypes[key].price),
+                roomTypeId: hotel.roomTypes[key].id
+            });
+        })
+        console.log(roomTypesInfo)
+        router.push({
+            pathname: '/booking',
+            query: {
+                hotelId: hotel.id,
+                startDate: String(dateRange[0].startDate),
+                endDate: String(dateRange[0].endDate),
+                adults: numberOfAdults,
+                children: numberOfChildren,
+                rooms: numberOfRooms,
+                nights: numberOfDays,
+                total: totalAmount,
+                roomTypesInfo: JSON.stringify(roomTypesInfo)
+            }
+        })
+    };
+
+    return (
+        <div className="h-screen font-poppins">
+            <Navbar />
+            {!isLoading ? hotel && <div className="py-24">
+                <div className="lg:flex hidden flex-col gap-2 w-full">
+                    <div className="flex justify-between items-center gap-2 w-full lg:px-24 px-4">
+                        <div className="hotelInfo">
+                            <h3 className="lg:text-2xl text-lg font-semibold">
+                                {hotel.name}
+                            </h3>
+
+                            <div className="text-xs flex items-center gap-1">
+                                <span>
+                                    <Location size={17} />
+                                </span>
+                                <p>{hotel.address.line}</p>
+                            </div>
+                        </div>
+                        <div className="flex items-center lg:gap-3 gap-2">
+                            <div
+                                onClick={saveHotel}
+                                className="flex items-center justify-center cursor-pointer"
+                            >
+                                {!saveHotelIsLoading ? (
+                                    <Heart
+                                        size={20}
+                                        color={isSaved ? "#FE4164" : "#1A1A1ADE"}
+                                        variant={isSaved ? "Bold" : "Outline"}
+                                    />
+                                ) : (
+                                    <ClipLoader size={20} color="#FFCC00" />
+                                )}
+                            </div>
+                            <div className="flex gap-2 items-center">
+                                <div className="p-1.5 rounded-t-md bg-[#139CE0]">
+                                    <p className="text-sm font-medium text-white">8.2</p>
+                                </div>
+                                <div className="lg:flex hidden flex-col">
+                                    <p className="text-sm text-sec-main">Pleasant</p>
+                                    <span className="text-xs text-sec-main/70">225 reviews</span>
+                                </div>
+                            </div>
+                            {/* <button
                             type="button"
                             className="text-end  py-[7px] px-5 rounded-[5px] bg-[#FFCC00]"
                         >
                             BOOK NOW
                         </button> */}
-                </div>
-              </div>
-
-              <Carousel
-                containerClass="container"
-                responsive={responsive}
-                draggable={true}
-                infinite={true}
-                className='border-x-[1.5px] border-gray-200 max-w-full'
-              >
-                {roomImages.map((image) => (
-                  <div className="md:mt-3">
-                    <div className="mr-3">
-                      <img
-                        className="object-cover w-[500px] h-[300px] rounded-lg"
-                        alt="bcloud"
-                        src={image}
-                      />
+                        </div>
                     </div>
-                  </div>
-                ))}
-              </Carousel>
-            </div>
 
-            <div className="flex flex-col gap-8 text-sec-main lg:px-24 px-4">
-
-              <div className="flex lg:hidden flex-col gap-2 w-full">
-                <div className="flex justify-between items-center gap-2">
-                  <div className="hotelInfo">
-                    <h3 className="lg:text-2xl text-lg font-semibold">
-                      {hotel.name}
-                    </h3>
-
-                    <div className="text-xs flex items-center gap-1">
-                      <span>
-                        <Location size={17} />
-                      </span>
-                      <p>{hotel.address.line}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center lg:gap-3 gap-2">
-                    <div
-                      onClick={saveHotel}
-                      className="flex items-center justify-center cursor-pointer"
+                    <Carousel
+                        containerClass="container"
+                        responsive={responsive}
+                        draggable={true}
+                        infinite={true}
+                        className='border-x-[1.5px] border-gray-200 max-w-full'
                     >
-                      {!saveHotelIsLoading ? (
-                        <Heart
-                          size={20}
-                          color={isSaved ? "#FE4164" : "#1A1A1ADE"}
-                          variant={isSaved ? "Bold" : "Outline"}
-                        />
-                      ) : (
-                        <ClipLoader size={20} color="#FFCC00" />
-                      )}
-                    </div>
-                    <div className="flex gap-2 items-center">
-                      <div className="p-1.5 rounded-t-md bg-[#139CE0]">
-                        <p className="text-sm font-medium text-white">8.2</p>
-                      </div>
-                      <div className="lg:flex hidden flex-col">
-                        <p className="text-sm text-sec-main">Pleasant</p>
-                        <span className="text-xs text-sec-main/70">225 reviews</span>
-                      </div>
-                    </div>
-                    {/* <button
+                        {roomImages.map((image) => (
+                            <div className="md:mt-3">
+                                <div className="mr-3">
+                                    <img
+                                        className="object-cover w-[500px] h-[300px] rounded-lg"
+                                        alt="bcloud"
+                                        src={image}
+                                    />
+                                </div>
+                            </div>
+                        ))}
+                    </Carousel>
+                </div>
+
+                <div className="flex flex-col gap-8 text-sec-main lg:px-24 px-4">
+
+                    <div className="flex lg:hidden flex-col gap-2 w-full">
+                        <div className="flex justify-between items-center gap-2">
+                            <div className="hotelInfo">
+                                <h3 className="lg:text-2xl text-lg font-semibold">
+                                    {hotel.name}
+                                </h3>
+
+                                <div className="text-xs flex items-center gap-1">
+                                    <span>
+                                        <Location size={17} />
+                                    </span>
+                                    <p>{hotel.address.line}</p>
+                                </div>
+                            </div>
+                            <div className="flex items-center lg:gap-3 gap-2">
+                                <div
+                                    onClick={saveHotel}
+                                    className="flex items-center justify-center cursor-pointer"
+                                >
+                                    {!saveHotelIsLoading ? (
+                                        <Heart
+                                            size={20}
+                                            color={isSaved ? "#FE4164" : "#1A1A1ADE"}
+                                            variant={isSaved ? "Bold" : "Outline"}
+                                        />
+                                    ) : (
+                                        <ClipLoader size={20} color="#FFCC00" />
+                                    )}
+                                </div>
+                                <div className="flex gap-2 items-center">
+                                    <div className="p-1.5 rounded-t-md bg-[#139CE0]">
+                                        <p className="text-sm font-medium text-white">8.2</p>
+                                    </div>
+                                    <div className="lg:flex hidden flex-col">
+                                        <p className="text-sm text-sec-main">Pleasant</p>
+                                        <span className="text-xs text-sec-main/70">225 reviews</span>
+                                    </div>
+                                </div>
+                                {/* <button
                             type="button"
                             className="text-end  py-[7px] px-5 rounded-[5px] bg-[#FFCC00]"
                         >
                             BOOK NOW
                         </button> */}
-                  </div>
-                </div>
+                            </div>
+                        </div>
 
-                <Carousel
-                  containerClass="container"
-                  responsive={responsive}
-                  draggable={true}
-                  infinite={true}
-                  className='border-x-[1.5px] border-gray-200'
-                >
-                  {roomImages.map((image) => (
-                    <div className="md:mt-3">
-                      <div className="mr-3">
-                        <img
-                          className="object-cover w-[500px] h-[300px] rounded-lg"
-                          alt="bcloud"
-                          src={image}
-                        />
-                      </div>
+                        <Carousel
+                            containerClass="container"
+                            responsive={responsive}
+                            draggable={true}
+                            infinite={true}
+                            className='border-x-[1.5px] border-gray-200'
+                        >
+                            {roomImages.map((image) => (
+                                <div className="md:mt-3">
+                                    <div className="mr-3">
+                                        <img
+                                            className="object-cover w-[500px] h-[300px] rounded-lg"
+                                            alt="bcloud"
+                                            src={image}
+                                        />
+                                    </div>
+                                </div>
+                            ))}
+                        </Carousel>
                     </div>
-                  ))}
-                </Carousel>
-              </div>
 
-              <div className="lg:mt-6 mt-0">
-                <p className="text-sm font-normal text-sec-main">
-                  {hotel.description}
-                </p>
-              </div>
+                    <div className="lg:mt-6 mt-0">
+                        <p className="text-sm font-normal text-sec-main">
+                            {hotel.description}
+                        </p>
+                    </div>
 
-              {/* popular destinations */}
-              <div className="flex flex-col w-full gap-4">
-                <p className="text-base font-medium pb-2 border-b-[1.5px]">
-                  Most popular facilities
-                </p>
+                    {/* popular destinations */}
+                    <div className="flex flex-col w-full gap-4">
+                        <p className="text-base font-medium pb-2 border-b-[1.5px]">Most popular facilities</p>
 
-                <Amenities />
-              </div>
+                        <Amenities />
+                    </div>
 
-              <div className="flex flex-col w-full gap-4">
-                <p className="text-base font-medium pb-2 border-b-[1.5px]">
-                  Select a room
-                </p>
-                {/* <div className="flex gap-[39px] mb-9">
+                    <div className="flex flex-col w-full gap-4">
+                        <p className="text-base font-medium pb-2 border-b-[1.5px]">Select a room</p>
+                        {/* <div className="flex gap-[39px] mb-9">
                             <div onClick={datePickerHandler} className="flex cursor-pointer gap-2 items-center py-[10px] pl-4 pr-[158px] border-[#1A1A1A14] border rounded-md">
                                 <Calendar
                                     size={20}
@@ -434,59 +439,103 @@ export default function HotelDetails() {
                                 numberOfRooms={numberOfRooms}
                             />
                         </div> */}
-                {/* <div className="space-y-3"> */}
-                <div className="w-full lg:w-3/4">
-                  <RoomType
-                    roomTypes={hotel.roomTypes}
-                    updateNumberOfRooms={updateNumberOfRooms}
-                    selectRooms={selectRooms}
-                  />
+                        {/* <div className="space-y-3"> */}
+                        <div className="w-full lg:w-3/4">
+                            <RoomType roomTypes={hotel.roomTypes} updateNumberOfRooms={updateNumberOfRooms} selectRooms={selectRooms} />
+                        </div>
+                        {/* </div> */}
+
+                    </div>
+
+                    <div className="text-center mt-7 space-y-3 font-semibold">
+                        <p>
+                            <span>{numberOfRooms} Rooms </span> ,<span>{numberOfDays} Night</span>
+                        </p>
+                        <p>
+                            Total Price:<span> ₦{totalAmount.toLocaleString()}</span>
+                        </p>
+                        <button
+                            type="button"
+                            className="disabled:bg-[#FFDD55] rounded-md w-[70%] py-[7px] bg-[#FFCC00]"
+                            onClick={gotoBookingInfo}
+                            disabled={totalAmount < 1}
+                        >
+                            Book Now
+                        </button>
+                    </div>
+                    <div className="my-5">
+                        <HotelList title={`Nearby Hotels to ${hotel.name}`} />
+                    </div>
                 </div>
-                {/* </div> */}
-              </div>
+            </div> : <div className="w-full">
+                <div className="flex flex-col items-center justify-center">
+                    <div className="lg:w-2/5 md:w-1/2 pt-10 pl-4 pr-4 justify-center lg:my-16 sm:my-5">
+                        <div className="m-12 pt-14 flex flex-col items-center justify-center">
+                            <BounceLoader
+                                heigth={200}
+                                width={200}
+                                color="#FFCC00"
+                                ariaLabel="loading-indicator"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+            <Footer />
 
-              <div className="text-center mt-7 space-y-3 font-semibold">
-                <p>
-                  <span>{numberOfRooms} Rooms </span> ,
-                  <span>{numberOfDays} Night</span>
-                </p>
-                <p>
-                  Total Price:<span> ₦{totalAmount.toLocaleString()}</span>
-                </p>
-                <button
-                  type="button"
-                  className="disabled:bg-[#FFDD55] rounded-md w-[70%] py-[7px] bg-[#FFCC00]"
-                  onClick={gotoBookingInfo}
-                  disabled={totalAmount < 1}
+            {modal && (
+                <div
+                    onClick={toggleModal}
+                    className="fixed inset-0 z-50 overflow-y-auto bg-gray-900/50 bg-blend-overlay flex items-center m-0"
                 >
-                  Book Now
-                </button>
-              </div>
-              <div className="my-5">
-                <HotelList title={`Nearby Hotels to ${hotel.name}`} />
-              </div>
+                    <div className="shadow-lg rounded-md bg-white m-auto p-4">
+                        <div className="w-full h-full">
+                            <div className="flex flex-col">
+                                <div className="flex justify-between border-b-[1.5px] pb-4">
+                                    <p className="text-base">Payment Options</p>
+                                    {/* <img src="close.svg" className="w-6 h-6 cursor-pointer" /> */}
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" fill="#1A1A1A" fill-opacity="0.87" />
+                                    </svg>
+                                </div>
 
-            </div>
-          </div>
+                                <div className="flex gap-6 lg:gap-[109px] border-b-[1.5px] py-4">
+                                    <div className="flex flex-col gap-4">
+                                        <p className="text-xs font-medium">Pay now</p>
+                                        <p className="text-[11px]">Free cancellation</p>
+                                        <p className="text-[11px]">More ways to pay: use Debit/Credit card</p>
+                                        <p className="text-[11px]">You can use a payment gateway also.</p>
+                                    </div>
 
-        )
-      ) : (
-        <div className="w-full">
-          <div className="flex flex-col items-center justify-center">
-            <div className="lg:w-2/5 md:w-1/2 pt-10 pl-4 pr-4 justify-center lg:my-16 sm:my-5">
-              <div className="m-12 pt-14 flex flex-col items-center justify-center">
-                <BounceLoader
-                  heigth={200}
-                  width={200}
-                  color="#FFCC00"
-                  ariaLabel="loading-indicator"
-                />
-              </div>
-            </div>
-          </div>
+                                    <div className="flex flex-col justify-end gap-6">
+                                        <p className="text-base font-medium">NGN 60,000</p>
+                                        <button className="text-center text-[11px] rounded-md bg-pri-main py-2 px-3">
+                                            Pay now
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="flex gap-3 lg:gap-[83px] py-4">
+                                    <div className="flex flex-col gap-4">
+                                        <p className="text-xs font-medium">Pay when you get to property</p>
+                                        <p className="text-[11px] w-60">Your card details aren’t needed to complete this reservation</p>
+                                        <p className="text-[11px]">You will not be charged untill your stay</p>
+                                        <p className="text-[11px]">Pay the property directly in their currency</p>
+                                    </div>
+
+                                    <div className="flex flex-col justify-end gap-6">
+                                        <p className="text-base font-medium">NGN 60,000</p>
+                                        <button className="text-center text-[11px] rounded-md bg-pri-main py-2 px-3">
+                                            Pay on premises
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
-      )}
-      <Footer />
-    </div>
-  );
-}
+    );
+};
