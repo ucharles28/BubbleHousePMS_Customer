@@ -19,6 +19,7 @@ import { format } from "date-fns";
 import PopoverDisplay from "../../components/PopoverDisplay";
 import { DateRange } from "@mui/icons-material";
 import { useUser } from '../../context/user';
+import Image from "next/image";
 
 
 export default function HotelDetails() {
@@ -45,11 +46,15 @@ export default function HotelDetails() {
     const [openDate, setOpenDate] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
 
+
+    const [modal, setModal] = useState(true);
+    const toggleModal = () => {
+        setModal(!modal);
+    };
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
-
-
 
     const updateNumberOfRooms = async (isAdd, index) => {
         const obj = { ...selectRooms }
@@ -387,6 +392,59 @@ export default function HotelDetails() {
 
             }
             <Footer />
+
+            {modal && (
+                <div
+                    onClick={toggleModal}
+                    className="fixed inset-0 z-50 overflow-y-auto bg-gray-900/50 bg-blend-overlay flex items-center m-0"
+                >
+                    <div className="shadow-lg rounded-md bg-white m-auto p-4">
+                        <div className="w-full h-full">
+                            <div className="flex flex-col">
+                                <div className="flex justify-between border-b-[1.5px] pb-4">
+                                    <p className="text-base">Payment Options</p>
+                                    {/* <img src="close.svg" className="w-6 h-6 cursor-pointer" /> */}
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" fill="#1A1A1A" fill-opacity="0.87" />
+                                    </svg>
+                                </div>
+
+                                <div className="flex gap-6 lg:gap-[109px] border-b-[1.5px] py-4">
+                                    <div className="flex flex-col gap-4">
+                                        <p className="text-xs font-medium">Pay now</p>
+                                        <p className="text-[11px]">Free cancellation</p>
+                                        <p className="text-[11px]">More ways to pay: use Debit/Credit card</p>
+                                        <p className="text-[11px]">You can use a payment gateway also.</p>
+                                    </div>
+
+                                    <div className="flex flex-col justify-end gap-6">
+                                        <p className="text-base font-medium">NGN 60,000</p>
+                                        <button className="text-center text-[11px] rounded-md bg-pri-main py-2 px-3">
+                                            Pay now
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="flex gap-3 lg:gap-[83px] py-4">
+                                    <div className="flex flex-col gap-4">
+                                        <p className="text-xs font-medium">Pay when you get to property</p>
+                                        <p className="text-[11px] w-60">Your card details aren’t needed to complete this reservation</p>
+                                        <p className="text-[11px]">You will not be charged untill your stay</p>
+                                        <p className="text-[11px]">Pay the property directly in their currency</p>
+                                    </div>
+
+                                    <div className="flex flex-col justify-end gap-6">
+                                        <p className="text-base font-medium">NGN 60,000</p>
+                                        <button className="text-center text-[11px] rounded-md bg-pri-main py-2 px-3">
+                                            Pay on premises
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
