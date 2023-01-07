@@ -389,7 +389,6 @@ export default function HotelDetails() {
                         </p>
                     </div>
 
-                    {/* popular destinations */}
                     <div className="flex flex-col w-full gap-4">
                         <p className="text-base font-medium pb-2 border-b-[1.5px]">Most popular facilities</p>
 
@@ -439,34 +438,35 @@ export default function HotelDetails() {
                                 numberOfRooms={numberOfRooms}
                             />
                         </div> */}
-                        {/* <div className="space-y-3"> */}
                         <div className="w-full lg:w-3/4">
                             <RoomType roomTypes={hotel.roomTypes} updateNumberOfRooms={updateNumberOfRooms} selectRooms={selectRooms} />
                         </div>
-                        {/* </div> */}
 
                     </div>
 
-                    <div className="text-center mt-7 space-y-3 font-semibold">
-                        <p>
-                            <span>{numberOfRooms} Rooms </span> ,<span>{numberOfDays} Night</span>
+                    <div className="flex flex-col gap-1 items-center">
+                        <p className="text-sm text-sec-main/70 font-normal">
+                            {numberOfRooms} Rooms, {numberOfDays} Night
                         </p>
-                        <p>
-                            Total Price:<span> ₦{totalAmount.toLocaleString()}</span>
+                        <p className="text-base text-sec-main font-medium">
+                            Total Price: NGN {totalAmount.toLocaleString()}
                         </p>
                         <button
                             type="button"
-                            className="disabled:bg-[#FFDD55] rounded-md w-[70%] py-[7px] bg-[#FFCC00]"
+                            className="mt-2 disabled:bg-pri-main/50 rounded-md w-full lg:w-1/2 py-2 bg-[#FFCC00]"
                             onClick={gotoBookingInfo}
                             disabled={totalAmount < 1}
                         >
                             Book Now
                         </button>
                     </div>
-                    <div className="my-5">
-                        <HotelList title={`Nearby Hotels to ${hotel.name}`} />
-                    </div>
                 </div>
+
+                <div className="flex flex-col pt-20 gap-4 lg:px-24 px-4">
+                    <p className="text-lg font-medium text-sec-main">Nearby Hotels to {hotel.name}</p>
+                    <HotelList />
+                </div>
+
             </div> : <div className="w-full">
                 <div className="flex flex-col items-center justify-center">
                     <div className="lg:w-2/5 md:w-1/2 pt-10 pl-4 pr-4 justify-center lg:my-16 sm:my-5">
