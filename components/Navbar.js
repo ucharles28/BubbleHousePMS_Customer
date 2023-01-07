@@ -124,7 +124,7 @@ export default function Navbar() {
         // }}
       >
         <div className="bg-white flex-col shadow-sm w-[220px] py-2">
-          <Link href="#">
+          <Link href="/settings">
             <div className=" py-2 px-3 flex flex-row items-center gap-2 text-[#1a1a1a]/70 hover:text-[#1a1a1a] hover:bg-[#1a1a1a]/5 w-full">
               <Profile size={24} />
               <p className="text-sm leading-5 font-normal">Manage Account</p>
