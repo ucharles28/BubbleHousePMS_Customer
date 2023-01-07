@@ -234,10 +234,80 @@ export default function HotelDetails() {
       <Navbar />
       {!isLoading ? (
         hotel && (
-          <div className="max-w-[1200px] py-24 mx-auto lg:px-10 px-4">
-            <div className="flex flex-col gap-8 text-sec-main">
-              <div className="flex flex-col gap-2 w-full">
-                <div className="flex justify-between items-center">
+
+          <div className="py-24">
+            <div className="lg:flex hidden flex-col gap-2 w-full">
+              <div className="flex justify-between items-center gap-2 w-full lg:px-24 px-4">
+                <div className="hotelInfo">
+                  <h3 className="lg:text-2xl text-lg font-semibold">
+                    {hotel.name}
+                  </h3>
+
+                  <div className="text-xs flex items-center gap-1">
+                    <span>
+                      <Location size={17} />
+                    </span>
+                    <p>{hotel.address.line}</p>
+                  </div>
+                </div>
+                <div className="flex items-center lg:gap-3 gap-2">
+                  <div
+                    onClick={saveHotel}
+                    className="flex items-center justify-center cursor-pointer"
+                  >
+                    {!saveHotelIsLoading ? (
+                      <Heart
+                        size={20}
+                        color={isSaved ? "#FE4164" : "#1A1A1ADE"}
+                        variant={isSaved ? "Bold" : "Outline"}
+                      />
+                    ) : (
+                      <ClipLoader size={20} color="#FFCC00" />
+                    )}
+                  </div>
+                  <div className="flex gap-2 items-center">
+                    <div className="p-1.5 rounded-t-md bg-[#139CE0]">
+                      <p className="text-sm font-medium text-white">8.2</p>
+                    </div>
+                    <div className="lg:flex hidden flex-col">
+                      <p className="text-sm text-sec-main">Pleasant</p>
+                      <span className="text-xs text-sec-main/70">225 reviews</span>
+                    </div>
+                  </div>
+                  {/* <button
+                            type="button"
+                            className="text-end  py-[7px] px-5 rounded-[5px] bg-[#FFCC00]"
+                        >
+                            BOOK NOW
+                        </button> */}
+                </div>
+              </div>
+
+              <Carousel
+                containerClass="container"
+                responsive={responsive}
+                draggable={true}
+                infinite={true}
+                className='border-x-[1.5px] border-gray-200 max-w-full'
+              >
+                {roomImages.map((image) => (
+                  <div className="md:mt-3">
+                    <div className="mr-3">
+                      <img
+                        className="object-cover w-[500px] h-[300px] rounded-lg"
+                        alt="bcloud"
+                        src={image}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </Carousel>
+            </div>
+
+            <div className="flex flex-col gap-8 text-sec-main lg:px-24 px-4">
+
+              <div className="flex lg:hidden flex-col gap-2 w-full">
+                <div className="flex justify-between items-center gap-2">
                   <div className="hotelInfo">
                     <h3 className="lg:text-2xl text-lg font-semibold">
                       {hotel.name}
@@ -250,10 +320,10 @@ export default function HotelDetails() {
                       <p>{hotel.address.line}</p>
                     </div>
                   </div>
-                  <div className="book flex items-center ">
+                  <div className="flex items-center lg:gap-3 gap-2">
                     <div
                       onClick={saveHotel}
-                      className="p-2 flex items-center justify-center mr-2 cursor-pointer"
+                      className="flex items-center justify-center cursor-pointer"
                     >
                       {!saveHotelIsLoading ? (
                         <Heart
@@ -265,6 +335,15 @@ export default function HotelDetails() {
                         <ClipLoader size={20} color="#FFCC00" />
                       )}
                     </div>
+                    <div className="flex gap-2 items-center">
+                      <div className="p-1.5 rounded-t-md bg-[#139CE0]">
+                        <p className="text-sm font-medium text-white">8.2</p>
+                      </div>
+                      <div className="lg:flex hidden flex-col">
+                        <p className="text-sm text-sec-main">Pleasant</p>
+                        <span className="text-xs text-sec-main/70">225 reviews</span>
+                      </div>
+                    </div>
                     {/* <button
                             type="button"
                             className="text-end  py-[7px] px-5 rounded-[5px] bg-[#FFCC00]"
@@ -275,18 +354,18 @@ export default function HotelDetails() {
                 </div>
 
                 <Carousel
-                  // swipeable={true}
                   containerClass="container"
                   responsive={responsive}
                   draggable={true}
                   infinite={true}
+                  className='border-x-[1.5px] border-gray-200'
                 >
                   {roomImages.map((image) => (
                     <div className="md:mt-3">
-                      <div className="rounded-lg mr-3">
+                      <div className="mr-3">
                         <img
                           className="object-cover w-[500px] h-[300px] rounded-lg"
-                          alt="name"
+                          alt="bcloud"
                           src={image}
                         />
                       </div>
@@ -295,7 +374,7 @@ export default function HotelDetails() {
                 </Carousel>
               </div>
 
-              <div className="">
+              <div className="lg:mt-6 mt-0">
                 <p className="text-sm font-normal text-sec-main">
                   {hotel.description}
                 </p>
@@ -386,8 +465,10 @@ export default function HotelDetails() {
               <div className="my-5">
                 <HotelList title={`Nearby Hotels to ${hotel.name}`} />
               </div>
+
             </div>
           </div>
+
         )
       ) : (
         <div className="w-full">

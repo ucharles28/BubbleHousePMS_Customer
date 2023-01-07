@@ -86,7 +86,7 @@ export default function Navbar() {
           ) : (
             <div className="relative flex items-center justify-end">
               <div
-                className="flex relative items-center cursor-pointer"
+                className="flex relative items-center cursor-pointer gap-2"
                 onClick={handleClick}
               >
                 <div className="rounded-full h-8 w-8 border-sec-main border flex items-center box">
@@ -94,10 +94,10 @@ export default function Navbar() {
                     src={user.profileImageUrl}
                     alt="avatar"
                     border="0"
-                    className="mx-auto object-cover rounded-full h-8 w-8"
+                    className="object-cover rounded-full h-8 w-8"
                   />
                 </div>
-                <span className="font-medium text-md mx-1 text-center flex items-center gap-1">
+                <span className="font-medium text-mdtext-center flex items-center gap-1">
                   {user.fullName}{" "}
                   <ArrowDown2 size="14" className="mt-1" color="#1a1a1a" />
                 </span>

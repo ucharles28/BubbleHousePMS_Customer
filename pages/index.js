@@ -394,9 +394,9 @@ export default function Home() {
                                         rooms: numberOfRooms,
                                     }
                                 }}>
-                                    <p className="font-normal text-sm lg:text-base mb-[0]">{hotel.name}</p>
+                                    <p className="font-normal text-sm lg:text-base mb-[0] truncate block w-44 lg:w-60 md:w-56">{hotel.name}</p>
                                 </Link>
-                                <p className="text-xs lg:text-sm text-sec-main/50 mb-[0] truncate block w-44">{hotel.address.line}</p>
+                                <p className="text-xs lg:text-sm text-sec-main/50 mb-[0] truncate block w-44 lg:w-60">{hotel.address.line}</p>
                                 <p className="text-xs lg:text-sm text-sec-main/50 mb-[0]">Starting from  <span className="text-sec-main font-medium">NGN {hotel.averagePrice}</span>
                                 </p>
                             </div>
