@@ -142,10 +142,10 @@ export default function Navbar() {
               <p className="text-sm leading-5 font-normal">Rewards</p>
             </div>
           </Link>
-          <Link href="#">
+          <Link href="/mywishlist">
             <div className=" py-2 px-3 flex flex-row items-center gap-2 text-[#1a1a1a]/70 hover:text-[#1a1a1a] hover:bg-[#1a1a1a]/5 w-full">
               <Heart size={24} />
-              <p className="text-sm leading-5 font-normal">Like</p>
+              <p className="text-sm leading-5 font-normal">Saved</p>
             </div>
           </Link>
           <Link href="#" onClick={logOut}>
