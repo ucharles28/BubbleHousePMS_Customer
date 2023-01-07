@@ -78,9 +78,7 @@ function PersonalInfo({
     const response = await post("Booking/Reserve", request);
     debugger;
     if (response.successful) {
-      debugger
       if (bookingInfo.isReservation === "false") {
-        debugger
         window.location.href = response.data.item2
       }
     } else {
