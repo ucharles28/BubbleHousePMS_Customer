@@ -212,7 +212,8 @@ export default function HotelDetails() {
         };
     };
 
-    const gotoBookingInfo = () => {
+    const gotoBookingInfo = (isReservation) => {
+        debugger
         const roomTypesInfo = []
         Object.keys(selectRooms).map((key) => {
             if (!selectRooms[key] || selectRooms[key] < 1) {
@@ -236,7 +237,8 @@ export default function HotelDetails() {
                 rooms: numberOfRooms,
                 nights: numberOfDays,
                 total: totalAmount,
-                roomTypesInfo: JSON.stringify(roomTypesInfo)
+                roomTypesInfo: JSON.stringify(roomTypesInfo),
+                isReservation
             }
         })
     };
@@ -454,7 +456,7 @@ export default function HotelDetails() {
                         <button
                             type="button"
                             className="mt-2 disabled:bg-pri-main/50 rounded-md w-full lg:w-1/2 py-2 bg-[#FFCC00]"
-                            onClick={gotoBookingInfo}
+                            onClick={toggleModal}
                             disabled={totalAmount < 1}
                         >
                             Book Now
@@ -509,8 +511,8 @@ export default function HotelDetails() {
                                     </div>
 
                                     <div className="flex flex-col justify-end gap-6">
-                                        <p className="text-base font-medium">NGN 60,000</p>
-                                        <button className="text-center text-[11px] rounded-md bg-pri-main py-2 px-3">
+                                        <p className="text-base font-medium">NGN {totalAmount.toLocaleString()}</p>
+                                        <button onClick={(e) => gotoBookingInfo(false)} className="text-center text-[11px] rounded-md bg-pri-main py-2 px-3">
                                             Pay now
                                         </button>
                                     </div>
@@ -525,8 +527,8 @@ export default function HotelDetails() {
                                     </div>
 
                                     <div className="flex flex-col justify-end gap-6">
-                                        <p className="text-base font-medium">NGN 60,000</p>
-                                        <button className="text-center text-[11px] rounded-md bg-pri-main py-2 px-3">
+                                        <p className="text-base font-medium">NGN {totalAmount.toLocaleString()}</p>
+                                        <button onClick={() => gotoBookingInfo(true)} className="text-center text-[11px] rounded-md bg-pri-main py-2 px-3">
                                             Pay on premises
                                         </button>
                                     </div>
