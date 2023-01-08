@@ -250,9 +250,9 @@ export default function HotelDetails() {
                 <div className="lg:flex hidden flex-col gap-2 w-full">
                     <div className="flex justify-between items-center gap-2 w-full lg:px-24 px-4">
                         <div className="hotelInfo">
-                            <h3 className="lg:text-2xl text-lg font-semibold">
+                            <p className="lg:text-2xl text-lg font-semibold">
                                 {hotel.name}
-                            </h3>
+                            </p>
 
                             <div className="text-xs flex items-center gap-1">
                                 <span>
