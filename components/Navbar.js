@@ -49,7 +49,6 @@ export default function Navbar() {
 
   useEffect(() => {
     const result = JSON.parse(localStorage.getItem("user"));
-    console.log(result);
     setUser(result);
   }, []);
 
