@@ -55,15 +55,14 @@ function paymentinfo() {
                                         </div>
                                     </div>
 
-                                    <div className='text-sec-main/70 text-xs font-medium flex flex-col gap-1'>
+                                    {/* <div className='text-sec-main/70 text-xs font-medium flex flex-col gap-1'>
                                         <p className='uppercase'>Deluxe room</p>
                                         <span>1 bed (queen size)</span>
                                         <p className='text-[#4CB200]'>Free cancellation</p>
                                     </div>
 
                                     <div className="flex gap-2 font-medium">
-                                        {/* {hotel.roomType.roomAmenities &&
-                                            hotel.roomType.roomAmenities.map((amenties) => ( */}
+                                        
                                         <span className="text-xs">
                                             Swimming pool
                                         </span>
@@ -79,18 +78,12 @@ function paymentinfo() {
                                         <span className="text-xs">
                                             Bar
                                         </span>
-                                        {/* ))} */}
-                                        {/* <span className="mr-3 font-semibold text-xs">
-                    Air conditioning
-                  </span>
-                  <span className="mr-3 font-semibold text-xs">Pool</span>
-                  <span className="mr-3 font-semibold text-xs">Restaurant</span> */}
-                                    </div>
+                                    </div> */}
 
-                                    <div className="flex flex-col text-sec-main">
+                                    {/* <div className="flex flex-col text-sec-main">
                                         <p className="text-base font-semibold">NGN 30,000</p>
                                         <p className="text-sec-main/70 text-xs font-medium">avg/night</p>
-                                    </div>
+                                    </div> */}
                                 </div>
 
                             </div>
@@ -156,10 +149,41 @@ function paymentinfo() {
                         </div>
 
                         <div className='bg-white flex w-full rounded-md p-3 border-2'>
-                            <div className='flex flex-col gap-3'>
-                                <p className='text-sm font-medium text-sec-main'>Contact details</p>
-                                <div className='text-base font-semibold text-sec-main/70'>
-                                    BKN01234567
+                            <div className='flex flex-col gap-2 w-full'>
+                                <p className='text-sm font-medium text-sec-main border-b-[1.5px] pb-1 w-full'>Contact details</p>
+                                <div className='w-full flex flex-col lg:gap-2 lg:grid lg:grid-cols-2'>
+                                    <div className='flex flex-col'>
+                                        <p className='text-sm font-medium text-sec-main/70'>Full Name</p>
+                                        <p className='text-base font-medium '>Chijioke Samuel</p>
+                                    </div>
+                                    <div className='flex flex-col'>
+                                        <p className='text-sm font-medium text-sec-main/70'>Email</p>
+                                        <p className='text-base font-medium '>ChijiokeSamuel@gmail.com</p>
+                                    </div>
+                                    <div className='flex flex-col'>
+                                        <p className='text-sm font-medium text-sec-main/70'>Phone Number</p>
+                                        <p className='text-base font-medium '>0909930929438</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='bg-white flex w-full rounded-md p-3 border-2'>
+                            <div className='flex flex-col gap-2 w-full'>
+                                <p className='text-sm font-medium text-sec-main border-b-[1.5px] pb-1 w-full'>Payment Information</p>
+                                <div className='flex flex-col gap-6'>
+                                    <div className='grid grid-cols-2 gap-2'>
+                                        <p className='text-base text-sec-main/70'>Room price</p>
+                                        <p className='text-base font-medium'>NGN 60,000</p>
+                                        <p className='text-base text-sec-main/70'>7.5% VAT</p>
+                                        <p className='text-base font-medium'>NGN 60,000</p>
+                                        <p className='text-base text-sec-main/70'>5.0% State Tax</p>
+                                        <p className='text-base font-medium'>NGN 60,000</p>
+                                    </div>
+                                    <div className='grid grid-cols-2 px-1'>
+                                        <p className='text-base font-medium'>Total paid</p>
+                                        <p className='text-base font-medium'>NGN 60,000</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
