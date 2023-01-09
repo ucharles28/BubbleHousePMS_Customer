@@ -55,11 +55,14 @@ export default function ConfirmBooking() {
         <div className="h-screen font-poppins">
             <Navbar />
             {!isLoading ? booking && <div className="bg-[#F8F8F8] flex flex-col gap-4 w-full h-auto lg:px-24 px-4 py-24 pb-32 text-sec-main">
-                    <div className='bg-white flex w-full rounded-md p-3 border-[1.5px]'>
-                        <div className="flex items-center gap-2">
+
+                <div className='bg-white flex w-full rounded-md p-3 border-[1.5px]'>
+                    {/* <div className="flex w-full"> */}
+
+                        <p className="text-sm font-medium text-sec-main flex items-center gap-2">
                             <svg
-                                width="20"
-                                height="20"
+                                width="24"
+                                height="24"
                                 viewBox="0 0 150 150"
                                 fill="none"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -69,67 +72,94 @@ export default function ConfirmBooking() {
                                     fill="#56CA00"
                                 />
                             </svg>
-                            <p className="text-sm font-medium text-sec-main">Your booking has been confirmed</p>
-                        </div>
+                            Your booking at {booking.hotel.name} has been confirmed</p>
+                    {/* </div> */}
+                </div>
+
+                <div className='bg-white flex flex-col w-full rounded-md p-3 border-[1.5px] gap-2'>
+                    <div className="flex flex-col">
+                        <p className="text-lg font-medium">{booking.hotel.name}</p>
+                        <p className="text-sm text-sec-main/70">{booking.hotel.address.line}</p>
+                    </div>
+                    <div className="flex gap-2 items-center justify-between w-full">
+                        <img src={booking.hotel.imageUrl} className="w-1/2 h-44 lg:h-[176px] object-cover rounded-md" />
+                        <img src={booking.hotel.imageUrl} className="w-1/2 h-44 lg:h-[176px] object-cover rounded-md" />
+                    </div>
+                </div>
+
+                <div className='bg-white flex w-full rounded-md p-3 border-[1.5px]'>
+                    <div className='flex flex-col gap-3 w-full'>
+                        <p className='text-sm font-medium text-sec-main border-b-[1.5px] pb-1.5 w-full'>Booking/Confirmation Number</p>
+
+                        <p className='text-sm font-medium text-sec-main/70 flex items-center gap-1'>Number: <span className='text-sm font-semibold text-sec-main tracking-wider'>{booking.code}</span></p>
+                    </div>
+                </div>
+
+                <div className='bg-white flex w-full flex-col rounded-md p-3 border-[1.5px] gap-3'>
+                    <p className='text-sm font-medium text-sec-main border-b-[1.5px] pb-1.5 w-full'>Contact Details</p>
+
+                    <div className="grid grid-cols-2 gap-3 text-sm">
+                        <p className="text-sec-main/70">Full Name</p>
+                        <p className="font-medium break-words">{booking.fullName}</p>
+                        <p className="text-sec-main/70">Email Address</p>
+                        <p className="font-medium break-words">{booking.email}</p>
+                        <p className="text-sec-main/70">Phone Number</p>
+                        <p className="font-medium">{booking.phone}</p>
                     </div>
 
-                    <div className='bg-white flex flex-col w-full rounded-md p-3 border-[1.5px] gap-2'>
-                        <div className="flex flex-col">
-                            <p className="text-lg font-medium">Hotel Name</p>
-                            <p className="text-sm text-sec-main/70">Lagos Nigeria</p>
-                        </div>
-                        <div className="flex gap-2 items-center justify-between w-full">
-                            <img src="../img.png" className="w-1/2 h-44 lg:h-[176px] object-cover rounded-md" />
-                            <img src="../img.png" className="w-1/2 h-44 lg:h-[176px] object-cover rounded-md" />
-                        </div>
+                </div>
+
+                <div className='bg-white flex w-full flex-col rounded-md p-3 border-[1.5px] gap-3'>
+                    <p className='text-sm font-medium text-sec-main border-b-[1.5px] pb-1.5 w-full'>Booking Details</p>
+
+                    <div className="grid grid-cols-2 gap-3 text-sm">
+                        <p className="text-sec-main/70">Check In</p>
+                        <p className="font-medium">{format(new Date(booking.checkInDate), "dd MMM, yyy")}</p>
+                        <p className="text-sec-main/70">Check Out</p>
+                        <p className="font-medium">{format(new Date(booking.checkOutDate), "dd MMM, yyy")}</p>
+                        <p className="text-sec-main/70">Guest</p>
+                        <p className="font-medium">{booking.totalAdults} adults{booking.totalChildren > 0 ? `, ${booking.totalChildren} child` : null}</p>
+                        <p className="text-sec-main/70">Reservation</p>
+                        <p className="font-medium">{numberOfDays} nights, {getTotalRooms(booking.roomTypes)} rooms</p>
                     </div>
 
-                    <div className='bg-white flex w-full flex-col rounded-md p-3 border-[1.5px] gap-3'>
-                        <p className='text-sm font-medium text-sec-main border-b-[1.5px] pb-1.5 w-full'>Booking Details</p>
+                </div>
 
-                        <div className="grid grid-cols-2 gap-3 text-sm">
-                            <p className="text-sec-main/70">Check In</p>
-                            <p className="font-medium">{format(new Date(booking.checkInDate), "dd MMM, yyy")}</p>
-                            <p className="text-sec-main/70">Check Out</p>
-                            <p className="font-medium">{format(new Date(booking.checkOutDate), "dd MMM, yyy")}</p>
-                            <p className="text-sec-main/70">Guest</p>
-                            <p className="font-medium">{booking.totalAdults} adults{booking.totalChildren > 0 ? `, ${booking.totalChildren} child` : null}</p>
-                            <p className="text-sec-main/70">Reservation</p>
-                            <p className="font-medium">{numberOfDays} nights, {getTotalRooms(booking.roomTypes)} rooms</p>
-                        </div>
+                <div className='bg-white flex w-full flex-col rounded-md p-3 border-[1.5px] gap-3'>
+                    <p className='text-sm font-medium text-sec-main border-b-[1.5px] pb-1.5 w-full'>Payment Details</p>
 
+                    <div className="grid grid-cols-2 gap-3 text-sm">
+                        <p className="text-sec-main/70">Payment Date</p>
+                        <p className="font-medium">{format(new Date(booking.createdDate), "dd MMM, yyy")}</p>
+                        <p className="text-sec-main/70">Method</p>
+                        <p className="font-medium">Stripe</p>
+                        <p className="text-sec-main/70">Total</p>
+                        <p className="font-medium">NGN {booking.totalAmount.toLocaleString()}</p>
+                        <p className="text-sec-main/70">Status</p>
+                        <p className="font-medium">Successful</p>
                     </div>
 
-                    <div className='bg-white flex w-full flex-col rounded-md p-3 border-[1.5px] gap-3'>
-                        <p className='text-sm font-medium text-sec-main border-b-[1.5px] pb-1.5 w-full'>Payment Details</p>
+                </div>
 
-                        <div className="grid grid-cols-2 gap-3 text-sm">
-                            <p className="text-sec-main/70">Payment Date</p>
-                            <p className="font-medium">{format(new Date(booking.createdDate), "dd MMM, yyy")}</p>
-                            <p className="text-sec-main/70">Method</p>
-                            <p className="font-medium">Stripe</p>
-                            <p className="text-sec-main/70">Total</p>
-                            <p className="font-medium">NGN {booking.totalAmount.toLocaleString()}</p>
-                            <p className="text-sec-main/70">Status</p>
-                            <p className="font-medium">Successful</p>
-                        </div>
+                <div className="flex flex-col items-center justify-center w-full gap-2 mt-6">
+                    <button type='button' className="text-sm bg-gray-400 text-white rounded-md p-3 px-4">Print now</button>
+                    <p className="text-sm text-sec-main/70 italic text-center">You can print a copy of your booking confirmation.</p>
+                </div>
 
-                    </div>
-
-                </div> : <div className="w-full h-full">
-                    <div className="flex flex-col items-center justify-center">
-                        <div className="lg:w-2/5 md:w-1/2 pt-10 pl-4 pr-4 justify-center lg:my-16 sm:my-5">
-                            <div className="m-12 pt-14 flex flex-col items-center justify-center">
-                                <BounceLoader
-                                    heigth={200}
-                                    width={200}
-                                    color="#FFCC00"
-                                    ariaLabel="loading-indicator"
-                                />
-                            </div>
+            </div> : <div className="w-full h-full">
+                <div className="flex flex-col items-center justify-center">
+                    <div className="lg:w-2/5 md:w-1/2 pt-10 pl-4 pr-4 justify-center lg:my-16 sm:my-5">
+                        <div className="m-12 pt-14 flex flex-col items-center justify-center">
+                            <BounceLoader
+                                heigth={200}
+                                width={200}
+                                color="#FFCC00"
+                                ariaLabel="loading-indicator"
+                            />
                         </div>
                     </div>
-                </div>}
+                </div>
+            </div>}
             <Footer className='bg-[#ffffff]' />
         </div >
     )

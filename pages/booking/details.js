@@ -49,10 +49,9 @@ function BookingDetails() {
                         <span className="lg:text-xl text-lg text-sec-main font-medium">
                             Booking details
                         </span>
-                        {/* <p>
-                            Update your information here, this information would also be used
-                            for your bookings in the future
-                        </p> */}
+                        <p>
+                            View the details of your booking at {booking.hotel.name}.
+                        </p>
                     </div>
 
                     <div className='flex flex-col gap-4 w-full'>
@@ -114,7 +113,7 @@ function BookingDetails() {
 
                         </div>
 
-                        <div className='bg-white p-3 gap-4 border-[1.5px] grid lg:grid-cols-2 grid-cols-1 justify-center items-center w-full rounded-md'>
+                        {/* <div className='bg-white p-3 gap-4 border-[1.5px] grid lg:grid-cols-2 grid-cols-1 justify-center items-center w-full rounded-md'>
                             <div className="box w-full gap-1">
                                 <p className="text-xs font-normal text-sec-main/70">
                                     Check-in
@@ -150,7 +149,7 @@ function BookingDetails() {
                                     {getTotalRooms(booking.roomTypes)} room
                                 </span>
                             </div>
-                        </div>
+                        </div> */}
 
                         <div className='bg-white flex w-full rounded-md p-3 border-[1.5px]'>
                             <div className='flex flex-col gap-3 w-full'>
@@ -160,25 +159,34 @@ function BookingDetails() {
                             </div>
                         </div>
 
-                        <div className='bg-white flex w-full rounded-md p-3 border-[1.5px]'>
-                            <div className='flex flex-col gap-3 w-full'>
-                                <p className='text-sm font-medium text-sec-main border-b-[1.5px] pb-1.5 w-full'>Contact Details</p>
+                        <div className='bg-white flex w-full flex-col rounded-md p-3 border-[1.5px] gap-3'>
+                            <p className='text-sm font-medium text-sec-main border-b-[1.5px] pb-1.5 w-full'>Contact Details</p>
 
-                                <div className='w-full flex flex-col lg:gap-2 lg:grid lg:grid-cols-2'>
-                                    <div className='flex flex-col gap-1'>
-                                        <p className='text-xs font-normal text-sec-main/70'>Full Name</p>
-                                        <p className='text-sm font-medium text-sec-main '>{booking.fullName}</p>
-                                    </div>
-                                    <div className='flex flex-col gap-1'>
-                                        <p className='text-xs font-normal text-sec-main/70'>Email address</p>
-                                        <p className='text-sm font-medium text-sec-main '>{booking.email}</p>
-                                    </div>
-                                    <div className='flex flex-col gap-1'>
-                                        <p className='text-xs font-normal text-sec-main/70'>Phone Number</p>
-                                        <p className='text-sm font-medium text-sec-main '>{booking.phone}</p>
-                                    </div>
-                                </div>
+                            <div className="grid grid-cols-2 gap-3 text-sm">
+                                <p className="text-sec-main/70">Full Name</p>
+                                <p className="font-medium break-words">{booking.fullName}</p>
+                                <p className="text-sec-main/70">Email Address</p>
+                                <p className="font-medium break-words">{booking.email}</p>
+                                <p className="text-sec-main/70">Phone Number</p>
+                                <p className="font-medium">{booking.phone}</p>
                             </div>
+
+                        </div>
+
+                        <div className='bg-white flex w-full flex-col rounded-md p-3 border-[1.5px] gap-3'>
+                            <p className='text-sm font-medium text-sec-main border-b-[1.5px] pb-1.5 w-full'>Booking Details</p>
+
+                            <div className="grid grid-cols-2 gap-3 text-sm">
+                                <p className="text-sec-main/70">Check In</p>
+                                <p className="font-medium">{format(new Date(booking.checkInDate), "dd MMM, yyy")}</p>
+                                <p className="text-sec-main/70">Check Out</p>
+                                <p className="font-medium">{format(new Date(booking.checkOutDate), "dd MMM, yyy")}</p>
+                                <p className="text-sec-main/70">Guest</p>
+                                <p className="font-medium">{booking.totalAdults} adults{booking.totalChildren > 0 ? `, ${booking.totalChildren} child` : null}</p>
+                                <p className="text-sec-main/70">Reservation</p>
+                                <p className="font-medium">1 nights, {getTotalRooms(booking.roomTypes)} rooms</p>
+                            </div>
+
                         </div>
 
                         <div className='bg-white flex w-full rounded-md p-3 border-[1.5px]'>
