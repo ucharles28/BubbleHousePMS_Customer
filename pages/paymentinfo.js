@@ -80,6 +80,7 @@ function paymentinfo() {
 
                                     <div className="flex gap-2 font-medium">
                                         
+                                        
                                         <span className="text-xs">
                                             Swimming pool
                                         </span>
@@ -97,10 +98,10 @@ function paymentinfo() {
                                         </span>
                                     </div> */}
 
-                                    <div className="flex flex-col text-sec-main">
+                                    {/* <div className="flex flex-col text-sec-main">
                                         <p className="text-base font-semibold">NGN {booking.totalAmount.toLocaleString()}</p>
                                         <p className="text-sec-main/70 text-xs font-medium">avg/night</p>
-                                    </div>
+                                    </div> */}
                                 </div>
 
                             </div>
