@@ -153,9 +153,11 @@ function BookingDetails() {
 
                         <div className='bg-white flex w-full rounded-md p-3 border-[1.5px]'>
                             <div className='flex flex-col gap-3 w-full'>
-                                <p className='text-sm font-medium text-sec-main border-b-[1.5px] pb-1.5 w-full'>Booking/Confirmation Number</p>
+                                <p className='text-sm font-medium text-sec-main border-b-[1.5px] pb-1.5 w-full'>Booking Number</p>
 
-                                <p className='text-sm font-medium text-sec-main/70 flex items-center gap-1'>Booking Number: <span className='text-sm font-semibold text-sec-main tracking-wider'>{booking.code}</span></p>
+                                {/* <p className='text-sm font-medium text-sec-main/70 flex items-center gap-1'>Booking Number: */}
+                                <span className='text-sm font-semibold text-sec-main tracking-wider'>{booking.code}</span>
+                                {/* </p> */}
                             </div>
                         </div>
 
@@ -163,12 +165,14 @@ function BookingDetails() {
                             <p className='text-sm font-medium text-sec-main border-b-[1.5px] pb-1.5 w-full'>Contact Details</p>
 
                             <div className="grid grid-cols-2 gap-3 text-sm">
-                                <p className="text-sec-main/70">Full Name</p>
+                                <p className="text-sec-main/70">Name</p>
                                 <p className="font-medium break-words">{booking.fullName}</p>
                                 <p className="text-sec-main/70">Email Address</p>
                                 <p className="font-medium break-words">{booking.email}</p>
                                 <p className="text-sec-main/70">Phone Number</p>
                                 <p className="font-medium">{booking.phone}</p>
+                                <p className="text-sec-main/70">Date</p>
+                                <p className="font-medium">08 Jan 2023</p>
                             </div>
 
                         </div>
@@ -177,14 +181,14 @@ function BookingDetails() {
                             <p className='text-sm font-medium text-sec-main border-b-[1.5px] pb-1.5 w-full'>Booking Details</p>
 
                             <div className="grid grid-cols-2 gap-3 text-sm">
-                                <p className="text-sec-main/70">Check In</p>
+                                <p className="text-sec-main/70">Check-in</p>
                                 <p className="font-medium">{format(new Date(booking.checkInDate), "dd MMM, yyy")}</p>
-                                <p className="text-sec-main/70">Check Out</p>
+                                <p className="text-sec-main/70">Check-out</p>
                                 <p className="font-medium">{format(new Date(booking.checkOutDate), "dd MMM, yyy")}</p>
                                 <p className="text-sec-main/70">Guest</p>
                                 <p className="font-medium">{booking.totalAdults} adults{booking.totalChildren > 0 ? `, ${booking.totalChildren} child` : null}</p>
                                 <p className="text-sec-main/70">Reservation</p>
-                                <p className="font-medium">1 nights, {getTotalRooms(booking.roomTypes)} rooms</p>
+                                <p className="font-medium">{numberOfDays} nights, {getTotalRooms(booking.roomTypes)} rooms</p>
                             </div>
 
                         </div>
