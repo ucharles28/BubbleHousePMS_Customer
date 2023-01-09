@@ -42,7 +42,7 @@ function BookingDetails() {
     return (
         <div className='h-screen font-poppins'>
             <Navbar />
-            {!isLoading ? booking && <div className="bg-[#F8F8F8] w-full lg:px-24 px-4 py-10 pb-24">
+            {!isLoading ? booking && <div className="bg-[#F8F8F8] w-full lg:px-24 px-4 py-10 pb-24 text-sec-main">
                 <div className="flex flex-col gap-10 justify-center w-full pt-12 pb-8">
 
                     <div className="flex flex-col gap-2">
@@ -57,7 +57,7 @@ function BookingDetails() {
 
                     <div className='flex flex-col gap-4 w-full'>
 
-                        <div className="bg-white border-2 p-4 flex w-full rounded-md">
+                        <div className="bg-white border-[1.5px] p-4 gap-4 flex flex-col w-full rounded-md">
 
                             <div className="flex gap-3 w-full">
                                 <img src={booking.hotel.imageUrl} className="object-cover rounded-md w-44 h-44" alt='bcloud' />
@@ -97,30 +97,24 @@ function BookingDetails() {
                                         </span>
                                     </div> */}
 
-                                    {/* <div className="flex flex-col text-sec-main">
-                                        <p className="text-base font-semibold">NGN 30,000</p>
+                                    <div className="flex flex-col text-sec-main">
+                                        <p className="text-base font-semibold">NGN {booking.totalAmount.toLocaleString()}</p>
                                         <p className="text-sec-main/70 text-xs font-medium">avg/night</p>
-                                    </div> */}
+                                    </div>
                                 </div>
 
                             </div>
 
-                            {/* <div className="right flex flex-col justify-between">
-                                <div className="text-end">
-                                    <small className="opacity-50 text-center">
-                                        Includes taxes and fees
-                                    </small>
-                                    <div className="text-end">
-                                        <p className="font-bold">NGN 30,000</p>
-                                        <p className=" text-xs">avg/night</p>
-                                    </div>
-                                </div>
+                            <div className='flex lg:flex-row flex-col items-center w-full gap-2'>
+                                <button type='button' className='p-3 bg-[#ffcc00]/70 hover:bg-[#f5c400] w-full text-sm rounded-md'>Cancel booking</button>
 
-                            </div> */}
+                                <button type='button' className='p-3 border-[1.5px] border-[#ffcc00]/70 hover:bg-[#ffcc00]/70 hover:border-0 w-full text-sm rounded-md'>Make changes to booking</button>
+
+                            </div>
 
                         </div>
 
-                        <div className='bg-white p-3 gap-4 border-2 grid lg:grid-cols-2 grid-cols-1 justify-center items-center w-full rounded-md'>
+                        <div className='bg-white p-3 gap-4 border-[1.5px] grid lg:grid-cols-2 grid-cols-1 justify-center items-center w-full rounded-md'>
                             <div className="box w-full gap-1">
                                 <p className="text-xs font-normal text-sec-main/70">
                                     Check-in
@@ -158,50 +152,50 @@ function BookingDetails() {
                             </div>
                         </div>
 
-                        <div className='bg-white flex w-full rounded-md p-3 border-2'>
-                            <div className='flex flex-col gap-2 w-full'>
-                                <p className='text-sm font-medium text-sec-main border-b-[1.5px] pb-1 w-full'>Booking Number</p>
-                                <p className='text-base font-semibold text-sec-main'>{booking.code}</p>
+                        <div className='bg-white flex w-full rounded-md p-3 border-[1.5px]'>
+                            <div className='flex flex-col gap-3 w-full'>
+                                <p className='text-sm font-medium text-sec-main border-b-[1.5px] pb-1.5 w-full'>Booking/Confirmation Number</p>
+
+                                <p className='text-sm font-medium text-sec-main/70 flex items-center gap-1'>Booking Number: <span className='text-sm font-semibold text-sec-main tracking-wider'>{booking.code}</span></p>
                             </div>
                         </div>
 
-                        <div className='bg-white flex w-full rounded-md p-3 border-2'>
-                            <div className='flex flex-col gap-2 w-full'>
-                                <p className='text-sm font-medium text-sec-main border-b-[1.5px] pb-1 w-full'>Contact details</p>
+                        <div className='bg-white flex w-full rounded-md p-3 border-[1.5px]'>
+                            <div className='flex flex-col gap-3 w-full'>
+                                <p className='text-sm font-medium text-sec-main border-b-[1.5px] pb-1.5 w-full'>Contact Details</p>
+
                                 <div className='w-full flex flex-col lg:gap-2 lg:grid lg:grid-cols-2'>
-                                    <div className='flex flex-col'>
+                                    <div className='flex flex-col gap-1'>
                                         <p className='text-xs font-normal text-sec-main/70'>Full Name</p>
-                                        <p className='text-sm font-normal text-sec-main '>{booking.fullName}</p>
+                                        <p className='text-sm font-medium text-sec-main '>{booking.fullName}</p>
                                     </div>
-                                    <div className='flex flex-col'>
-                                        <p className='text-xs font-normal text-sec-main/70'>Email</p>
-                                        <p className='text-sm font-normal text-sec-main '>{booking.email}</p>
+                                    <div className='flex flex-col gap-1'>
+                                        <p className='text-xs font-normal text-sec-main/70'>Email address</p>
+                                        <p className='text-sm font-medium text-sec-main '>{booking.email}</p>
                                     </div>
-                                    <div className='flex flex-col'>
+                                    <div className='flex flex-col gap-1'>
                                         <p className='text-xs font-normal text-sec-main/70'>Phone Number</p>
-                                        <p className='text-sm font-normal text-sec-main '>{booking.phone}</p>
+                                        <p className='text-sm font-medium text-sec-main '>{booking.phone}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div className='bg-white flex w-full rounded-md p-3 border-2'>
-                            <div className='flex flex-col gap-2 w-full'>
-                                <p className='text-sm font-medium text-sec-main border-b-[1.5px] pb-1 w-full'>Payment Information</p>
-                                <div className='flex flex-col gap-6'>
-                                    <div className='grid grid-cols-2 gap-2'>
-                                        <p className='text-base text-sec-main/70'>Room price</p>
-                                        <p className='text-base font-medium'>NGN {booking.totalRoomPrice.toLocaleString()}</p>
-                                        <p className='text-base text-sec-main/70'>7.5% VAT</p>
-                                        <p className='text-base font-medium'>NGN {booking.vatAmount.toLocaleString()}</p>
-                                        <p className='text-base text-sec-main/70'>5.0% State Tax</p>
-                                        <p className='text-base font-medium'>NGN {booking.stateTaxAmount.toLocaleString()}</p>
-                                    </div>
-                                    <div className='grid grid-cols-2 px-1'>
-                                        <p className='text-base font-medium'>Total paid</p>
-                                        <p className='text-base font-medium'>NGN {booking.totalAmount.toLocaleString()}</p>
-                                    </div>
+                        <div className='bg-white flex w-full rounded-md p-3 border-[1.5px]'>
+                            <div className='flex flex-col gap-3 w-full'>
+                                <p className='text-sm font-medium text-sec-main border-b-[1.5px] pb-1.5 w-full'>Payment Information</p>
+
+                                <div className="grid grid-cols-2 gap-3 text-sm">
+                                    <p className="text-sec-main/70">Room price</p>
+                                    <p className="font-medium">NGN {booking.totalRoomPrice.toLocaleString()}</p>
+                                    <p className="text-sec-main/70">7.5% VAT</p>
+                                    <p className="font-medium">NGN {booking.vatAmount.toLocaleString()}</p>
+                                    <p className="text-sec-main/70">5.0% State Tax</p>
+                                    <p className="font-medium">NGN {booking.stateTaxAmount.toLocaleString()}</p>
+                                    <p className="text-sm font-semibold ext-sec-main">Total paid</p>
+                                    <p className="font-semibold">NGN {booking.totalAmount.toLocaleString()}</p>
                                 </div>
+
                             </div>
                         </div>
 

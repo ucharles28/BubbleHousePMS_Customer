@@ -53,7 +53,7 @@ export default function Navbar() {
   }, []);
 
   return (
-    <div className="bg-white after:bg-pri-main fixed w-full z-20 shadow-sm font-poppins">
+    <div className="bg-white fixed w-full z-20 shadow-sm font-poppins">
       <div className="flex py-3 lg:px-16 px-4 w-full justify-between items-center">
         <Link href="/">
           <Image
