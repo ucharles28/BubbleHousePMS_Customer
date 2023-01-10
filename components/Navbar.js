@@ -49,12 +49,11 @@ export default function Navbar() {
 
   useEffect(() => {
     const result = JSON.parse(localStorage.getItem("user"));
-    console.log(result);
     setUser(result);
   }, []);
 
   return (
-    <div className="bg-white after:bg-pri-main fixed w-full z-20 shadow-sm font-poppins">
+    <div className="bg-white fixed w-full z-20 shadow-sm font-poppins">
       <div className="flex py-3 lg:px-16 px-4 w-full justify-between items-center">
         <Link href="/">
           <Image
@@ -130,7 +129,7 @@ export default function Navbar() {
               <p className="text-sm leading-5 font-normal">Manage Account</p>
             </div>
           </Link>
-          <Link href="#">
+          <Link href="/booking/history">
             <div className=" py-2 px-3 flex flex-row items-center gap-2 text-[#1a1a1a]/70 hover:text-[#1a1a1a] hover:bg-[#1a1a1a]/5 w-full">
               <Notepad2 size={24} />
               <p className="text-sm leading-5 font-normal">Booking History</p>
@@ -142,10 +141,10 @@ export default function Navbar() {
               <p className="text-sm leading-5 font-normal">Rewards</p>
             </div>
           </Link>
-          <Link href="#">
+          <Link href="/mywishlist">
             <div className=" py-2 px-3 flex flex-row items-center gap-2 text-[#1a1a1a]/70 hover:text-[#1a1a1a] hover:bg-[#1a1a1a]/5 w-full">
               <Heart size={24} />
-              <p className="text-sm leading-5 font-normal">Like</p>
+              <p className="text-sm leading-5 font-normal">Saved</p>
             </div>
           </Link>
           <Link href="#" onClick={logOut}>

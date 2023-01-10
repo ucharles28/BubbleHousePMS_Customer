@@ -1,24 +1,22 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./pages/**/*.{html,js}",
-    "./components/*.{html,js}",
+    "./pages/**/**/*.{html,js}",
+    "./components/**/*.{html,js}",
     "./pages/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     fontFamily: {
       poppins: ["Poppins", "sans-serif"],
     },
-
-    // fontFamily: { poppins: "Poppins" },
     colors: {
-      white: "#fff",
-      pri: {
+      'white': "#fff",
+      'pri': {
         "main": "#ffcc00",
         "cont": "#f5c400",
         "adark": "#D4AA00",
       },
-      sec: {
+      'sec': {
         "main": "#1a1a1a",
       },
       'gray': {

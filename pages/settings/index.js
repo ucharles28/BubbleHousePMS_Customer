@@ -26,16 +26,20 @@ export default function Home() {
                 </div>
               </div>
             </Link>
-            <div className="flex gap-8 items-center cursor-pointer hover:text-pri-cont px-5 lg:px-10 py-8 rounded-md border-[0.5px] border-sec-main/20 text-sec-main bg-white">
-              <ShieldSecurity size={38} className="" />
-              <div className="flex flex-col">
-                <p className="text-xl font-medium">Security details</p>
-                <p className="text-sm text-sec-main/80 font-normal">
-                  Adjust your security details and set up two-factor
-                  authentication.
-                </p>
+            <Link href="/settings/security">
+              {" "}
+              <div className="flex gap-8 items-center cursor-pointer hover:text-pri-cont px-5 lg:px-10 py-8 rounded-md border-[0.5px] border-sec-main/20 text-sec-main bg-white">
+                <ShieldSecurity size={38} className="" />
+                <div className="flex flex-col">
+                  <p className="text-xl font-medium">Security details</p>
+                  <p className="text-sm text-sec-main/80 font-normal">
+                    Adjust your security details and set up two-factor
+                    authentication.
+                  </p>
+                </div>
               </div>
-            </div>
+            </Link>
+
             <div className="flex gap-8 items-center cursor-pointer hover:text-pri-cont px-5 lg:px-10 py-8 rounded-md border-[0.5px] border-sec-main/20 text-sec-main bg-white">
               <Notification size={42} className="" />
               <div className="flex flex-col gap-1">
