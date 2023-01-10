@@ -10,13 +10,13 @@ module.exports = {
       poppins: ["Poppins", "sans-serif"],
     },
     colors: {
-      white: "#fff",
-      pri: {
+      'white': "#fff",
+      'pri': {
         "main": "#ffcc00",
         "cont": "#f5c400",
         "adark": "#D4AA00",
       },
-      sec: {
+      'sec': {
         "main": "#1a1a1a",
       },
       'gray': {
