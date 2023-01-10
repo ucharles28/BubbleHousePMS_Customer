@@ -75,12 +75,12 @@ export default function ConfirmBooking() {
 
                     <div className='bg-white flex flex-col w-full rounded-md p-3 border-[1.5px] gap-2'>
                         <div className="flex flex-col">
-                            <p className="text-lg font-medium">Hotel Name</p>
-                            <p className="text-sm text-sec-main/70">Lagos Nigeria</p>
+                            <p className="text-lg font-medium">{booking.hotel.name}</p>
+                            <p className="text-sm text-sec-main/70">{booking.hotel.address.line}</p>
                         </div>
                         <div className="flex gap-2 items-center justify-between w-full">
-                            <img src="../img.png" className="w-1/2 h-44 lg:h-[176px] object-cover rounded-md" />
-                            <img src="../img.png" className="w-1/2 h-44 lg:h-[176px] object-cover rounded-md" />
+                            <img src={booking.roomTypes[0].roomType.images[0].imageUrl} className="w-1/2 h-44 lg:h-[250px] object-cover rounded-md" />
+                            <img src={booking.roomTypes[0].roomType.images[1].imageUrl} className="w-1/2 h-44 lg:h-[250px] object-cover rounded-md" />
                         </div>
                     </div>
 
@@ -107,7 +107,7 @@ export default function ConfirmBooking() {
                             <p className="text-sec-main/70">Payment Date</p>
                             <p className="font-medium">{format(new Date(booking.createdDate), "dd MMM, yyy")}</p>
                             <p className="text-sec-main/70">Method</p>
-                            <p className="font-medium">Stripe</p>
+                            <p className="font-medium">Card</p>
                             <p className="text-sec-main/70">Total</p>
                             <p className="font-medium">NGN {booking.totalAmount.toLocaleString()}</p>
                             <p className="text-sec-main/70">Status</p>
