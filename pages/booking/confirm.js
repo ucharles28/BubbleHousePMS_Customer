@@ -59,20 +59,20 @@ export default function ConfirmBooking() {
                 <div className='bg-white flex w-full rounded-md p-3 border-[1.5px]'>
                     {/* <div className="flex w-full"> */}
 
-                        <p className="text-sm font-medium text-sec-main flex items-center gap-2">
-                            <svg
-                                width="24"
-                                height="24"
-                                viewBox="0 0 150 150"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    d="M75 12.5C40.5625 12.5 12.5 40.5625 12.5 75C12.5 109.438 40.5625 137.5 75 137.5C109.438 137.5 137.5 109.438 137.5 75C137.5 40.5625 109.438 12.5 75 12.5ZM104.875 60.625L69.4375 96.0625C68.5625 96.9375 67.375 97.4375 66.125 97.4375C64.875 97.4375 63.6875 96.9375 62.8125 96.0625L45.125 78.375C43.3125 76.5625 43.3125 73.5625 45.125 71.75C46.9375 69.9375 49.9375 69.9375 51.75 71.75L66.125 86.125L98.25 54C100.063 52.1875 103.063 52.1875 104.875 54C106.688 55.8125 106.688 58.75 104.875 60.625Z"
-                                    fill="#56CA00"
-                                />
-                            </svg>
-                            Your booking at {booking.hotel.name} has been confirmed</p>
+                    <p className="text-sm font-medium text-sec-main flex items-center gap-2">
+                        <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 150 150"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M75 12.5C40.5625 12.5 12.5 40.5625 12.5 75C12.5 109.438 40.5625 137.5 75 137.5C109.438 137.5 137.5 109.438 137.5 75C137.5 40.5625 109.438 12.5 75 12.5ZM104.875 60.625L69.4375 96.0625C68.5625 96.9375 67.375 97.4375 66.125 97.4375C64.875 97.4375 63.6875 96.9375 62.8125 96.0625L45.125 78.375C43.3125 76.5625 43.3125 73.5625 45.125 71.75C46.9375 69.9375 49.9375 69.9375 51.75 71.75L66.125 86.125L98.25 54C100.063 52.1875 103.063 52.1875 104.875 54C106.688 55.8125 106.688 58.75 104.875 60.625Z"
+                                fill="#56CA00"
+                            />
+                        </svg>
+                        Your booking at {booking.hotel.name} has been confirmed</p>
                     {/* </div> */}
                 </div>
 
@@ -89,9 +89,11 @@ export default function ConfirmBooking() {
 
                 <div className='bg-white flex w-full rounded-md p-3 border-[1.5px]'>
                     <div className='flex flex-col gap-3 w-full'>
-                        <p className='text-sm font-medium text-sec-main border-b-[1.5px] pb-1.5 w-full'>Booking/Confirmation Number</p>
+                        <p className='text-sm font-medium text-sec-main border-b-[1.5px] pb-1.5 w-full'>Booking Number</p>
 
-                        <p className='text-sm font-medium text-sec-main/70 flex items-center gap-1'>Number: <span className='text-sm font-semibold text-sec-main tracking-wider'>{booking.code}</span></p>
+                        {/* <p className='text-sm font-medium text-sec-main/70 flex items-center gap-1'>Number: */}
+                            <span className='text-sm font-semibold text-sec-main tracking-wider'>{booking.code}</span>
+                        {/* </p> */}
                     </div>
                 </div>
 
@@ -99,12 +101,14 @@ export default function ConfirmBooking() {
                     <p className='text-sm font-medium text-sec-main border-b-[1.5px] pb-1.5 w-full'>Contact Details</p>
 
                     <div className="grid grid-cols-2 gap-3 text-sm">
-                        <p className="text-sec-main/70">Full Name</p>
+                        <p className="text-sec-main/70">Name</p>
                         <p className="font-medium break-words">{booking.fullName}</p>
                         <p className="text-sec-main/70">Email Address</p>
                         <p className="font-medium break-words">{booking.email}</p>
                         <p className="text-sec-main/70">Phone Number</p>
                         <p className="font-medium">{booking.phone}</p>
+                        <p className="text-sec-main/70">Date</p>
+                        <p className="font-medium">08 Jan 2023</p>
                     </div>
 
                 </div>
@@ -113,9 +117,9 @@ export default function ConfirmBooking() {
                     <p className='text-sm font-medium text-sec-main border-b-[1.5px] pb-1.5 w-full'>Booking Details</p>
 
                     <div className="grid grid-cols-2 gap-3 text-sm">
-                        <p className="text-sec-main/70">Check In</p>
+                        <p className="text-sec-main/70">Check-in</p>
                         <p className="font-medium">{format(new Date(booking.checkInDate), "dd MMM, yyy")}</p>
-                        <p className="text-sec-main/70">Check Out</p>
+                        <p className="text-sec-main/70">Check-out</p>
                         <p className="font-medium">{format(new Date(booking.checkOutDate), "dd MMM, yyy")}</p>
                         <p className="text-sec-main/70">Guest</p>
                         <p className="font-medium">{booking.totalAdults} adults{booking.totalChildren > 0 ? `, ${booking.totalChildren} child` : null}</p>
