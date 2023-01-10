@@ -164,7 +164,6 @@ import {
 } from "iconsax-react";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
-import LeftSideBar from "../../components/leftSideBar";
 
 const ProfileDetails = () => {
   const [image, setImage] = useState("");
@@ -228,7 +227,7 @@ const ProfileDetails = () => {
                 </div>
               </div>
             </div>
-            ;
+
             <div className="flex-wrap flex-grow gap-8 items-start cursor-pointer  rounded-md border-[0.5px] border-sec-main/20 text-sec-main bg-white py-3 px-6 md:flex-1 md:w-32">
               <div className="flex space-x-3 items-center">
                 <div className="border p-5 rounded-full">
@@ -250,69 +249,56 @@ const ProfileDetails = () => {
               </div>
 
               <div className="mt-4 w-full">
-                <form>
-                  <div className="w-full flex space-x-2">
+                <form className="flex flex-col gap-5 w-full">
+                  <div className="w-full lg:flex grid grid-cols-1 gap-6 lg:gap-4">
                     <input
                       type="text"
                       placeholder="First Name"
-                      className="border p-1 outline-none w-full rounded-md"
+                      className="border-[0.5px] placeholder:text-sm border-sec-main/20 p-2.5 outline-none w-full rounded-md"
                     />
                     <input
                       type="text"
                       placeholder="Last Name"
-                      className="border p-1 outline-none w-full rounded-md"
+                      className="border-[0.5px] placeholder:text-sm border-sec-main/20 p-2.5 outline-none w-full rounded-md"
                     />
                   </div>
-                  <form className="flex flex-col gap-5 w-full">
-                    <div className="w-full lg:flex grid grid-cols-1 gap-6 lg:gap-4">
-                      <input
-                        type="text"
-                        placeholder="First Name"
-                        className="border-[0.5px] placeholder:text-sm border-sec-main/20 p-2.5 outline-none w-full rounded-md"
-                      />
-                      <input
-                        type="text"
-                        placeholder="Last Name"
-                        className="border-[0.5px] placeholder:text-sm border-sec-main/20 p-2.5 outline-none w-full rounded-md"
-                      />
-                    </div>
 
-                    <input
-                      type="email"
-                      placeholder="Email"
-                      className="border-[0.5px] placeholder:text-sm border-sec-main/20 p-2.5 outline-none w-full rounded-md"
-                    />
-                    <input
-                      type="text"
-                      placeholder="Phone Number"
-                      className="border-[0.5px] placeholder:text-sm border-sec-main/20 p-2.5 outline-none w-full rounded-md"
-                    />
-                    <input
-                      type="text"
-                      placeholder="Gender"
-                      className="border-[0.5px] placeholder:text-sm border-sec-main/20 p-2.5 outline-none w-full rounded-md"
-                    />
-                    <input
-                      type="text"
-                      placeholder="State"
-                      className="border-[0.5px] placeholder:text-sm border-sec-main/20 p-2.5 outline-none w-full rounded-md"
-                    />
-                    <input
-                      type="text"
-                      placeholder="City"
-                      className="border-[0.5px] placeholder:text-sm border-sec-main/20 p-2.5 outline-none w-full rounded-md"
-                    />
-                    <div className="w-full flex justify-end space-x-3">
-                      <button
-                        type="button"
-                        className="p-3 px-4 bg-[#FFCC00AA] text-sm rounded-md"
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </form>
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    className="border-[0.5px] placeholder:text-sm border-sec-main/20 p-2.5 outline-none w-full rounded-md"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Phone Number"
+                    className="border-[0.5px] placeholder:text-sm border-sec-main/20 p-2.5 outline-none w-full rounded-md"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Gender"
+                    className="border-[0.5px] placeholder:text-sm border-sec-main/20 p-2.5 outline-none w-full rounded-md"
+                  />
+                  <input
+                    type="text"
+                    placeholder="State"
+                    className="border-[0.5px] placeholder:text-sm border-sec-main/20 p-2.5 outline-none w-full rounded-md"
+                  />
+                  <input
+                    type="text"
+                    placeholder="City"
+                    className="border-[0.5px] placeholder:text-sm border-sec-main/20 p-2.5 outline-none w-full rounded-md"
+                  />
+                  <div className="w-full flex justify-end space-x-3">
+                    <button
+                      type="button"
+                      className="p-3 px-4 bg-[#FFCC00AA] text-sm rounded-md"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </form>
 
-                  <div className="mt-3 space-y-3">
+                {/* <div className="mt-3 space-y-3">
                     <input
                       type="email"
                       placeholder="Email"
@@ -346,8 +332,7 @@ const ProfileDetails = () => {
                     >
                       Save
                     </button>
-                  </div>
-                </form>
+                  </div> */}
               </div>
             </div>
           </div>
