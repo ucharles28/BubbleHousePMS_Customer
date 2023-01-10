@@ -82,8 +82,8 @@ export default function ConfirmBooking() {
                         <p className="text-sm text-sec-main/70">{booking.hotel.address.line}</p>
                     </div>
                     <div className="flex gap-2 items-center justify-between w-full">
-                        <img src={booking.hotel.imageUrl} className="w-1/2 h-44 lg:h-[176px] object-cover rounded-md" />
-                        <img src={booking.hotel.imageUrl} className="w-1/2 h-44 lg:h-[176px] object-cover rounded-md" />
+                        <img src={booking.roomTypes[0].roomType.images[0].imageUrl} className="w-1/2 h-44 lg:h-[250px] object-cover rounded-md" />
+                        <img src={booking.roomTypes[0].roomType.images[1].imageUrl} className="w-1/2 h-44 lg:h-[250px] object-cover rounded-md" />
                     </div>
                 </div>
 
