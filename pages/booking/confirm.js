@@ -42,6 +42,10 @@ export default function ConfirmBooking() {
         return count
     }
 
+    const printReceipt = () => {
+        window.open(`https://uzomacharles.bsite.net/api/Payment/Receipt/${booking.id}`, '_blank');
+    }
+
     function dateDiffInDays(a, b) {
         const _MS_PER_DAY = 1000 * 60 * 60 * 24;
         // Discard the time and time-zone information.
@@ -146,7 +150,7 @@ export default function ConfirmBooking() {
                 </div>
 
                 <div className="flex flex-col items-center justify-center w-full gap-2 mt-6">
-                    <button type='button' className="text-sm bg-gray-400 text-white rounded-md p-3 px-4">Print now</button>
+                    <button type='button' onClick={printReceipt} className="text-sm bg-gray-400 text-white rounded-md p-3 px-4">Print now</button>
                     <p className="text-sm text-sec-main/70 italic text-center">You can print a copy of your booking confirmation.</p>
                 </div>
 

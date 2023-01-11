@@ -257,7 +257,7 @@ const HotelSearch = ({ numberOfAdults, setNumberOfAdults, numberOfChildren, setN
           </button>
         </form>
         {searchIsLoading ||
-          (places.length > 0 && (
+          (places && places.length > 0 && (
             <div className={styles.dropdown}>
               {searchIsLoading && (
                 <div className="flex flex-col items-end m-0 p-0 justify-start">

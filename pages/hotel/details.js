@@ -220,7 +220,7 @@ export default function HotelDetails() {
                 return;
             }
             roomTypesInfo.push({
-                bookedRoooms: Number(selectRooms[key]),
+                numberBookedRooms: Number(selectRooms[key]),
                 roomPrice: Number(hotel.roomTypes[key].price),
                 roomTypeId: hotel.roomTypes[key].id
             });
