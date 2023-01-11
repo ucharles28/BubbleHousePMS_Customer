@@ -96,7 +96,7 @@ export default function ConfirmBooking() {
                         <p className='text-sm font-medium text-sec-main border-b-[1.5px] pb-1.5 w-full'>Booking Number</p>
 
                         {/* <p className='text-sm font-medium text-sec-main/70 flex items-center gap-1'>Number: */}
-                        <span className='text-sm font-semibold text-sec-main tracking-wider'>{booking.code}</span>
+                            <span className='text-sm font-semibold text-sec-main tracking-wider'>{booking.code}</span>
                         {/* </p> */}
                     </div>
                 </div>

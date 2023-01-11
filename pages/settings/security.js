@@ -31,33 +31,29 @@ const SecurityDetails = () => {
             </p>
           </div>
           <div className="lg:flex grid lg:gap-4 gap-8 grid-cols-1 w-full h-auto">
-
             <div className="lg:w-1/4 w-full h-auto cursor-pointer py-7 rounded-md border-[0.5px] border-sec-main/20 text-sec-main flex flex-col gap-2 bg-white md:mb-0 ">
-
               <Link href="/settings/profile">
                 <div className="flex gap-8 items-center justify-between border-b-[1.5px] hover:border-l-[5px] hover:border-l-pri-main py-3 px-2 w-full hover:text-pri-cont">
                   <div className="flex items-center space-x-3">
                     <Profile size={22} className="" />
-                    <p className="text-sm font-normal">Manage profile details</p>
+                    <p className="text-sm font-normal">
+                      Manage profile details
+                    </p>
                   </div>
                 </div>
               </Link>
 
               <Link href="/settings/security">
                 <div className="flex gap-8 border-b-[1.5px] items-center justify-between hover:text-pri-cont">
-
                   <div className="border-l-[5px] flex gap-8 items-center justify-between border-l-pri-main py-3 px-2 w-full">
                     <div className="flex items-center gap-3">
                       <Lock size={22} className="" />
-                      <p className="text-sm font-normal">
-                        Security details
-                      </p>
+                      <p className="text-sm font-normal">Security details</p>
                     </div>
                     <div className="flex gap-1">
                       <ArrowRight2 size="16" className="text-sec-main" />
                     </div>
                   </div>
-
                 </div>
               </Link>
 
@@ -71,16 +67,12 @@ const SecurityDetails = () => {
               <div className="flex gap-8 items-center justify-between hover:border-l-[5px] hover:border-l-pri-main py-3 px-2 w-full hover:text-pri-cont">
                 <div className="flex items-center gap-4">
                   <Profile size={22} className="" />
-                  <p className="text-sm font-normal">
-                    Manage profile details
-                  </p>
+                  <p className="text-sm font-normal">Manage profile details</p>
                 </div>
               </div>
-
             </div>
 
             <div className="flex flex-col lg:w-3/4 w-full gap-6 rounded-md border-[0.5px] border-sec-main/20 text-sec-main bg-white p-3">
-
               <form className="flex flex-col gap-5 w-full">
                 <div className="flex flex-col gap-1">
                   <span className="lg:text-base text-sm text-sec-main font-medium">
@@ -150,18 +142,17 @@ const SecurityDetails = () => {
                     />
                   </div>
 
-
-                  {code ?
+                  {code ? (
                     <p className="text-xs">
-                      we&#39;ll send a 6-digit code to this number. You&#39;ll be asked
-                      to enter it at the next step.
-                    </p> :
-                    <p className="text-xs">
-                      We&#39;ve sent a 6-digit code to your phone. Type the code into the box above.
+                      we&#39;ll send a 6-digit code to this number. You&#39;ll
+                      be asked to enter it at the next step.
                     </p>
-
-                  }
-
+                  ) : (
+                    <p className="text-xs">
+                      We&#39;ve sent a 6-digit code to your phone. Type the code
+                      into the box above.
+                    </p>
+                  )}
                 </div>
 
                 <div className="w-full flex justify-end space-x-3">
@@ -173,14 +164,11 @@ const SecurityDetails = () => {
                     {code ? "Send Code" : "Submit"}
                   </button>
                 </div>
-
               </form>
-
             </div>
           </div>
         </div>
       </div>
-
       <Footer className="bg-[#ffffff]" />
     </>
   );
