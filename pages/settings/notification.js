@@ -12,7 +12,13 @@ import {
 } from "iconsax-react";
 
 const notification = () => {
-  const [checked, setChecked] = useState(false);
+  const [checkedObj, setCheckedObj] = useState({
+    0: true,
+    1: true,
+    2: true,
+    3: true,
+    4: true,
+  });
 
   const handleChange = () => {
     setChecked(!checked);
@@ -77,8 +83,8 @@ const notification = () => {
                     {/* <div size={20}> */}
                     <Switch
                       className='bg-[#E5E7EB]'
-                      checked={checked}
-                      onChange={handleChange}
+                      checked={checkedObj[0]}
+                      onChange={() => setCheckedObj({...checkedObj, 0: !checkedObj[0]})}
                       id="switch1"
                     />
                     {/* </div> */}
@@ -90,8 +96,8 @@ const notification = () => {
                     {/* <div size={20}> */}
                     <Switch
                       className='bg-[#E5E7EB]'
-                      checked={checked}
-                      onChange={handleChange}
+                      checked={checkedObj[1]}
+                      onChange={() => setCheckedObj({...checkedObj, 1: !checkedObj[1]})}
                       id="switch2"
                     />
                     {/* </div> */}
@@ -103,8 +109,8 @@ const notification = () => {
                     {/* <div size={20}> */}
                     <Switch
                       className='bg-[#E5E7EB]'
-                      checked={checked}
-                      onChange={handleChange}
+                      checked={checkedObj[2]}
+                      onChange={() => setCheckedObj({...checkedObj, 2: !checkedObj[2]})}
                       id="switch3"
                     />
                     {/* </div> */}
@@ -116,8 +122,8 @@ const notification = () => {
                     {/* <div size={20}> */}
                     <Switch
                       className='bg-[#E5E7EB]'
-                      checked={checked}
-                      onChange={handleChange}
+                      checked={checkedObj[3]}
+                      onChange={() => setCheckedObj({...checkedObj, 3: !checkedObj[3]})}
                       id="switch4"
                     />
                     {/* </div> */}
@@ -129,8 +135,8 @@ const notification = () => {
                     {/* <div size={20}> */}
                     <Switch
                       className='bg-[#E5E7EB]'
-                      checked={checked}
-                      onChange={handleChange}
+                      checked={checkedObj[4]}
+                      onChange={() => setCheckedObj({...checkedObj, 4: !checkedObj[4]})}
                       id="switch5"
                     />
                     {/* </div> */}
