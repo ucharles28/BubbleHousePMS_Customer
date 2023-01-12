@@ -1,6 +1,7 @@
 import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
-import Switch from "react-switch";
+// import Switch from "react-switch";
+import { Switch } from 'antd';
 import { useState } from "react";
 import {
   Profile,
@@ -13,10 +14,10 @@ import {
 const notification = () => {
   const [checked, setChecked] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChange = () => {
     setChecked(!checked);
   };
-
+  
   return (
     <>
       <Navbar />
@@ -34,7 +35,7 @@ const notification = () => {
                 </div>
 
                 <div className="flex gap-1">
-                  <ArrowRight2 size="18" className="text-sec-main" />
+                  <ArrowRight2 size="18" className="text-sec-mai" />
                 </div>
               </div>
               <hr className="my-3" />
@@ -64,118 +65,75 @@ const notification = () => {
 
             <div className="flex flex-col lg:w-3/4 w-full gap-6 rounded-md border-[0.5px] border-sec-main/20 text-sec-main bg-white p-3">
               <div className="flex flex-col gap-5 w-full p-3">
-                <h3>Email notifications</h3>
+                <span className="lg:text-base text-sm text-sec-main font-medium">
+                  Email notifications
+                </span>
                 <div className="space-y-5">
                   <span className="w-full flex justify-between items-center">
                     <label htmlFor="switch1">
-                      Get a notification when it’s almost time for me to
+                      Get a notification when it&#39;s almost time for me to
                       check-in
                     </label>
-                    <div size={20}>
-                      <Switch
-                        checked={checked}
-                        onChange={handleChange}
-                        onColor="#FFCC0080"
-                        onHandleColor="#F5C400"
-                        handleDiameter={18}
-                        uncheckedIcon={false}
-                        checkedIcon={false}
-                        boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-                        activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-                        height={15}
-                        width={35}
-                        className="react-switch"
-                        id="switch1"
-                      />
-                    </div>
+                    {/* <div size={20}> */}
+                    <Switch
+                      className='bg-[#E5E7EB]'
+                      checked={checked}
+                      onChange={handleChange}
+                      id="switch1"
+                    />
+                    {/* </div> */}
                   </span>
                   <span className="w-full flex justify-between items-center">
                     <label htmlFor="switch1">
                       Get a notification when you check-in
                     </label>
-                    <div size={20}>
-                      <Switch
-                        checked={checked}
-                        onChange={handleChange}
-                        onColor="#FFCC0080"
-                        onHandleColor="#F5C400"
-                        handleDiameter={18}
-                        uncheckedIcon={false}
-                        checkedIcon={false}
-                        boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-                        activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-                        height={15}
-                        width={35}
-                        className="react-switch"
-                        id="switch1"
-                      />
-                    </div>
+                    {/* <div size={20}> */}
+                    <Switch
+                      className='bg-[#E5E7EB]'
+                      checked={checked}
+                      onChange={handleChange}
+                      id="switch2"
+                    />
+                    {/* </div> */}
                   </span>
                   <span className="w-full flex justify-between items-center">
                     <label htmlFor="switch1">
                       Get a notification when you check-out
                     </label>
-                    <div size={20}>
-                      <Switch
-                        checked={checked}
-                        onChange={handleChange}
-                        onColor="#FFCC0080"
-                        onHandleColor="#F5C400"
-                        handleDiameter={18}
-                        uncheckedIcon={false}
-                        checkedIcon={false}
-                        boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-                        activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-                        height={15}
-                        width={35}
-                        className="react-switch"
-                        id="switch1"
-                      />
-                    </div>
+                    {/* <div size={20}> */}
+                    <Switch
+                      className='bg-[#E5E7EB]'
+                      checked={checked}
+                      onChange={handleChange}
+                      id="switch3"
+                    />
+                    {/* </div> */}
                   </span>
                   <span className="w-full flex justify-between items-center">
                     <label htmlFor="switch1">
                       Get a notification when your booking is successful
                     </label>
-                    <div size={20}>
-                      <Switch
-                        checked={checked}
-                        onChange={handleChange}
-                        onColor="#FFCC0080"
-                        onHandleColor="#F5C400"
-                        handleDiameter={18}
-                        uncheckedIcon={false}
-                        checkedIcon={false}
-                        boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-                        activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-                        height={15}
-                        width={35}
-                        className="react-switch"
-                        id="switch1"
-                      />
-                    </div>
+                    {/* <div size={20}> */}
+                    <Switch
+                      className='bg-[#E5E7EB]'
+                      checked={checked}
+                      onChange={handleChange}
+                      id="switch4"
+                    />
+                    {/* </div> */}
                   </span>
                   <span className="w-full flex justify-between items-center">
                     <label htmlFor="switch1">
                       Get a notification when your booking gets cancelled
                     </label>
-                    <div size={20}>
-                      <Switch
-                        checked={checked}
-                        onChange={handleChange}
-                        onColor="#FFCC0080"
-                        onHandleColor="#F5C400"
-                        handleDiameter={18}
-                        uncheckedIcon={false}
-                        checkedIcon={false}
-                        boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-                        activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-                        height={15}
-                        width={35}
-                        className="react-switch"
-                        id="switch1"
-                      />
-                    </div>
+                    {/* <div size={20}> */}
+                    <Switch
+                      className='bg-[#E5E7EB]'
+                      checked={checked}
+                      onChange={handleChange}
+                      id="switch5"
+                    />
+                    {/* </div> */}
                   </span>
                 </div>
                 <div className="w-full flex justify-end space-x-3">

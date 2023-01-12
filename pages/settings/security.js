@@ -57,12 +57,14 @@ const SecurityDetails = () => {
                 </div>
               </Link>
 
-              <div className="flex gap-8 items-center justify-between hover:border-l-[5px] hover:border-l-pri-main border-b-[1.5px] py-3 px-2 w-full hover:text-pri-cont">
-                <div className="flex items-center space-x-3">
-                  <Notification size={22} className="" />
-                  <p className="text-sm font-normal">Notifications</p>
+              <Link href="/settings/notification">
+                <div className="flex gap-8 items-center justify-between hover:border-l-[5px] hover:border-l-pri-main border-b-[1.5px] py-3 px-2 w-full hover:text-pri-cont">
+                  <div className="flex items-center space-x-3">
+                    <Notification size={22} className="" />
+                    <p className="text-sm font-normal">Notifications</p>
+                  </div>
                 </div>
-              </div>
+              </Link>
 
               <div className="flex gap-8 items-center justify-between hover:border-l-[5px] hover:border-l-pri-main py-3 px-2 w-full hover:text-pri-cont">
                 <div className="flex items-center gap-4">
@@ -137,14 +139,14 @@ const SecurityDetails = () => {
 
                     <input
                       type="phone"
-                      placeholder={code ? "Number" : "Authentication Code"}
+                      placeholder={code ? "Phone Number" : "Authentication Code"}
                       className="w-full outline-none text-sm"
                     />
                   </div>
 
                   {code ? (
                     <p className="text-xs">
-                      we&#39;ll send a 6-digit code to this number. You&#39;ll
+                      We&#39;ll send a 6-digit code to this number. You&#39;ll
                       be asked to enter it at the next step.
                     </p>
                   ) : (
