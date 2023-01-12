@@ -313,7 +313,7 @@ function SignUpInfo({ formData, setFormData, bookingInfo, hotel, setPage }) {
                     id=""
                     cols="30"
                     rows="10"
-                    className="border-[1.5px] rounded-md text-sm outline-0 w-full p-2"
+                    className="border-[0.5px] placeholder:text-sm border-sec-main/20 p-2.5 outline-none w-full rounded-md"
                   ></textarea>
                 </div>
               </div>

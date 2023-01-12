@@ -17,9 +17,9 @@ const notification = () => {
   const handleChange = () => {
     setChecked(!checked);
   };
-  
+
   return (
-    <>
+    <div className="h-screen font-poppins">
       <Navbar />
       <div className="bg-[#F8F8F8] w-full lg:px-24 px-4 py-10 pb-20">
         <div className="flex flex-col gap-10 justify-center w-full pt-12 pb-8">
@@ -150,7 +150,7 @@ const notification = () => {
         </div>
       </div>
       <Footer className="bg-[#ffffff]" />
-    </>
+    </div>
   );
 };
 

@@ -31,7 +31,7 @@ export default function MyWishList() {
     }, [])
 
     return (
-        <>
+        <div className='h-screen font-poppins'>
             <Navbar />
             <div className='bg-[#F8F8F8] w-full h-full lg:px-24 px-4 py-10 pb-24'>
                 <div className="flex flex-col gap-10 justify-center w-full h-full pt-12 pb-8">
@@ -68,6 +68,6 @@ export default function MyWishList() {
                 </div>
             </div>
             <Footer />
-        </>
+        </div>
     );
 }
