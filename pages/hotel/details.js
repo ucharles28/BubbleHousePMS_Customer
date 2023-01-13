@@ -20,6 +20,7 @@ import PopoverDisplay from "../../components/PopoverDisplay";
 import { DateRange } from "@mui/icons-material";
 import { useUser } from '../../context/user';
 import Image from "next/image";
+import Link from "next/link";
 
 
 export default function HotelDetails() {
@@ -207,9 +208,9 @@ export default function HotelDetails() {
         }
 
     };
-    
-    
-    
+
+
+
     const gotoBookingInfo = (isReservation) => {
         debugger
         const roomTypesInfo = []
@@ -393,6 +394,65 @@ export default function HotelDetails() {
                         <p className="text-base font-medium pb-2 border-b-[1.5px]">Most popular facilities</p>
 
                         <Amenities />
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                        <div className="w-full border-[1.5px] rounded p-4 flex gap-2 items-center">
+                            <p className="text-sm font-medium">Reviews</p>
+                            <div className="p-1.5 rounded-t-md bg-[#108EE9]">
+                                <p className="text-sm font-medium text-white">{hotel.rating}</p>
+                            </div>
+                        </div>
+                        <div className="flex flex-col w-full gap-6">
+
+                            {hotel.feedbacks.map((review) => (<div className='flex flex-col gap-4 p-2 border-b-2 pb-4' key={review.id}>
+
+                                <div className='flex lg:flex-row flex-col lg:items-center justify-between gap-3 w-full'>
+
+                                    <div className="lg:hidden flex gap-2 items-center">
+                                        <div className="flex flex-col">
+                                            <p className="text-sm text-sec-main font-medium">Pleasant</p>
+                                        </div>
+
+                                        <div className="p-1.5 rounded-t-md bg-[#108EE9]">
+                                            <p className="text-xs font-medium text-white">{review.rating}</p>
+                                        </div>
+                                    </div>
+
+                                    <div className='flex flex-col'>
+                                        <p className='text-sm font-medium text-sec-main'>{review.title} </p>
+                                        <span className='text-xs text-sec-main/70'>by {review.customerName} on {format(new Date(review.createdDate), "MMMM d, yyyy")}</span>
+                                    </div>
+
+                                    <div className="lg:flex hidden gap-2 items-center">
+                                        <div className="flex flex-col">
+                                            <p className="text-sm text-sec-main font-medium">Pleasant</p>
+                                        </div>
+
+                                        <div className="p-1.5 rounded-t-md bg-[#108EE9]">
+                                            <p className="text-xs font-medium text-white">{review.rating}</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <p className='pt-2 text-sm text-sec-main/80'>
+                                    {review.review}
+                                </p>
+                            </div>))}
+
+
+                        </div>
+                        <div>
+                            <Link href={{
+                                pathname: '/hotel/reviews',
+                                query: {
+                                    id: query.hotelId
+                                }
+                            }}>
+                                <p className="text-[#FFCC00]">Click to see all guest reviews</p>
+                            </Link>
+                        </div>
                     </div>
 
                     <div className="flex flex-col w-full gap-4">
