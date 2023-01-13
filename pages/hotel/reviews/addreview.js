@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
-import Amenities from "../../components/Amenities";
+import Navbar from "../../../components/Navbar";
+import Footer from "../../../components/Footer";
+import Amenities from "../../../components/Amenities";
 import Carousel from "react-multi-carousel";
 import { Rate, Slider, Checkbox } from 'antd';
 import { Calendar, Heart, Location, People } from "iconsax-react";
@@ -202,7 +202,7 @@ const Reviews = () => {
 
                         <div className="flex flex-col gap-10 w-full">
 
-                            <div className="flex flex-col lg:w-3/4 w-full gap-3">
+                            <div className="flex flex-col lg:w-2/3 w-full gap-3">
                                 <div className="flex lg:flex-row flex-col gap-3 items-center">
                                     <input
                                         type="text"
@@ -243,69 +243,90 @@ const Reviews = () => {
                             </div>
 
 
-                            <div className="flex flex-col lg:w-3/4 w-full gap-3">
+                            <div className="flex flex-col lg:w-2/3 w-full gap-3">
                                 <p className="text-base font-medium">Hotel rating</p>
 
 
-                                <div className="lg:grid lg:grid-cols-3 flex flex-row gap-2 justify-between">
-                                    <p>
+                                <div className="flex flex-row lg:space-x-4 space-x-3 items-center justify-between w-full">
+                                    <p className="lg:w-1/3">
                                         Cleanliness
                                     </p>
 
-                                    <Slider defaultValue={5} min={1} max={10} onAfterChange={(value) => setCleanliness(value)} tooltip={{ open: false }} />
+                                    <div className='lg:w-1/3 w-full'>
+                                        <Slider defaultValue={5} min={1} max={10} onAfterChange={(value) => setCleanliness(value)} tooltip={{ open: false }} />
+                                    </div>
 
-                                    <div className="box p-1 px-2.5 w-10 items-center text-center rounded-md bg-pri-main/50 text-xs flex justify-center">
-                                        <span>{cleanliness}</span>/10
+
+                                    <div className='lg:w-1/3 flex justify-end'>
+                                        <p className="p-1 px-2.5 rounded-md bg-pri-main/50 text-xs text-center">
+                                            <span>{cleanliness}</span>/10
+                                        </p>
                                     </div>
 
                                 </div>
 
-                                <div className="lg:grid lg:grid-cols-3 flex flex-row gap-2 justify-between">
-                                    <p>
+                                <div className="flex flex-row lg:space-x-4 space-x-3 items-center justify-between w-full">
+                                    <p className="lg:w-1/3">
                                         Comfort
                                     </p>
 
-                                    <Slider defaultValue={5} min={1} max={10} onAfterChange={(value) => setComfort(value)} tooltip={{ open: false }} />
+                                    <div className='lg:w-1/3 w-full'>
+                                        <Slider defaultValue={5} min={1} max={10} onAfterChange={(value) => setComfort(value)} tooltip={{ open: false }} />
+                                    </div>
 
-                                    <p className="box p-1 px-2.5 w-10 items-center text-center rounded-md bg-pri-main/50 text-xs flex justify-center">
-                                        <span>{comfort}</span>/10
-                                    </p>
+                                    <div className='lg:w-1/3 flex justify-end'>
+                                        <p className="p-1 px-2.5 rounded-md bg-pri-main/50 text-xs text-center">
+                                            <span>{comfort}</span>/10
+                                        </p>
+                                    </div>
                                 </div>
 
-                                <div className="lg:grid lg:grid-cols-3 flex flex-row gap-2 justify-between">
-                                    <p>
+                                <div className="flex flex-row lg:space-x-4 space-x-3 items-center justify-between w-full">
+                                    <p className="lg:w-1/3">
                                         Service quality
                                     </p>
 
-                                    <Slider defaultValue={5} min={1} max={10} onAfterChange={(value) => setServiceQuality(value)} tooltip={{ open: false }} />
+                                    <div className='lg:w-1/3 w-full'>
+                                        <Slider defaultValue={5} min={1} max={10} onAfterChange={(value) => setServiceQuality(value)} tooltip={{ open: false }} />
+                                    </div>
 
-                                    <p className="box p-1 px-2.5 w-10 items-center text-center rounded-md bg-pri-main/50 text-xs flex justify-center">
-                                        <span>{serviceQuality}</span>/10
-                                    </p>
+                                    <div className='lg:w-1/3 flex justify-end'>
+                                        <p className="p-1 px-2.5 rounded-md bg-pri-main/50 text-xs text-center">
+                                            <span>{serviceQuality}</span>/10
+                                        </p>
+                                    </div>
                                 </div>
 
-                                <div className="lg:grid lg:grid-cols-3 flex flex-row gap-2 justify-between">
-                                    <p>
+                                <div className="flex flex-row lg:space-x-4 space-x-3 items-center justify-between w-full">
+                                    <p className="lg:w-1/3">
                                         Security
                                     </p>
 
-                                    <Slider defaultValue={5} min={1} max={10} onAfterChange={(value) => setSecurity(value)} tooltip={{ open: false }} />
+                                    <div className='lg:w-1/3 w-full'>
+                                        <Slider defaultValue={5} min={1} max={10} onAfterChange={(value) => setSecurity(value)} tooltip={{ open: false }} />
+                                    </div>
 
-                                    <p className="box p-1 px-2.5 w-10 items-center text-center rounded-md bg-pri-main/50 text-xs flex justify-center">
-                                        <span>{security}</span>/10
-                                    </p>
+                                    <div className='lg:w-1/3 flex justify-end'>
+                                        <p className="p-1 px-2.5 rounded-md bg-pri-main/50 text-xs text-center">
+                                            <span>{security}</span>/10
+                                        </p>
+                                    </div>
                                 </div>
 
-                                <div className="lg:grid lg:grid-cols-3 flex flex-row gap-2 justify-between">
-                                    <p>
+                                <div className="flex flex-row lg:space-x-4 space-x-3 items-center justify-between w-full">
+                                    <p className="lg:w-1/3">
                                         Location
                                     </p>
 
-                                    <Slider defaultValue={5} min={1} max={10} onAfterChange={(value) => setLocation(value)} tooltip={{ open: false }} />
+                                    <div className='lg:w-1/3 w-full'>
+                                        <Slider defaultValue={5} min={1} max={10} onAfterChange={(value) => setLocation(value)} tooltip={{ open: false }} />
+                                    </div>
 
-                                    <p className="box p-1 px-2.5 w-10 items-center text-center rounded-md bg-pri-main/50 text-xs flex justify-center">
-                                        <span>{location}</span>/10
-                                    </p>
+                                    <div className='lg:w-1/3 flex justify-end'>
+                                        <p className="p-1 px-2.5 rounded-md bg-pri-main/50 text-xs text-center">
+                                            <span>{location}</span>/10
+                                        </p>
+                                    </div>
                                 </div>
 
                             </div>
@@ -326,19 +347,30 @@ const Reviews = () => {
 
                             </div>
 
-                            <div className="flex flex-col md:flex-row gap-3">
+                            <div className="flex flex-col gap-3 w-full">
+
+                                <p className="text-sm font-medium">Share photos (optional)</p>
+
+
+                                <input
+                                    type='file'
+                                />
+
+                            </div>
+
+                            <div className="flex flex-row gap-3 lg:w-2/3 w-full">
                                 <Checkbox checked={hasAcceptedPolicy} onChange={() => setHasAcceptedPolicy(!hasAcceptedPolicy)} />
-                                <p className="text-xs w-[600px]">I certify that this review is based on my own experience and is my genuine opinion of this hotel, and that I have no personal or business relationship with this establishment, and have not been offered any incentive or payment originating from the establishment to write this review. I understand that bcloud has a zero-tolerance policy on fake reviews.</p>
+                                <p className="text-xs text-justify">I certify that this review is based on my own experience and is my genuine opinion of this hotel, and that I have no personal or business relationship with this establishment, and have not been offered any incentive or payment originating from the establishment to write this review. I understand that bcloud has a zero-tolerance policy on fake reviews.</p>
                             </div>
 
                             <div className="flex items-start ">
-                            <button
-                                type="button"
-                                disabled={!fullName || !email || !title || !review || !hasAcceptedPolicy}
-                                className="text-sec-main text-center rounded px-4 py-2.5 bg-[#ffcc00] disabled:bg-pri-main/50"
-                            >
-                                Submit you review
-                            </button>
+                                <button
+                                    type="button"
+                                    disabled={!fullName || !email || !title || !review || !hasAcceptedPolicy}
+                                    className="text-sec-main cursor-pointer text-center rounded px-4 py-2.5 bg-[#ffcc00] hover:bg-[#ffcc00] disabled:bg-pri-main/50"
+                                >
+                                    Submit you review
+                                </button>
                             </div>
                         </div>
                     </div>
