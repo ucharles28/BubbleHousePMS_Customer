@@ -206,12 +206,10 @@ export default function HotelDetails() {
             }
         }
 
-        const datePickerHandler = () => {
-            console.log(openDate)
-            setOpenDate(!openDate);
-        };
     };
-
+    
+    
+    
     const gotoBookingInfo = (isReservation) => {
         debugger
         const roomTypesInfo = []
