@@ -21,57 +21,51 @@ const SecurityDetails = () => {
       <Navbar />
       <div className="bg-[#F8F8F8] w-full lg:px-24 px-4 py-10 pb-24">
         <div className="flex flex-col gap-10 justify-center w-full pt-12 pb-8">
+          
           <div className="flex flex-col gap-2">
-            <span className="lg:text-2xl text-xl text-sec-main font-medium">
-              Manage profile details
+            <span className="lg:text-xl text-lg text-sec-main font-medium">
+              Security details
             </span>
             <p>
-              Update your information here, this information would also be used
-              for your bookings in the future
+              Adjust your security details and set up two-factor authentication.
             </p>
           </div>
+
           <div className="lg:flex grid lg:gap-4 gap-8 grid-cols-1 w-full h-auto">
+
             <div className="lg:w-1/4 w-full h-auto cursor-pointer py-7 rounded-md border-[0.5px] border-sec-main/20 text-sec-main flex flex-col gap-2 bg-white md:mb-0 ">
+
               <Link href="/settings/profile">
-                <div className="flex gap-8 items-center justify-between border-b-[1.5px] hover:border-l-[5px] hover:border-l-pri-main py-3 px-2 w-full hover:text-pri-cont">
+                <div className="flex gap-8 items-center justify-between border-b-[1.5px] hover:border-l-[5px] hover:border-l-pri-main py-3 px-2 w-full hover:text-pri-cont text-sec-main/70">
                   <div className="flex items-center space-x-3">
                     <Profile size={22} className="" />
+                    <p className="text-sm font-normal">Manage profile details</p>
+                  </div>
+                </div>
+              </Link>
+
+              <div className="flex gap-8 border-b-[1.5px] items-center justify-between hover:text-pri-cont">
+                <div className="border-l-[5px] flex gap-8 items-center justify-between border-l-pri-main py-3 px-2 w-full">
+                  <div className="flex items-center gap-3">
+                    <Lock size={22} className="" />
                     <p className="text-sm font-normal">
-                      Manage profile details
+                      Security details
                     </p>
                   </div>
-                </div>
-              </Link>
-
-              <Link href="/settings/security">
-                <div className="flex gap-8 border-b-[1.5px] items-center justify-between hover:text-pri-cont">
-                  <div className="border-l-[5px] flex gap-8 items-center justify-between border-l-pri-main py-3 px-2 w-full">
-                    <div className="flex items-center gap-3">
-                      <Lock size={22} className="" />
-                      <p className="text-sm font-normal">Security details</p>
-                    </div>
-                    <div className="flex gap-1">
-                      <ArrowRight2 size="16" className="text-sec-main" />
-                    </div>
+                  <div className="flex gap-1">
+                    <ArrowRight2 size="16" className="text-sec-main" />
                   </div>
                 </div>
-              </Link>
+              </div>
 
               <Link href="/settings/notification">
-                <div className="flex gap-8 items-center justify-between hover:border-l-[5px] hover:border-l-pri-main border-b-[1.5px] py-3 px-2 w-full hover:text-pri-cont">
+                <div className="flex gap-8 items-center justify-between border-b-[1.5px] hover:border-l-[5px] hover:border-l-pri-main py-3 px-2 w-full hover:text-pri-cont text-sec-main/70">
                   <div className="flex items-center space-x-3">
                     <Notification size={22} className="" />
                     <p className="text-sm font-normal">Notifications</p>
                   </div>
                 </div>
               </Link>
-
-              <div className="flex gap-8 items-center justify-between hover:border-l-[5px] hover:border-l-pri-main py-3 px-2 w-full hover:text-pri-cont">
-                <div className="flex items-center gap-4">
-                  <Profile size={22} className="" />
-                  <p className="text-sm font-normal">Manage profile details</p>
-                </div>
-              </div>
             </div>
 
             <div className="flex flex-col lg:w-3/4 w-full gap-6 rounded-md border-[0.5px] border-sec-main/20 text-sec-main bg-white p-3">
@@ -169,6 +163,7 @@ const SecurityDetails = () => {
               </form>
             </div>
           </div>
+
         </div>
       </div>
       <Footer className="bg-[#ffffff]" />

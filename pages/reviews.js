@@ -68,7 +68,7 @@ const Reviews = () => {
                                 )} */}
                             </div>
                             <div className="flex gap-2 items-center">
-                                <div className="p-1.5 rounded-t-md bg-[#139CE0]">
+                                <div className="p-1.5 rounded-t-md bg-[#108EE9]">
                                     <p className="text-sm font-medium text-white">8.2</p>
                                 </div>
                                 <div className="lg:flex hidden flex-col">
@@ -138,7 +138,7 @@ const Reviews = () => {
                                     )} */}
                                 </div>
                                 <div className="flex gap-2 items-center">
-                                    <div className="p-1.5 rounded-t-md bg-[#139CE0]">
+                                    <div className="p-1.5 rounded-t-md bg-[#108EE9]">
                                         <p className="text-sm font-medium text-white">8.2</p>
                                     </div>
                                     <div className="lg:flex hidden flex-col">
