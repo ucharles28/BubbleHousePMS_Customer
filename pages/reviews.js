@@ -191,34 +191,34 @@ const Reviews = () => {
                     <div className="flex flex-col w-full gap-4">
                         <p className="text-base font-medium pb-2 border-b-[1.5px]">Drop a review for hotel name</p>
 
-                        <div className="flex flex-col gap-10 w-full">
+                        <div className="flex flex-col gap-10 lg:w-3/4 w-full ">
 
-                            <div className="flex flex-col lg:w-3/4 w-full gap-3">
+                            <div className="flex flex-col w-full gap-3">
                                 <div className="flex lg:flex-row flex-col gap-3 items-center">
                                     <input
                                         type="text"
                                         placeholder="Name"
-                                        className="border-[0.5px] placeholder:text-sm border-sec-main/20 p-2.5 outline-none w-full rounded-md"
+                                        className="border-[1.5px] placeholder:text-sm border-sec-main/20 p-2.5 outline-none w-full rounded-md"
                                     />
 
                                     <input
                                         type="email"
                                         placeholder="Email address"
-                                        className="border-[0.5px] placeholder:text-sm border-sec-main/20 p-2.5 outline-none w-full rounded-md"
+                                        className="border-[1.5px] placeholder:text-sm border-sec-main/20 p-2.5 outline-none w-full rounded-md"
                                     />
                                 </div>
 
                                 <input
                                     type="text"
                                     placeholder="Review title"
-                                    className="border-[0.5px] placeholder:text-sm border-sec-main/20 p-2.5 outline-none w-full rounded-md"
+                                    className="border-[1.5px] placeholder:text-sm border-sec-main/20 p-2.5 outline-none w-full rounded-md"
                                 />
 
                                 <textarea
                                     placeholder="Review.."
                                     cols="30"
                                     rows="5"
-                                    className="border-[0.5px] placeholder:text-sm border-sec-main/20 p-2.5 outline-none w-full rounded-md"
+                                    className="border-[1.5px] placeholder:text-sm border-sec-main/20 p-2.5 outline-none w-full rounded-md"
                                 >
 
                                 </textarea>
@@ -226,11 +226,11 @@ const Reviews = () => {
                             </div>
 
 
-                            <div className="flex flex-col lg:w-3/4 w-full gap-3">
+                            <div className="flex flex-col w-full gap-3">
                                 <p className="text-base font-medium">Hotel rating</p>
 
 
-                                <div className="lg:grid lg:grid-cols-3 flex flex-row gap-2 justify-between">
+                                <div className="lg:grid lg:grid-cols-3 flex flex-row gap-2 w-full items-center justify-between">
                                     <p>
                                         Cleanliness
                                     </p>
@@ -240,12 +240,12 @@ const Reviews = () => {
 
                                     </p>
 
-                                    <div className="box p-1 px-2.5 rounded-md bg-pri-main/50 text-xs flex justify-end">
+                                    <div className="p-1 px-2.5 rounded-md bg-pri-main/50 text-xs flex justify-end w-12 text-center">
                                         <span>1</span>/10
                                     </div>
                                 </div>
 
-                                <div className="lg:grid lg:grid-cols-3 flex flex-row gap-2 justify-between">
+                                <div className="lg:grid lg:grid-cols-3 flex flex-row gap-2 items-center justify-between">
                                     <p>
                                         Comfort
                                     </p>
@@ -254,9 +254,9 @@ const Reviews = () => {
                                         Slider
                                     </p>
 
-                                    <p className="p-1 px-2.5 rounded-md bg-pri-main/50 text-xs">
+                                    <div className="p-1 px-2.5 rounded-md bg-pri-main/50 text-xs flex justify-end">
                                         <span>2</span>/10
-                                    </p>
+                                    </div>
                                 </div>
 
                                 <div className="lg:grid lg:grid-cols-3 flex flex-row gap-2 justify-between">
@@ -315,6 +315,26 @@ const Reviews = () => {
                                     />
                                 </p>
 
+                            </div>
+
+                            <div className="flex flex-col gap-3 w-full">
+
+                                <p className="text-base font-medium">Share photos (optional)</p>
+
+
+                                <input
+                                    type='file'
+                                />
+
+                            </div>
+
+                            <div className="w-full flex justify-end space-x-3">
+                                <button
+                                    type="button"
+                                    className="p-3 px-4 bg-[#FFCC00AA] text-sm rounded-md"
+                                >
+                                    Submit
+                                </button>
                             </div>
                         </div>
                     </div>
