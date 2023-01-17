@@ -23,6 +23,7 @@
     "bootstrap": "^5.2.2",
     "env": "^0.0.2",
     "env-cmd": "^10.1.0",
+    "file-upload-with-preview": "^5.0.8",
     "google-auth-library": "^8.7.0",
     "iconsax-react": "^0.0.8",
     "jwt-decode": "^3.1.2",

@@ -11,12 +11,22 @@ import { FcGoogle } from 'react-icons/fc';
 import Link from 'next/link';
 import { GoogleLogin, useGoogleLogin, googleLogout } from '@react-oauth/google'
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import { Form, Col } from 'react-bootstrap';
+import { BounceLoader } from 'react-spinners';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
+import bcloud1 from "../../public/bcloud1.png";
+import { RiFacebookFill } from 'react-icons/ri';
 
 
 
 export default function SignUp() {
 
     const router = useRouter()
+    const [passwordShown, setPasswordShown] = useState(false);
+    const togglePasswordVisiblity = () => {
+        setPasswordShown(passwordShown ? false : true);
+    };
+
     const [isLoading, setIsLoading] = useState(false);
     const [email, setEmail] = useState('');
     const [fullName, setFullName] = useState('');
@@ -119,69 +129,148 @@ export default function SignUp() {
                 </Snackbar> */}
 
             <div className='item w-full h-full bg-[url(https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg)] object-fill'>
-                <div className='w-full h-full flex bg-gradient-to-t from-[#1a1a1a]/80 to-[#1a1a1a]/10'>
-                    <div className='bg-white w-[450px] h-[605px] flex items-center flex-d m-auto'>
+                <div className='w-full h-full flex bg-gradient-to-t from-[#1a1a1a]/80 to-[#1a1a1a]/30'>
 
-                        <div className='flex justify-center items-center p-7 w-full h-full'>
-                            <div className='m-0'>
+                    <div className='flex justify-center items-center w-full px-1 h-full'>
+                        <div className='bg-white rounded lg:w-1/3 w-full lg:px-6 p-4 py-10 shadow-md flex flex-col gap-6'>
 
-                                <div className="block">
-                                    <Image src="/logo.png" width={120} height={120} className="mb-2 m-auto" />
-                                    <p className='block text-xl leading-8 font-medium text-[#1a1a1a}/90'>Adventure starts here 🚀</p>
-                                    <span className='block text-sm leading-5 font-normal text-[#1a1a1a]/70'>Make your hotel booking management easy and fun!</span>
+                            {/* <GoogleLogin
+                                    onSuccess={onHandleSuccess}
+                                    onError={() => {
+                                        console.log('Login Failed');
+                                    }}
+                                /> */}
+
+                            <div className="flex flex-col gap-6 items-center">
+                                <Image src={bcloud1} width={120} height={120} className="object-cover" />
+
+                                <div className='flex flex-col w-full'>
+                                    <p className='mb-[0] text-lg font-medium text-[#1a1a1a}/90'>Adventure starts here 🚀</p>
+                                    <span className='text-sm font-normal text-[#1a1a1a]/70'>Make your hotel booking management easy and fun!</span>
                                 </div>
-
-                                <div className='flex flex-col mt-6 space-y-4 text-[#1a1a1a}'>
-                                    <TextField id="outlined-basic" value={fullName} onChange={(e) => setFullName(e.target.value)} className='w-full' InputProps={{ sx: { height: 56 } }} label="Full Name" variant="outlined" />
-                                    <TextField id="outlined-basic" value={email} onChange={(e) => setEmail(e.target.value)} className='w-full' InputProps={{ sx: { height: 56 } }} label="Email" variant="outlined" />
-                                    <TextField id="outlined-basic" type={'password'} value={password} onChange={(e) => setPassword(e.target.value)} className='w-full' InputProps={{ sx: { height: 56 } }} label="Password" variant="outlined" />
-                                </div>
-                                <div className='flex justify-between items-center'>
-                                    <FormControlLabel control={<Checkbox size='small' checked={acceptTerms} onChange={(e) => setAcceptTerms(e.target.value)} />} label="I agree to privacy policy & terms" className='text-[12px]' />
-                                    {/* <p className='text-xs leading-6 font-normal text-[#1a1a1a]/50'>Forgot password?</p> */}
-                                </div>
-                                {isLoading ? <div className='flex justify-center'><CircularProgress /></div> :
-                                    <button
-                                        type="button"
-                                        disabled={!fullName || !email || !password || !acceptTerms}
-                                        className="mt-7 w-full text-center justify-center font-medium flex items-center py-2 rounded-[5px] text-sm leading-6 uppercase bg-[#F5C400] hover:bg-[#ffcc00] text-[#1a1a1a]" onClick={handleLogin}>Sign Up</button>}
-
-                                {/* <div className='text-sm font-normal leading-6 w-full text-center mt-10'>
-                                    
-                                </div> */}
-                                {/* <div className='text-sm font-normal m-auto mt-2'>
-                                    <p>Already have an account?  Sign in instead</p>
-                                </div> */}
-                                <div className='font-normal flex justify-center item-center m-auto mt-2'>
-                                    <p className='text-[16px] m-auto flex leading-6'>Already have an account? <Link href="/auth/login"> <span className='font-medium ml-1'>Sign in instead</span></Link> </p>
-                                </div>
-                                {!isLoadingSocial ? <div className='flex items-center justify-center '>
-
-                                    <FacebookLogin
-                                        appId="687573586008281"
-                                        autoLoad={true}
-                                        fields="name,email,picture"
-                                        render={renderProps => {
-                                            console.log(renderProps)
-
-                                            // <button onClick={(e) => renderProps.onClick(e)}>This is my custom FB button</button>
-                                            return (<FaFacebookF className='cursor-pointer' onClick={(e) => renderProps.onClick(e)} color='#4267B2' size={24} />)
-                                        }}
-                                        callback={responseFacebook} />
-                                    <FaTwitter color='#1DA1F2' className='mx-4 my-4 cursor-pointer' size={24} />
-                                    <FcGoogle className='cursor-pointer' onClick={() => googleAuthLogin()} size={24} />
-                                </div> :
-                                    <div className='flex items-center justify-center '>
-                                        <CircularProgress />
-                                    </div>}
-
 
                             </div>
 
+                            <Form className='flex flex-col gap-4'>
+                                <Form.Group as={Col} controlId="validationCustom00" autoCorrect="nope">
+                                    <div className="flex flex-col gap-1 w-full">
+                                        <label className="text-sm font-medium text-gray-800">
+                                            Full Name
+                                        </label>
+                                        <Form.Control
+                                            type="email"
+                                            placeholder="Full Name"
+                                            role="input"
+                                            value={fullName}
+                                            onChange={(e) => setFullName(e.target.value)}
+                                            className="bg-white border-[1.5px] rounded-md border-gray focus:outline-none text-base font-medium leading-none text-black py-3 w-full pl-3 placeholder:font-medium placeholder:text-sm"
+                                            required
+                                        />
+                                        <Form.Control.Feedback type="invalid" />
+                                    </div>
+                                </Form.Group>
+                                <Form.Group as={Col} controlId="validationCustom01" autoCorrect="nope">
+                                    <div className="flex flex-col gap-1 w-full">
+                                        <label className="text-sm font-medium text-gray-800">
+                                            Email Address
+                                        </label>
+                                        <Form.Control
+                                            type="email"
+                                            placeholder="Email Address"
+                                            role="input"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            className="bg-white border-[1.5px] rounded-md border-gray focus:outline-none text-base font-medium leading-none text-black py-3 w-full pl-3 placeholder:font-medium placeholder:text-sm"
+                                            required
+                                        />
+                                        <Form.Control.Feedback type="invalid" />
+                                    </div>
+                                </Form.Group>
+                                <Form.Group as={Col} controlId="validationCustomPassword" autoCorrect="current-password">
+                                    <div className="flex flex-col gap-1 w-full">
+                                        <div className='flex justify-between'>
+                                            <label className="text-sm font-medium text-gray-800">
+                                                Password
+                                            </label>
+                                        </div>
+                                        <div className="relative flex items-center justify-center">
+                                            <Form.Control
+                                                type={passwordShown ? 'text' : 'password'}
+                                                role="input"
+                                                value={password}
+                                                onChange={(e) => setPassword(e.target.value)}
+                                                placeholder="Password"
+                                                className="bg-white border-[1.5px] rounded-md border-gray focus:outline-none text-base font-medium leading-none text-black py-3 w-full pl-3 placeholder:font-medium placeholder:text-sm"
+                                                required
+                                            />
+                                            <div
+                                                className="absolute right-1 mt-2 mr-2 cursor-pointer"
+                                                onClick={togglePasswordVisiblity}
+                                            >
+                                                {passwordShown ? <FiEyeOff /> : <FiEye />}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Form.Group>
+                                <Form.Group as={Col} controlId="validationCustomTerms">
+                                    <div className="flex flex-row gap-2 pl-0.5">
+                                        <div>
+                                            <Form.Check
+                                                name="term"
+                                                type="checkbox"
+                                                checked={acceptTerms}
+                                                onChange={(e) => setAcceptTerms(e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="text-sm mb-[0]">
+                                            I agree to privacy policy & terms
+                                        </div>
+                                    </div>
+                                </Form.Group>
+
+                                <div className="mt-2">
+                                    <button
+                                        role="button"
+                                        type="submit"
+                                        aria-label="log into my account"
+                                        onClick={handleLogin}
+                                        disabled={!fullName || !email || !password || !acceptTerms}
+                                        className="text-sm font-medium uppercase rounded-md leading-none focus:outline-none bg-pri-main hover:bg-pri-cont disabled:bg-pri-main/50 text-sec-main py-3.5 w-full flex items-center justify-center gap-1"
+                                    >
+                                        {isLoading ? <BounceLoader size={18} color="#ffffff" /> :
+                                            <span>Login</span>}
+                                    </button>
+                                </div>
+                            </Form>
+
+                            <div className='font-normal flex justify-center item-center text-sm'>
+                                <p className='flex gap-1'>Have an account already? <Link href="/auth/login"> <span className='font-medium'>Sign in instead</span></Link> </p>
+                            </div>
+
+                            {!isLoadingSocial ? <div className='flex items-center justify-center gap-4 mt-3'>
+
+                                <FacebookLogin
+                                    appId="687573586008281"
+                                    autoLoad={true}
+                                    fields="name,email,picture"
+                                    render={renderProps => {
+                                        console.log(renderProps)
+
+                                        return (<RiFacebookFill className='cursor-pointer' onClick={(e) => renderProps.onClick(e)} color='#4267B2' size={24} />)
+                                    }}
+                                    callback={responseFacebook} />
+                                <FaTwitter color='#1DA1F2' className='cursor-pointer' size={24} />
+                                <FcGoogle className='cursor-pointer' onClick={() => googleAuthLogin()} size={24} />
+                            </div> : <div className='flex items-center justify-center '>
+                                <BounceLoader />
+                            </div>}
+
                         </div>
                     </div>
+
                 </div>
             </div>
+
         </div>
     )
 }

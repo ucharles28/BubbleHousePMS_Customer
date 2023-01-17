@@ -5,6 +5,8 @@ import Amenities from "../../../components/Amenities";
 import Carousel from "react-multi-carousel";
 import { Rate, Slider, Checkbox } from 'antd';
 import { Calendar, Heart, Location, People } from "iconsax-react";
+import { FileUploadWithPreview } from "file-upload-with-preview";
+import "file-upload-with-preview/dist/file-upload-with-preview.min.css";
 
 const Reviews = () => {
 
@@ -41,6 +43,17 @@ const Reviews = () => {
     const [review, setReview] = useState('');
     const [hasAcceptedPolicy, setHasAcceptedPolicy] = useState(false);
 
+    // const firstUpload = new FileUploadWithPreview('myFirstImage', {
+    //     maxFileCount: 5,
+    //     multiple: true,
+    //     text: {
+    //         browse: 'Choose',
+    //         chooseFile: 'Take your pick...',
+    //         label: 'Choose Files to Upload',
+    //     },
+    // });
+
+
 
     return (
         <div className="h-screen font-poppins">
@@ -76,15 +89,20 @@ const Reviews = () => {
                                     <ClipLoader size={20} color="#FFCC00" />
                                 )} */}
                             </div>
+
                             <div className="flex gap-2 items-center">
-                                <div className="p-1.5 rounded-t-md bg-[#108EE9]">
-                                    <p className="text-sm font-medium text-white">8.2</p>
-                                </div>
-                                <div className="lg:flex hidden flex-col">
-                                    <p className="text-sm text-sec-main">Pleasant</p>
+                                <p className="text-sm font-medium text-white p-1.5 rounded-t-md bg-[#108EE9]">8.2</p>
+
+                                {/* <div className="flex flex-col"> */}
+                                <p className="text-sm text-sec-main flex flex-col">
+                                    Pleasant
                                     <span className="text-xs text-sec-main/70">225 reviews</span>
-                                </div>
+                                </p>
+
+                                {/* </div> */}
+
                             </div>
+
                             {/* <button
                             type="button"
                             className="text-end  py-[7px] px-5 rounded-[5px] bg-[#FFCC00]"
@@ -146,7 +164,21 @@ const Reviews = () => {
                                         <ClipLoader size={20} color="#FFCC00" />
                                     )} */}
                                 </div>
+
                                 <div className="flex gap-2 items-center">
+                                    <p className="text-sm font-medium text-white p-1.5 rounded-t-md bg-[#108EE9]">8.2</p>
+
+                                    {/* <div className="flex flex-col"> */}
+                                    <p className="text-sm text-sec-main flex flex-col">
+                                        Pleasant
+                                        <span className="text-xs text-sec-main/70">225 reviews</span>
+                                    </p>
+
+                                    {/* </div> */}
+
+                                </div>
+
+                                {/* <div className="flex gap-2 items-center">
                                     <div className="p-1.5 rounded-t-md bg-[#108EE9]">
                                         <p className="text-sm font-medium text-white">8.2</p>
                                     </div>
@@ -154,7 +186,7 @@ const Reviews = () => {
                                         <p className="text-sm text-sec-main">Pleasant</p>
                                         <span className="text-xs text-sec-main/70">225 reviews</span>
                                     </div>
-                                </div>
+                                </div> */}
                                 {/* <button
                             type="button"
                             className="text-end  py-[7px] px-5 rounded-[5px] bg-[#FFCC00]"
@@ -354,7 +386,12 @@ const Reviews = () => {
 
                                 <input
                                     type='file'
+                                    multiple
+                                    className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-medium file:bg-pri-main/20 file:text-pri-cont hover:file:bg-pri-main/30 cursor-pointer"
                                 />
+
+                                {/* <div class="custom-file-container" data-upload-id="myFirstImage"></div> */}
+
 
                             </div>
 

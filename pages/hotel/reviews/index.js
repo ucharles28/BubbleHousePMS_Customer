@@ -12,19 +12,24 @@ function AllReviews() {
             <div className="w-full h-full py-24 pb-20 lg:px-20 px-4">
                 <div className="flex flex-col gap-6 justify-center w-full">
 
-                    <div className='flex lg:flex-row flex-col lg:items-center w-full gap-2 justify-between'>
-                        <p className="lg:text-xl text-lg text-sec-main font-medium">
+                    <div className='flex lg:flex-row flex-col lg:items-center w-full justify-between'>
+                        <p className="lg:text-xl text-lg text-sec-main font-medium mb-[0]">
                             Reviews for Hotel name
                         </p>
+
                         <div className="flex gap-2 items-center">
-                            {/* <div className="p-1.5 rounded-t-md bg-[#108EE9]"> */}
-                                <p className="text-sm font-medium text-white p-1.5 rounded-t-md bg-[#108EE9]">8.2</p>
-                            {/* </div> */}
-                            <div className="flex flex-col">
-                                <p className="text-sm text-sec-main mb-[0]">Pleasant</p>
+                            <p className="text-sm font-medium text-white p-1.5 rounded-t-md bg-[#108EE9]">8.2</p>
+
+                            {/* <div className="flex flex-col"> */}
+                            <p className="text-sm text-sec-main flex flex-col">
+                                Pleasant
                                 <span className="text-xs text-sec-main/70">225 reviews</span>
-                            </div>
+                            </p>
+
+                            {/* </div> */}
+
                         </div>
+
                     </div>
 
                     <div className='flex flex-col gap-10 w-full h-full'>
@@ -164,33 +169,33 @@ function AllReviews() {
 
                         <div className="flex flex-col w-full gap-6">
 
-                            <div className='flex flex-col gap-4 p-2 border-b-2 pb-4'>
+                            <div className='flex flex-col gap-4 p-2 border-t-2 pt-4'>
 
-                                <div className='flex lg:flex-row flex-col lg:items-center justify-between gap-3 w-full'>
+                                <div className='flex lg:flex-row flex-col lg:items-center justify-between w-full'>
 
                                     <div className="lg:hidden flex gap-2 items-center">
-                                        <div className="flex flex-col">
-                                            <p className="text-sm text-sec-main font-medium">Pleasant</p>
-                                        </div>
 
-                                        <div className="p-1.5 rounded-t-md bg-[#108EE9]">
-                                            <p className="text-xs font-medium text-white">8.2</p>
-                                        </div>
+                                        <p className="text-sm text-sec-main font-medium">
+                                            Pleasant
+                                        </p>
+
+                                        <p className="text-sm font-medium text-white p-1.5 rounded-t-md bg-[#108EE9]">8.2</p>
+
                                     </div>
 
                                     <div className='flex flex-col'>
-                                        <p className='text-sm font-medium text-sec-main'>Amazing </p>
+                                        <p className='text-sm font-medium text-sec-main mb-[1px]'>Amazing </p>
                                         <span className='text-xs text-sec-main/70'>by Chijioke on February  18, 2023</span>
                                     </div>
 
                                     <div className="lg:flex hidden gap-2 items-center">
-                                        <div className="flex flex-col">
-                                            <p className="text-sm text-sec-main font-medium">Pleasant</p>
-                                        </div>
 
-                                        <div className="p-1.5 rounded-t-md bg-[#108EE9]">
-                                            <p className="text-xs font-medium text-white">8.2</p>
-                                        </div>
+                                        <p className="text-sm text-sec-main font-medium">
+                                            Pleasant
+                                        </p>
+
+                                        <p className="text-sm font-medium text-white p-1.5 rounded-t-md bg-[#108EE9]">8.2</p>
+
                                     </div>
 
                                 </div>

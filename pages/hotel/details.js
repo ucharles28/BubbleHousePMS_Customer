@@ -347,13 +347,16 @@ export default function HotelDetails() {
                                     )}
                                 </div>
                                 <div className="flex gap-2 items-center">
-                                    <div className="p-1.5 rounded-t-md bg-[#108EE9]">
-                                        <p className="text-sm font-medium text-white">8.2</p>
-                                    </div>
-                                    <div className="lg:flex hidden flex-col">
-                                        <p className="text-sm text-sec-main">Pleasant</p>
+                                    <p className="text-sm font-medium text-white p-1.5 rounded-t-md bg-[#108EE9]">8.2</p>
+
+                                    {/* <div className="flex flex-col"> */}
+                                    <p className="text-sm text-sec-main lg:flex hidden flex-col">
+                                        Pleasant
                                         <span className="text-xs text-sec-main/70">225 reviews</span>
-                                    </div>
+                                    </p>
+
+                                    {/* </div> */}
+
                                 </div>
                                 {/* <button
                             type="button"
