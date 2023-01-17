@@ -1,14 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/Footer";
 import Amenities from "../../../components/Amenities";
 import Carousel from "react-multi-carousel";
 import { Rate, Slider, Checkbox } from 'antd';
 import { Calendar, Heart, Location, People } from "iconsax-react";
-import { FileUploadWithPreview } from "file-upload-with-preview";
-import "file-upload-with-preview/dist/file-upload-with-preview.min.css";
+import { useRouter } from "next/router";
+import { get, postData } from "../../../helpers/ApiRequest";
+import { BounceLoader, ClipLoader } from "react-spinners";
+import { useUser } from '../../../context/user'
+import 'react-multi-carousel/lib/styles.css';
 
 const Reviews = () => {
+    const router = useRouter();
+    const { query } = router;
+    const id = query.id
+    const { user } = useUser();
 
     const responsive = {
         superLargeDesktop: {
@@ -41,95 +48,195 @@ const Reviews = () => {
     const [email, setEmail] = useState('');
     const [title, setTitle] = useState('');
     const [review, setReview] = useState('');
+    const [image, setImage] = useState();
     const [hasAcceptedPolicy, setHasAcceptedPolicy] = useState(false);
+    const [roomImages, setRoomImages] = useState([]);
+    const [isSaved, setIsSaved] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [hotel, setHotel] = useState();
+    const [saveHotelIsLoading, setSaveHotelIsLoading] = useState(false);
+    const [buttonIsLoading, setButtonIsLoading] = useState(false);
 
-    // const firstUpload = new FileUploadWithPreview('myFirstImage', {
-    //     maxFileCount: 5,
-    //     multiple: true,
-    //     text: {
-    //         browse: 'Choose',
-    //         chooseFile: 'Take your pick...',
-    //         label: 'Choose Files to Upload',
-    //     },
-    // });
 
+    useEffect(() => {
+        if (id) {
+            getHotelDetails(id)
+        }
+    }, [id])
+
+    const getRoomImages = (roomTypes) => {
+        const images = []
+        roomTypes.map((roomType) => {
+            roomType.images.map((image) => {
+                images.push(image.imageUrl)
+            })
+        })
+
+        setRoomImages(images)
+    }
+
+    const submitReview = async () => {
+        setButtonIsLoading(true)
+        const formData = new FormData()
+        formData.append('HotelId', id)
+        formData.append('CustomerName', fullName)
+        formData.append('CustomerEmail', email)
+        formData.append('Title', title)
+        formData.append('Review', review)
+        formData.append('Cleanliness', cleanliness)
+        formData.append('Rating', rating)
+        formData.append('Comfort', comfort)
+        formData.append('ServiceQuality', serviceQuality)
+        formData.append('Security', security)
+        formData.append('Location', location)
+        formData.append('FeedbackImage', image)
+
+        const response = await postData('Feedback', formData)
+
+        if (response.successful) {
+            alert('Your review has been submitted successfully')
+            // router.back()papi
+            router.push({
+                pathname: '/hotel/reviews',
+                query: {
+                    id: id
+                }
+            });
+        } else {
+            alert(response.data)
+        }
+        setButtonIsLoading(false)
+
+    }
+
+    const getHotelDetails = async (id) => {
+        setIsLoading(true)
+        if (user) {
+            const responses = await Promise.all([
+                get(`Hotel/${id}`),
+                get(`SavedHotel?customerId=${user.id}&hotelId=${id}`)
+            ])
+
+            if (responses[0].successful) {
+                setHotel(responses[0].data)
+                getRoomImages(responses[0].data.roomTypes)
+            }
+
+            if (responses[1].successful) {
+                setIsSaved(responses[1].data)
+            }
+
+        } else {
+            const response = await get(`Hotel/${id}`)
+
+            if (response.successful) {
+                setHotel(response.data)
+                getRoomImages(response.data.roomTypes)
+            }
+        }
+        setIsLoading(false)
+    }
+
+    const saveHotel = async () => {
+        setSaveHotelIsLoading(true);
+        if (!isSaved) {
+            if (user) {
+                const request = {
+                    hotelId: hotel.id,
+                    userId: user.id,
+                };
+                const response = await post("SavedHotel", request);
+                if (response.successful) {
+                    setIsSaved(true);
+                }
+            } else {
+                setTimeout(() => {
+                    setIsSaved(true);
+                }, 2000);
+            }
+        } else {
+            const response = await deleteData(
+                `SavedHotel?customerId=${user.id}&hotelId=${hotel.id}`
+            );
+            if (response.successful) {
+                setIsSaved(false);
+            } else {
+                setTimeout(() => {
+                    setIsSaved(false);
+                }, 2000);
+            }
+        }
+
+    };
+
+    const handleFileChange = e => {
+        setImage(e.target.files[0])
+    };
 
 
     return (
         <div className="h-screen font-poppins">
             <Navbar />
-            <div className="w-full py-24">
+            {!isLoading ? hotel && <div className="w-full py-24">
 
                 <div className="lg:flex hidden flex-col gap-2 w-full">
                     <div className="flex justify-between items-center gap-2 w-full lg:px-24 px-4">
                         <div className="hotelInfo">
                             <p className="lg:text-2xl text-lg font-semibold">
-                                Hotel Name
+                                {hotel.name}
                             </p>
 
                             <div className="text-xs flex items-center gap-1">
                                 <span>
                                     <Location size={17} />
                                 </span>
-                                <p>address</p>
+                                <p>{hotel.address.line}</p>
                             </div>
                         </div>
                         <div className="flex items-center lg:gap-3 gap-2">
-                            <div
-                                // onClick={saveHotel}
+                            {/* <div
+                                onClick={saveHotel}
                                 className="flex items-center justify-center cursor-pointer"
                             >
-                                {/* {!saveHotelIsLoading ? ( */}
-                                <Heart
-                                    size={20}
-                                // color={isSaved ? "#FE4164" : "#1A1A1ADE"}
-                                // variant={isSaved ? "Bold" : "Outline"}
-                                />
-                                {/* ) : (
+                                {!saveHotelIsLoading ? (
+                                    <Heart
+                                        size={20}
+                                        color={isSaved ? "#FE4164" : "#1A1A1ADE"}
+                                        variant={isSaved ? "Bold" : "Outline"}
+                                    />
+                                ) : (
                                     <ClipLoader size={20} color="#FFCC00" />
-                                )} */}
-                            </div>
-
+                                )}
+                            </div> */}
                             <div className="flex gap-2 items-center">
-                                <p className="text-sm font-medium text-white p-1.5 rounded-t-md bg-[#108EE9]">8.2</p>
-
-                                {/* <div className="flex flex-col"> */}
-                                <p className="text-sm text-sec-main flex flex-col">
-                                    Pleasant
+                                <div className="p-1.5 rounded-t-md bg-[#108EE9]">
+                                    <p className="text-sm font-medium text-white">8.2</p>
+                                </div>
+                                <div className="lg:flex hidden flex-col">
+                                    <p className="text-sm text-sec-main">Pleasant</p>
                                     <span className="text-xs text-sec-main/70">225 reviews</span>
-                                </p>
-
-                                {/* </div> */}
-
+                                </div>
                             </div>
-
-                            {/* <button
-                            type="button"
-                            className="text-end  py-[7px] px-5 rounded-[5px] bg-[#FFCC00]"
-                        >
-                            BOOK NOW
-                        </button> */}
                         </div>
                     </div>
 
+
+
                     <Carousel
-                        containerClass="container"
-                        responsive={responsive}
+                        // swipeable={true}
+                        containerClass="container" responsive={responsive}
                         draggable={true}
                         infinite={true}
-                        className='border-x-[1.5px] border-gray-200 max-w-full'
                     >
-                        {/* {roomImages.map((image) => ( */}
-                        <div className="md:mt-3">
-                            <div className="mr-3">
+                        {roomImages.map((image) => (<div className="md:mt-3">
+                            <div className="rounded-lg mr-3">
                                 <img
                                     className="object-cover w-[500px] h-[300px] rounded-lg"
-                                    alt="bcloud"
-                                    src='../lagos.png'
+                                    alt="name"
+                                    src={image}
                                 />
                             </div>
-                        </div>
-                        {/* ))} */}
+                        </div>))}
                     </Carousel>
                 </div>
 
@@ -164,21 +271,7 @@ const Reviews = () => {
                                         <ClipLoader size={20} color="#FFCC00" />
                                     )} */}
                                 </div>
-
                                 <div className="flex gap-2 items-center">
-                                    <p className="text-sm font-medium text-white p-1.5 rounded-t-md bg-[#108EE9]">8.2</p>
-
-                                    {/* <div className="flex flex-col"> */}
-                                    <p className="text-sm text-sec-main flex flex-col">
-                                        Pleasant
-                                        <span className="text-xs text-sec-main/70">225 reviews</span>
-                                    </p>
-
-                                    {/* </div> */}
-
-                                </div>
-
-                                {/* <div className="flex gap-2 items-center">
                                     <div className="p-1.5 rounded-t-md bg-[#108EE9]">
                                         <p className="text-sm font-medium text-white">8.2</p>
                                     </div>
@@ -186,13 +279,7 @@ const Reviews = () => {
                                         <p className="text-sm text-sec-main">Pleasant</p>
                                         <span className="text-xs text-sec-main/70">225 reviews</span>
                                     </div>
-                                </div> */}
-                                {/* <button
-                            type="button"
-                            className="text-end  py-[7px] px-5 rounded-[5px] bg-[#FFCC00]"
-                        >
-                            BOOK NOW
-                        </button> */}
+                                </div>
                             </div>
                         </div>
 
@@ -203,23 +290,23 @@ const Reviews = () => {
                             infinite={true}
                             className='border-x-[1.5px] border-gray-200'
                         >
-                            {/* {roomImages.map((image) => ( */}
-                            <div className="md:mt-3">
-                                <div className="mr-3">
-                                    <img
-                                        className="object-cover w-[500px] h-[300px] rounded-lg"
-                                        alt="bcloud"
-                                        src='./lagos.png'
-                                    />
+                            {roomImages.map((image) => (
+                                <div className="md:mt-3">
+                                    <div className="mr-3">
+                                        <img
+                                            className="object-cover w-[500px] h-[300px] rounded-lg"
+                                            alt="bcloud"
+                                            src={image}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                            {/* ))} */}
+                            ))}
                         </Carousel>
                     </div>
 
                     <div className="lg:mt-6 mt-0">
                         <p className="text-sm font-normal text-sec-main">
-                            Hola
+                            {hotel.description}
                         </p>
                     </div>
 
@@ -386,12 +473,8 @@ const Reviews = () => {
 
                                 <input
                                     type='file'
-                                    multiple
-                                    className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-medium file:bg-pri-main/20 file:text-pri-cont hover:file:bg-pri-main/30 cursor-pointer"
+                                    onChange={handleFileChange}
                                 />
-
-                                {/* <div class="custom-file-container" data-upload-id="myFirstImage"></div> */}
-
 
                             </div>
 
@@ -401,19 +484,34 @@ const Reviews = () => {
                             </div>
 
                             <div className="flex items-start ">
-                                <button
+                                {!buttonIsLoading ? <button
                                     type="button"
-                                    disabled={!fullName || !email || !title || !review || !hasAcceptedPolicy}
-                                    className="text-sec-main cursor-pointer text-center rounded px-4 py-2.5 bg-[#ffcc00] hover:bg-[#ffcc00] disabled:bg-pri-main/50"
+                                    onClick={submitReview}
+                                    // disabled={(!fullName || !email || !title || !review || !hasAcceptedPolicy || rating > 0)}
+                                    className="text-sec-main cursor-pointer text-center rounded px-4 py-2.5 bg-[#ffcc00] disabled:bg-pri-main/50"
                                 >
                                     Submit you review
-                                </button>
+                                </button> :
+                                <ClipLoader size={30} color="#ffcc00" />}
                             </div>
                         </div>
                     </div>
                 </div>
 
-            </div>
+            </div> : <div className="w-full">
+                <div className="flex flex-col items-center justify-center">
+                    <div className="lg:w-2/5 md:w-1/2 pt-10 pl-4 pr-4 justify-center lg:my-16 sm:my-5">
+                        <div className="m-12 pt-14 flex flex-col items-center justify-center">
+                            <BounceLoader
+                                heigth={200}
+                                width={200}
+                                color="#FFCC00"
+                                ariaLabel="loading-indicator"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>}
             <Footer className="bg-[#ffffff]" />
         </div>
     );
