@@ -209,13 +209,16 @@ const Reviews = () => {
                                 )}
                             </div> */}
                             <div className="flex gap-2 items-center">
-                                <div className="p-1.5 rounded-t-md bg-[#108EE9]">
-                                    <p className="text-sm font-medium text-white">8.2</p>
-                                </div>
-                                <div className="lg:flex hidden flex-col">
-                                    <p className="text-sm text-sec-main">Pleasant</p>
+                                <p className="text-sm font-medium text-white p-1.5 rounded-t-md bg-[#108EE9]">8.2</p>
+
+                                {/* <div className="flex flex-col"> */}
+                                <p className="text-sm text-sec-main flex flex-col">
+                                    Pleasant
                                     <span className="text-xs text-sec-main/70">225 reviews</span>
-                                </div>
+                                </p>
+
+                                {/* </div> */}
+
                             </div>
                         </div>
                     </div>
@@ -272,13 +275,16 @@ const Reviews = () => {
                                     )} */}
                                 </div>
                                 <div className="flex gap-2 items-center">
-                                    <div className="p-1.5 rounded-t-md bg-[#108EE9]">
-                                        <p className="text-sm font-medium text-white">8.2</p>
-                                    </div>
-                                    <div className="lg:flex hidden flex-col">
-                                        <p className="text-sm text-sec-main">Pleasant</p>
+                                    <p className="text-sm font-medium text-white p-1.5 rounded-t-md bg-[#108EE9]">8.2</p>
+
+                                    {/* <div className="flex flex-col"> */}
+                                    <p className="text-sm text-sec-main flex flex-col">
+                                        Pleasant
                                         <span className="text-xs text-sec-main/70">225 reviews</span>
-                                    </div>
+                                    </p>
+
+                                    {/* </div> */}
+
                                 </div>
                             </div>
                         </div>
@@ -470,10 +476,11 @@ const Reviews = () => {
 
                                 <p className="text-sm font-medium">Share photos (optional)</p>
 
-
                                 <input
                                     type='file'
+                                    multiple
                                     onChange={handleFileChange}
+                                    className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-medium file:bg-pri-main/20 file:text-pri-cont hover:file:bg-pri-main/30 cursor-pointer"
                                 />
 
                             </div>
@@ -492,7 +499,7 @@ const Reviews = () => {
                                 >
                                     Submit you review
                                 </button> :
-                                <ClipLoader size={30} color="#ffcc00" />}
+                                    <ClipLoader size={30} color="#ffcc00" />}
                             </div>
                         </div>
                     </div>
