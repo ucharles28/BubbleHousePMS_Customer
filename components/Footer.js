@@ -78,9 +78,9 @@ const Footer = () => {
                 <div className='lg:flex lg:items-center lg:justify-between lg:gap-0 grid grid-cols-1 gap-2 w-full border-t py-4'>
                     <p className='text-sm font-normal leading-6 text-sec-main/50'>Copyright © 2022 Bcloud. All Rights Reserved</p>
                     <div className='flex flex-row items-center gap-4'>
-                        <FaFacebookF className='cursor-pointer' color='#4267B2' size={18} />
-                        <FaTwitter className='cursor-pointer' color='#1DA1F2' size={19} />
-                        <FcGoogle className='cursor-pointer' size={18} />
+                        <FaFacebookF className='cursor-pointer opacity-75 hover:opacity-100' color='#4267B2' size={18} />
+                        <FaTwitter className='cursor-pointer opacity-75 hover:opacity-100' color='#1DA1F2' size={19} />
+                        <FcGoogle className='cursor-pointer opacity-75 hover:opacity-100' size={18} />
                     </div>
                 </div>
 

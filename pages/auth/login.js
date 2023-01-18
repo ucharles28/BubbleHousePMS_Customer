@@ -191,7 +191,7 @@ export default function Login() {
                                             role="input"
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
-                                            className="bg-white border-[1.5px] rounded-md border-gray focus:outline-none text-base font-medium leading-none text-black py-3 w-full pl-3 placeholder:font-medium placeholder:text-sm"
+                                            className="bg-white border-[1.5px] rounded-md border-gray focus:outline-none text-base font-medium leading-none text-black py-3 w-full pl-3 placeholder:font-normal placeholder:text-sm"
                                             required
                                         />
                                         <Form.Control.Feedback type="invalid" />
@@ -211,7 +211,7 @@ export default function Login() {
                                                 value={password}
                                                 onChange={(e) => setPassword(e.target.value)}
                                                 placeholder="Password"
-                                                className="bg-white border-[1.5px] rounded-md border-gray focus:outline-none text-base font-medium leading-none text-black py-3 w-full pl-3 placeholder:font-medium placeholder:text-sm"
+                                                className="bg-white border-[1.5px] rounded-md border-gray focus:outline-none text-base font-medium leading-none text-black py-3 w-full pl-3 placeholder:font-normal placeholder:text-sm"
                                                 required
                                             />
                                             <div

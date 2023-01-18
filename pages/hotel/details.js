@@ -1,24 +1,22 @@
-import { Calendar, Heart, Location, People } from "iconsax-react";
-
 import React from "react";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
 import Amenities from "../../components/Amenities";
-// import Carousel from "../../components/Carousel";
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
 import RoomType from "../../components/RoomType";
 import HotelList from "../../components/HotelList";
-import Navbar from "../../components/Navbar";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import { deleteData, get, post } from "../../helpers/ApiRequest";
 import HotelSearch from "../../components/HotelSearch";
+import PopoverDisplay from "../../components/PopoverDisplay";
+import { useUser } from '../../context/user';
+import { Calendar, Heart, Location, People, ArrowRight2 } from "iconsax-react";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { CircularProgress } from "@mui/material";
-import Footer from "../../components/Footer";
 import { BounceLoader, ClipLoader } from "react-spinners";
 import { format } from "date-fns";
-import PopoverDisplay from "../../components/PopoverDisplay";
 import { DateRange } from "@mui/icons-material";
-import { useUser } from '../../context/user';
 import Image from "next/image";
 import Link from "next/link";
 
@@ -28,12 +26,10 @@ export default function HotelDetails() {
     const { query } = router;
     const { user } = useUser();
 
-
     const [hotel, setHotel] = useState();
     const [roomTypeImages, setRoomTypeImages] = useState();
     const [selectRooms, setSelectedRooms] = useState({});
     const [roomImages, setRoomImages] = useState([]);
-    // const [amenties, setRoomImages] = useState([]);
     const [totalAmount, setTotalAmount] = useState(0);
     const [numberOfRooms, setNumberOfRooms] = useState(0);
     const [numberOfDays, setNumberOfDays] = useState(0);
@@ -277,7 +273,7 @@ export default function HotelDetails() {
                             </div>
                             <div className="flex gap-2 items-center">
                                 <div className="p-1.5 rounded-t-md bg-[#108EE9]">
-                                    <p className="text-sm font-medium text-white">8.2</p>
+                                    <p className="text-sm font-medium text-white">{hotel.rating}</p>
                                 </div>
                                 <div className="lg:flex hidden flex-col">
                                     <p className="text-sm text-sec-main">Pleasant</p>
@@ -314,7 +310,7 @@ export default function HotelDetails() {
                     </Carousel>
                 </div>
 
-                <div className="flex flex-col gap-8 text-sec-main lg:px-24 px-4">
+                <div className="flex flex-col gap-10 text-sec-main lg:px-24 px-4">
 
                     <div className="flex lg:hidden flex-col gap-2 w-full">
                         <div className="flex justify-between items-center gap-2">
@@ -346,23 +342,13 @@ export default function HotelDetails() {
                                     )}
                                 </div>
                                 <div className="flex gap-2 items-center">
-                                    <p className="text-sm font-medium text-white p-1.5 rounded-t-md bg-[#108EE9]">8.2</p>
-
-                                    {/* <div className="flex flex-col"> */}
+                                    <p className="text-sm font-medium text-white p-1.5 rounded-t-md bg-[#108EE9]">{hotel.rating}</p>
                                     <p className="text-sm text-sec-main lg:flex hidden flex-col">
                                         Pleasant
                                         <span className="text-xs text-sec-main/70">225 reviews</span>
                                     </p>
 
-                                    {/* </div> */}
-
                                 </div>
-                                {/* <button
-                            type="button"
-                            className="text-end  py-[7px] px-5 rounded-[5px] bg-[#FFCC00]"
-                        >
-                            BOOK NOW
-                        </button> */}
                             </div>
                         </div>
 
@@ -399,13 +385,21 @@ export default function HotelDetails() {
                         <Amenities />
                     </div>
 
-                    <div className="flex flex-col gap-2">
-                        <div className="w-full border-[1.5px] rounded p-4 flex gap-2 items-center">
+                    <div className="flex flex-col gap-4 w-full">
+
+                        <div className="w-full border-[1.5px] rounded-md px-3 py-2 flex gap-2 items-center">
                             <p className="text-sm font-medium">Reviews</p>
                             <div className="p-1.5 rounded-t-md bg-[#108EE9]">
                                 <p className="text-sm font-medium text-white">{hotel.rating}</p>
                             </div>
                         </div>
+
+                    </div>
+
+                    <div className="flex flex-col gap-4 w-full">
+
+                        <p className="text-base font-medium text-sec-main">Some reviews for {hotel.name}</p>
+
                         <div className="flex flex-col w-full gap-6">
 
                             {hotel.feedbacks.map((review) => (<div className='flex flex-col gap-4 p-2 border-b-2 pb-4' key={review.id}>
@@ -428,13 +422,13 @@ export default function HotelDetails() {
                                     </div>
 
                                     <div className="lg:flex hidden gap-2 items-center">
-                                        <div className="flex flex-col">
-                                            <p className="text-sm text-sec-main font-medium">Pleasant</p>
-                                        </div>
 
-                                        <div className="p-1.5 rounded-t-md bg-[#108EE9]">
-                                            <p className="text-xs font-medium text-white">{review.rating}</p>
-                                        </div>
+                                        <p className="text-sm text-sec-main font-medium mb-[0]">
+                                            Pleasant
+                                        </p>
+
+                                        <p className="text-sm font-medium text-white p-1.5 rounded-t-md bg-[#108EE9]">{review.rating}</p>
+
                                     </div>
 
                                 </div>
@@ -444,18 +438,22 @@ export default function HotelDetails() {
                                 </p>
                             </div>))}
 
+                            <div className="flex lg:justify-end justify-center w-full -mt-4">
+                                <Link href={{
+                                    pathname: '/hotel/reviews',
+                                    query: {
+                                        id: query.hotelId
+                                    }
+                                }}>
+                                    <p className="text-sm text-sec-main/70 font-medium hover:text-sec-main hover:underline flex items-center gap-1">
+                                        See more
+                                        <ArrowRight2 size="14" />
+                                    </p>
+                                </Link>
+                            </div>
 
                         </div>
-                        <div>
-                            <Link href={{
-                                pathname: '/hotel/reviews',
-                                query: {
-                                    id: query.hotelId
-                                }
-                            }}>
-                                <p className="text-[#FFCC00]">Click to see all guest reviews</p>
-                            </Link>
-                        </div>
+
                     </div>
 
                     <div className="flex flex-col w-full gap-4">
