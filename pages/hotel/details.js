@@ -387,11 +387,26 @@ export default function HotelDetails() {
 
                     <div className="flex flex-col gap-4 w-full">
 
-                        <div className="w-full border-[1.5px] rounded-md px-3 py-2 flex gap-2 items-center">
-                            <p className="text-sm font-medium">Reviews</p>
-                            <div className="p-1.5 rounded-t-md bg-[#108EE9]">
-                                <p className="text-sm font-medium text-white">{hotel.rating}</p>
+                        <Link href={{
+                            pathname: '/hotel/reviews',
+                            query: {
+                                id: query.hotelId
+                            }
+                        }}>
+                            <div className="w-full border-[1.5px] rounded-md px-3 py-2 flex gap-2 items-center">
+                                <p className="text-sm font-medium text-sec-main">Reviews</p>
+                                <div className="p-1.5 rounded-t-md bg-[#108EE9]">
+                                    <p className="text-sm font-medium text-white">{hotel.rating}</p>
+                                </div>
                             </div>
+                        </Link>
+
+                        <div className="w-full border-[1.5px] rounded-md px-3 py-2 flex gap-2 items-center">
+                            <p className="text-sm font-medium">Property policy</p>
+                        </div>
+
+                        <div className="w-full border-[1.5px] rounded-md px-3 py-2 flex gap-2 items-center">
+                            <p className="text-sm font-medium">FAQ's</p>
                         </div>
 
                     </div>
@@ -402,18 +417,18 @@ export default function HotelDetails() {
 
                         <div className="flex flex-col w-full gap-6">
 
-                            {hotel.feedbacks.map((review) => (<div className='flex flex-col gap-4 p-2 border-b-2 pb-4' key={review.id}>
+                            {hotel.feedbacks.map((review) => (<div className='flex flex-col gap-4 p-2 border-b-2 pb-3' key={review.id}>
 
-                                <div className='flex lg:flex-row flex-col lg:items-center justify-between gap-3 w-full'>
+                                <div className='flex lg:flex-row flex-col lg:items-center justify-between lg:gap-0 gap-3 w-full'>
 
-                                    <div className="lg:hidden flex gap-2 items-center">
-                                        <div className="flex flex-col">
-                                            <p className="text-sm text-sec-main font-medium">Pleasant</p>
-                                        </div>
+                                    <div className="flex lg:hidden gap-2 items-center">
 
-                                        <div className="p-1.5 rounded-t-md bg-[#108EE9]">
-                                            <p className="text-xs font-medium text-white">{review.rating}</p>
-                                        </div>
+                                        <p className="text-sm text-sec-main font-medium mb-[0]">
+                                            Pleasant
+                                        </p>
+
+                                        <p className="lg:text-sm text-xs font-medium text-white p-1.5 rounded-t-md bg-[#108EE9]">{review.rating}</p>
+
                                     </div>
 
                                     <div className='flex flex-col'>
@@ -427,7 +442,7 @@ export default function HotelDetails() {
                                             Pleasant
                                         </p>
 
-                                        <p className="text-sm font-medium text-white p-1.5 rounded-t-md bg-[#108EE9]">{review.rating}</p>
+                                        <p className="lg:text-sm text-xs font-medium text-white p-1.5 rounded-t-md bg-[#108EE9]">{review.rating}</p>
 
                                     </div>
 

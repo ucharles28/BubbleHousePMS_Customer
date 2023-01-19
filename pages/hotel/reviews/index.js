@@ -210,9 +210,9 @@ function AllReviews() {
 
                         <div className="flex flex-col w-full gap-6">
 
-                            {reviews.map((review) => (<div className='flex flex-col gap-4 p-2 border-t-2 pt-4' key={review.id}>
+                            {reviews.map((review) => (<div className='flex flex-col gap-4 p-2 border-t-2 pt-3' key={review.id}>
 
-                                <div className='flex lg:flex-row flex-col lg:items-center justify-between w-full'>
+                                <div className='flex lg:flex-row flex-col lg:gap-0 gap-3 lg:items-center justify-between w-full'>
 
                                     <div className="lg:hidden flex gap-2 items-center">
 
@@ -220,7 +220,7 @@ function AllReviews() {
                                             Pleasant
                                         </p>
 
-                                        <p className="text-sm font-medium text-white p-1.5 rounded-t-md bg-[#108EE9]">{review.rating}</p>
+                                        <p className="lg:text-sm text-xs font-medium text-white p-1.5 rounded-t-md bg-[#108EE9]">{review.rating}</p>
 
                                     </div>
 
@@ -235,7 +235,7 @@ function AllReviews() {
                                             Pleasant
                                         </p>
 
-                                        <p className="text-sm font-medium text-white p-1.5 rounded-t-md bg-[#108EE9]">{review.rating}</p>
+                                        <p className="lg:text-sm text-xs font-medium text-white p-1.5 rounded-t-md bg-[#108EE9]">{review.rating}</p>
 
 
                                     </div>

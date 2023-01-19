@@ -6,6 +6,7 @@ import {
   Money2,
   Heart,
   LogoutCurve,
+  HambergerMenu,
 } from "iconsax-react";
 import { BsList } from "react-icons/bs";
 import Image from "next/image";
@@ -85,8 +86,8 @@ export default function Navbar() {
           ) : (
             <div className="relative flex items-center justify-end">
               <div
-                className="flex relative items-center cursor-pointer gap-2"
-                onClick={handleClick}
+                className="flex relative items-center cursor-pointer gap-3"
+                // onClick={handleClick}
               >
                 <div className="rounded-full h-8 w-8 border-sec-main border flex items-center box">
                   <img
@@ -94,12 +95,17 @@ export default function Navbar() {
                     alt="avatar"
                     border="0"
                     className="object-cover rounded-full h-8 w-8"
+                    onClick={handleClick}
                   />
                 </div>
-                <span className="font-medium text-mdtext-center flex items-center gap-1">
+
+                <span className="font-medium text-sm text-center lg:flex hidden items-center gap-1" onClick={handleClick} >
                   {user.fullName}{" "}
                   <ArrowDown2 size="14" className="mt-1" color="#1a1a1a" />
                 </span>
+
+                <HambergerMenu className="flex lg:hidden"/>
+
               </div>
             </div>
           )}
@@ -118,9 +124,6 @@ export default function Navbar() {
           vertical: "bottom",
           horizontal: "left",
         }}
-        // sx={{
-        //     width: 320
-        // }}
       >
         <div className="bg-white flex-col shadow-sm w-[220px] py-2">
           <Link href="/settings">

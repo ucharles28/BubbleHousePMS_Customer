@@ -6,7 +6,7 @@ import { format } from "date-fns";
 function SignUpInfo({ formData, setFormData, bookingInfo, hotel, setPage }) {
   return (
     <div className="h-full font-poppins">
-      {/* <Navbar /> */}
+      <Navbar />
 
       <div className="flex flex-col items-center w-full h-full pt-20 lg:px-24 px-4">
         <div className="w-11/12 lg:w-2/6 mx-auto mt-4 lg:mb-8 mb-4">
@@ -376,7 +376,7 @@ function SignUpInfo({ formData, setFormData, bookingInfo, hotel, setPage }) {
         )}
       </div>
 
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }

@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 import Image from "next/image";
 import { format } from "date-fns";
 import { post } from "../helpers/ApiRequest";
@@ -93,6 +95,7 @@ function PersonalInfo({
 
   return (
     <div className="h-full font-poppins">
+      <Navbar />
       <div className="flex flex-col items-center w-full h-full pt-20 lg:px-24 px-4">
         <div className="w-11/12 lg:w-2/6 mx-auto mt-4 lg:mb-8 mb-4">
           <div className="flex justify-between items-center pb-2 flex-col">
@@ -288,14 +291,14 @@ function PersonalInfo({
                 </div> */}
                 </div>
 
-                <div className="bg-pri-main lg:w-1/3 w-full border-[1.5px] p-4 rounded-md flex justify-end">
+                <div className="bg-pri-main/30 lg:w-1/3 w-full border-[1.5px] p-4 rounded-md flex justify-end">
                   <div className="flex flex-col gap-4">
                     <div>
                       <label htmlFor="" className="text-sm">
                         Full Name
                       </label>
                       <input
-                        className="border-[1.5px] rounded-md text-sm outline-0 w-full p-2"
+                        className="border-[1.5px] bg-white rounded-md text-sm outline-0 w-full p-2"
                         disabled
                         type="text"
                         // placeholder="First name"
@@ -315,7 +318,7 @@ function PersonalInfo({
                         Email Address
                       </label>
                       <input
-                        className="border-[1.5px] rounded-md text-sm outline-0 w-full p-2"
+                        className="border-[1.5px] bg-white rounded-md text-sm outline-0 w-full p-2"
                         disabled
                         type="text"
                         // placeholder="First name"
@@ -347,9 +350,9 @@ function PersonalInfo({
       {modal && (
         <div
           onClick={toggleModal}
-          className="fixed inset-0 z-50 overflow-y-auto bg-gray-900/50 bg-blend-overlay flex items-center m-0"
+          className="fixed inset-0 z-50 overflow-y-auto bg-gray-900/50 bg-blend-overlay flex items-center m-0 lg:px-0 px-4"
         >
-          <div className="shadow-lg rounded-2xl p-4 bg-white w-[360px] m-auto pb-[96px] px-[52px] pt-[43px]">
+          <div className="shadow-lg rounded-2xl p-4 bg-white lg:w-[360px] w-full m-auto pb-[96px] px-[52px] pt-[43px]">
             <div className="w-full h-full text-center">
               <div className="flex h-full flex-col items-center justify-between">
                 {isBooking ? (
@@ -357,16 +360,16 @@ function PersonalInfo({
                     <BounceLoader
                       size={140}
                       color="#FFCC00"/>
-                    <div className="flex flex-col mt-[23px] gap-[4px]">
-                      <p className="text-2xl font-medium">Hold on a sec</p>
-                      <p className="text-xl">Confirming your booking</p>
+                    <div className="flex flex-col mt-6 gap-2">
+                      <p className="text-lg font-medium text-sec-main">Hold on a sec</p>
+                      <p className="text-base text-sec-main/70">Confirming your booking</p>
                     </div>
                   </>
                 ) : (
                   <>
                     <svg
-                      width="150"
-                      height="150"
+                      width="140"
+                      height="140"
                       viewBox="0 0 150 150"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
@@ -376,9 +379,9 @@ function PersonalInfo({
                         fill="#56CA00"
                       />
                     </svg>
-                    <div className="flex flex-col mt-[23px] gap-[4px]">
-                      <p className="text-2xl font-medium">Booking confirmed</p>
-                      <p className="text-xl">
+                    <div className="flex flex-col mt-6 gap-2">
+                      <p className="text-lg font-medium text-sec-main">Booking confirmed</p>
+                      <p className="text-base text-sec-main-70">
                         Your booking has been confirmed successfully
                       </p>
                     </div>
@@ -389,6 +392,8 @@ function PersonalInfo({
           </div>
         </div>
       )}
+
+      <Footer />F
     </div>
   );
 }
