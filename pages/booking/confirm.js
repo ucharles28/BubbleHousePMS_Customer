@@ -24,7 +24,28 @@ export default function ConfirmBooking() {
     const confirmPayment = async () => {
         if (query) {
             setIsLoading(true)
-            const response = await get(`Payment/VerifyPayment?reference=${query.reference}`)
+            const response = await fetch(`https://uzomacharles.bsite.net/api/Payment/VerifyPayment?reference=${query.reference}`, {
+                method: 'GET',
+                // headers: {
+                //   Authorization: `Bearer ${token}`,
+                // },
+              })
+                .then(async (res) => {
+                  const responseObject = {
+                    successful: res.ok,
+                    data: await res?.json(),
+                  };
+                  return responseObject;
+                })
+                .catch((error) => {
+                  // return error;
+                  const responseObject = {
+                    successful: false,
+                    data: 'Unable to send request. Please try again later',
+                  };
+                  return responseObject;
+                });
+            // const response = await get(`Payment/VerifyPayment?reference=${query.reference}`)
             if (response.successful) {
                 console.log(response.data)
                 setBooking(response.data)
@@ -86,8 +107,8 @@ export default function ConfirmBooking() {
                         <p className="text-sm text-sec-main/70">{booking.hotel.address.line}</p>
                     </div>
                     <div className="flex gap-2 items-center justify-between w-full">
-                        <img src={booking.roomTypes[0].roomType.images[0].imageUrl} className="w-1/2 h-44 lg:h-[250px] object-cover rounded-md" />
-                        <img src={booking.roomTypes[0].roomType.images[1].imageUrl} className="w-1/2 h-44 lg:h-[250px] object-cover rounded-md" />
+                        <img src={booking.roomTypes[0].roomType.images[0] ? booking.roomTypes[0].roomType.images[0].imageUrl : booking.hotel.imageUrl} className="w-1/2 h-44 lg:h-[250px] object-cover rounded-md" />
+                        <img src={booking.roomTypes[0].roomType.images[1] ? booking.roomTypes[0].roomType.images[1].imageUrl : booking.hotel.imageUrl} className="w-1/2 h-44 lg:h-[250px] object-cover rounded-md" />
                     </div>
                 </div>
 
@@ -140,11 +161,11 @@ export default function ConfirmBooking() {
                         <p className="text-sec-main/70">Payment Date</p>
                         <p className="font-medium">{format(new Date(booking.createdDate), "dd MMM, yyy")}</p>
                         <p className="text-sec-main/70">Method</p>
-                        <p className="font-medium">Stripe</p>
+                        <p className="font-medium">Paystack</p>
                         <p className="text-sec-main/70">Total</p>
                         <p className="font-medium">NGN {booking.totalAmount.toLocaleString()}</p>
                         <p className="text-sec-main/70">Status</p>
-                        <p className="font-medium">Successful</p>
+                        <p className="font-medium">{booking.isPaid ? 'Successful' : 'Failed'}</p>
                     </div>
 
                 </div>
