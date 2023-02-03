@@ -89,10 +89,10 @@ export default function Navbar() {
                 className="flex relative items-center cursor-pointer gap-3"
                 // onClick={handleClick}
               >
-                <div className="rounded-full h-8 w-8 border-sec-main border flex items-center box">
+                <div className="rounded-full h-8 w-8 ring-2 ring-pri-cont/70 flex items-center">
                   <img
                     src={user.profileImageUrl}
-                    alt="avatar"
+                    // alt="avatar"
                     border="0"
                     className="object-cover rounded-full h-8 w-8"
                     onClick={handleClick}
@@ -110,10 +110,6 @@ export default function Navbar() {
             </div>
           )}
         </div>
-        {/* <span className="font-medium text-md mx-1 text-center flex items-center gap-1">
-          {user.fullName}{" "}
-          <ArrowDown2 size="14" className="mt-1" color="#1a1a1a" />
-        </span> */}
       </div>
       <Popover
         id={id}
@@ -125,35 +121,35 @@ export default function Navbar() {
           horizontal: "left",
         }}
       >
-        <div className="bg-white flex-col shadow-sm w-[220px] py-2">
+        <div className="bg-white flex-col w-[220px] py-2">
           <Link href="/settings">
-            <div className=" py-2 px-3 flex flex-row items-center gap-2 text-[#1a1a1a]/70 hover:text-[#1a1a1a] hover:bg-[#1a1a1a]/5 w-full">
-              <Profile size={24} />
-              <p className="text-sm leading-5 font-normal">Manage Account</p>
+            <div className="py-2 px-3 flex items-center gap-3 text-sec-main/70 hover:text-sec-main hover:bg-gray-100 w-full">
+              <Profile size={20} />
+              <p className="text-sm font-normal mb-[0]">Manage Account</p>
             </div>
           </Link>
           <Link href="/booking/history">
-            <div className=" py-2 px-3 flex flex-row items-center gap-2 text-[#1a1a1a]/70 hover:text-[#1a1a1a] hover:bg-[#1a1a1a]/5 w-full">
-              <Notepad2 size={24} />
-              <p className="text-sm leading-5 font-normal">Booking History</p>
+            <div className="py-2 px-3 flex items-center gap-3 text-sec-main/70 hover:text-sec-main hover:bg-gray-100 w-full">
+              <Notepad2 size={20} />
+              <p className="text-sm font-normal mb-[0]">Booking History</p>
             </div>
           </Link>
           <Link href="#">
-            <div className=" py-2 px-3 flex flex-row items-center gap-2 text-[#1a1a1a]/70 hover:text-[#1a1a1a] hover:bg-[#1a1a1a]/5 w-full">
-              <Money2 size={24} />
-              <p className="text-sm leading-5 font-normal">Rewards</p>
+            <div className="py-2 px-3 flex items-center gap-3 text-sec-main/70 hover:text-sec-main hover:bg-gray-100 w-full">
+              <Money2 size={20} />
+              <p className="text-sm font-normal mb-[0]">Rewards</p>
             </div>
           </Link>
           <Link href="/mywishlist">
-            <div className=" py-2 px-3 flex flex-row items-center gap-2 text-[#1a1a1a]/70 hover:text-[#1a1a1a] hover:bg-[#1a1a1a]/5 w-full">
-              <Heart size={24} />
-              <p className="text-sm leading-5 font-normal">Saved</p>
+            <div className="py-2 px-3 flex items-center gap-3 text-sec-main/70 hover:text-sec-main hover:bg-gray-100 w-full">
+              <Heart size={20} />
+              <p className="text-sm font-normal mb-[0]">Saved</p>
             </div>
           </Link>
           <Link href="#" onClick={logOut}>
-            <div className=" py-2 px-3 flex flex-row items-center gap-2 text-[#1a1a1a]/70 hover:text-[#1a1a1a] hover:bg-[#1a1a1a]/5 w-full">
-              <LogoutCurve size={24} />
-              <p className="text-sm leading-5 font-normal">Logout</p>
+            <div className="py-2 px-3 flex items-center gap-3 text-sec-main/70 hover:text-sec-main hover:bg-gray-100 w-full">
+              <LogoutCurve size={20} />
+              <p className="text-sm font-normal mb-[0]">Logout</p>
             </div>
           </Link>
         </div>

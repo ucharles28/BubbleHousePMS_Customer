@@ -29,9 +29,9 @@ const Footer = () => {
                             <p className='text-sec-main/50 font-medium'>Company</p>
                             <div className="flex flex-col space-y-4 text-sec-main">
                                 <Link href="#" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> About Us</a></Link>
-                                <Link href="#" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> Privacy Policy</a></Link>
-                                <Link href="../signup" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> Terms of Service </a></Link>
-                                <Link href="../signup" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> How it Works </a></Link>
+                                {/* <Link href="#" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> Privacy Policy</a></Link> */}
+                                <Link href="/terms" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> Terms of Service </a></Link>
+                                <Link href="#" legacyBehavior><a className="text-sec-main/70 hover:text-sec-main"> How it Works </a></Link>
                             </div>
                         </div>
 
