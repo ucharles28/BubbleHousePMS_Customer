@@ -118,6 +118,11 @@ export default function HotelDetails() {
     useEffect(() => {
         let totalAmount = 0
         let numberOfRooms = 0
+        let numberOfDays = 0
+        if (dateRange) {
+            numberOfDays = dateDiffInDays(dateRange[0].startDate, dateRange[0].endDate)
+            setNumberOfDays(numberOfDays)
+        }
         Object.keys(selectRooms).map((key) => {
             if (!selectRooms[key] || selectRooms[key] < 1) {
                 return;
@@ -126,11 +131,9 @@ export default function HotelDetails() {
             numberOfRooms += Number(selectRooms[key])
             totalAmount += Number(hotel.roomTypes[key].price) * Number(selectRooms[key])
         })
+        totalAmount *= numberOfDays;
         setNumberOfRooms(numberOfRooms)
         setTotalAmount(totalAmount)
-        if (dateRange) {
-            setNumberOfDays(dateDiffInDays(dateRange[0].startDate, dateRange[0].endDate))
-        }
 
     }, [selectRooms])
 
