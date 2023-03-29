@@ -54,14 +54,21 @@ export default function HotelDetails() {
     };
 
     const updateNumberOfRooms = async (isAdd, index) => {
+        debugger
         const obj = { ...selectRooms }
-        if (obj[index]) {
-            if (!isAdd && obj[index] < 1) {
+        if (!obj[index] && Number(hotel.roomTypes[index].numberOfAvailableRooms) > 0) {
+            obj[index] = 1;
+        } else {
+            if (obj[index] === Number(hotel.roomTypes[index].numberOfAvailableRooms)) {
                 return;
             }
-            obj[index] = isAdd ? obj[index] + 1 : obj[index] - 1;
-        } else {
-            obj[index] = 1;
+
+            if (obj[index]) {
+                if (!isAdd && obj[index] < 1) {
+                    return;
+                }
+                obj[index] = isAdd ? obj[index] + 1 : obj[index] - 1;
+            }
         }
         setSelectedRooms(obj)
     }
@@ -102,7 +109,7 @@ export default function HotelDetails() {
 
     useEffect(() => {
         if (query) {
-            getHotelDetails(query.hotelId)
+            getHotelDetails(query)
             setDateRange([
                 {
                     startDate: new Date(query.startDate),
@@ -137,11 +144,16 @@ export default function HotelDetails() {
 
     }, [selectRooms])
 
-    const getHotelDetails = async (id) => {
+    const getHotelDetails = async (query) => {
         setIsLoading(true)
+        const request = {
+            hotelId: query.id,
+            checkInDate: new Date(query.endDate),
+            checkOutDate: new Date(query.endDate)
+        }
         if (user) {
             const responses = await Promise.all([
-                get(`Hotel/${id}`),
+                post(`Hotel/BookingDetails`, request),
                 get(`SavedHotel?customerId=${user.id}&hotelId=${id}`)
             ])
 
@@ -155,7 +167,7 @@ export default function HotelDetails() {
             }
 
         } else {
-            const response = await get(`Hotel/${id}`)
+            const response = await post(`Hotel/BookingDetails`, request)
 
             if (response.successful) {
                 setHotel(response.data)
@@ -207,8 +219,6 @@ export default function HotelDetails() {
         }
 
     };
-
-
 
     const gotoBookingInfo = (isReservation) => {
         debugger

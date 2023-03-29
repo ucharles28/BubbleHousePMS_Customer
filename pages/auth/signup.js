@@ -223,7 +223,9 @@ export default function SignUp() {
                                             />
                                         </div>
                                         <div className="text-sm mb-[0]">
-                                            I agree to privacy policy & terms
+                                            <Link href="/terms">
+                                                I agree to privacy policy & terms
+                                            </Link>
                                         </div>
                                     </div>
                                 </Form.Group>
@@ -238,7 +240,7 @@ export default function SignUp() {
                                         className="text-sm font-medium uppercase rounded-md leading-none focus:outline-none bg-pri-main hover:bg-pri-cont disabled:bg-pri-main/50 text-sec-main py-3.5 w-full flex items-center justify-center gap-1"
                                     >
                                         {isLoading ? <BounceLoader size={18} color="#ffffff" /> :
-                                            <span>Login</span>}
+                                            <span>Sign up</span>}
                                     </button>
                                 </div>
                             </Form>

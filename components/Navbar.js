@@ -43,6 +43,7 @@ export default function Navbar() {
     setUser(null);
     localStorage.setItem("user", null);
     router.push("/");
+    setAnchorEl(null);
   };
 
   const open = Boolean(anchorEl);
