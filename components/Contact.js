@@ -117,7 +117,7 @@ function SignUpInfo({ formData, setFormData, bookingInfo, hotel, setPage }) {
                 </div>
 
                 <div className="flex flex-col w-full gap-1 text-xs font-normal text-sec-main">
-                  <p>Free cancellation until 11:59 PM on 26 Aug</p>
+                  <p>Free cancellation until 72hrs before the checking</p>
                   <p className="text-[#4CB200] italic">
                     Payment to be made on premises
                   </p>
@@ -319,6 +319,24 @@ function SignUpInfo({ formData, setFormData, bookingInfo, hotel, setPage }) {
               </div>
 
               <div className="border-[1.5px] p-3 space-y-5 w-full rounded-md">
+                <p className="text-base font-medium">Please select a means of identification</p>
+                <div className="flex flex-col gap-1">
+                  <select
+                    id="cars"
+                    className="border-[1.5px] rounded-md text-xs outline-0 lg:w-1/2 w-full p-2"
+                  >
+                    <option value={formData.identificationType} disabled="" selected="" onChange={(e) => setFormData({...formData, identificationType: e.target.value})}>
+                      Please select
+                    </option>
+                    <option value="National Identity Number (NIN)">National Identity Number (NIN)</option>
+                    <option value="International Passport">International Passport</option>
+                    <option value="Voter's Card">Voter's Card</option>
+                    <option value="Driver's License">Driver's License</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="border-[1.5px] p-3 space-y-5 w-full rounded-md">
                 <p className="text-base font-medium">Your arrival time</p>
                 <span className="text-xs text-sec-main/70">
                   You can check in between 3:00 PM and 6:00 PM
@@ -333,31 +351,32 @@ function SignUpInfo({ formData, setFormData, bookingInfo, hotel, setPage }) {
                     id="cars"
                     className="border-[1.5px] rounded-md text-xs outline-0 lg:w-1/2 w-full p-2"
                   >
-                    <option value="" disabled="" selected="">
+                    <option value={formData.estimatedArrivalTime} disabled="" selected="" 
+                    onChange={(e) => setFormData({...formData, estimatedArrivalTime: e.target.value })}>
                       Please select
                     </option>
-                    <option value="-1">I don't know</option>
-                    <option value="5">5:00AM – 6:00AM </option>
-                    <option value="6">6:00AM – 7:00AM </option>
-                    <option value="7">7:00AM – 8:00AM </option>
-                    <option value="8">8:00AM – 9:00AM </option>
-                    <option value="9">9:00AM – 10:00AM </option>
-                    <option value="10">10:00AM – 11:00AM </option>
-                    <option value="11">11:00AM – 12:00PM </option>
-                    <option value="12">12:00PM – 1:00PM </option>
-                    <option value="13">1:00PM – 2:00PM </option>
-                    <option value="14">2:00PM – 3:00PM </option>
-                    <option value="15">3:00PM – 4:00PM </option>
-                    <option value="16">4:00PM – 5:00PM </option>
-                    <option value="17">5:00PM – 6:00PM </option>
-                    <option value="18">6:00PM – 7:00PM </option>
-                    <option value="19">7:00PM – 8:00PM </option>
-                    <option value="20">8:00PM – 9:00PM </option>
-                    <option value="21">9:00PM – 10:00PM </option>
-                    <option value="22">10:00PM – 11:00PM </option>
-                    <option value="23">11:00PM – 12:00AM </option>
-                    <option value="24">12:00AM – 1:00AM (the next day)</option>
-                    <option value="25">1:00AM – 2:00AM (the next day)</option>
+                    <option value="I don't know">I don't know</option>
+                    <option value="5:00AM – 6:00AM">5:00AM – 6:00AM </option>
+                    <option value="6:00AM – 7:00AM">6:00AM – 7:00AM</option>
+                    <option value="7:00AM – 8:00AM">7:00AM – 8:00AM </option>
+                    <option value="8:00AM – 9:00AM">8:00AM – 9:00AM </option>
+                    <option value="9:00AM – 10:00AM">9:00AM – 10:00AM</option>
+                    <option value="10:00AM – 11:00AM">10:00AM – 11:00AM </option>
+                    <option value="11:00AM – 12:00PM">11:00AM – 12:00PM </option>
+                    <option value="12:00PM – 1:00PM">12:00PM – 1:00PM </option>
+                    <option value="1:00PM – 2:00PM">1:00PM – 2:00PM </option>
+                    <option value="2:00PM – 3:00PM">2:00PM – 3:00PM </option>
+                    <option value="3:00PM – 4:00PM">3:00PM – 4:00PM </option>
+                    <option value="4:00PM – 5:00PM">4:00PM – 5:00PM </option>
+                    <option value="5:00PM – 6:00PM">5:00PM – 6:00PM </option>
+                    <option value="6:00PM – 7:00PM">6:00PM – 7:00PM </option>
+                    <option value="7:00PM – 8:00PM">7:00PM – 8:00PM </option>
+                    <option value="8:00PM – 9:00PM">8:00PM – 9:00PM </option>
+                    <option value="9:00PM – 10:00PM">9:00PM – 10:00PM </option>
+                    <option value="10:00PM – 11:00PM">10:00PM – 11:00PM </option>
+                    <option value="11:00PM – 12:00AM">11:00PM – 12:00AM </option>
+                    <option value="12:00AM – 1:00AM (the next day)">12:00AM – 1:00AM (the next day)</option>
+                    <option value="1:00AM – 2:00AM (the next day)">1:00AM – 2:00AM (the next day)</option>
                   </select>
                 </div>
               </div>

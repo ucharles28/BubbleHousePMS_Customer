@@ -147,7 +147,7 @@ export default function HotelDetails() {
     const getHotelDetails = async (query) => {
         setIsLoading(true)
         const request = {
-            hotelId: query.id,
+            hotelId: query.hotelId,
             checkInDate: new Date(query.endDate),
             checkOutDate: new Date(query.endDate)
         }

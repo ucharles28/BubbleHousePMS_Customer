@@ -190,7 +190,7 @@ export default function Home() {
                 </div>
             </div>
 
-            <div className="flex flex-col mx-5 lg:items-center justify-center py-12 gap-20 pb-20 w-full">
+            <div className="flex flex-col mx-5  justify-center py-12 gap-20 pb-20 w-full">
 
                 {/* Top hotel deals */}
                 <div className="flex flex-col">
@@ -262,7 +262,7 @@ export default function Home() {
                                 }}>
                                     <p className="font-normal text-sm lg:text-base mb-[0]">Hotels in Lagos</p>
                                 </Link>
-                                
+
                             </div>
 
                         </div>
@@ -286,7 +286,7 @@ export default function Home() {
                                 }}>
                                     <p className="font-normal text-sm lg:text-base mb-[0]">Hotels in Awka</p>
                                 </Link>
-                                
+
                             </div>
 
                         </div>
@@ -310,7 +310,7 @@ export default function Home() {
                                 }}>
                                     <p className="font-normal text-sm lg:text-base mb-[0]">Hotels in Port Harcourt</p>
                                 </Link>
-                                
+
                             </div>
 
                         </div>
@@ -334,7 +334,7 @@ export default function Home() {
                                 }}>
                                     <p className="font-normal text-sm lg:text-base mb-[0]">Hotels in Owerri</p>
                                 </Link>
-                                
+
                             </div>
 
                         </div>
@@ -358,7 +358,7 @@ export default function Home() {
                                 }}>
                                     <p className="font-normal text-sm lg:text-base mb-[0]">Hotels in Abuja</p>
                                 </Link>
-                                
+
                             </div>
 
                         </div>
@@ -382,7 +382,7 @@ export default function Home() {
                                 }}>
                                     <p className="font-normal text-sm lg:text-base mb-[0]">Hotel in Kano</p>
                                 </Link>
-                                
+
                             </div>
 
                         </div>

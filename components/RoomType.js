@@ -68,7 +68,7 @@ const RoomType = ({ roomTypes, updateNumberOfRooms, selectRooms }) => {
 
         <div className="flex items-center justify-end">
           <div className="flex flex-col items-end gap-y-1">
-            <p className="text-xs font-normal leading-5 text-gray-500">2 rooms left</p>
+            <p className="text-xs font-normal leading-5 text-gray-500">{roomType.numberOfAvailableRooms} rooms left</p>
             {(!selectRooms[index] || selectRooms[index] < 1) && <button
               type="button"
               onClick={() => updateNumberOfRooms(true, index)}
@@ -100,7 +100,7 @@ const RoomType = ({ roomTypes, updateNumberOfRooms, selectRooms }) => {
 
       <div className="clear-left md:flex hidden items-end">
         <div className="flex flex-col items-end gap-y-1">
-          <p className="text-xs font-normal leading-5 text-gray-500">2 rooms left</p>
+          <p className="text-xs font-normal leading-5 text-gray-500">{roomType.numberOfAvailableRooms} rooms left</p>
           {(!selectRooms[index] || selectRooms[index] < 1) && <button
             type="button"
             onClick={() => updateNumberOfRooms(true, index)}

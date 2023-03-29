@@ -63,12 +63,13 @@ function PersonalInfo({
       vATAmount: bookingInfo.vat,
       stateTaxAmount: bookingInfo.stateTax,
       totalRoomPrice: bookingInfo.totalAmount,
-      totalAmount:
-        bookingInfo.totalAmount + bookingInfo.vat + bookingInfo.stateTax,
+      totalAmount: bookingInfo.totalAmount + bookingInfo.vat + bookingInfo.stateTax,
       totalAdults: bookingInfo.adults,
       totalChildren: bookingInfo.children,
       roomTypes: bookingInfo.roomTypesInfo,
-      isReservation: bookingInfo.isReservation
+      isReservation: bookingInfo.isReservation,
+      estimatedArrivalTime: formData.estimatedArrivalTime,
+      identificationType: formData.identificationType
     };
 
     if (user) {
@@ -200,7 +201,7 @@ function PersonalInfo({
               </div>
 
               <div className="flex flex-col w-full gap-1 text-xs font-normal text-sec-main">
-                <p>Free cancellation until 11:59 PM on 26 Aug</p>
+                <p>Free cancellation until 72hrs before the checking</p>
                 <p className="text-[#4CB200] italic">
                   Payment to be made on premises
                 </p>

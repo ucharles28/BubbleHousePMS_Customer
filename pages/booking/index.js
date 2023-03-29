@@ -32,6 +32,8 @@ function Form() {
     guestEmail: "",
     phone: "",
     isMainGuest: true,
+    estimatedArrivalTime: '',
+    identificationType: ''
   });
 
 
