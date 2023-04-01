@@ -2,12 +2,9 @@ import Image from "next/image";
 import React, { useRef, useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import Script from 'next/script'
-// import { TextField } from "@mui/material";
+import Script from 'next/script';
 import { DatePicker, Space } from 'antd';
 import Popover from '@mui/material/Popover';
-// import Typography from '@mui/material/Typography';
-// import Button from '@mui/material/Button';
 import { useRouter } from "next/router";
 import { People } from "iconsax-react";
 // import Carousel from "../components/Carousel";
@@ -24,7 +21,7 @@ export default function Home() {
         superLargeDesktop: {//
             // the naming can be any, depends on you.
             breakpoint: { max: 4000, min: 3000 },
-            items: 4
+            items: 5
         },
         desktop: {//desktop
             breakpoint: { max: 3000, min: 1024 },
@@ -32,7 +29,7 @@ export default function Home() {
         },
         tablet: {//tablet
             breakpoint: { max: 1024, min: 464 },
-            items: 2
+            items: 3
         },
         mobile: {//mobile
             breakpoint: { max: 464, min: 0 },
@@ -177,12 +174,12 @@ export default function Home() {
     return (
         <div className='h-screen font-poppins'>
             <Navbar />
-            <div className="w-full bg-[url('/hero@3x.png')] bg-cover bg-no-repeat bg-[top] py-24">
-                <div className="flex flex-col items-center gap-12 pt-40 pb-16 lg:px-0 px-4">
+            <div className="w-full bg-[url('/hero@3x.png')] bg-cover bg-no-repeat bg-[bottom] py-24">
+                <div className="flex flex-col items-center gap-12 pt-40 pb-16 md:px-0 px-4">
 
-                    <div className="flex flex-col text-white items-center">
-                        <p className="lg:text-5xl text-2xl font-medium">Find deals from you favorite hotels in Nigeria</p>
-                        <p className="lg:text-2xl text-base font-normal">Try searching for a city, A specific hotel or even a landmark!</p>
+                    <div className="flex flex-col text-white items-center space-y-2">
+                        <p className="md:text-5xl text-2xl font-medium">Find deals from you favorite hotels in Nigeria</p>
+                        <p className="md:text-xl text-base font-normal">Try searching for a city, A specific hotel or even a landmark!</p>
                     </div>
 
                     <HotelSearch numberOfAdults={numberOfAdults} setNumberOfAdults={setNumberOfAdults} numberOfChildren={numberOfChildren} setNumberOfChildren={setNumberOfChildren} numberOfRooms={numberOfRooms} setNumberOfRooms={setNumberOfRooms} dateRange={dateRange} setDateRange={setDateRange} />
@@ -190,64 +187,57 @@ export default function Home() {
                 </div>
             </div>
 
-            <div className="flex flex-col mx-5  justify-center py-12 gap-20 pb-20 w-full">
+            <div className="w-full md:pt-16 pt-10 pb-20">
+                <div className="flex flex-col justify-center gap-y-28 w-full md:px-10 px-4">
 
-                {/* Top hotel deals */}
-                <div className="flex flex-col">
+                    <div className="flex flex-col space-y-6 w-full">
 
-                    <div className="flex justify-between items-center w-full">
-                        <p className="text-xl font-medium text-sec-main">Today&#39;s Top Hotel Deals</p>
-                        {/* <p className="text-sm font-medium text-sec-main/50">See more</p> */}
+                        <div className="flex w-full">
+                            <p className="text-lg font-medium text-sec-main">Today&#39;s Top Hotel Deals</p>
+                        </div>
+
+                        {/* <Carousel containerClass="container" responsive={responsive}> */}
+                        <div className="grid md:grid-cols-5 grid-cols-2 gap-x-4 gap-y-8 overflow-hidden w-full">
+                            {featuredHotels.map((hotel) => (<div className="flex flex-col gap-2">
+
+                                <img src={hotel.imageUrl} className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" />
+
+                                <div className="flex flex-col text-sec-main gap-1.5">
+                                    <Link href={{
+                                        pathname: '/hotel/details',
+                                        query: {
+                                            hotelId: hotel.id,
+                                            startDate: String(dateRange[0].startDate),
+                                            endDate: String(dateRange[0].endDate),
+                                            adults: numberOfAdults,
+                                            children: numberOfChildren,
+                                            rooms: numberOfRooms,
+                                        }
+                                    }}>
+                                        <p className="font-normal text-sm md:text-base mb-[0] truncate block w-32 lg:w-48 md:w-36">{hotel.name}</p>
+                                    </Link>
+                                    <p className="text-xs md:text-sm text-sec-main/70 mb-[0] truncate block w-32 md:w-36">{hotel.address.line}</p>
+                                    <p className="text-xs md:text-sm text-sec-main/70 mb-[0]">Starting from  <span className="text-sec-main font-medium">NGN {hotel.averagePrice}</span>
+                                    </p>
+                                </div>
+
+                            </div>))}
+                        </div>
+
+                        {/* </Carousel> */}
+
                     </div>
 
-                    <Carousel containerClass="container" responsive={responsive}>
+                    <div className="flex flex-col space-y-8 w-full">
 
-                        {featuredHotels.map((hotel) => (<div className="flex flex-col gap-2">
+                        <div className="flex flex-col w-full gap-1">
+                            <p className="text-lg font-medium text-sec-main mb-[0]">Top cities</p>
+                            <p className="text-sm font-medium text-sec-main/70">See the top destinations people are traveling to</p>
+                        </div>
+                        <div className="grid md:grid-cols-5 grid-cols-2 gap-x-4 gap-y-8 overflow-hidden w-full">
+                            {/* <Carousel containerClass="container" responsive={responsive}> */}
+                            <div className="flex flex-col gap-2">
 
-                            <img src={hotel.imageUrl} className="object-cover w-[180px] h-[180px] lg:w-64 lg:h-64 rounded-md" alt="bcloud" />
-
-                            <div className="flex flex-col text-sec-main gap-1.5">
-                                <Link href={{
-                                    pathname: '/hotel/details',
-                                    query: {
-                                        hotelId: hotel.id,
-                                        startDate: String(dateRange[0].startDate),
-                                        endDate: String(dateRange[0].endDate),
-                                        adults: numberOfAdults,
-                                        children: numberOfChildren,
-                                        rooms: numberOfRooms,
-                                    }
-                                }}>
-                                    <p className="font-normal text-sm lg:text-base mb-[0] truncate block w-44 lg:w-60 md:w-56">{hotel.name}</p>
-                                </Link>
-                                <p className="text-xs lg:text-sm text-sec-main/70 mb-[0] truncate block w-44 lg:w-60">{hotel.address.line}</p>
-                                <p className="text-xs lg:text-sm text-sec-main/70 mb-[0]">Starting from  <span className="text-sec-main font-medium">NGN {hotel.averagePrice}</span>
-                                </p>
-                            </div>
-
-                        </div>))}
-
-                    </Carousel>
-
-                </div>
-
-                {/* Top cities */}
-                <div className="flex flex-col">
-
-                    <div className="flex flex-col w-full gap-2">
-                        <p className="text-xl font-medium text-sec-main mb-[0]">Top cities</p>
-                        <p className="text-sm font-medium text-sec-main/70">See the top destinations people are traveling to</p>
-                    </div>
-
-
-
-
-                    <Carousel containerClass="container" responsive={responsive}>
-                        <div className="flex flex-col gap-2">
-
-                            <img src="lagos.png" className="object-cover w-[180px] h-[180px] lg:w-64 lg:h-64 rounded-md" alt="bcloud" />
-
-                            <div className="flex flex-col text-sec-main gap-1.5">
                                 <Link href={{
                                     pathname: "/search",
                                     query: {
@@ -260,140 +250,141 @@ export default function Home() {
                                         rooms: numberOfRooms,
                                     },
                                 }}>
-                                    <p className="font-normal text-sm lg:text-base mb-[0]">Hotels in Lagos</p>
+                                    <img src="lagos.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md mb-2" alt="bcloud" />
+
+                                    {/* <div className="flex flex-col text-sec-main gap-1.5"> */}
+                                        <p className="font-normal text-sm md:text-base mb-[0] truncate block w-32 md:w-48 hover:text-sec-main">Hotels in Lagos</p>
+
+                                    {/* </div> */}
                                 </Link>
 
                             </div>
 
-                        </div>
+                            <div className="flex flex-col gap-2">
 
-                        <div className="flex flex-col gap-2">
+                                <img src="awka.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" />
 
-                            <img src="awka.png" className="object-cover w-[180px] h-[180px] lg:w-64 lg:h-64 rounded-md" alt="bcloud" />
+                                <div className="flex flex-col text-sec-main gap-1.5">
+                                    <Link href={{
+                                        pathname: "/search",
+                                        query: {
+                                            hotel: "",
+                                            location: "Awka",
+                                            startDate: String(dateRange[0].startDate),
+                                            endDate: String(dateRange[0].endDate),
+                                            adults: numberOfAdults,
+                                            children: numberOfChildren,
+                                            rooms: numberOfRooms,
+                                        },
+                                    }}>
+                                        <p className="font-normal text-sm md:text-base mb-[0] truncate block w-32 md:w-48">Hotels in Awka</p>
+                                    </Link>
 
-                            <div className="flex flex-col text-sec-main gap-1.5">
-                                <Link href={{
-                                    pathname: "/search",
-                                    query: {
-                                        hotel: "",
-                                        location: "Awka",
-                                        startDate: String(dateRange[0].startDate),
-                                        endDate: String(dateRange[0].endDate),
-                                        adults: numberOfAdults,
-                                        children: numberOfChildren,
-                                        rooms: numberOfRooms,
-                                    },
-                                }}>
-                                    <p className="font-normal text-sm lg:text-base mb-[0]">Hotels in Awka</p>
-                                </Link>
-
-                            </div>
-
-                        </div>
-
-                        <div className="flex flex-col gap-2">
-
-                            <img src="ph-city.png" className="object-cover w-[180px] h-[180px] lg:w-64 lg:h-64 rounded-md" alt="bcloud" />
-
-                            <div className="flex flex-col text-sec-main gap-1.5">
-                                <Link href={{
-                                    pathname: "/search",
-                                    query: {
-                                        hotel: "",
-                                        location: "Port Harcourt",
-                                        startDate: String(dateRange[0].startDate),
-                                        endDate: String(dateRange[0].endDate),
-                                        adults: numberOfAdults,
-                                        children: numberOfChildren,
-                                        rooms: numberOfRooms,
-                                    },
-                                }}>
-                                    <p className="font-normal text-sm lg:text-base mb-[0]">Hotels in Port Harcourt</p>
-                                </Link>
+                                </div>
 
                             </div>
 
-                        </div>
+                            <div className="flex flex-col gap-2">
 
-                        <div className="flex flex-col gap-2">
+                                <img src="ph-city.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" />
 
-                            <img src="owerri.png" className="object-cover w-[180px] h-[180px] lg:w-64 lg:h-64 rounded-md" alt="bcloud" />
+                                <div className="flex flex-col text-sec-main gap-1.5">
+                                    <Link href={{
+                                        pathname: "/search",
+                                        query: {
+                                            hotel: "",
+                                            location: "Port Harcourt",
+                                            startDate: String(dateRange[0].startDate),
+                                            endDate: String(dateRange[0].endDate),
+                                            adults: numberOfAdults,
+                                            children: numberOfChildren,
+                                            rooms: numberOfRooms,
+                                        },
+                                    }}>
+                                        <p className="font-normal text-sm md:text-base mb-[0] truncate block w-32 md:w-48">Hotels in Port Harcourt</p>
+                                    </Link>
 
-                            <div className="flex flex-col text-sec-main gap-1.5">
-                                <Link href={{
-                                    pathname: "/search",
-                                    query: {
-                                        hotel: "",
-                                        location: "Owerri",
-                                        startDate: String(dateRange[0].startDate),
-                                        endDate: String(dateRange[0].endDate),
-                                        adults: numberOfAdults,
-                                        children: numberOfChildren,
-                                        rooms: numberOfRooms,
-                                    },
-                                }}>
-                                    <p className="font-normal text-sm lg:text-base mb-[0]">Hotels in Owerri</p>
-                                </Link>
-
-                            </div>
-
-                        </div>
-
-                        <div className="flex flex-col gap-2">
-
-                            <img src="abuja.png" className="object-cover w-[180px] h-[180px] lg:w-64 lg:h-64 rounded-md" alt="bcloud" />
-
-                            <div className="flex flex-col text-sec-main gap-1.5">
-                                <Link href={{
-                                    pathname: "/search",
-                                    query: {
-                                        hotel: "",
-                                        location: "Abuja",
-                                        startDate: String(dateRange[0].startDate),
-                                        endDate: String(dateRange[0].endDate),
-                                        adults: numberOfAdults,
-                                        children: numberOfChildren,
-                                        rooms: numberOfRooms,
-                                    },
-                                }}>
-                                    <p className="font-normal text-sm lg:text-base mb-[0]">Hotels in Abuja</p>
-                                </Link>
+                                </div>
 
                             </div>
 
-                        </div>
+                            <div className="flex flex-col gap-2">
 
-                        <div className="flex flex-col gap-2">
+                                <img src="owerri.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" />
 
-                            <img src="kano.png" className="object-cover w-[180px] h-[180px] lg:w-64 lg:h-64 rounded-md" alt="bcloud" />
+                                <div className="flex flex-col text-sec-main gap-1.5">
+                                    <Link href={{
+                                        pathname: "/search",
+                                        query: {
+                                            hotel: "",
+                                            location: "Owerri",
+                                            startDate: String(dateRange[0].startDate),
+                                            endDate: String(dateRange[0].endDate),
+                                            adults: numberOfAdults,
+                                            children: numberOfChildren,
+                                            rooms: numberOfRooms,
+                                        },
+                                    }}>
+                                        <p className="font-normal text-sm md:text-base mb-[0] truncate block w-32 md:w-48">Hotels in Owerri</p>
+                                    </Link>
 
-                            <div className="flex flex-col text-sec-main gap-1.5">
-                                <Link href={{
-                                    pathname: "/search",
-                                    query: {
-                                        hotel: "",
-                                        location: "Kano",
-                                        startDate: String(dateRange[0].startDate),
-                                        endDate: String(dateRange[0].endDate),
-                                        adults: numberOfAdults,
-                                        children: numberOfChildren,
-                                        rooms: numberOfRooms,
-                                    },
-                                }}>
-                                    <p className="font-normal text-sm lg:text-base mb-[0]">Hotel in Kano</p>
-                                </Link>
+                                </div>
 
                             </div>
 
+                            <div className="flex flex-col gap-2">
+
+                                <img src="abuja.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" />
+
+                                <div className="flex flex-col text-sec-main gap-1.5">
+                                    <Link href={{
+                                        pathname: "/search",
+                                        query: {
+                                            hotel: "",
+                                            location: "Abuja",
+                                            startDate: String(dateRange[0].startDate),
+                                            endDate: String(dateRange[0].endDate),
+                                            adults: numberOfAdults,
+                                            children: numberOfChildren,
+                                            rooms: numberOfRooms,
+                                        },
+                                    }}>
+                                        <p className="font-normal text-sm md:text-base mb-[0] truncate block w-32 md:w-48">Hotels in Abuja</p>
+                                    </Link>
+
+                                </div>
+
+                            </div>
+
+                            <div className="flex flex-col gap-2">
+
+                                <img src="kano.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" />
+
+                                <div className="flex flex-col text-sec-main gap-1.5">
+                                    <Link href={{
+                                        pathname: "/search",
+                                        query: {
+                                            hotel: "",
+                                            location: "Kano",
+                                            startDate: String(dateRange[0].startDate),
+                                            endDate: String(dateRange[0].endDate),
+                                            adults: numberOfAdults,
+                                            children: numberOfChildren,
+                                            rooms: numberOfRooms,
+                                        },
+                                    }}>
+                                        <p className="font-normal text-sm md:text-base mb-[0] truncate block w-32 md:w-48">Hotel in Kano</p>
+                                    </Link>
+
+                                </div>
+
+                            </div>
+
+                            {/* </Carousel> */}
                         </div>
-
-                    </Carousel>
-
-
-
+                    </div>
 
                 </div>
-
             </div>
             <Footer />
         </div>
