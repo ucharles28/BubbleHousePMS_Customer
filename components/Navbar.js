@@ -10,8 +10,8 @@ import {
 } from "iconsax-react";
 import { BsList } from "react-icons/bs";
 import Image from "next/image";
-import logo from "../public/images/logo.png";
-import bcloud1 from "../public/images/bcloud1.png";
+import logo from "../public/images/img/logo.png";
+import bcloud1 from "../public/images/img/bcloud1.png";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";

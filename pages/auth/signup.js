@@ -14,7 +14,7 @@ import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props
 import { Form, Col } from 'react-bootstrap';
 import { BounceLoader } from 'react-spinners';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
-import bcloud1 from "../../public/images/bcloud1.png";
+import bcloud1 from "../../public/images/img/bcloud1.png";
 import { RiFacebookFill } from 'react-icons/ri';
 
 

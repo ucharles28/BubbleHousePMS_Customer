@@ -174,7 +174,7 @@ export default function Home() {
     return (
         <div className='h-screen font-poppins'>
             <Navbar />
-            <div className="w-full bg-[url('/hero@3x.png')] bg-cover bg-no-repeat bg-[bottom] py-24">
+            <div className="w-full bg-[url('/images/img/hero@3x.png')] bg-cover bg-no-repeat bg-[bottom] py-24">
                 <div className="flex flex-col items-center gap-12 pt-40 pb-16 md:px-0 px-4">
 
                     <div className="flex flex-col text-white items-center space-y-2">
@@ -250,7 +250,7 @@ export default function Home() {
                                         rooms: numberOfRooms,
                                     },
                                 }}>
-                                    <img src="images/lagos.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md mb-2" alt="bcloud" />
+                                    <img src="/images/img/lagos.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md mb-2" alt="bcloud" />
 
                                     {/* <div className="flex flex-col text-sec-main gap-1.5"> */}
                                         <p className="font-normal text-sm md:text-base mb-[0] truncate block w-32 md:w-48 hover:text-sec-main">Hotels in Lagos</p>
@@ -262,7 +262,7 @@ export default function Home() {
 
                             <div className="flex flex-col gap-2">
 
-                                <img src="awka.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" />
+                                <img src="/images/img/awka.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" />
 
                                 <div className="flex flex-col text-sec-main gap-1.5">
                                     <Link href={{
@@ -286,7 +286,7 @@ export default function Home() {
 
                             <div className="flex flex-col gap-2">
 
-                                <img src="ph-city.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" />
+                                <img src="/images/img/ph-city.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" />
 
                                 <div className="flex flex-col text-sec-main gap-1.5">
                                     <Link href={{
@@ -310,7 +310,7 @@ export default function Home() {
 
                             <div className="flex flex-col gap-2">
 
-                                <img src="owerri.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" />
+                                <img src="/images/img/owerri.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" />
 
                                 <div className="flex flex-col text-sec-main gap-1.5">
                                     <Link href={{
@@ -334,7 +334,7 @@ export default function Home() {
 
                             <div className="flex flex-col gap-2">
 
-                                <img src="abuja.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" />
+                                <img src="/images/img/abuja.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" />
 
                                 <div className="flex flex-col text-sec-main gap-1.5">
                                     <Link href={{
@@ -358,7 +358,7 @@ export default function Home() {
 
                             <div className="flex flex-col gap-2">
 
-                                <img src="kano.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" />
+                                <img src="/images/img/kano.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" />
 
                                 <div className="flex flex-col text-sec-main gap-1.5">
                                     <Link href={{

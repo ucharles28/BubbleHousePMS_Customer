@@ -5,7 +5,7 @@ const Hero = () => {
   return (
     <div className="h-screen w-full relative font-poppins">
       <Image
-        src="/hero@3x.png"
+        src="../public/images/img/hero@3x.png"
         width={1024}
         height={100}
         className="object-cover w-full h-full"
