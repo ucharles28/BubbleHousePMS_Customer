@@ -13,6 +13,12 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { get } from "../helpers/ApiRequest";
 import Link from "next/link";
+import lagos from "../public/images/img/lagos.png";
+import awka from "../public/images/img/awka.png";
+import ph_city from "../public/images/img/ph-city.png";
+import owerri from "../public/images/img/owerri.png";
+import abuja from "../public/images/img/abuja.png";
+import kano from "../public/images/img/kano.png";
 
 const { RangePicker } = DatePicker;
 
@@ -250,10 +256,16 @@ export default function Home() {
                                         rooms: numberOfRooms,
                                     },
                                 }}>
-                                    <img src="/images/img/lagos.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md mb-2" alt="bcloud" />
-
+                                    {/* <img src="/images/img/lagos.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md mb-2" alt="bcloud" /> */}
+                                    <Image
+                                        className="object-cover md:w-48 md:h-48 rounded-md mb-2"
+                                        src={lagos}
+                                        width={140}
+                                        height={140}
+                                        alt="blcoud"
+                                    />
                                     {/* <div className="flex flex-col text-sec-main gap-1.5"> */}
-                                        <p className="font-normal text-sm md:text-base mb-[0] truncate block w-32 md:w-48 hover:text-sec-main">Hotels in Lagos</p>
+                                    <p className="font-normal text-sm md:text-base mb-[0] truncate block w-32 md:w-48 hover:text-sec-main">Hotels in Lagos</p>
 
                                     {/* </div> */}
                                 </Link>
@@ -262,8 +274,14 @@ export default function Home() {
 
                             <div className="flex flex-col gap-2">
 
-                                <img src="/images/img/awka.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" />
-
+                                {/* <img src="/images/img/awka.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" /> */}
+                                <Image
+                                        className="object-cover md:w-48 md:h-48 rounded-md mb-2"
+                                        src={awka}
+                                        width={140}
+                                        height={140}
+                                        alt="blcoud"
+                                    />
                                 <div className="flex flex-col text-sec-main gap-1.5">
                                     <Link href={{
                                         pathname: "/search",
@@ -286,8 +304,14 @@ export default function Home() {
 
                             <div className="flex flex-col gap-2">
 
-                                <img src="/images/img/ph-city.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" />
-
+                                {/* <img src="/images/img/ph-city.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" /> */}
+                                <Image
+                                        className="object-cover md:w-48 md:h-48 rounded-md mb-2"
+                                        src={ph_city}
+                                        width={140}
+                                        height={140}
+                                        alt="blcoud"
+                                    />
                                 <div className="flex flex-col text-sec-main gap-1.5">
                                     <Link href={{
                                         pathname: "/search",
@@ -310,8 +334,14 @@ export default function Home() {
 
                             <div className="flex flex-col gap-2">
 
-                                <img src="/images/img/owerri.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" />
-
+                                {/* <img src="/images/img/owerri.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" /> */}
+                                <Image
+                                        className="object-cover md:w-48 md:h-48 rounded-md mb-2"
+                                        src={owerri}
+                                        width={140}
+                                        height={140}
+                                        alt="blcoud"
+                                    />
                                 <div className="flex flex-col text-sec-main gap-1.5">
                                     <Link href={{
                                         pathname: "/search",
@@ -334,8 +364,14 @@ export default function Home() {
 
                             <div className="flex flex-col gap-2">
 
-                                <img src="/images/img/abuja.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" />
-
+                                {/* <img src="/images/img/abuja.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" /> */}
+                                <Image
+                                        className="object-cover md:w-48 md:h-48 rounded-md mb-2"
+                                        src={abuja}
+                                        width={140}
+                                        height={140}
+                                        alt="blcoud"
+                                    />
                                 <div className="flex flex-col text-sec-main gap-1.5">
                                     <Link href={{
                                         pathname: "/search",
@@ -358,8 +394,14 @@ export default function Home() {
 
                             <div className="flex flex-col gap-2">
 
-                                <img src="/images/img/kano.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" />
-
+                                {/* <img src="/images/img/kano.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" /> */}
+                                <Image
+                                        className="object-cover md:w-48 md:h-48 rounded-md mb-2"
+                                        src={kano}
+                                        width={140}
+                                        height={140}
+                                        alt="blcoud"
+                                    />
                                 <div className="flex flex-col text-sec-main gap-1.5">
                                     <Link href={{
                                         pathname: "/search",
