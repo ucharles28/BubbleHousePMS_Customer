@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar';
 import { useUser } from '../context/user';
 import { get } from '../helpers/ApiRequest';
 import Image from 'next/image';
-import empty from '../public/empty.png';
+import empty from '../public/images/img/empty.png';
 import Link from 'next/link';
 import RoomSearchResult from "../components/RoomSearchResult";
 

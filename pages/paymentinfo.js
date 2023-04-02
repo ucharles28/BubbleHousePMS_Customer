@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Image from 'next/image';
-import lagos from '../public/lagos.png';
+import lagos from '../public/images/img/lagos.png';
 import { useRouter } from "next/router";
 import { get } from '../helpers/ApiRequest';
 import { BounceLoader } from "react-spinners";

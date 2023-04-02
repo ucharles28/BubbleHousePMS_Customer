@@ -1,6 +1,6 @@
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import hotelimage from '../../public/hotelimage.png'
+import hotelimage from '../../public/images/img/hotelimage.png'
 import { useRouter } from "next/router";
 import { get } from "../../helpers/ApiRequest";
 import { useEffect, useState } from "react";
