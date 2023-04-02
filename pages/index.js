@@ -250,7 +250,7 @@ export default function Home() {
                                         rooms: numberOfRooms,
                                     },
                                 }}>
-                                    <img src="lagos.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md mb-2" alt="bcloud" />
+                                    <img src="images/lagos.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md mb-2" alt="bcloud" />
 
                                     {/* <div className="flex flex-col text-sec-main gap-1.5"> */}
                                         <p className="font-normal text-sm md:text-base mb-[0] truncate block w-32 md:w-48 hover:text-sec-main">Hotels in Lagos</p>

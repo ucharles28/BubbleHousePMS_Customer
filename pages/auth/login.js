@@ -12,7 +12,7 @@ import jwt_decode from "jwt-decode"
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import { BounceLoader } from 'react-spinners';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
-import bcloud1 from "../../public/bcloud1.png";
+import bcloud1 from "../../public/images/bcloud1.png";
 import { Form, Col } from 'react-bootstrap';
 import { RiFacebookFill } from 'react-icons/ri';
 

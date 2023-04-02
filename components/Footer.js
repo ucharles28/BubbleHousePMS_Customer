@@ -2,7 +2,7 @@ import { Navbar } from 'react-bootstrap';
 import Link from 'next/link';
 import { ImFacebook2, ImTwitter, ImGoogle } from 'react-icons/im'
 import Image from 'next/image';
-import bcloud1 from '../public/bcloud1.png'
+import bcloud1 from '../public/images/bcloud1.png'
 import { FaFacebookF, FaTwitter } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 
