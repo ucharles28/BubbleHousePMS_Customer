@@ -19,6 +19,7 @@ import ph_city from "../public/images/img/ph-city.png";
 import owerri from "../public/images/img/owerri.png";
 import abuja from "../public/images/img/abuja.png";
 import kano from "../public/images/img/kano.png";
+import hero from "../public/images/img/hero@3x.png";
 
 const { RangePicker } = DatePicker;
 
@@ -180,7 +181,7 @@ export default function Home() {
     return (
         <div className='h-screen font-poppins'>
             <Navbar />
-            <div className="w-full bg-[url('/images/img/hero@3x.png')] bg-cover bg-no-repeat bg-[bottom] py-24">
+            <div className="w-full bg-[url('https://res.cloudinary.com/drpsnmeoc/image/upload/v1680477527/hero_3x_aylkxh.png')] bg-cover bg-no-repeat bg-[bottom] py-24">
                 <div className="flex flex-col items-center gap-12 pt-40 pb-16 md:px-0 px-4">
 
                     <div className="flex flex-col text-white items-center space-y-2">
@@ -304,7 +305,7 @@ export default function Home() {
 
                             <div className="flex flex-col gap-2">
 
-                                {/* <img src="/images/img/ph-city.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" /> */}
+                                {/* <img src={kano} className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" /> */}
                                 <Image
                                         className="object-cover md:w-48 md:h-48 rounded-md mb-2"
                                         src={ph_city}
