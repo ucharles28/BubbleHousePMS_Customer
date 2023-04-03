@@ -19,7 +19,6 @@ import ph_city from "../public/images/img/ph-city.png";
 import owerri from "../public/images/img/owerri.png";
 import abuja from "../public/images/img/abuja.png";
 import kano from "../public/images/img/kano.png";
-import hero from "../public/images/img/hero@3x.png";
 
 const { RangePicker } = DatePicker;
 
