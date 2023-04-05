@@ -2,7 +2,7 @@ name: Development Pipeline
 
 on:
   push:
-    branches: [ devl ]
+    branches: [ dev ]
 
 jobs:
 
