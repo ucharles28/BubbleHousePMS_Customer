@@ -19,7 +19,7 @@ Router.events.on("routeChangeComplete", nProgress.done);
 
 function MyApp({ Component, pageProps }) {
   const [user, setUser] = useState(null);
-
+  console.log(`Where am i : ${process.env.NEXT_PUBLIC_REACT_APP_WHERE_AM_I}`);
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("user")));
   }, []);
