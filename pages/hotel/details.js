@@ -154,7 +154,7 @@ export default function HotelDetails() {
         if (user) {
             const responses = await Promise.all([
                 post(`Hotel/BookingDetails`, request),
-                get(`SavedHotel?customerId=${user.id}&hotelId=${id}`)
+                get(`SavedHotel?customerId=${user.id}&hotelId=${query.hotelId}`)
             ])
 
             if (responses[0].successful) {
