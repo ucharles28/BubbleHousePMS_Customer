@@ -31,6 +31,7 @@ export default function SignUp() {
     const [email, setEmail] = useState('');
     const [fullName, setFullName] = useState('');
     const [password, setPassword] = useState('')
+    const [phoneNumber, setPhoneNumber] = useState('')
     const [alertMessage, setAlertMessage] = useState('');
     const [acceptTerms, setAcceptTerms] = useState(false);
     const [isLoadingSocial, setIsLoadingSocial] = useState(false);
@@ -73,12 +74,13 @@ export default function SignUp() {
 
     });
 
-    const handleLogin = async () => {
+    const handleSignUp = async () => {
         setIsLoading(true)
         const request = {
             email,
             password,
             fullName,
+            phoneNumber,
             isSocailAuth: false
         }
         const response = await post('Auth/Customer/SignUp', request)
@@ -186,6 +188,23 @@ export default function SignUp() {
                                         <Form.Control.Feedback type="invalid" />
                                     </div>
                                 </Form.Group>
+                                <Form.Group as={Col} controlId="validationCustom01" autoCorrect="nope">
+                                    <div className="flex flex-col gap-1 w-full">
+                                        <label className="text-sm font-medium text-gray-800">
+                                            Phone Address
+                                        </label>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Phone Number"
+                                            role="input"
+                                            value={phoneNumber}
+                                            onChange={(e) => setPhoneNumber(e.target.value)}
+                                            className="bg-white border-[1.5px] rounded-md border-gray focus:outline-none text-base font-medium leading-none text-black py-3 w-full pl-3 placeholder:font-medium placeholder:text-sm"
+                                            required
+                                        />
+                                        <Form.Control.Feedback type="invalid" />
+                                    </div>
+                                </Form.Group>
                                 <Form.Group as={Col} controlId="validationCustomPassword" autoCorrect="current-password">
                                     <div className="flex flex-col gap-1 w-full">
                                         <div className='flex justify-between'>
@@ -235,8 +254,8 @@ export default function SignUp() {
                                         role="button"
                                         type="submit"
                                         aria-label="log into my account"
-                                        onClick={handleLogin}
-                                        disabled={!fullName || !email || !password || !acceptTerms}
+                                        onClick={handleSignUp}
+                                        disabled={!fullName || !email || !password || !acceptTerms || !phoneNumber}
                                         className="text-sm font-medium uppercase rounded-md leading-none focus:outline-none bg-pri-main hover:bg-pri-cont disabled:bg-pri-main/50 text-sec-main py-3.5 w-full flex items-center justify-center gap-1"
                                     >
                                         {isLoading ? <BounceLoader size={18} color="#ffffff" /> :
