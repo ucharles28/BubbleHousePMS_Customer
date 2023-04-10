@@ -14,11 +14,11 @@ import 'react-multi-carousel/lib/styles.css';
 import { get } from "../helpers/ApiRequest";
 import Link from "next/link";
 import lagos from "../public/images/img/lagos.png";
-import awka from "../public/images/img/awka.png";
-import ph_city from "../public/images/img/ph-city.png";
-import owerri from "../public/images/img/owerri.png";
+import ibadan from "../public/images/img/ibadan.jpg";
+import benin from "../public/images/img/benin.jpg";
+import ogun from "../public/images/img/ogun.jpg";
 import abuja from "../public/images/img/abuja.png";
-import kano from "../public/images/img/kano.png";
+import ilorin from "../public/images/img/ilorin.jpg";
 
 const { RangePicker } = DatePicker;
 
@@ -277,7 +277,7 @@ export default function Home() {
                                 {/* <img src="/images/img/awka.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" /> */}
                                 <Image
                                         className="object-cover md:w-48 md:h-48 rounded-md mb-2"
-                                        src={awka}
+                                        src={ibadan}
                                         width={140}
                                         height={140}
                                         alt="blcoud"
@@ -287,7 +287,7 @@ export default function Home() {
                                         pathname: "/search",
                                         query: {
                                             hotel: "",
-                                            location: "Awka",
+                                            location: "Ibadan",
                                             startDate: String(dateRange[0].startDate),
                                             endDate: String(dateRange[0].endDate),
                                             adults: numberOfAdults,
@@ -295,7 +295,7 @@ export default function Home() {
                                             rooms: numberOfRooms,
                                         },
                                     }}>
-                                        <p className="font-normal text-sm md:text-base mb-[0] truncate block w-32 md:w-48">Hotels in Awka</p>
+                                        <p className="font-normal text-sm md:text-base mb-[0] truncate block w-32 md:w-48">Hotels in Ibadan</p>
                                     </Link>
 
                                 </div>
@@ -307,7 +307,7 @@ export default function Home() {
                                 {/* <img src={kano} className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" /> */}
                                 <Image
                                         className="object-cover md:w-48 md:h-48 rounded-md mb-2"
-                                        src={ph_city}
+                                        src={benin}
                                         width={140}
                                         height={140}
                                         alt="blcoud"
@@ -317,7 +317,7 @@ export default function Home() {
                                         pathname: "/search",
                                         query: {
                                             hotel: "",
-                                            location: "Port Harcourt",
+                                            location: "Benin",
                                             startDate: String(dateRange[0].startDate),
                                             endDate: String(dateRange[0].endDate),
                                             adults: numberOfAdults,
@@ -325,7 +325,7 @@ export default function Home() {
                                             rooms: numberOfRooms,
                                         },
                                     }}>
-                                        <p className="font-normal text-sm md:text-base mb-[0] truncate block w-32 md:w-48">Hotels in Port Harcourt</p>
+                                        <p className="font-normal text-sm md:text-base mb-[0] truncate block w-32 md:w-48">Hotels in benin</p>
                                     </Link>
 
                                 </div>
@@ -337,7 +337,7 @@ export default function Home() {
                                 {/* <img src="/images/img/owerri.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" /> */}
                                 <Image
                                         className="object-cover md:w-48 md:h-48 rounded-md mb-2"
-                                        src={owerri}
+                                        src={ogun}
                                         width={140}
                                         height={140}
                                         alt="blcoud"
@@ -347,7 +347,7 @@ export default function Home() {
                                         pathname: "/search",
                                         query: {
                                             hotel: "",
-                                            location: "Owerri",
+                                            location: "Ogun",
                                             startDate: String(dateRange[0].startDate),
                                             endDate: String(dateRange[0].endDate),
                                             adults: numberOfAdults,
@@ -355,7 +355,7 @@ export default function Home() {
                                             rooms: numberOfRooms,
                                         },
                                     }}>
-                                        <p className="font-normal text-sm md:text-base mb-[0] truncate block w-32 md:w-48">Hotels in Owerri</p>
+                                        <p className="font-normal text-sm md:text-base mb-[0] truncate block w-32 md:w-48">Hotels in Ogun</p>
                                     </Link>
 
                                 </div>
@@ -397,7 +397,7 @@ export default function Home() {
                                 {/* <img src="/images/img/kano.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" /> */}
                                 <Image
                                         className="object-cover md:w-48 md:h-48 rounded-md mb-2"
-                                        src={kano}
+                                        src={ilorin}
                                         width={140}
                                         height={140}
                                         alt="blcoud"
@@ -407,7 +407,7 @@ export default function Home() {
                                         pathname: "/search",
                                         query: {
                                             hotel: "",
-                                            location: "Kano",
+                                            location: "Ilorin",
                                             startDate: String(dateRange[0].startDate),
                                             endDate: String(dateRange[0].endDate),
                                             adults: numberOfAdults,
@@ -415,7 +415,7 @@ export default function Home() {
                                             rooms: numberOfRooms,
                                         },
                                     }}>
-                                        <p className="font-normal text-sm md:text-base mb-[0] truncate block w-32 md:w-48">Hotel in Kano</p>
+                                        <p className="font-normal text-sm md:text-base mb-[0] truncate block w-32 md:w-48">Hotel in Ilorin</p>
                                     </Link>
 
                                 </div>

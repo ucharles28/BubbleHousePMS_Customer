@@ -224,17 +224,22 @@ export default function Login() {
                                     </div>
                                 </Form.Group>
                                 <Form.Group as={Col} controlId="validationCustomTerms">
-                                    <div className="flex flex-row gap-2 pl-0.5">
-                                        <div>
-                                            <Form.Check
-                                                name="term"
-                                                type="checkbox"
-                                                checked={acceptTerms}
-                                                onChange={(e) => setAcceptTerms(e.target.value)}
-                                            />
+                                    <div className='flex flex-row justify-between'>
+                                        <div className="flex flex-row gap-2 pl-0.5">
+                                            <div>
+                                                <Form.Check
+                                                    name="term"
+                                                    type="checkbox"
+                                                    checked={acceptTerms}
+                                                    onChange={(e) => setAcceptTerms(e.target.value)}
+                                                />
+                                            </div>
+                                            <div className="text-sm mb-[0]">
+                                                Remember Me
+                                            </div>
                                         </div>
-                                        <div className="text-sm mb-[0]">
-                                            Remember Me
+                                        <div className='font-normal flex text-gray-500 text-sm'>
+                                            <p className='flex gap-1'><Link href="/auth/forgotpassword"> <span>Fogot password?</span></Link> </p>
                                         </div>
                                     </div>
                                 </Form.Group>
@@ -270,7 +275,7 @@ export default function Login() {
                                         return (<RiFacebookFill className='cursor-pointer' onClick={(e) => renderProps.onClick(e)} color='#4267B2' size={24} />)
                                     }}
                                     callback={responseFacebook} />
-                                <FaTwitter color='#1DA1F2' className='cursor-pointer' size={24} />
+                                {/* <FaTwitter color='#1DA1F2' className='cursor-pointer' size={24} /> */}
                                 <FcGoogle className='cursor-pointer' onClick={() => googleAuthLogin()} size={24} />
                             </div> : <div className='flex items-center justify-center '>
                                 <BounceLoader />

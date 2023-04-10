@@ -191,7 +191,7 @@ export default function SignUp() {
                                 <Form.Group as={Col} controlId="validationCustom01" autoCorrect="nope">
                                     <div className="flex flex-col gap-1 w-full">
                                         <label className="text-sm font-medium text-gray-800">
-                                            Phone Address
+                                            Phone Number
                                         </label>
                                         <Form.Control
                                             type="text"
@@ -280,7 +280,7 @@ export default function SignUp() {
                                         return (<RiFacebookFill className='cursor-pointer' onClick={(e) => renderProps.onClick(e)} color='#4267B2' size={24} />)
                                     }}
                                     callback={responseFacebook} />
-                                <FaTwitter color='#1DA1F2' className='cursor-pointer' size={24} />
+                                {/* <FaTwitter color='#1DA1F2' className='cursor-pointer' size={24} /> */}
                                 <FcGoogle className='cursor-pointer' onClick={() => googleAuthLogin()} size={24} />
                             </div> : <div className='flex items-center justify-center '>
                                 <BounceLoader />
