@@ -16,7 +16,8 @@ import { useRouter } from "next/router";
 import { CircularProgress } from "@mui/material";
 import { BounceLoader, ClipLoader } from "react-spinners";
 import { format } from "date-fns";
-import { DateRange } from "@mui/icons-material";
+// import { DateRange } from "@mui/icons-material";
+import { DateRange } from "react-date-range";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -486,27 +487,29 @@ export default function HotelDetails() {
 
                     <div className="flex flex-col w-full gap-4">
                         <p className="text-base font-medium pb-2 border-b-[1.5px]">Select a room</p>
-                        {/* <div className="flex gap-[39px] mb-9">
-                            <div onClick={datePickerHandler} className="flex cursor-pointer gap-2 items-center py-[10px] pl-4 pr-[158px] border-[#1A1A1A14] border rounded-md">
-                                <Calendar
-                                    size={20}
-                                    className="" />
-                                <div className="flex flex-col">
-                                    <p className="text-xs text-[#1A1A1A61]">Dates</p>
-                                    <p className="text-xs text-[#1A1A1AAD]">27 Aug - 28 Aug</p>
+                        <div className="flex gap-[39px] mb-9">
+                            <div className="flex flex-col">
+                                <div onClick={datePickerHandler} className="flex cursor-pointer gap-2 items-center py-[10px] pl-4 pr-[158px] border-[#1A1A1A14] border rounded-md">
+                                    <Calendar
+                                        size={20}
+                                        className="" />
+                                    <div className="flex flex-col">
+                                        <p className="text-xs text-[#1A1A1A61]">Dates</p>
+                                        <p className="text-xs text-[#1A1A1AAD]">27 Aug - 28 Aug</p>
+                                    </div>
                                 </div>
+                                {openDate && (
+                                    <DateRange
+                                        editableDateInputs={true}
+                                        onChange={(item) => setDateRange([item.selection])}
+                                        moveRangeOnFirstSelection={false}
+                                        ranges={dateRange}
+                                        className="z-10"
+                                    />
+                                )} 
                             </div>
-                            {openDate && (
-                                <DateRange
-                                    editableDateInputs={true}
-                                    onChange={(item) => setDateRange([item.selection])}
-                                    moveRangeOnFirstSelection={false}
-                                    ranges={dateRange}
-                                    className="absolute top-[90px] lg:top-[60px] lg:left-[30%]"
-                                />
-                            )}
 
-                            <div onClick={handleClick} className="flex cursor-pointer gap-2 items-center py-[10px] pl-4 pr-[158px] border-[#1A1A1A14] border rounded-md">
+                            {/* <div onClick={handleClick} className="flex cursor-pointer gap-2 items-center py-[10px] pl-4 pr-[158px] border-[#1A1A1A14] border rounded-md">
                                 <People
                                     size={20}
                                     className="" />
@@ -525,8 +528,8 @@ export default function HotelDetails() {
                                 setNumberOfChildren={setNumberOfChildren}
                                 setNumberOfRooms={setNumberOfRooms}
                                 numberOfRooms={numberOfRooms}
-                            />
-                        </div> */}
+                            /> */}
+                        </div>
                         <div className="w-full lg:w-3/4">
                             <RoomType roomTypes={hotel.roomTypes} updateNumberOfRooms={updateNumberOfRooms} selectRooms={selectRooms} />
                         </div>
