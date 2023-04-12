@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Add, Minus } from "iconsax-react";
 
 const RoomType = ({ roomTypes, updateNumberOfRooms, selectRooms }) => {
+  console.log(roomTypes)
   return (
     roomTypes.map((roomType, index) => (<div className="group border-[1.5px] bg-white border-pri-main/40 hover:bg-pri-main/5 cursor-pointer hover:shadow-sm p-3 mb-3 rounded-md flex justify-between text-sec-main">
 
@@ -10,7 +11,7 @@ const RoomType = ({ roomTypes, updateNumberOfRooms, selectRooms }) => {
 
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-1">
-            <p className="text-lg font-semibold">Deluxe Grande Room</p>
+            <p className="text-lg font-semibold">{roomType.name}</p>
 
             <div className="space-x-3 text-sec-main/70 text-xs font-medium flex items-center">
               <p>1 bed (1 queen)</p>
@@ -40,7 +41,7 @@ const RoomType = ({ roomTypes, updateNumberOfRooms, selectRooms }) => {
         <div className="flex justify-between gap-3">
           <div className="flex flex-col gap-6 w-full">
             <div className="flex flex-col gap-1">
-              <p className="text-lg font-semibold">Deluxe Grande Room</p>
+              <p className="text-lg font-semibold">{roomType.name}</p>
 
               <div className="space-x-3 text-sec-main/70 text-xs font-medium flex items-center">
                 <p>1 bed (1 queen)</p>
