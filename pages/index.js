@@ -3,14 +3,12 @@ import React, { useRef, useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Script from 'next/script';
-import { DatePicker, Space } from 'antd';
-import Popover from '@mui/material/Popover';
-import { useRouter } from "next/router";
-import { People } from "iconsax-react";
-// import Carousel from "../components/Carousel";
+import { DateRange } from "react-date-range";
+import { format } from "date-fns";
 import HotelSearch from "../components/HotelSearch";
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
+import { Calendar, People } from 'iconsax-react';
+import { useRouter } from "next/router";
+import PopoverDisplay from "../components/PopoverDisplay";
 import { get } from "../helpers/ApiRequest";
 import Link from "next/link";
 import lagos from "../public/images/img/lagos.png";
@@ -20,30 +18,9 @@ import ogun from "../public/images/img/ogun.jpg";
 import abuja from "../public/images/img/abuja.png";
 import ilorin from "../public/images/img/ilorin.jpg";
 
-const { RangePicker } = DatePicker;
-
 export default function Home() {
-    const responsive = {
-        superLargeDesktop: {//
-            // the naming can be any, depends on you.
-            breakpoint: { max: 4000, min: 3000 },
-            items: 5
-        },
-        desktop: {//desktop
-            breakpoint: { max: 3000, min: 1024 },
-            items: 4
-        },
-        tablet: {//tablet
-            breakpoint: { max: 1024, min: 464 },
-            items: 3
-        },
-        mobile: {//mobile
-            breakpoint: { max: 464, min: 0 },
-            items: 2
-        }
-    };
-
     const router = useRouter()
+    const [openDate, setOpenDate] = useState(false);
     const inputRef = useRef(null);
     const autoCompleteRef = useRef(null);
     const [query, setQuery] = useState("");
@@ -67,7 +44,6 @@ export default function Home() {
     //Popover
     const [anchorEl, setAnchorEl] = useState(null);
 
-
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -79,7 +55,9 @@ export default function Home() {
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
-
+    const datePickerHandler = () => {
+        setOpenDate(!openDate);
+    };
 
     const onChange = (
         value,
@@ -129,8 +107,6 @@ export default function Home() {
         console.log(addressObject);
     }
 
-
-
     //   useEffect(() => {
     //     getFeaturedHotels()
     //   }, [])
@@ -146,7 +122,6 @@ export default function Home() {
 
         setIsLoading(false)
     }
-
 
     const options = {
         componentRestrictions: { country: "ng" },
@@ -181,19 +156,89 @@ export default function Home() {
         <div className='h-screen font-poppins'>
             <Navbar />
             <div className="w-full bg-[url('https://res.cloudinary.com/drpsnmeoc/image/upload/v1680477527/hero_3x_aylkxh.png')] bg-cover bg-no-repeat bg-[bottom] py-24">
-                <div className="flex flex-col items-center gap-12 pt-40 pb-16 md:px-0 px-4">
+                <div className="flex flex-col items-center gap-12 pt-40 pb-20 md:px-0 px-4">
 
-                    <div className="flex flex-col text-white items-center space-y-2">
-                        <p className="md:text-5xl text-2xl font-medium">Find deals from you favorite hotels in Nigeria</p>
-                        <p className="md:text-xl text-base font-normal">Try searching for a city, A specific hotel or even a landmark!</p>
+                    <div className="flex flex-col text-white items-center text-center space-y-2">
+                        <p className="md:text-4xl mb-[0] text-2xl font-medium">Find deals from you favorite hotels in Nigeria</p>
+                        <p className="md:text-xl mb-[0] text-base font-normal">Try searching for a city, A specific hotel or even a landmark!</p>
                     </div>
+
+                    {/* <div className="flex md:flex-row flex-col items-center justify-between bg-white md:w-3/4 w-full gap-2 p-4 rounded-md">
+
+                        <input
+                            ref={inputRef}
+                            onChange={(event) => setQuery(event.target.value)}
+                            placeholder="Enter a City"
+                            className="outline-0 w-full p-3 pl-4 leading-5 text-xs font-normal bg-gray-100 active:bg-gray-200/50 rounded-md"
+                            type="text"
+                        />
+
+                        <div
+                            className="relative w-full flex bg-gray-100 rounded-md py-1 px-3 items-center gap-2 text-xs leading-5 cursor-pointer"
+                            onClick={datePickerHandler}
+                        >
+
+                            <Calendar size={20} />
+
+                            <div className="flex flex-col w-full">
+                                <p className="text-[0.63rem] mb-[0] text-sec-main/60">Check in/out</p>
+                                <p className="text-xs mb-[0] text-sec-main">
+                                    {`${format(dateRange[0].startDate, "dd-MM-yyy")} - ${format(
+                                        dateRange[0].endDate,
+                                        "dd-MM-yyy"
+                                    )}`}
+                                </p>
+                            </div>
+
+                            {openDate && (
+                                <DateRange
+                                    onChange={(item) => setDateRange([item.selection])}
+                                    showSelectionPreview={true}
+                                    moveRangeOnFirstSelection={false}
+                                    months={1}
+                                    ranges={dateRange}
+                                    rangeColors={['#ffcc00']}
+                                    className="absolute md:top-[50%] md:bg-white bottom-[50%] -left-[5%] md:-left-[15%] z-20"
+                                />
+                            )}
+
+                        </div>
+
+                        <div
+                            className="w-full flex bg-gray-100 rounded-md py-1 px-3 items-center gap-2 text-xs leading-5"
+                            onClick={handleClick}
+                        >
+
+                            <People size={20} />
+
+                            <div className="flex flex-col w-full">
+                                <p className="text-[0.63rem] mb-[0] text-sec-main/60">Room</p>
+                                <p className="text-xs mb-[0] text-sec-main">Guest</p>
+                            </div>
+
+                        </div>
+
+                        <PopoverDisplay
+                            handleClick={handleClick}
+                            anchorEl={anchorEl}
+                            setAnchorEl={setAnchorEl}
+                            numberOfAdults={numberOfAdults}
+                            setNumberOfAdults={setNumberOfAdults}
+                            numberOfChildren={numberOfChildren}
+                            setNumberOfChildren={setNumberOfChildren}
+                            setNumberOfRooms={setNumberOfRooms}
+                            numberOfRooms={numberOfRooms}
+                        />
+
+                        <button type='submit' className="md:w-1/2 w-full p-3 rounded-md bg-gray-600/90 hover:bg-gray-600 text-white flex items-center justify-center">Search</button>
+                    </div> */}
 
                     <HotelSearch numberOfAdults={numberOfAdults} setNumberOfAdults={setNumberOfAdults} numberOfChildren={numberOfChildren} setNumberOfChildren={setNumberOfChildren} numberOfRooms={numberOfRooms} setNumberOfRooms={setNumberOfRooms} dateRange={dateRange} setDateRange={setDateRange} />
 
                 </div>
             </div>
 
-            <div className="w-full md:pt-16 pt-10 pb-20">
+            {/* <div className="w-full md:pt-16 pt-10 pb-20">
                 <div className="flex flex-col justify-center gap-y-28 w-full md:px-10 px-4">
 
                     <div className="flex flex-col space-y-6 w-full">
@@ -202,7 +247,6 @@ export default function Home() {
                             <p className="text-lg font-medium text-sec-main">Today&#39;s Top Hotel Deals</p>
                         </div>
 
-                        {/* <Carousel containerClass="container" responsive={responsive}> */}
                         <div className="grid md:grid-cols-5 grid-cols-2 gap-x-4 gap-y-8 overflow-hidden w-full">
                             {featuredHotels.map((hotel) => (<div className="flex flex-col gap-2">
 
@@ -230,8 +274,6 @@ export default function Home() {
                             </div>))}
                         </div>
 
-                        {/* </Carousel> */}
-
                     </div>
 
                     <div className="flex flex-col space-y-8 w-full">
@@ -241,7 +283,6 @@ export default function Home() {
                             <p className="text-sm font-medium text-sec-main/70">See the top destinations people are traveling to</p>
                         </div>
                         <div className="grid md:grid-cols-5 grid-cols-2 gap-x-4 gap-y-8 overflow-hidden w-full">
-                            {/* <Carousel containerClass="container" responsive={responsive}> */}
                             <div className="flex flex-col gap-2">
 
                                 <Link href={{
@@ -256,7 +297,6 @@ export default function Home() {
                                         rooms: numberOfRooms,
                                     },
                                 }}>
-                                    {/* <img src="/images/img/lagos.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md mb-2" alt="bcloud" /> */}
                                     <Image
                                         className="object-cover md:w-48 md:h-48 rounded-md mb-2"
                                         src={lagos}
@@ -264,24 +304,19 @@ export default function Home() {
                                         height={140}
                                         alt="blcoud"
                                     />
-                                    {/* <div className="flex flex-col text-sec-main gap-1.5"> */}
                                     <p className="font-normal text-sm md:text-base mb-[0] truncate block w-32 md:w-48 hover:text-sec-main">Hotels in Lagos</p>
-
-                                    {/* </div> */}
                                 </Link>
 
                             </div>
 
                             <div className="flex flex-col gap-2">
-
-                                {/* <img src="/images/img/awka.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" /> */}
                                 <Image
-                                        className="object-cover md:w-48 md:h-48 rounded-md mb-2"
-                                        src={ibadan}
-                                        width={140}
-                                        height={140}
-                                        alt="blcoud"
-                                    />
+                                    className="object-cover md:w-48 md:h-48 rounded-md mb-2"
+                                    src={ibadan}
+                                    width={140}
+                                    height={140}
+                                    alt="blcoud"
+                                />
                                 <div className="flex flex-col text-sec-main gap-1.5">
                                     <Link href={{
                                         pathname: "/search",
@@ -303,15 +338,13 @@ export default function Home() {
                             </div>
 
                             <div className="flex flex-col gap-2">
-
-                                {/* <img src={kano} className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" /> */}
                                 <Image
-                                        className="object-cover md:w-48 md:h-48 rounded-md mb-2"
-                                        src={benin}
-                                        width={140}
-                                        height={140}
-                                        alt="blcoud"
-                                    />
+                                    className="object-cover md:w-48 md:h-48 rounded-md mb-2"
+                                    src={benin}
+                                    width={140}
+                                    height={140}
+                                    alt="blcoud"
+                                />
                                 <div className="flex flex-col text-sec-main gap-1.5">
                                     <Link href={{
                                         pathname: "/search",
@@ -333,15 +366,13 @@ export default function Home() {
                             </div>
 
                             <div className="flex flex-col gap-2">
-
-                                {/* <img src="/images/img/owerri.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" /> */}
                                 <Image
-                                        className="object-cover md:w-48 md:h-48 rounded-md mb-2"
-                                        src={ogun}
-                                        width={140}
-                                        height={140}
-                                        alt="blcoud"
-                                    />
+                                    className="object-cover md:w-48 md:h-48 rounded-md mb-2"
+                                    src={ogun}
+                                    width={140}
+                                    height={140}
+                                    alt="blcoud"
+                                />
                                 <div className="flex flex-col text-sec-main gap-1.5">
                                     <Link href={{
                                         pathname: "/search",
@@ -363,15 +394,13 @@ export default function Home() {
                             </div>
 
                             <div className="flex flex-col gap-2">
-
-                                {/* <img src="/images/img/abuja.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" /> */}
                                 <Image
-                                        className="object-cover md:w-48 md:h-48 rounded-md mb-2"
-                                        src={abuja}
-                                        width={140}
-                                        height={140}
-                                        alt="blcoud"
-                                    />
+                                    className="object-cover md:w-48 md:h-48 rounded-md mb-2"
+                                    src={abuja}
+                                    width={140}
+                                    height={140}
+                                    alt="blcoud"
+                                />
                                 <div className="flex flex-col text-sec-main gap-1.5">
                                     <Link href={{
                                         pathname: "/search",
@@ -393,15 +422,13 @@ export default function Home() {
                             </div>
 
                             <div className="flex flex-col gap-2">
-
-                                {/* <img src="/images/img/kano.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" /> */}
                                 <Image
-                                        className="object-cover md:w-48 md:h-48 rounded-md mb-2"
-                                        src={ilorin}
-                                        width={140}
-                                        height={140}
-                                        alt="blcoud"
-                                    />
+                                    className="object-cover md:w-48 md:h-48 rounded-md mb-2"
+                                    src={ilorin}
+                                    width={140}
+                                    height={140}
+                                    alt="blcoud"
+                                />
                                 <div className="flex flex-col text-sec-main gap-1.5">
                                     <Link href={{
                                         pathname: "/search",
@@ -422,13 +449,13 @@ export default function Home() {
 
                             </div>
 
-                            {/* </Carousel> */}
                         </div>
                     </div>
 
                 </div>
             </div>
-            <Footer />
-        </div>
+
+            <Footer /> */}
+        </div >
     );
 }

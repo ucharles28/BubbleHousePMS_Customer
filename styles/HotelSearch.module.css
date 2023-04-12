@@ -8,7 +8,23 @@
   width: 100%;
   color: black;
   transition: 0.2s;
-  padding:  10px;
+  padding: 10px;
+}
+
+/* Media queries for screens tht are 600px or lesser */
+@media screen and (max-width: 600px) {
+  .dropdown {
+    background: rgba(238, 238, 238, 1);
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    padding: 10px 10px 0 10px;
+    max-width: 100%;
+    width: 100%;
+    color: black;
+    transition: 0.2s;
+    padding: 10px;
+  }
 }
 
 .dropdown:empty {
@@ -45,6 +61,7 @@
   gap: 5px;
   padding: 10px 8px;
 }
+
 .dropdownRow:hover {
   background-color: rgb(121, 121, 121);
   max-width: 100%;
@@ -53,6 +70,7 @@
   transition: 0.15s;
   padding: 10px 8px;
 }
+
 /* @media only screen and (max-width: 480px) {
   .dropdown {
     background: rgba(238, 238, 238, 1);

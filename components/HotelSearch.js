@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import { get } from "../helpers/ApiRequest";
 import data from "../pages/api/HotelSerMockData/MOCK_DATA.json";
 import styles from "../styles/HotelSearch.module.css";
-import { People } from "iconsax-react";
+import { People, Calendar } from "iconsax-react";
 import PopoverDisplay from "./PopoverDisplay";
 import { style } from "@mui/system";
 import { Puff } from "react-loader-spinner";
@@ -156,42 +156,17 @@ const HotelSearch = ({ numberOfAdults, setNumberOfAdults, numberOfChildren, setN
 
   return (
     <>
-      <section className="relative">
-        <form className="lg:bg-white bg-transparent text-black rounded-lg  items-center py-[2px] lg:py-0 lg:px-5 lg:mx-auto grid lg:flex mx-2 relative">
+      <div className="relative md:w-3/4 w-full ">
+        {/* <form className="lg:bg-white bg-transparent text-black rounded-lg  items-center py-[2px] lg:py-0 lg:px-5 lg:mx-auto grid lg:flex mx-2 relative">
           <div className="text-start lg:grow">
             <input
               ref={inputRef}
-              // onChange={(event) => setQuery(event.target.value)}
               placeholder="Enter a City"
               className="border-1 text-md p-2 bg-[#E0E0E0] rounded-md outline-0 w-full text-[13.5px] font-bold"
               type="text"
               value={value}
               onChange={onChange}
             />
-            {/* <div className={styles.dropdown}>
-              {dommyData
-                .filter((item) => {
-                  const searchTerm = value?.toLowerCase();
-                  const fullName = item.full_name?.toLowerCase();
-
-                  return (
-                    searchTerm &&
-                    fullName?.startsWith(searchTerm) &&
-                    fullName !== searchTerm
-                  );
-                })
-                .slice(0, 9)
-                .map((item) => (
-                  <div className={styles.dropdownRow}>
-                    <ul
-                      onClick={() => onSearch(item.full_name)}
-                      key={item.full_name}
-                    >
-                      <li>{item.full_name}</li>
-                    </ul>
-                  </div>
-                ))}
-            </div> */}
           </div>
           <div className="lg:grow lg:ml-3 cursor-pointer">
             <div className="grid lg:flex  items-start lg:items-center space-y-3 lg:space-y-0 my-3 lg:my-0">
@@ -255,7 +230,86 @@ const HotelSearch = ({ numberOfAdults, setNumberOfAdults, numberOfChildren, setN
           >
             Search
           </button>
-        </form>
+        </form> */}
+
+        <div className="flex md:flex-row flex-col items-center justify-between bg-white gap-2 p-4 rounded-md">
+
+          <input
+            ref={inputRef}
+            // onChange={(event) => setQuery(event.target.value)}
+            placeholder="Enter a City"
+            className="outline-0 w-full p-3 pl-4 leading-5 text-xs font-normal bg-gray-100 active:bg-gray-200/50 rounded-md"
+            type="text"
+            value={value}
+            onChange={onChange}
+          />
+
+          <div
+            className="relative w-full flex bg-gray-100 rounded-md py-1 px-3 items-center gap-2 text-xs leading-5 cursor-pointer"
+            onClick={datePickerHandler}
+          >
+
+            <Calendar size={20} />
+
+            <div className="flex flex-col w-full">
+              <p className="text-[0.63rem] mb-[0] text-sec-main/60">Check in/out</p>
+              <p className="text-xs mb-[0] text-sec-main">
+                {`${format(dateRange[0].startDate, "dd-MM-yyy")} - ${format(
+                  dateRange[0].endDate,
+                  "dd-MM-yyy"
+                )}`}
+              </p>
+            </div>
+
+            {openDate && (
+              <DateRange
+                onChange={(item) => setDateRange([item.selection])}
+                showSelectionPreview={true}
+                moveRangeOnFirstSelection={false}
+                months={1}
+                ranges={dateRange}
+                // direction="horizontal"
+                rangeColors={['#ffcc00']}
+                className="absolute md:top-[50%] md:bg-white bottom-[50%] -left-[5%] md:-left-[15%] z-20"
+              />
+            )}
+
+          </div>
+
+          <div
+            className="w-full flex bg-gray-100 rounded-md py-1 px-3 items-center gap-2 text-xs leading-5"
+            onClick={handleClick}
+          >
+
+            <People size={20} />
+
+            <div className="flex flex-col w-full">
+              <p className="text-[0.63rem] mb-[0] text-sec-main/60">Room</p>
+              <p className="text-xs mb-[0] text-sec-main">Guest</p>
+            </div>
+
+          </div>
+
+          <PopoverDisplay
+            handleClick={handleClick}
+            anchorEl={anchorEl}
+            setAnchorEl={setAnchorEl}
+            numberOfAdults={numberOfAdults}
+            setNumberOfAdults={setNumberOfAdults}
+            numberOfChildren={numberOfChildren}
+            setNumberOfChildren={setNumberOfChildren}
+            setNumberOfRooms={setNumberOfRooms}
+            numberOfRooms={numberOfRooms}
+          />
+
+          <button
+            type='submit'
+            className="md:w-1/2 w-full p-3 rounded-md bg-gray-600/90 hover:bg-gray-600 text-white flex items-center justify-center"
+            onClick={handleSearch}
+          >
+            Search
+          </button>
+        </div>
         {searchIsLoading ||
           (places && places.length > 0 && (
             <div className={styles.dropdown}>
@@ -301,7 +355,7 @@ const HotelSearch = ({ numberOfAdults, setNumberOfAdults, numberOfChildren, setN
                 ))}
             </div>
           ))}
-      </section>
+      </div>
     </>
   );
 };
