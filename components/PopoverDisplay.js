@@ -34,9 +34,9 @@ const PopoverDisplay = ({
       >
         <div className="flex flex-col w-full p-3 space-y-3">
 
-          <div className="flex justify-between items-center w-full gap-x-12">
+          <div className="flex justify-between items-center w-full gap-x-14">
 
-            <p className="text-sm mb-[0] font-normal text-sec-main/70">Adult</p>
+            <p className="text-sm mb-[0] font-normal text-sec-main/80">Adult</p>
 
             <div className="flex items-center justify-center gap-x-3">
               <button
@@ -62,8 +62,8 @@ const PopoverDisplay = ({
             </div>
           </div>
 
-          <div className="flex justify-between items-center w-full gap-x-12">
-            <p className="text-sm mb-[0] font-normal text-sec-main/70">Children</p>
+          <div className="flex justify-between items-center w-full gap-x-14">
+            <p className="text-sm mb-[0] font-normal text-sec-main/80">Children</p>
 
             <div className="flex justify-center items-center gap-3">
               <button
@@ -89,8 +89,8 @@ const PopoverDisplay = ({
             </div>
           </div>
 
-          <div className="flex justify-between items-center w-full gap-x-12">
-            <p className="text-sm mb-[0] font-normal text-sec-main/70">Rooms</p>
+          <div className="flex justify-between items-center w-full gap-x-14">
+            <p className="text-sm mb-[0] font-normal text-sec-main/80">Rooms</p>
 
             <div className="flex justify-center items-center gap-3">
               <button
