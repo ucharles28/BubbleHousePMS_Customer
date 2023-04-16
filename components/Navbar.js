@@ -61,9 +61,9 @@ export default function Navbar() {
           <Image
             className="block"
             src={bcloud1}
-            width={100}
+            width={90}
             height={2}
-            alt="blcoud"
+            alt="myblcoud"
           />
         </Link>
         <div className="flex justify-end items-center">
@@ -72,14 +72,14 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={gotoLogin}
-                className="text-center justify-end font-medium flex items-center px-4 py-2.5 rounded-[5px] text-sm leading-6 bg-pri-cont hover:bg-pri-main text-sec-main"
+                className="text-center justify-end font-medium flex items-center px-4 py-2 rounded-md text-sm leading-6 bg-pri-cont hover:bg-pri-main text-sec-main"
               >
                 Log In
               </button>
               <button
                 type="button"
                 onClick={gotoSignUp}
-                className="text-center justify-end font-medium flex items-center px-4 py-2.5 rounded-[5px] text-sm leading-6 bg-pri-cont hover:bg-pri-main text-sec-main"
+                className="text-center justify-end font-medium flex items-center px-4 py-2 rounded-md text-sm leading-6 bg-pri-cont hover:bg-pri-main text-sec-main"
               >
                 Register
               </button>

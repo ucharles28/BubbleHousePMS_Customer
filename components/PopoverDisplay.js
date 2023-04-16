@@ -32,68 +32,90 @@ const PopoverDisplay = ({
           width: 320,
         }}
       >
-        <div className="flex justify-between items-center gap-11 py-[15px] px-[16px]">
-          <p className="text-base text-black ">Adult</p>
+        <div className="flex flex-col w-full p-3 space-y-3">
 
-          <div className="flex justify-center items-center gap-3">
-            <button
-              onClick={() => setNumberOfAdults(Number(numberOfAdults) - 1)}
-              disabled={numberOfAdults < 2}
-              className="text-center flex justify-center items-center border border-black rounded-full px-3"
-            >
-              <span className="font-medium text-xl mb-1">-</span>
-            </button>
+          <div className="flex justify-between items-center w-full gap-x-14">
 
-            <p className="text-lg mx-2">{numberOfAdults}</p>
-            <button
-              onClick={() => setNumberOfAdults(Number(numberOfAdults) + 1)}
-              className="text-center flex justify-center items-center border border-black rounded-full px-2"
-            >
-              <span className="font-medium text-xl mb-1">+</span>
-            </button>
+            <p className="text-sm mb-[0] font-normal text-sec-main/80">Adult</p>
+
+            <div className="flex items-center justify-center gap-x-3">
+              <button
+                onClick={() => setNumberOfAdults(Number(numberOfAdults) - 1)}
+                disabled={numberOfAdults < 2}
+                className="flex justify-center items-center border border-gray-500 hover:bg-gray-200 rounded-full px-3 py-1.5 cursor-pointer"
+              >
+                <span className="text-lg font-medium leading-6">
+                  &#8722;
+                </span>
+              </button>
+
+              <p className="text-lg font-medium text-gray-700 leading-6 mb-[0]">{numberOfAdults}</p>
+
+              <button
+                onClick={() => setNumberOfAdults(Number(numberOfAdults) + 1)}
+                className="flex justify-center items-center border border-gray-500 hover:bg-gray-200 rounded-full px-3 py-1.5 cursor-pointer"
+              >
+                <span className="text-lg font-medium leading-6">
+                  &#43;
+                </span>
+              </button>
+            </div>
           </div>
-        </div>
-        <div className="flex justify-between items-center gap-11 py-[6px] px-[16px]">
-          <p className="text-base ">Children</p>
 
-          <div className="flex justify-center items-center gap-3">
-            <button
-              onClick={() => setNumberOfChildren(Number(numberOfChildren) - 1)}
-              disabled={numberOfChildren < 1}
-              className="text-center flex justify-center items-center border border-black rounded-full px-3"
-            >
-              <span className="font-medium text-xl mb-1">-</span>
-            </button>
+          <div className="flex justify-between items-center w-full gap-x-14">
+            <p className="text-sm mb-[0] font-normal text-sec-main/80">Children</p>
 
-            <p className="text-lg mx-2">{numberOfChildren}</p>
-            <button
-              onClick={() => setNumberOfChildren(numberOfChildren + 1)}
-              className="text-center flex justify-center items-center border border-black rounded-full px-2"
-            >
-              <span className="font-medium text-xl mb-1">+</span>
-            </button>
+            <div className="flex justify-center items-center gap-3">
+              <button
+                onClick={() => setNumberOfChildren(Number(numberOfChildren) - 1)}
+                disabled={numberOfChildren < 1}
+                className="flex justify-center items-center border border-gray-500 hover:bg-gray-200 rounded-full px-3 py-1.5 cursor-pointer"
+              >
+                 <span className="text-lg font-medium leading-6">
+                  &#8722;
+                </span>
+              </button>
+
+              <p className="text-lg font-medium text-gray-700 leading-6 mb-[0]">{numberOfChildren}</p>
+
+              <button
+                onClick={() => setNumberOfChildren(numberOfChildren + 1)}
+                className="flex justify-center items-center border border-gray-500 hover:bg-gray-200 rounded-full px-3 py-1.5 cursor-pointer"
+              >
+                <span className="text-lg font-medium leading-6">
+                  &#43;
+                </span>
+              </button>
+            </div>
           </div>
-        </div>
-        <div className="flex justify-between items-center gap-11 py-[6px] px-[16px]">
-          <p className="text-base ">Rooms</p>
 
-          <div className="flex justify-center items-center gap-3">
-            <button
-              onClick={() => setNumberOfRooms(numberOfRooms - 1)}
-              disabled={numberOfRooms < 2}
-              className="text-center flex justify-center items-center border border-black rounded-full px-3"
-            >
-              <span className="font-medium text-xl mb-1">-</span>
-            </button>
+          <div className="flex justify-between items-center w-full gap-x-14">
+            <p className="text-sm mb-[0] font-normal text-sec-main/80">Rooms</p>
 
-            <p className="text-lg mx-2">{numberOfRooms}</p>
-            <button
-              onClick={() => setNumberOfRooms(numberOfRooms + 1)}
-              className="text-center flex justify-center items-center border border-black rounded-full px-2"
-            >
-              <span className="font-medium text-xl mb-1">+</span>
-            </button>
+            <div className="flex justify-center items-center gap-3">
+              <button
+                onClick={() => setNumberOfRooms(numberOfRooms - 1)}
+                disabled={numberOfRooms < 2}
+                className="flex justify-center items-center border border-gray-500 hover:bg-gray-200 rounded-full px-3 py-1.5 cursor-pointer"
+              >
+                <span className="text-lg font-medium leading-6">
+                  &#8722;
+                </span>
+              </button>
+
+              <p className="text-lg font-medium text-gray-700 leading-6 mb-[0]">{numberOfRooms}</p>
+
+              <button
+                onClick={() => setNumberOfRooms(numberOfRooms + 1)}
+                className="flex justify-center items-center border border-gray-500 hover:bg-gray-200 rounded-full px-3 py-1.5 cursor-pointer"
+              >
+                <span className="text-lg font-medium leading-6">
+                  &#43;
+                </span>
+              </button>
+            </div>
           </div>
+
         </div>
       </Popover>
     </div>

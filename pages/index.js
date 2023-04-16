@@ -3,14 +3,14 @@ import React, { useRef, useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Script from 'next/script';
-import { DatePicker, Space } from 'antd';
-import Popover from '@mui/material/Popover';
-import { useRouter } from "next/router";
-import { People } from "iconsax-react";
-// import Carousel from "../components/Carousel";
+import { DateRange } from "react-date-range";
+import { format } from "date-fns";
+import { CarouselProvider, Slider, Slide } from 'pure-react-carousel';
+import "pure-react-carousel/dist/react-carousel.es.css";
 import HotelSearch from "../components/HotelSearch";
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
+import { Calendar, People } from 'iconsax-react';
+import { useRouter } from "next/router";
+import PopoverDisplay from "../components/PopoverDisplay";
 import { get } from "../helpers/ApiRequest";
 import Link from "next/link";
 import lagos from "../public/images/img/lagos.png";
@@ -20,30 +20,9 @@ import ogun from "../public/images/img/ogun.jpg";
 import abuja from "../public/images/img/abuja.png";
 import ilorin from "../public/images/img/ilorin.jpg";
 
-const { RangePicker } = DatePicker;
-
 export default function Home() {
-    const responsive = {
-        superLargeDesktop: {//
-            // the naming can be any, depends on you.
-            breakpoint: { max: 4000, min: 3000 },
-            items: 5
-        },
-        desktop: {//desktop
-            breakpoint: { max: 3000, min: 1024 },
-            items: 4
-        },
-        tablet: {//tablet
-            breakpoint: { max: 1024, min: 464 },
-            items: 3
-        },
-        mobile: {//mobile
-            breakpoint: { max: 464, min: 0 },
-            items: 2
-        }
-    };
-
     const router = useRouter()
+    const [openDate, setOpenDate] = useState(false);
     const inputRef = useRef(null);
     const autoCompleteRef = useRef(null);
     const [query, setQuery] = useState("");
@@ -59,14 +38,13 @@ export default function Home() {
     const [dateRange, setDateRange] = useState([
         {
             startDate: new Date(),
-            endDate: new Date(new Date().setDate(new Date().getDate() + 1)),
+            endDate: new Date(new Date().setDate(new Date().getDate() + 0)),
             key: "selection",
         },
     ]);
 
     //Popover
     const [anchorEl, setAnchorEl] = useState(null);
-
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -79,7 +57,9 @@ export default function Home() {
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
-
+    const datePickerHandler = () => {
+        setOpenDate(!openDate);
+    };
 
     const onChange = (
         value,
@@ -129,8 +109,6 @@ export default function Home() {
         console.log(addressObject);
     }
 
-
-
     //   useEffect(() => {
     //     getFeaturedHotels()
     //   }, [])
@@ -146,7 +124,6 @@ export default function Home() {
 
         setIsLoading(false)
     }
-
 
     const options = {
         componentRestrictions: { country: "ng" },
@@ -181,108 +158,264 @@ export default function Home() {
         <div className='h-screen font-poppins'>
             <Navbar />
             <div className="w-full bg-[url('https://res.cloudinary.com/drpsnmeoc/image/upload/v1680477527/hero_3x_aylkxh.png')] bg-cover bg-no-repeat bg-[bottom] py-24">
-                <div className="flex flex-col items-center gap-12 pt-40 pb-16 md:px-0 px-4">
+                <div className="flex flex-col items-center gap-12 md:pt-40 pt-24 pb-20 md:px-0 px-4">
 
-                    <div className="flex flex-col text-white items-center space-y-2">
-                        <p className="md:text-5xl text-2xl font-medium">Find deals from you favorite hotels in Nigeria</p>
-                        <p className="md:text-xl text-base font-normal">Try searching for a city, A specific hotel or even a landmark!</p>
+                    <div className="flex flex-col text-white items-center text-center space-y-2">
+                        <p className="md:text-4xl mb-[0] text-2xl font-medium">Find deals from you favorite hotels in Nigeria</p>
+                        <p className="md:text-xl mb-[0] text-sm font-normal md:w-full w-5/6">Try searching for a city, A specific hotel or even a landmark!</p>
                     </div>
+
+                    {/* <div className="flex md:flex-row flex-col items-center justify-between bg-white md:w-3/4 w-full gap-2 p-4 rounded-md">
+
+                        <input
+                            ref={inputRef}
+                            onChange={(event) => setQuery(event.target.value)}
+                            placeholder="Enter a City"
+                            className="outline-0 w-full p-3 pl-4 leading-5 text-xs font-normal bg-gray-100 active:bg-gray-200/50 rounded-md"
+                            type="text"
+                        />
+
+                        <div
+                            className="relative w-full flex bg-gray-100 rounded-md py-1 px-3 items-center gap-2 text-xs leading-5 cursor-pointer"
+                            onClick={datePickerHandler}
+                        >
+
+                            <Calendar size={20} />
+
+                            <div className="flex flex-col w-full">
+                                <p className="text-[0.63rem] mb-[0] text-sec-main/60">Check in/out</p>
+                                <p className="text-xs mb-[0] text-sec-main">
+                                    {`${format(dateRange[0].startDate, "dd-MM-yyy")} - ${format(
+                                        dateRange[0].endDate,
+                                        "dd-MM-yyy"
+                                    )}`}
+                                </p>
+                            </div>
+
+                            {openDate && (
+                                <DateRange
+                                    onChange={(item) => setDateRange([item.selection])}
+                                    showSelectionPreview={true}
+                                    moveRangeOnFirstSelection={false}
+                                    months={1}
+                                    ranges={dateRange}
+                                    rangeColors={['#ffcc00']}
+                                    className="absolute md:top-[50%] md:bg-white bottom-[50%] -left-[5%] md:-left-[15%] z-20"
+                                />
+                            )}
+
+                        </div>
+
+                        <div
+                            className="w-full flex bg-gray-100 rounded-md py-1 px-3 items-center gap-2 text-xs leading-5"
+                            onClick={handleClick}
+                        >
+
+                            <People size={20} />
+
+                            <div className="flex flex-col w-full">
+                                <p className="text-[0.63rem] mb-[0] text-sec-main/60">Room</p>
+                                <p className="text-xs mb-[0] text-sec-main">Guest</p>
+                            </div>
+
+                        </div>
+
+                        <PopoverDisplay
+                            handleClick={handleClick}
+                            anchorEl={anchorEl}
+                            setAnchorEl={setAnchorEl}
+                            numberOfAdults={numberOfAdults}
+                            setNumberOfAdults={setNumberOfAdults}
+                            numberOfChildren={numberOfChildren}
+                            setNumberOfChildren={setNumberOfChildren}
+                            setNumberOfRooms={setNumberOfRooms}
+                            numberOfRooms={numberOfRooms}
+                        />
+
+                        <button type='submit' className="md:w-1/2 w-full p-3 rounded-md bg-gray-600/90 hover:bg-gray-600 text-white flex items-center justify-center">Search</button>
+                    </div> */}
 
                     <HotelSearch numberOfAdults={numberOfAdults} setNumberOfAdults={setNumberOfAdults} numberOfChildren={numberOfChildren} setNumberOfChildren={setNumberOfChildren} numberOfRooms={numberOfRooms} setNumberOfRooms={setNumberOfRooms} dateRange={dateRange} setDateRange={setDateRange} />
 
                 </div>
             </div>
 
-            <div className="w-full md:pt-16 pt-10 pb-20">
-                <div className="flex flex-col justify-center gap-y-28 w-full md:px-10 px-4">
+            <section className="w-full py-12">
+                <div className="container flex flex-col justify-center items-center w-full mx-auto md:px-8 px-4">
 
-                    <div className="flex flex-col space-y-6 w-full">
+                    <div className="flex w-full">
+                        <p className="text-lg font-medium text-sec-main">Today&#39;s Top Hotel Deals</p>
+                    </div>
 
-                        <div className="flex w-full">
-                            <p className="text-lg font-medium text-sec-main">Today&#39;s Top Hotel Deals</p>
-                        </div>
+                    <div className="flex w-full">
+                        <CarouselProvider
+                            naturalSlideWidth={100}
+                            isIntrinsicHeight={true}
+                            totalSlides={6}
+                            isPlaying={true}
+                            visibleSlides={2.05}
+                            infinite={true}
+                            className="w-full flex sm:hidden md:hidden lg:hidden"
+                        >
+                            <Slider className='w-full'>
 
-                        {/* <Carousel containerClass="container" responsive={responsive}> */}
-                        <div className="grid md:grid-cols-5 grid-cols-2 gap-x-4 gap-y-8 overflow-hidden w-full">
-                            {featuredHotels.map((hotel) => (<div className="flex flex-col gap-2">
+                                {featuredHotels.map((hotel, index) => (
+                                    <Slide index={0} key={index}>
+                                        <Link href={{
+                                            pathname: '/hotel/details',
+                                            query: {
+                                                hotelId: hotel.id,
+                                                startDate: String(dateRange[0].startDate),
+                                                endDate: String(dateRange[0].endDate),
+                                                adults: numberOfAdults,
+                                                children: numberOfChildren,
+                                                rooms: numberOfRooms,
+                                            }
+                                        }}>
+                                            <div className="flex flex-col gap-3">
+                                                <img src={hotel.imageUrl} className="object-cover w-[140px] h-[140px] md:w-64 md:h-64 rounded-md" alt="mybcloud" />
 
-                                <img src={hotel.imageUrl} className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" />
+                                                <div className="flex flex-col text-sec-main gap-1">
+                                                    <span className="text-sec-main font-medium text-sm md:text-base block truncate w-32 lg:w-56 md:w-56">{hotel.name}</span>
+                                                    <span className="text-xs text-sec-conBg block truncate w-36 lg:w-56 md:w-56">{hotel.address.line}</span>
+                                                    <span className="text-xs text-sec-conBg block truncate w-36 lg:w-56 md:w-56">Starting from  <span className="text-sec-main font-medium">NGN {hotel.averagePrice}</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    </Slide>
+                                ))}
+                            </Slider>
+                        </CarouselProvider>
 
-                                <div className="flex flex-col text-sec-main gap-1.5">
+                        <CarouselProvider
+                            naturalSlideWidth={100}
+                            isIntrinsicHeight={true}
+                            totalSlides={6}
+                            isPlaying={true}
+                            visibleSlides={3}
+                            infinite={true}
+                            className="w-full hidden sm:flex md:hidden lg:hidden"
+                        >
+                            <Slider className='w-full'>
+
+                                {featuredHotels.map((hotel, index) => (
+                                    <Slide index={0} key={index}>
+                                        <Link href={{
+                                            pathname: '/hotel/details',
+                                            query: {
+                                                hotelId: hotel.id,
+                                                startDate: String(dateRange[0].startDate),
+                                                endDate: String(dateRange[0].endDate),
+                                                adults: numberOfAdults,
+                                                children: numberOfChildren,
+                                                rooms: numberOfRooms,
+                                            }
+                                        }}>
+                                            <div className="flex flex-col gap-3">
+                                                <img src={hotel.imageUrl} className="object-cover w-[128px] h-[128px] md:w-64 md:h-64 rounded-md" alt="mybcloud" />
+
+                                                <div className="flex flex-col text-sec-main gap-1">
+                                                    <span className="text-sec-main font-medium text-sm md:text-base block truncate w-28 lg:w-56 md:w-56">{hotel.name}</span>
+                                                    <span className="text-xs text-sec-conBg block truncate w-28 lg:w-56 md:w-56">{hotel.address.line}</span>
+                                                    <span className="text-xs text-sec-conBg block truncate w-28 lg:w-56 md:w-56">Starting from  <span className="text-sec-main font-medium">NGN {hotel.averagePrice}</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    </Slide>
+                                ))}
+                            </Slider>
+                        </CarouselProvider>
+
+                        <CarouselProvider
+                            naturalSlideWidth={100}
+                            isIntrinsicHeight={true}
+                            totalSlides={6}
+                            isPlaying={true}
+                            visibleSlides={4}
+                            infinite={true}
+                            className="w-full hidden sm:hidden md:flex lg:flex"
+                        >
+                            <Slider className='w-full'>
+
+                                {featuredHotels.map((hotel, index) => (
+                                    <Slide index={0} key={index}>
+                                        <Link href={{
+                                            pathname: '/hotel/details',
+                                            query: {
+                                                hotelId: hotel.id,
+                                                startDate: String(dateRange[0].startDate),
+                                                endDate: String(dateRange[0].endDate),
+                                                adults: numberOfAdults,
+                                                children: numberOfChildren,
+                                                rooms: numberOfRooms,
+                                            }
+                                        }}>
+                                            <div className="flex flex-col gap-3">
+                                                <img src={hotel.imageUrl} className="object-cover w-[128px] h-[128px] md:w-64 md:h-64 rounded-md" alt="mybcloud" />
+
+                                                <div className="flex flex-col text-sec-main gap-1">
+                                                    <span className="text-sec-main font-medium text-sm md:text-base block truncate w-28 lg:w-56 md:w-56">{hotel.name}</span>
+                                                    <span className="text-xs text-sec-conBg block truncate w-28 lg:w-56 md:w-56">{hotel.address.line}</span>
+                                                    <span className="text-xs text-sec-conBg block truncate w-28 lg:w-56 md:w-56">Starting from  <span className="text-sec-main font-medium">NGN {hotel.averagePrice}</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    </Slide>
+                                ))}
+                            </Slider>
+                        </CarouselProvider>
+                    </div>
+
+                </div>
+            </section>
+
+            <section className="w-full py-12">
+                <div className="container flex flex-col justify-center items-center w-full gap-6 mx-auto md:px-8 px-4">
+
+                    <div className="flex flex-col w-full">
+                        <span className="text-lg font-medium text-sec-main">Top cities</span>
+                        <span className="text-sm font-normal text-sec-conBg">See the top destinations people are traveling to</span>
+                    </div>
+
+                    <div className="flex w-full">
+                        <CarouselProvider
+                            naturalSlideWidth={100}
+                            isIntrinsicHeight={true}
+                            totalSlides={6}
+                            isPlaying={true}
+                            visibleSlides={2.05}
+                            infinite={true}
+                            className="w-full flex sm:hidden md:hidden lg:hidden"
+                        >
+                            <Slider className='w-full'>
+                                <Slide index={0}>
                                     <Link href={{
-                                        pathname: '/hotel/details',
+                                        pathname: "/search",
                                         query: {
-                                            hotelId: hotel.id,
+                                            hotel: "",
+                                            location: "Lagos",
                                             startDate: String(dateRange[0].startDate),
                                             endDate: String(dateRange[0].endDate),
                                             adults: numberOfAdults,
                                             children: numberOfChildren,
                                             rooms: numberOfRooms,
-                                        }
+                                        },
                                     }}>
-                                        <p className="font-normal text-sm md:text-base mb-[0] truncate block w-32 lg:w-48 md:w-36">{hotel.name}</p>
+                                        <div className="flex flex-col gap-3 w-full">
+                                            <Image
+                                                className="object-cover w-[140px] h-[140px] md:w-64 md:h-64 rounded-md"
+                                                src={lagos}
+                                                alt="myblcoud"
+                                            />
+                                            <p className="text-sec-main font-medium text-sm md:text-base block truncate w-32 lg:w-56 md:w-56">Hotels in Lagos</p>
+                                        </div>
                                     </Link>
-                                    <p className="text-xs md:text-sm text-sec-main/70 mb-[0] truncate block w-32 md:w-36">{hotel.address.line}</p>
-                                    <p className="text-xs md:text-sm text-sec-main/70 mb-[0]">Starting from  <span className="text-sec-main font-medium">NGN {hotel.averagePrice}</span>
-                                    </p>
-                                </div>
+                                </Slide>
 
-                            </div>))}
-                        </div>
-
-                        {/* </Carousel> */}
-
-                    </div>
-
-                    <div className="flex flex-col space-y-8 w-full">
-
-                        <div className="flex flex-col w-full gap-1">
-                            <p className="text-lg font-medium text-sec-main mb-[0]">Top cities</p>
-                            <p className="text-sm font-medium text-sec-main/70">See the top destinations people are traveling to</p>
-                        </div>
-                        <div className="grid md:grid-cols-5 grid-cols-2 gap-x-4 gap-y-8 overflow-hidden w-full">
-                            {/* <Carousel containerClass="container" responsive={responsive}> */}
-                            <div className="flex flex-col gap-2">
-
-                                <Link href={{
-                                    pathname: "/search",
-                                    query: {
-                                        hotel: "",
-                                        location: "Lagos",
-                                        startDate: String(dateRange[0].startDate),
-                                        endDate: String(dateRange[0].endDate),
-                                        adults: numberOfAdults,
-                                        children: numberOfChildren,
-                                        rooms: numberOfRooms,
-                                    },
-                                }}>
-                                    {/* <img src="/images/img/lagos.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md mb-2" alt="bcloud" /> */}
-                                    <Image
-                                        className="object-cover md:w-48 md:h-48 rounded-md mb-2"
-                                        src={lagos}
-                                        width={140}
-                                        height={140}
-                                        alt="blcoud"
-                                    />
-                                    {/* <div className="flex flex-col text-sec-main gap-1.5"> */}
-                                    <p className="font-normal text-sm md:text-base mb-[0] truncate block w-32 md:w-48 hover:text-sec-main">Hotels in Lagos</p>
-
-                                    {/* </div> */}
-                                </Link>
-
-                            </div>
-
-                            <div className="flex flex-col gap-2">
-
-                                {/* <img src="/images/img/awka.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" /> */}
-                                <Image
-                                        className="object-cover md:w-48 md:h-48 rounded-md mb-2"
-                                        src={ibadan}
-                                        width={140}
-                                        height={140}
-                                        alt="blcoud"
-                                    />
-                                <div className="flex flex-col text-sec-main gap-1.5">
+                                <Slide index={1}>
                                     <Link href={{
                                         pathname: "/search",
                                         query: {
@@ -295,24 +428,18 @@ export default function Home() {
                                             rooms: numberOfRooms,
                                         },
                                     }}>
-                                        <p className="font-normal text-sm md:text-base mb-[0] truncate block w-32 md:w-48">Hotels in Ibadan</p>
+                                        <div className="flex flex-col gap-3 w-full">
+                                            <Image
+                                                className="object-cover w-[140px] h-[140px] md:w-64 md:h-64 rounded-md"
+                                                src={ibadan}
+                                                alt="myblcoud"
+                                            />
+                                            <p className="text-sec-main font-medium text-sm md:text-base block truncate w-32 lg:w-56 md:w-56">Hotels in Ibadan</p>
+                                        </div>
                                     </Link>
+                                </Slide>
 
-                                </div>
-
-                            </div>
-
-                            <div className="flex flex-col gap-2">
-
-                                {/* <img src={kano} className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" /> */}
-                                <Image
-                                        className="object-cover md:w-48 md:h-48 rounded-md mb-2"
-                                        src={benin}
-                                        width={140}
-                                        height={140}
-                                        alt="blcoud"
-                                    />
-                                <div className="flex flex-col text-sec-main gap-1.5">
+                                <Slide index={2}>
                                     <Link href={{
                                         pathname: "/search",
                                         query: {
@@ -325,24 +452,18 @@ export default function Home() {
                                             rooms: numberOfRooms,
                                         },
                                     }}>
-                                        <p className="font-normal text-sm md:text-base mb-[0] truncate block w-32 md:w-48">Hotels in benin</p>
+                                        <div className="flex flex-col gap-3 w-full">
+                                            <Image
+                                                className="object-cover w-[140px] h-[140px] md:w-64 md:h-64 rounded-md"
+                                                src={benin}
+                                                alt="myblcoud"
+                                            />
+                                            <p className="text-sec-main font-medium text-sm md:text-base block truncate w-32 lg:w-56 md:w-56">Hotels in Benin</p>
+                                        </div>
                                     </Link>
+                                </Slide>
 
-                                </div>
-
-                            </div>
-
-                            <div className="flex flex-col gap-2">
-
-                                {/* <img src="/images/img/owerri.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" /> */}
-                                <Image
-                                        className="object-cover md:w-48 md:h-48 rounded-md mb-2"
-                                        src={ogun}
-                                        width={140}
-                                        height={140}
-                                        alt="blcoud"
-                                    />
-                                <div className="flex flex-col text-sec-main gap-1.5">
+                                <Slide index={3}>
                                     <Link href={{
                                         pathname: "/search",
                                         query: {
@@ -355,24 +476,18 @@ export default function Home() {
                                             rooms: numberOfRooms,
                                         },
                                     }}>
-                                        <p className="font-normal text-sm md:text-base mb-[0] truncate block w-32 md:w-48">Hotels in Ogun</p>
+                                        <div className="flex flex-col gap-3 w-full">
+                                            <Image
+                                                className="object-cover w-[140px] h-[140px] md:w-64 md:h-64 rounded-md"
+                                                src={ogun}
+                                                alt="myblcoud"
+                                            />
+                                            <p className="text-sec-main font-medium text-sm md:text-base block truncate w-32 lg:w-56 md:w-56">Hotels in Ogun</p>
+                                        </div>
                                     </Link>
+                                </Slide>
 
-                                </div>
-
-                            </div>
-
-                            <div className="flex flex-col gap-2">
-
-                                {/* <img src="/images/img/abuja.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" /> */}
-                                <Image
-                                        className="object-cover md:w-48 md:h-48 rounded-md mb-2"
-                                        src={abuja}
-                                        width={140}
-                                        height={140}
-                                        alt="blcoud"
-                                    />
-                                <div className="flex flex-col text-sec-main gap-1.5">
+                                <Slide index={4}>
                                     <Link href={{
                                         pathname: "/search",
                                         query: {
@@ -385,24 +500,18 @@ export default function Home() {
                                             rooms: numberOfRooms,
                                         },
                                     }}>
-                                        <p className="font-normal text-sm md:text-base mb-[0] truncate block w-32 md:w-48">Hotels in Abuja</p>
+                                        <div className="flex flex-col gap-3 w-full">
+                                            <Image
+                                                className="object-cover w-[140px] h-[140px] md:w-64 md:h-64 rounded-md"
+                                                src={abuja}
+                                                alt="myblcoud"
+                                            />
+                                            <p className="text-sec-main font-medium text-sm md:text-base block truncate w-32 lg:w-56 md:w-56">Hotels in Abuja</p>
+                                        </div>
                                     </Link>
+                                </Slide>
 
-                                </div>
-
-                            </div>
-
-                            <div className="flex flex-col gap-2">
-
-                                {/* <img src="/images/img/kano.png" className="object-cover w-[140px] h-[140px] md:w-48 md:h-48 rounded-md" alt="bcloud" /> */}
-                                <Image
-                                        className="object-cover md:w-48 md:h-48 rounded-md mb-2"
-                                        src={ilorin}
-                                        width={140}
-                                        height={140}
-                                        alt="blcoud"
-                                    />
-                                <div className="flex flex-col text-sec-main gap-1.5">
+                                <Slide index={5}>
                                     <Link href={{
                                         pathname: "/search",
                                         query: {
@@ -415,20 +524,336 @@ export default function Home() {
                                             rooms: numberOfRooms,
                                         },
                                     }}>
-                                        <p className="font-normal text-sm md:text-base mb-[0] truncate block w-32 md:w-48">Hotel in Ilorin</p>
+                                        <div className="flex flex-col gap-3 w-full">
+                                            <Image
+                                                className="object-cover w-[140px] h-[140px] md:w-64 md:h-64 rounded-md"
+                                                src={ilorin}
+                                                alt="myblcoud"
+                                            />
+                                            <p className="text-sec-main font-medium text-sm md:text-base block truncate w-32 lg:w-56 md:w-56">Hotels in Ilorin</p>
+                                        </div>
                                     </Link>
+                                </Slide>
+                            </Slider>
+                        </CarouselProvider>
 
-                                </div>
+                        <CarouselProvider
+                            naturalSlideWidth={100}
+                            isIntrinsicHeight={true}
+                            totalSlides={6}
+                            isPlaying={true}
+                            visibleSlides={3}
+                            infinite={true}
+                            className="w-full hidden sm:flex md:hidden lg:hidden"
+                        >
+                            <Slider className='w-full'>
+                                <Slide index={0}>
+                                    <Link href={{
+                                        pathname: "/search",
+                                        query: {
+                                            hotel: "",
+                                            location: "Lagos",
+                                            startDate: String(dateRange[0].startDate),
+                                            endDate: String(dateRange[0].endDate),
+                                            adults: numberOfAdults,
+                                            children: numberOfChildren,
+                                            rooms: numberOfRooms,
+                                        },
+                                    }}>
+                                        <div className="flex flex-col gap-3 w-full">
+                                            <Image
+                                                className="object-cover w-[140px] h-[140px] md:w-64 md:h-64 rounded-md"
+                                                src={lagos}
+                                                alt="myblcoud"
+                                            />
+                                            <p className="text-sec-main font-medium text-sm md:text-base block truncate w-32 lg:w-56 md:w-56">Hotels in Lagos</p>
+                                        </div>
+                                    </Link>
+                                </Slide>
 
-                            </div>
+                                <Slide index={1}>
+                                    <Link href={{
+                                        pathname: "/search",
+                                        query: {
+                                            hotel: "",
+                                            location: "Ibadan",
+                                            startDate: String(dateRange[0].startDate),
+                                            endDate: String(dateRange[0].endDate),
+                                            adults: numberOfAdults,
+                                            children: numberOfChildren,
+                                            rooms: numberOfRooms,
+                                        },
+                                    }}>
+                                        <div className="flex flex-col gap-3 w-full">
+                                            <Image
+                                                className="object-cover w-[140px] h-[140px] md:w-64 md:h-64 rounded-md"
+                                                src={ibadan}
+                                                alt="myblcoud"
+                                            />
+                                            <p className="text-sec-main font-medium text-sm md:text-base block truncate w-32 lg:w-56 md:w-56">Hotels in Ibadan</p>
+                                        </div>
+                                    </Link>
+                                </Slide>
 
-                            {/* </Carousel> */}
-                        </div>
+                                <Slide index={2}>
+                                    <Link href={{
+                                        pathname: "/search",
+                                        query: {
+                                            hotel: "",
+                                            location: "Benin",
+                                            startDate: String(dateRange[0].startDate),
+                                            endDate: String(dateRange[0].endDate),
+                                            adults: numberOfAdults,
+                                            children: numberOfChildren,
+                                            rooms: numberOfRooms,
+                                        },
+                                    }}>
+                                        <div className="flex flex-col gap-3 w-full">
+                                            <Image
+                                                className="object-cover w-[140px] h-[140px] md:w-64 md:h-64 rounded-md"
+                                                src={benin}
+                                                alt="myblcoud"
+                                            />
+                                            <p className="text-sec-main font-medium text-sm md:text-base block truncate w-32 lg:w-56 md:w-56">Hotels in Benin</p>
+                                        </div>
+                                    </Link>
+                                </Slide>
+
+                                <Slide index={3}>
+                                    <Link href={{
+                                        pathname: "/search",
+                                        query: {
+                                            hotel: "",
+                                            location: "Ogun",
+                                            startDate: String(dateRange[0].startDate),
+                                            endDate: String(dateRange[0].endDate),
+                                            adults: numberOfAdults,
+                                            children: numberOfChildren,
+                                            rooms: numberOfRooms,
+                                        },
+                                    }}>
+                                        <div className="flex flex-col gap-3 w-full">
+                                            <Image
+                                                className="object-cover w-[140px] h-[140px] md:w-64 md:h-64 rounded-md"
+                                                src={ogun}
+                                                alt="myblcoud"
+                                            />
+                                            <p className="text-sec-main font-medium text-sm md:text-base block truncate w-32 lg:w-56 md:w-56">Hotels in Ogun</p>
+                                        </div>
+                                    </Link>
+                                </Slide>
+
+                                <Slide index={4}>
+                                    <Link href={{
+                                        pathname: "/search",
+                                        query: {
+                                            hotel: "",
+                                            location: "Abuja",
+                                            startDate: String(dateRange[0].startDate),
+                                            endDate: String(dateRange[0].endDate),
+                                            adults: numberOfAdults,
+                                            children: numberOfChildren,
+                                            rooms: numberOfRooms,
+                                        },
+                                    }}>
+                                        <div className="flex flex-col gap-3 w-full">
+                                            <Image
+                                                className="object-cover w-[140px] h-[140px] md:w-64 md:h-64 rounded-md"
+                                                src={abuja}
+                                                alt="myblcoud"
+                                            />
+                                            <p className="text-sec-main font-medium text-sm md:text-base block truncate w-32 lg:w-56 md:w-56">Hotels in Abuja</p>
+                                        </div>
+                                    </Link>
+                                </Slide>
+
+                                <Slide index={5}>
+                                    <Link href={{
+                                        pathname: "/search",
+                                        query: {
+                                            hotel: "",
+                                            location: "Ilorin",
+                                            startDate: String(dateRange[0].startDate),
+                                            endDate: String(dateRange[0].endDate),
+                                            adults: numberOfAdults,
+                                            children: numberOfChildren,
+                                            rooms: numberOfRooms,
+                                        },
+                                    }}>
+                                        <div className="flex flex-col gap-3 w-full">
+                                            <Image
+                                                className="object-cover w-[140px] h-[140px] md:w-64 md:h-64 rounded-md"
+                                                src={ilorin}
+                                                alt="myblcoud"
+                                            />
+                                            <p className="text-sec-main font-medium text-sm md:text-base block truncate w-32 lg:w-56 md:w-56">Hotels in Ilorin</p>
+                                        </div>
+                                    </Link>
+                                </Slide>
+                            </Slider>
+                        </CarouselProvider>
+
+                        <CarouselProvider
+                            naturalSlideWidth={100}
+                            isIntrinsicHeight={true}
+                            totalSlides={6}
+                            isPlaying={true}
+                            visibleSlides={4}
+                            infinite={true}
+                            className="w-full hidden sm:hidden md:flex lg:flex"
+                        >
+                            <Slider className='w-full'>
+                                <Slide index={0}>
+                                    <Link href={{
+                                        pathname: "/search",
+                                        query: {
+                                            hotel: "",
+                                            location: "Lagos",
+                                            startDate: String(dateRange[0].startDate),
+                                            endDate: String(dateRange[0].endDate),
+                                            adults: numberOfAdults,
+                                            children: numberOfChildren,
+                                            rooms: numberOfRooms,
+                                        },
+                                    }}>
+                                        <div className="flex flex-col gap-3 w-full">
+                                            <Image
+                                                className="object-cover w-[140px] h-[140px] md:w-64 md:h-64 rounded-md"
+                                                src={lagos}
+                                                alt="myblcoud"
+                                            />
+                                            <p className="text-sec-main font-medium text-sm md:text-base block truncate w-32 lg:w-56 md:w-56">Hotels in Lagos</p>
+                                        </div>
+                                    </Link>
+                                </Slide>
+
+                                <Slide index={1}>
+                                    <Link href={{
+                                        pathname: "/search",
+                                        query: {
+                                            hotel: "",
+                                            location: "Ibadan",
+                                            startDate: String(dateRange[0].startDate),
+                                            endDate: String(dateRange[0].endDate),
+                                            adults: numberOfAdults,
+                                            children: numberOfChildren,
+                                            rooms: numberOfRooms,
+                                        },
+                                    }}>
+                                        <div className="flex flex-col gap-3 w-full">
+                                            <Image
+                                                className="object-cover w-[140px] h-[140px] md:w-64 md:h-64 rounded-md"
+                                                src={ibadan}
+                                                alt="myblcoud"
+                                            />
+                                            <p className="text-sec-main font-medium text-sm md:text-base block truncate w-32 lg:w-56 md:w-56">Hotels in Ibadan</p>
+                                        </div>
+                                    </Link>
+                                </Slide>
+
+                                <Slide index={2}>
+                                    <Link href={{
+                                        pathname: "/search",
+                                        query: {
+                                            hotel: "",
+                                            location: "Benin",
+                                            startDate: String(dateRange[0].startDate),
+                                            endDate: String(dateRange[0].endDate),
+                                            adults: numberOfAdults,
+                                            children: numberOfChildren,
+                                            rooms: numberOfRooms,
+                                        },
+                                    }}>
+                                        <div className="flex flex-col gap-3 w-full">
+                                            <Image
+                                                className="object-cover w-[140px] h-[140px] md:w-64 md:h-64 rounded-md"
+                                                src={benin}
+                                                alt="myblcoud"
+                                            />
+                                            <p className="text-sec-main font-medium text-sm md:text-base block truncate w-32 lg:w-56 md:w-56">Hotels in Benin</p>
+                                        </div>
+                                    </Link>
+                                </Slide>
+
+                                <Slide index={3}>
+                                    <Link href={{
+                                        pathname: "/search",
+                                        query: {
+                                            hotel: "",
+                                            location: "Ogun",
+                                            startDate: String(dateRange[0].startDate),
+                                            endDate: String(dateRange[0].endDate),
+                                            adults: numberOfAdults,
+                                            children: numberOfChildren,
+                                            rooms: numberOfRooms,
+                                        },
+                                    }}>
+                                        <div className="flex flex-col gap-3 w-full">
+                                            <Image
+                                                className="object-cover w-[140px] h-[140px] md:w-64 md:h-64 rounded-md"
+                                                src={ogun}
+                                                alt="myblcoud"
+                                            />
+                                            <p className="text-sec-main font-medium text-sm md:text-base block truncate w-32 lg:w-56 md:w-56">Hotels in Ogun</p>
+                                        </div>
+                                    </Link>
+                                </Slide>
+
+                                <Slide index={4}>
+                                    <Link href={{
+                                        pathname: "/search",
+                                        query: {
+                                            hotel: "",
+                                            location: "Abuja",
+                                            startDate: String(dateRange[0].startDate),
+                                            endDate: String(dateRange[0].endDate),
+                                            adults: numberOfAdults,
+                                            children: numberOfChildren,
+                                            rooms: numberOfRooms,
+                                        },
+                                    }}>
+                                        <div className="flex flex-col gap-3 w-full">
+                                            <Image
+                                                className="object-cover w-[140px] h-[140px] md:w-64 md:h-64 rounded-md"
+                                                src={abuja}
+                                                alt="myblcoud"
+                                            />
+                                            <p className="text-sec-main font-medium text-sm md:text-base block truncate w-32 lg:w-56 md:w-56">Hotels in Abuja</p>
+                                        </div>
+                                    </Link>
+                                </Slide>
+
+                                <Slide index={5}>
+                                    <Link href={{
+                                        pathname: "/search",
+                                        query: {
+                                            hotel: "",
+                                            location: "Ilorin",
+                                            startDate: String(dateRange[0].startDate),
+                                            endDate: String(dateRange[0].endDate),
+                                            adults: numberOfAdults,
+                                            children: numberOfChildren,
+                                            rooms: numberOfRooms,
+                                        },
+                                    }}>
+                                        <div className="flex flex-col gap-3 w-full">
+                                            <Image
+                                                className="object-cover w-[140px] h-[140px] md:w-64 md:h-64 rounded-md"
+                                                src={ilorin}
+                                                alt="myblcoud"
+                                            />
+                                            <p className="text-sec-main font-medium text-sm md:text-base block truncate w-32 lg:w-56 md:w-56">Hotels in Ilorin</p>
+                                        </div>
+                                    </Link>
+                                </Slide>
+                            </Slider>
+                        </CarouselProvider>
                     </div>
 
                 </div>
-            </div>
+            </section>
+
             <Footer />
-        </div>
+        </div >
     );
 }

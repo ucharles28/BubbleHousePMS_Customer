@@ -18,6 +18,8 @@ module.exports = {
       },
       'sec': {
         "main": "#1a1a1a",
+        "conBg": "#666666",
+        "altDark": "#404040",
       },
       'gray': {
         50: '#C4C4C4',

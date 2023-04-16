@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import { get } from "../helpers/ApiRequest";
 import data from "../pages/api/HotelSerMockData/MOCK_DATA.json";
 import styles from "../styles/HotelSearch.module.css";
-import { People } from "iconsax-react";
+import { People, Calendar } from "iconsax-react";
 import PopoverDisplay from "./PopoverDisplay";
 import { style } from "@mui/system";
 import { Puff } from "react-loader-spinner";
@@ -155,154 +155,135 @@ const HotelSearch = ({ numberOfAdults, setNumberOfAdults, numberOfChildren, setN
   // })
 
   return (
-    <>
-      <section className="relative">
-        <form className="lg:bg-white bg-transparent text-black rounded-lg  items-center py-[2px] lg:py-0 lg:px-5 lg:mx-auto grid lg:flex mx-2 relative">
-          <div className="text-start lg:grow">
-            <input
-              ref={inputRef}
-              // onChange={(event) => setQuery(event.target.value)}
-              placeholder="Enter a City"
-              className="border-1 text-md p-2 bg-[#E0E0E0] rounded-md outline-0 w-full text-[13.5px] font-bold"
-              type="text"
-              value={value}
-              onChange={onChange}
-            />
-            {/* <div className={styles.dropdown}>
-              {dommyData
-                .filter((item) => {
-                  const searchTerm = value?.toLowerCase();
-                  const fullName = item.full_name?.toLowerCase();
+    <div className="relative md:w-3/4 w-full">
 
-                  return (
-                    searchTerm &&
-                    fullName?.startsWith(searchTerm) &&
-                    fullName !== searchTerm
-                  );
-                })
-                .slice(0, 9)
-                .map((item) => (
-                  <div className={styles.dropdownRow}>
-                    <ul
-                      onClick={() => onSearch(item.full_name)}
-                      key={item.full_name}
-                    >
-                      <li>{item.full_name}</li>
-                    </ul>
-                  </div>
-                ))}
-            </div> */}
-          </div>
-          <div className="lg:grow lg:ml-3 cursor-pointer">
-            <div className="grid lg:flex  items-start lg:items-center space-y-3 lg:space-y-0 my-3 lg:my-0">
-              <div
-                className="w-full flex items-center justify-start bg-[#E0E0E0]  py-[.5px] gap-2 px-5 rounded-md"
-                onClick={datePickerHandler}
-              >
-                <BsCalendar size={19} />
+      <div className="flex md:flex-row flex-col items-center justify-between md:bg-white gap-2 p-3 md:p-4 rounded-md">
 
-                <div className="relative">
-                  <small className="text-[11px] font-bold text-[gray]">
-                    Check In / Check out
-                  </small>
-                  <h6 className="text-[13px] font-extrabold">
-                    {`${format(dateRange[0].startDate, "dd-MM-yyy")} - ${format(
-                      dateRange[0].endDate,
-                      "dd-MM-yyy"
-                    )}`}
-                  </h6>
-                </div>
-              </div>
-              {openDate && (
-                <DateRange
-                  editableDateInputs={true}
-                  onChange={(item) => setDateRange([item.selection])}
-                  moveRangeOnFirstSelection={false}
-                  ranges={dateRange}
-                  className="absolute top-[90px] lg:top-[60px] lg:left-[30%]"
-                />
-              )}
-            </div>
-          </div>
+        <input
+          ref={inputRef}
+          // onChange={(event) => setQuery(event.target.value)}
+          placeholder="Enter a City"
+          className="outline-0 w-full p-4 pl-4 leading-5 md:text-xs text-sm font-normal bg-white md:bg-gray-100 active:bg-gray-200/50 rounded-md"
+          type="text"
+          value={value}
+          onChange={onChange}
+        />
 
+        <div className='relative w-full'>
           <div
-            className="flex gap-2 cursor-pointer lg:p-2 rounded-md items-center lg:grow"
-            onClick={handleClick}
+            className="flex bg-white md:bg-gray-100 rounded-md py-2 px-4 items-center gap-2 text-xs leading-5 cursor-pointer"
+            onClick={datePickerHandler}
           >
-            <div className="w-full flex gap-0 bg-[#E0E0E0] items-center space-x-3 py-[4.5px] lg:justify-center justify-start rounded-md pl-5 lg:pl-0 lg:grow">
-              <People size={20} className="lg:mr-1" />
-              <div className="flex-col text-[gray]">
-                <p className="text-[10px] font-extrabold">Rooms</p>
-                <p className="text-[12px] font-extrabold text-black">Guests</p>
-              </div>
+
+            <Calendar size={22} />
+
+            <div className="flex flex-col w-full">
+              <p className="text-xs md:text-[0.63rem] mb-[0] text-sec-main/60">Check in/out</p>
+              <p className="text-sm md:text-xs mb-[0] text-sec-main">
+                {`${format(dateRange[0].startDate, "dd-MM-yyy")} - ${format(
+                  dateRange[0].endDate,
+                  "dd-MM-yyy"
+                )}`}
+              </p>
             </div>
           </div>
-          <PopoverDisplay
-            handleClick={handleClick}
-            anchorEl={anchorEl}
-            setAnchorEl={setAnchorEl}
-            numberOfAdults={numberOfAdults}
-            setNumberOfAdults={setNumberOfAdults}
-            numberOfChildren={numberOfChildren}
-            setNumberOfChildren={setNumberOfChildren}
-            setNumberOfRooms={setNumberOfRooms}
-            numberOfRooms={numberOfRooms}
-          />
-          <button
-            type="button"
-            onClick={handleSearch}
-            className="w-full lg:w-fit py-3 lg:py-2 px-7 bg-[#404040;] text-white rounded-md mt-2 text-base lg:grow lg:mb-2"
-          >
-            Search
-          </button>
-        </form>
-        {searchIsLoading ||
-          (places && places.length > 0 && (
-            <div className={styles.dropdown}>
-              {searchIsLoading && (
-                <div className="flex flex-col items-end m-0 p-0 justify-start">
-                  <BounceLoader
-                    heigth={20}
-                    width={20}
-                    color="#FFCC00"
-                    ariaLabel="loading-indicator"
-                  />
-                </div>
-              )}
-              {!searchIsLoading && places.length > 0 && (
-                <div className={styles.dropdownRowTitle}>
-                  <ul key={"location"}>
-                    <li>Locations</li>
+          {openDate && (
+            <DateRange
+              onChange={(item) => setDateRange([item.selection])}
+              showSelectionPreview={true}
+              moveRangeOnFirstSelection={false}
+              months={1}
+              ranges={dateRange}
+              // direction="horizontal"
+              rangeColors={['#ffcc00']}
+              className={['absolute md:top-[50%] md:bg-white bottom-[50%] -left-[5%] md:-left-[15%] z-10']}
+            />
+          )}
+        </div>
+
+        <div
+          className="w-full flex bg-white md:bg-gray-100 rounded-md py-2 px-4 items-center gap-2 text-xs leading-5 cursor-pointer"
+          onClick={handleClick}
+        >
+
+          <People size={22} />
+
+          <div className="flex flex-col w-full">
+            <p className="text-xs md:text-[0.63rem] mb-[0] text-sec-main/60">Room</p>
+            <p className="text-sm md:text-xs mb-[0] text-sec-main">Guest</p>
+          </div>
+
+        </div>
+
+        <PopoverDisplay
+          handleClick={handleClick}
+          anchorEl={anchorEl}
+          setAnchorEl={setAnchorEl}
+          numberOfAdults={numberOfAdults}
+          setNumberOfAdults={setNumberOfAdults}
+          numberOfChildren={numberOfChildren}
+          setNumberOfChildren={setNumberOfChildren}
+          setNumberOfRooms={setNumberOfRooms}
+          numberOfRooms={numberOfRooms}
+        />
+
+        <button
+          // type='submit'
+          className="md:w-1/2 w-full p-4 text-sm md:text-xs rounded-md hover:bg-sec-altDark bg-sec-conBg text-white flex items-center justify-center"
+          onClick={handleSearch}
+        >
+          Search
+        </button>
+
+      </div>
+
+      {searchIsLoading ||
+        (places && places.length > 0 && (
+          <div className={styles.dropdown}>
+            {searchIsLoading && (
+              <div className="flex flex-col items-end m-0 p-0 justify-start">
+                <BounceLoader
+                  heigth={20}
+                  width={20}
+                  color="#FFCC00"
+                  ariaLabel="loading-indicator"
+                />
+              </div>
+            )}
+            {!searchIsLoading && places.length > 0 && (
+              <div className={styles.dropdownRowTitle}>
+                <ul key={"location"}>
+                  <li>Locations</li>
+                </ul>
+              </div>
+            )}
+            {!searchIsLoading &&
+              places.map((item, index) => (
+                <div className={styles.dropdownRow}>
+                  <ul onClick={() => onSelectPlace(item)} key={index}>
+                    <li>{item.description}</li>
                   </ul>
                 </div>
-              )}
-              {!searchIsLoading &&
-                places.map((item, index) => (
-                  <div className={styles.dropdownRow}>
-                    <ul onClick={() => onSelectPlace(item)} key={index}>
-                      <li>{item.description}</li>
-                    </ul>
-                  </div>
-                ))}
-              {!searchIsLoading && hotels.length > 0 && (
-                <div className={styles.dropdownRowTitle}>
-                  <ul key={"hotels"}>
-                    <li>Hotels</li>
+              ))}
+            {!searchIsLoading && hotels.length > 0 && (
+              <div className={styles.dropdownRowTitle}>
+                <ul key={"hotels"}>
+                  <li>Hotels</li>
+                </ul>
+              </div>
+            )}
+            {!searchIsLoading &&
+              hotels.map((item, index) => (
+                <div className={styles.dropdownRow}>
+                  <ul onClick={() => onSelectHotel(item)} key={index}>
+                    <li>{item.name}</li>
                   </ul>
                 </div>
-              )}
-              {!searchIsLoading &&
-                hotels.map((item, index) => (
-                  <div className={styles.dropdownRow}>
-                    <ul onClick={() => onSelectHotel(item)} key={index}>
-                      <li>{item.name}</li>
-                    </ul>
-                  </div>
-                ))}
-            </div>
-          ))}
-      </section>
-    </>
+              ))}
+          </div>
+        ))}
+
+    </div>
   );
 };
 

@@ -27,7 +27,6 @@ const Meta = (pageMeta) => {
         <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png" />
         <link rel="manifest" href="/images/site.webmanifest" />
         {/* <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8QN-9BQ2Gto1h0GfSOG78AzL-qHhDyPg&libraries=places&callback=initMap"async></script> */}
-        <script src="https://cdn.tailwindcss.com"></script>
       </Head>
     </>
   )

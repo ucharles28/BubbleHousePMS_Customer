@@ -509,7 +509,7 @@ export default function HotelDetails() {
                                 )} 
                             </div>
 
-                            {/* <div onClick={handleClick} className="flex cursor-pointer gap-2 items-center py-[10px] pl-4 pr-[158px] border-[#1A1A1A14] border rounded-md">
+                            <div onClick={handleClick} className="flex cursor-pointer gap-2 items-center py-[10px] pl-4 pr-[158px] border-[#1A1A1A14] border rounded-md">
                                 <People
                                     size={20}
                                     className="" />
@@ -528,7 +528,7 @@ export default function HotelDetails() {
                                 setNumberOfChildren={setNumberOfChildren}
                                 setNumberOfRooms={setNumberOfRooms}
                                 numberOfRooms={numberOfRooms}
-                            /> */}
+                            />
                         </div>
                         <div className="w-full lg:w-3/4">
                             <RoomType roomTypes={hotel.roomTypes} updateNumberOfRooms={updateNumberOfRooms} selectRooms={selectRooms} />

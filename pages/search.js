@@ -21,6 +21,7 @@ import PopoverDisplay from "../components/PopoverDisplay";
 
 import RoomSearchResult from "../components/RoomSearchResult";
 import { BounceLoader } from "react-spinners";
+import Footer from "../components/Footer";
 
 export default function Home() {
   const [age, setAge] = useState("");
@@ -125,15 +126,13 @@ export default function Home() {
   };
 
   return (
-    <section className="font-poppins">
-      <div className="relative">
-        <Navbar />
-      </div>
-      <div className="absolute top-20 w-full">
-        <div className="max-w-[100%] md:max-w-[85%] md:mx-auto w-full flex-wrap mx-4 flex gap-5">
+    <div className="min-h-screen font-poppins">
+      <Navbar />
+      <div className="flex flex-col items-center bg-gray-100/40 justify-center">
+        <div className="max-w-[100%] md:max-w-[85%] md:mx-auto w-full flex-wrap mx-4 flex gap-5 py-6 justify-start align-top items-start mt-24">
           <div className="md:block">
             <form className=" bg-[#FFCC00] p-3 space-y-3 rounded-lg sticky top-20 ">
-              <h1 className="font-bold ">Search</h1>
+              <h1 className="font-medium ">Search</h1>
               <div className="w-full bg-white rounded-md mb-2 cursor-pointer">
                 <div className="flex items-center">
                   <LocationOnIcon style={{ fontSize: "20px" }} />
@@ -274,6 +273,7 @@ export default function Home() {
           )}
         </div>
       </div>
-    </section>
+      <Footer />
+    </div>
   );
 }
