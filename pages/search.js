@@ -126,11 +126,11 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen font-poppins">
+    <div className="min-h-screen font-poppins bg-gray-100/50">
       <Navbar />
-      <div className="flex flex-col items-center bg-gray-100/40 justify-center">
-        <div className="max-w-[100%] md:max-w-[85%] md:mx-auto w-full flex-wrap mx-4 flex gap-5 py-6 justify-start align-top items-start mt-24">
-          <div className="md:block">
+      <div className="flex flex-col items-center justify-center">
+        <div className="grid md:grid-cols-4 grid-cols-1 mx-auto py-24 items-start justify-start gap-7 px-4">
+          <div className="col-span-1">
             <form className=" bg-[#FFCC00] p-3 space-y-3 rounded-lg sticky top-20 ">
               <h1 className="font-medium ">Search</h1>
               <div className="w-full bg-white rounded-md mb-2 cursor-pointer">
@@ -219,8 +219,8 @@ export default function Home() {
             </form>
           </div>
           {!isLoading ? (
-            <div className=" flex-auto w-64">
-              <div className="flex justify-between items-center">
+            <div className="col-span-3 flex-auto w-full space-y-5">
+              <div className="flex justify-between items-center w-full">
                 {location ? (
                   <h1 className="text-xl font-bold">
                     {hotelsCount} Hotels in {location.split(",")[0]}
@@ -230,7 +230,9 @@ export default function Home() {
                     {hotelsCount} Hotel found searching for {hotel}
                   </h1>
                 )}
-                <div className="bg-white hidden p-2 border-2 rounded-lg  justify-between space-x-3 items-center cursor-pointer relative z-10">
+
+                {/* Filter search */}
+                {/* <div className="bg-white p-2 border-2 rounded-lg  justify-between space-x-3 items-center cursor-pointer relative z-10">
                   <span onClick={viewMenuHandler}>
                     <small className="opacity-50 text-[11px]">Sort by </small>:
                     <strong className="text-[12px]">Top Viewed</strong>
@@ -242,9 +244,9 @@ export default function Home() {
                       <p>Top Viewed</p>
                     </div>
                   )}
-                </div>
+                </div> */}
               </div>
-              <div className="">
+              {/* <div className=""> */}
                 <RoomSearchResult
                   hotels={hotelResults}
                   gotoDetails={gotoDetails}
@@ -253,7 +255,7 @@ export default function Home() {
                   rooms={numberOfRooms}
                   dateRange={dateRange}
                 />
-              </div>
+              {/* </div> */}
             </div>
           ) : (
             <div className="w-full">

@@ -18,17 +18,20 @@ const RoomSearchResult = ({
       {hotels.map((hotel) => {
         return (
           <div
-            className="border-2 my-3 py-3 px-4 flex-wrap md:flex justify-between"
+            className="border-[1.5px] border-gray-200 hover:bg-pri-main/10 hover:border-pri-main/20 cursor-pointer p-3 rounded-md flex-wrap md:flex md:justify-between w-auto h-auto grid grid-cols-1"
             key={hotel.id}
           >
-            <div className="left flex space-x-3">
+
+            <div className="flex md:flex-row flex-col space-y-3 md:space-x-3">
+
               <img
                 src={hotel.imageUrl}
-                className="object-cover rounded-lg w-40 h-40"
+                className="object-cover rounded-md w-40 md:w-48 h-40 md:h-48"
               />
-              <div className="space-y-4">
-                <div>
-                  <Link
+
+              <div className="space-y-5">
+                <div className='flex flex-col'>
+                  {/* <Link
                     href={{
                       pathname: "/hotel/details",
                       query: {
@@ -40,42 +43,50 @@ const RoomSearchResult = ({
                         rooms: rooms,
                       },
                     }}
-                  >
-                    <h4 className="font-extrabold">{hotel.name}</h4>
-                  </Link>
-                  <span className="my-2 space-x-2">
-                    <small className="text-[10.7px] font-semibold">
+                  > */}
+                  <span className="text-lg font-semibold block truncate w-3/4 md:w-96">
+                    {hotel.name}
+                  </span>
+                  {/* </Link> */}
+                  <span className="space-x-2 block truncate w-3/4 md:w-96">
+                    <span className="text-xs text-sec-conBg font-medium">
                       {hotel.address.area}
-                    </small>
-                    <small className="text-[11.3px] opacity-50 ">
+                    </span>
+                    <span className="text-xs text-sec-conBg">
                       {hotel.address.line}
-                    </small>
+                    </span>
                   </span>
                 </div>
 
-                <div>
-                  <h5 className="font-bold text-base">{hotel.roomType.name}</h5>
-                  <small className="opacity-50">{hotel.bedSpace}</small>
-                  <p className="text-xs font-semibold">{hotel.cancellation}</p>
+                <div className='flex flex-col gap-1 text-xs font-normal text-sec-conBg'>
+                  <span className="font-semibold uppercase text-sec-altDark">
+                    {/* {hotel.roomType.name} */}
+                    Deluxe Room
+                  </span>
+                  <span className="">
+                    {/* {hotel.bedSpace} */}
+                    1 queen size bed
+                  </span>
+                  <span className="font-medium italic">
+                    {/* {hotel.cancellation} */}
+                    Free cancellation
+                  </span>
                 </div>
 
-                <div className="font-bold flex flex-wrap w-[70%]">
+                <div className="font-semibold flex flex-wrap w-[80%]">
                   {hotel.roomType.roomAmenities &&
                     hotel.roomType.roomAmenities.map((amenties) => (
-                      <span className="mr-3 font-semibold text-xs">
+                      <span className="mr-2 font-medium text-xs">
                         {amenties.amenity.title}
                       </span>
                     ))}
-                  {/* <span className="mr-3 font-semibold text-xs">
-                    Air conditioning
-                  </span>
-                  <span className="mr-3 font-semibold text-xs">Pool</span>
-                  <span className="mr-3 font-semibold text-xs">Restaurant</span> */}
                 </div>
               </div>
+
             </div>
-            <div className="right flex flex-col justify-between">
-              <div className="text-end">
+
+            <div className="flex flex-col justify-between">
+              <div className="md:text-end">
                 <small className="opacity-50 text-center">
                   Includes taxes and fees
                 </small>
@@ -87,76 +98,17 @@ const RoomSearchResult = ({
               {/* <Link href="/singleRoom" className="text-end"> */}
               <button
                 type="button"
-                className="text-center py-1 px-5 mt-2 lg:mt-0 rounded-lg bg-[#FFCC00]"
+                className="w-auto text-center py-1 px-5 mt-2 lg:mt-0 rounded-lg bg-[#FFCC00]"
                 onClick={(e) => gotoDetails(hotel.id)}
               >
                 Book Now
               </button>
               {/* </Link> */}
             </div>
+
           </div>
         );
       })}
-      {/* {roomDetails.map((room) => {
-        return (
-          <div
-            className="border-2 my-3 py-3 px-4 flex justify-between"
-            key={room.id}
-          >
-            <div className="left flex space-x-3">
-              <Image
-                src={room.imgSrc}
-                width={150}
-                height={150}
-                className="object-cover rounded-lg"
-              />
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-extrabold">{room.name}</h4>
-                  <span className="my-2 space-x-2">
-                    <small className="text-[10.7px] font-semibold">
-                      {room.address.area}
-                    </small>
-                    <small className="text-[11.3px] opacity-50 ">
-                      {room.address.street}
-                    </small>
-                  </span>
-                </div>
-
-                <div>
-                  <h5 className="font-bold text-base">{room.roomType}</h5>
-                  <small className="opacity-50">{room.bedSpace}</small>
-                  <p className="text-xs font-semibold">{room.cancellation}</p>
-                </div>
-
-                <div className="font-bold flex flex-wrap w-[70%]">
-                  <span className="mr-3 font-semibold text-xs">Free Wifi</span>
-                  <span className="mr-3 font-semibold text-xs">
-                    Air conditioning
-                  </span>
-                  <span className="mr-3 font-semibold text-xs">Pool</span>
-                  <span className="mr-3 font-semibold text-xs">Restaurant</span>
-                </div>
-              </div>
-            </div>
-            <div className="right flex flex-col justify-between">
-              <div className="">
-                <small className="opacity-50">{room.taxes}</small>
-                <p className="font-bold text-end">{room.price}</p>
-                <p className="text-end text-xs">{room.time}</p>
-              </div>
-              <Link href="/singleRoom" className="text-end">
-                <button
-                  type="button"
-                  className="text-end  py-1 px-5 rounded-lg bg-[#FFCC00]"
-                >
-                  Book Now
-                </button>
-              </Link>
-            </div>
-          </div>
-        );
-      })} */}
     </>
   );
 };
