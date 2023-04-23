@@ -2,7 +2,6 @@ import Image from "next/image";
 import { Add, Minus } from "iconsax-react";
 
 const RoomType = ({ roomTypes, updateNumberOfRooms, selectRooms }) => {
-  console.log(roomTypes)
   return (
     roomTypes.map((roomType, index) => (<div className="group border-[1.5px] bg-white border-pri-main/40 hover:bg-pri-main/5 cursor-pointer hover:shadow-sm p-3 mb-3 rounded-md flex justify-between text-sec-main">
 

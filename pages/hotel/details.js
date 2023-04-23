@@ -158,7 +158,7 @@ export default function HotelDetails() {
                 get(`SavedHotel?customerId=${user.id}&hotelId=${query.hotelId}`)
             ])
 
-            if (responses[0].successful) {
+            if (responses[0].successful) {                
                 setHotel(responses[0].data)
                 getRoomImages(responses[0].data.roomTypes)
             }
@@ -171,6 +171,7 @@ export default function HotelDetails() {
             const response = await post(`Hotel/BookingDetails`, request)
 
             if (response.successful) {
+                console.log(response.data)
                 setHotel(response.data)
                 getRoomImages(response.data.roomTypes)
             }
@@ -396,7 +397,7 @@ export default function HotelDetails() {
                     <div className="flex flex-col w-full gap-4">
                         <p className="text-base font-medium pb-2 border-b-[1.5px]">Most popular facilities</p>
 
-                        <Amenities />
+                        {<Amenities amenities={hotel.amenities} />}
                     </div>
 
                     <div className="flex flex-col gap-4 w-full">
