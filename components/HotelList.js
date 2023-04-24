@@ -36,51 +36,12 @@ const HotelList = () => {
     const response = await get("Hotel/Featured");
 
     if (response.successful) {
-      console.log(response.data);
       setFeaturedHotels(response.data);
     }
 
     setIsLoading(false);
   };
 
-  const HotelData = [
-    {
-      name: "Wintess Hotel and Suites",
-      address: "Ifite-Awka, Anambra State.",
-      img: "/HotelListImg.png",
-      price: " NGN 5,000",
-      id: 0,
-    },
-    {
-      name: "Wintess Hotel and Suites",
-      address: "Ifite-Awka, Anambra State.",
-      img: "/HotelListImg.png",
-      price: " NGN 5,000",
-      id: 1,
-    },
-    {
-      name: "Wintess Hotel and Suites",
-      address: "Ifite-Awka, Anambra State.",
-      img: "/HotelListImg.png",
-      price: "NGN 5,000",
-      id: 2,
-    },
-    {
-      name: "Wintess Hotel and Suites",
-      address: "Ifite-Awka, Anambra State.",
-      img: "/HotelListImg.png",
-      price: "NGN 5,000",
-      id: 3,
-    },
-    // {
-    //   name: "Wintess Hotel and Suites",
-    //   address: "Ifite-Awka, Anambra State.",
-    //   img: "/HotelListImg.png",
-    //   price: "NGN 5,000",
-    //   id: 1,
-    // },
-  ];
-  console.log(HotelData);
   return (
     <div className="lg:flex lg:flex-row grid grid-cols-1">
       {!isLoading ? ( <Carousel
