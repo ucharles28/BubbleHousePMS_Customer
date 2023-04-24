@@ -184,6 +184,8 @@ const HotelSearch = ({ numberOfAdults, setNumberOfAdults, numberOfChildren, setN
                   dateRange[0].endDate,
                   "dd-MM-yyy"
                 )}`}
+                {/* {dateRange &&
+                  `${format(dateRange[0].startDate, "dd-MM-yyy")}`} */}
               </p>
             </div>
           </div>
@@ -200,6 +202,23 @@ const HotelSearch = ({ numberOfAdults, setNumberOfAdults, numberOfChildren, setN
             />
           )}
         </div>
+
+        {/* <div
+          className="w-full flex bg-white md:bg-gray-100 rounded-md py-2 px-4 items-center gap-2 text-xs leading-5 cursor-pointer"
+          onClick={datePickerHandler}
+        >
+
+          <Calendar size={22} />
+
+          <div className="flex flex-col w-full">
+            <p className="text-xs md:text-[0.63rem] mb-[0] text-sec-main/60">Check out</p>
+            <p className="text-sm md:text-xs mb-[0] text-sec-main">
+              {dateRange &&
+                `${format(dateRange[0].endDate, "dd-MM-yyy")}`}
+            </p>
+          </div>
+
+        </div> */}
 
         <div
           className="w-full flex bg-white md:bg-gray-100 rounded-md py-2 px-4 items-center gap-2 text-xs leading-5 cursor-pointer"

@@ -11,7 +11,7 @@ import { BsCalendar } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { DatePicker, Space } from "antd";
-import { People } from "iconsax-react";
+import { Calendar, People } from "iconsax-react";
 import { useRouter } from "next/router";
 import { post } from "../helpers/ApiRequest";
 import Link from "next/link";
@@ -129,76 +129,66 @@ export default function Home() {
     <div className="min-h-screen font-poppins bg-gray-100/50">
       <Navbar />
       <div className="flex flex-col items-center justify-center">
-        <div className="grid md:grid-cols-4 grid-cols-1 mx-auto py-24 items-start justify-start gap-7 px-4">
+        <div className="grid md:grid-cols-5 grid-cols-1 mx-auto py-24 items-start justify-start gap-7 px-4">
           <div className="col-span-1">
-            <form className=" bg-[#FFCC00] p-3 space-y-3 rounded-lg sticky top-20 ">
-              <h1 className="font-medium ">Search</h1>
-              <div className="w-full bg-white rounded-md mb-2 cursor-pointer">
-                <div className="flex items-center">
-                  <LocationOnIcon style={{ fontSize: "20px" }} />
-                  <input
-                    type="text"
-                    placeholder="Lagos"
-                    className="p-2 outline-none text-base"
-                  />
-                </div>
-              </div>
+            <form className="bg-pri-main py-4 px-3 space-y-3 rounded-md">
+              <p className="text-lg font-semibold leading-5 text-sec-main">Search</p>
+              <input
+                placeholder="Enter a City"
+                className="outline-0 p-4 pl-4 leading-5 text-base font-normal bg-white rounded-md"
+                type="text"
+              />
+
               <div
                 onClick={datePickerHandler}
-                className="w-full bg-white rounded-md mb-2 cursor-pointer"
+                className="flex bg-white md:bg-gray-100 rounded-md py-2 px-3 items-center gap-2 text-xs leading-5 cursor-pointer"
               >
-                <div className="flex items-center space-x-2 p-[2.5px]">
-                  <BsCalendar className="text-[16px] ml-1" />
-                  <span>
-                    <small className="text-[10px] opacity-30 font-bold">
-                      Check-In Date
-                    </small>
-                    <p className="text-[11px] font-extrabold">
-                      {dateRange &&
-                        `${format(dateRange[0].startDate, "dd-MM-yyy")}`}
-                    </p>
-                  </span>
+                <Calendar size={22} />
+                <div className="flex flex-col w-full">
+                  <p className="text-xs md:text-[0.63rem] mb-[0] text-sec-main/60">Check in</p>
+                  <p className="text-sm md:text-xs mb-[0] text-sec-main">
+                    {dateRange &&
+                      `${format(dateRange[0].startDate, "dd-MM-yyy")}`}
+                  </p>
                 </div>
               </div>
+
               <div
                 onClick={datePickerHandler}
-                className="w-full bg-white rounded-md mb-2 cursor-pointer"
+                className="flex bg-white md:bg-gray-100 rounded-md py-2 px-3 items-center gap-2 text-xs leading-5 cursor-pointer"
               >
-                <div className="flex items-center space-x-2 p-[2.5px]">
-                  <BsCalendar className="text-[16px] ml-1" />
-                  <span>
-                    <small className="text-[10px] opacity-30 font-bold">
-                      Check-Out Date
-                    </small>
-                    <p className="text-[11px] font-extrabold">
-                      {dateRange &&
-                        `${format(dateRange[0].endDate, "dd-MM-yyy")}`}
-                    </p>
-                  </span>
+                <Calendar size={22} />
+                <div className="flex flex-col w-full">
+                  <p className="text-xs md:text-[0.63rem] mb-[0] text-sec-main/60">Check out</p>
+                  <p className="text-sm md:text-xs mb-[0] text-sec-main">
+                    {dateRange &&
+                      `${format(dateRange[0].endDate, "dd-MM-yyy")}`}
+                  </p>
                 </div>
               </div>
               {openDate && (
                 <DateRange
-                  editableDateInputs={true}
+                  // editableDateInputs={true}
                   onChange={(item) => setDateRange([item.selection])}
                   moveRangeOnFirstSelection={false}
                   ranges={dateRange}
+                  rangeColors={['#ffcc00']}
                   className="absolute top-[90px] lg:top-[60px] lg:left-[30%]"
                 />
               )}
+
               <div
-                className="w-full bg-white rounded-md mb-2 cursor-pointer"
+                className="w-full flex bg-white md:bg-gray-100 rounded-md py-2 px-3 items-center gap-2 text-xs leading-5 cursor-pointer"
                 onClick={handleClick}
               >
-                <div className="flex items-center space-x-2 p-[2.5px]">
-                  <People className=" ml-1" size={20} />
-                  <span>
-                    <small className="text-[10px] opacity-30 font-bold">
-                      Rooms
-                    </small>
-                    <p className="text-[12px] font-extrabold">Guests</p>
-                  </span>
+
+                <People size={22} />
+
+                <div className="flex flex-col w-full">
+                  <p className="text-xs md:text-[0.63rem] mb-[0] text-sec-main/60">Room</p>
+                  <p className="text-sm md:text-xs mb-[0] text-sec-main">Guest</p>
                 </div>
+
               </div>
               <PopoverDisplay
                 handleClick={handleClick}
@@ -211,16 +201,18 @@ export default function Home() {
                 setNumberOfRooms={setNumberOfRooms}
                 numberOfRooms={numberOfRooms}
               />
-              <div className="w-full bg-[#404040] rounded-md cursor-pointer">
-                <button className="text-center w-full p-2 text-white">
-                  Search
-                </button>
-              </div>
+
+              <button
+                className="w-full p-3.5 text-sm md:text-sm rounded-md hover:bg-sec-altDark bg-sec-conBg text-white flex items-center justify-center"
+              >
+                Search
+              </button>
+              
             </form>
           </div>
           {!isLoading ? (
-            <div className="col-span-3 flex-auto w-full space-y-5">
-              <div className="flex justify-between items-center w-full">
+            <div className="col-span-4 flex-auto w-full space-y-5">
+              <div className="flex items-center w-full">
                 {location ? (
                   <h1 className="text-xl font-bold">
                     {hotelsCount} Hotels in {location.split(",")[0]}
@@ -246,16 +238,14 @@ export default function Home() {
                   )}
                 </div> */}
               </div>
-              {/* <div className=""> */}
-                <RoomSearchResult
-                  hotels={hotelResults}
-                  gotoDetails={gotoDetails}
-                  children={numberOfChildren}
-                  adults={numberOfAdults}
-                  rooms={numberOfRooms}
-                  dateRange={dateRange}
-                />
-              {/* </div> */}
+              <RoomSearchResult
+                hotels={hotelResults}
+                gotoDetails={gotoDetails}
+                children={numberOfChildren}
+                adults={numberOfAdults}
+                rooms={numberOfRooms}
+                dateRange={dateRange}
+              />
             </div>
           ) : (
             <div className="w-full">
