@@ -3,16 +3,18 @@ import { Wifi, Star1 } from "iconsax-react";
 const Amenities = ({ amenities }) => {
   return (
     <>
-      <div className="grid justify-between lg:grid-cols-6 grid-cols-3 gap-4 font-poppins">
+      <div className="grid justify-between md:grid-cols-8 grid-cols-3 gap-4 font-poppins">
         {amenities && amenities.map((amenity) => (
-          <div className="flex flex-col items-center space-y-1">
-            <span className="p-3 bg-pri-main/20 rounded-full">
-              <i className={`fa fa-${amenity.icon} text-lg text-[#f5c400]`}></i>
-            </span>
-            <p className="text-sm lg:font-medium font-normal"> {amenity.title}</p>
+          <div className="flex flex-col items-center">
+            <div className="flex items-center justify-center relative">
+              <span className="absolute rounded-full p-5 bg-pri-main/30">
+              </span>
+              <i className={`fa fa-${amenity.icon} text-base text-[#f5c400]`}></i>
+            </div>
+            <p className="mt-2 text-xs text-center md:font-medium font-normal"> {amenity.title}</p>
           </div>
         ))}
-        
+
       </div>
     </>
   );

@@ -158,7 +158,7 @@ export default function HotelDetails() {
                 get(`SavedHotel?customerId=${user.id}&hotelId=${query.hotelId}`)
             ])
 
-            if (responses[0].successful) {                
+            if (responses[0].successful) {
                 setHotel(responses[0].data)
                 getRoomImages(responses[0].data.roomTypes)
             }
@@ -398,6 +398,7 @@ export default function HotelDetails() {
                         <p className="text-base font-medium pb-2 border-b-[1.5px]">Most popular facilities</p>
 
                         {<Amenities amenities={hotel.amenities} />}
+                        {<Amenities amenities={hotel.amenities} />}
                     </div>
 
                     <div className="flex flex-col gap-4 w-full">
@@ -488,35 +489,36 @@ export default function HotelDetails() {
 
                     <div className="flex flex-col w-full gap-4">
                         <p className="text-base font-medium pb-2 border-b-[1.5px]">Select a room</p>
-                        <div className="flex gap-[39px] mb-9">
-                            <div className="flex flex-col">
-                                <div onClick={datePickerHandler} className="flex cursor-pointer gap-2 items-center py-[10px] pl-4 pr-[158px] border-[#1A1A1A14] border rounded-md">
-                                    <Calendar
-                                        size={20}
-                                        className="" />
-                                    <div className="flex flex-col">
-                                        <p className="text-xs text-[#1A1A1A61]">Dates</p>
-                                        <p className="text-xs text-[#1A1A1AAD]">27 Aug - 28 Aug</p>
+                        <div className="flex w-full md:flex-row flex-col md:gap-6 gap-3 mb-9">
+                            <div className="flex flex-col relative md:w-1/5 w-full">
+                                <div onClick={datePickerHandler} className="flex bg-white md:bg-gray-100 rounded-md py-2 px-4 items-center gap-2 text-xs leading-5 cursor-pointer">
+                                    <Calendar size={22} />
+                                    <div className="flex flex-col w-full">
+                                        <p className="text-xs md:text-[0.63rem] mb-[0] text-sec-main/60">Check in/out</p>
+                                        <p className="text-sm md:text-xs mb-[0] text-sec-main">
+                                            {`${format(dateRange[0].startDate, "dd-MM-yyy")} - ${format(
+                                                dateRange[0].endDate,
+                                                "dd-MM-yyy"
+                                            )}`}
+                                        </p>
                                     </div>
                                 </div>
                                 {openDate && (
                                     <DateRange
-                                        editableDateInputs={true}
                                         onChange={(item) => setDateRange([item.selection])}
                                         moveRangeOnFirstSelection={false}
                                         ranges={dateRange}
-                                        className="z-10"
+                                        rangeColors={['#ffcc00']}
+                                        className="absolute z-10 top-[50%]"
                                     />
-                                )} 
+                                )}
                             </div>
 
-                            <div onClick={handleClick} className="flex cursor-pointer gap-2 items-center py-[10px] pl-4 pr-[158px] border-[#1A1A1A14] border rounded-md">
-                                <People
-                                    size={20}
-                                    className="" />
-                                <div className="flex flex-col">
-                                    <p className="text-xs text-[#1A1A1A61]">Guest</p>
-                                    <p className="text-xs text-[#1A1A1AAD]">1 room 1 adult, 1 children</p>
+                            <div onClick={handleClick} className="flex bg-white md:bg-gray-100 rounded-md py-2 px-4 items-center gap-2 text-xs leading-5 cursor-pointer md:w-1/5 w-full">
+                                <People size={22} />
+                                <div className="flex flex-col w-full">
+                                    <p className="text-xs md:text-[0.63rem] mb-[0] text-sec-main/60">Room</p>
+                                    <p className="text-sm md:text-xs mb-[0] text-sec-main">Guest</p>
                                 </div>
                             </div>
                             <PopoverDisplay
