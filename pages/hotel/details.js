@@ -398,7 +398,7 @@ export default function HotelDetails() {
                         <p className="text-base font-medium pb-2 border-b-[1.5px]">Most popular facilities</p>
 
                         {<Amenities amenities={hotel.amenities} />}
-                        {<Amenities amenities={hotel.amenities} />}
+                        {/* {<Amenities amenities={hotel.amenities} />} */}
                     </div>
 
                     <div className="flex flex-col gap-4 w-full">
