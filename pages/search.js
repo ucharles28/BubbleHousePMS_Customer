@@ -130,7 +130,7 @@ export default function Home() {
       <Navbar />
       <div className="flex flex-col items-center justify-center">
         <div className="grid md:grid-cols-5 grid-cols-1 mx-auto py-24 items-start justify-start gap-7 px-4">
-          <div className="md:col-span-1 hidden">
+          <div className="md:col-span-1">
             <form className="bg-pri-main py-4 px-3 space-y-3 rounded-md">
               <p className="text-lg font-semibold leading-5 text-sec-main">Search</p>
               <input
