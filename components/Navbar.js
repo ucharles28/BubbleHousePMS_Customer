@@ -135,7 +135,7 @@ export default function Navbar() {
               <p className="text-sm font-normal mb-[0]">Booking History</p>
             </div>
           </Link>
-          <Link href="#">
+          <Link href="/rewards">
             <div className="py-2 px-3 flex items-center gap-3 text-sec-main/70 hover:text-sec-main hover:bg-gray-100 w-full">
               <Money2 size={20} />
               <p className="text-sm font-normal mb-[0]">Rewards</p>

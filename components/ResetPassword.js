@@ -40,7 +40,7 @@ export default function ResetPassword({ email }) {
             // showAlert('success', 'Password updated successfully')
             // setTimeout(() => {
             // }, 1000);
-            router.push('login')                
+            router.push('login')
         } else {
             alert(response.data)
         }
@@ -72,14 +72,14 @@ export default function ResetPassword({ email }) {
 
 
             <div className='item w-full h-full bg-[url(https://interiordesign.net/wp-content/uploads/2021/03/Interior-Design-Ace-Hotel-Kyoto-Kengo-Kuma-Associates-Commune-Design-idx210201_kk01.jpg)] object-fill'>
-                <div className='w-full h-full flex bg-gradient-to-t from-[#1a1a1a]/80 to-[#1a1a1a]/30'>
+                <div className='w-full h-full flex bg-gradient-to-t from-[#1a1a1a]/90 to-[#1a1a1a]/30'>
 
                     <div className='flex justify-center items-center w-full px-1 h-full'>
                         <div className='bg-white rounded lg:w-1/3 w-full lg:px-6 p-4 py-10 shadow-md flex flex-col gap-9'>
 
 
-                            <div className="flex flex-col gap-6 items-center">
-                                <Image src={bcloud1} width={120} height={120} className="object-cover" />
+                            <div className="flex flex-col gap-5 items-center">
+                                <Image src={bcloud1} width={100} height={100} className="object-cover" />
 
                                 <div className='flex flex-col w-full'>
                                     <p className='mb-[0] text-lg font-medium text-[#1a1a1a}/90'>Create new password</p>
