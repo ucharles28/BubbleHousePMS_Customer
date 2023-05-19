@@ -251,7 +251,7 @@ export default function Home() {
                         <CarouselProvider
                             naturalSlideWidth={100}
                             isIntrinsicHeight={true}
-                            totalSlides={6}
+                            totalSlides={12}
                             isPlaying={true}
                             visibleSlides={2.05}
                             infinite={true}
@@ -291,7 +291,7 @@ export default function Home() {
                         <CarouselProvider
                             naturalSlideWidth={100}
                             isIntrinsicHeight={true}
-                            totalSlides={6}
+                            totalSlides={12}
                             isPlaying={true}
                             visibleSlides={3}
                             infinite={true}
@@ -331,7 +331,7 @@ export default function Home() {
                         <CarouselProvider
                             naturalSlideWidth={100}
                             isIntrinsicHeight={true}
-                            totalSlides={6}
+                            totalSlides={12}
                             isPlaying={true}
                             visibleSlides={4}
                             infinite={true}
