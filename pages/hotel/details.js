@@ -415,13 +415,25 @@ export default function HotelDetails() {
                             </div>
                         </Link>
 
-                        <Link href='/hotel/policy'>
+                        <Link href={
+                            {
+                                pathname: '/hotel/policy',
+                                query: {
+                                    hotelId: query.hotelId
+                                }
+                            }
+                        }>
                             <div className="w-full border-[1.5px] rounded-md px-3 py-2 flex gap-2 items-center">
                                 <p className="text-sm font-medium text-sec-main">Property policy</p>
                             </div>
                         </Link>
 
-                        <Link href='/hotel/faq'>
+                        <Link href={{
+                            pathname: '/hotel/faq',
+                            query: {
+                                hotelId: query.hotelId
+                            }
+                        }}>
                             <div className="w-full border-[1.5px] rounded-md px-3 py-2 flex gap-2 items-center">
                                 <p className="text-sm font-medium text-sec-main">FAQ's</p>
                             </div>
