@@ -12,12 +12,12 @@ const RoomType = ({ roomTypes, updateNumberOfRooms, selectRooms }) => {
           <div className="flex flex-col gap-1">
             <p className="text-lg font-semibold">{roomType.name}</p>
 
-            <div className="space-x-3 text-sec-main/70 text-xs font-medium flex items-center">
+            {/* <div className="space-x-3 text-sec-main/70 text-xs font-medium flex items-center">
               <p>1 bed (1 queen)</p>
               <p>Sleeps 2</p>
-            </div>
+            </div> */}
 
-            <div className="space-x-3 text-sec-main/70 text-xs font-medium flex items-center">
+            <div className="space-x-3 text-sec-main/70 text-xs font-medium  grid grid-cols-3 items-center">
               {roomType.roomAmenities.map((amenity) => (<small>{amenity.amenity.title}</small>))}
             </div>
 
@@ -42,12 +42,12 @@ const RoomType = ({ roomTypes, updateNumberOfRooms, selectRooms }) => {
             <div className="flex flex-col gap-1">
               <p className="text-lg font-semibold">{roomType.name}</p>
 
-              <div className="space-x-3 text-sec-main/70 text-xs font-medium flex items-center">
+              {/* <div className="space-x-3 text-sec-main/70 text-xs font-medium flex items-center">
                 <p>1 bed (1 queen)</p>
                 <p>Sleeps 2</p>
-              </div>
+              </div> */}
 
-              <div className="space-x-3 text-sec-main/70 text-xs font-medium flex items-center">
+              <div className="space-x-3 grid grid-cols-3 text-sec-main/70 text-xs font-medium items-center">
                 {roomType.roomAmenities.map((amenity) => (<small>{amenity.amenity.title}</small>))}
               </div>
 
@@ -77,21 +77,25 @@ const RoomType = ({ roomTypes, updateNumberOfRooms, selectRooms }) => {
               Reserve
             </button>}
             {(selectRooms[index] || selectRooms[index] > 0) && <div className="flex items-center gap-2">
-              <span
+              <button
+                type="button"
                 className="border border-[#FFCC00]/50 bg-[#FFCC00]/10 align-middle cursor-pointer"
                 style={{ borderRadius: "50%" }}
+                onClick={() => updateNumberOfRooms(false, index)}
               >
-                <Minus onClick={() => updateNumberOfRooms(false, index)} />
-              </span>
+                <Minus />
+              </button>
               <span className="border rounded-md py-1 px-3 text-xs  border-[#FFCC00]/50">
                 {selectRooms[index]}
               </span>
-              <span
+              <button
+                type="button"
                 className="border border-[#FFCC00]/50 bg-[#FFCC00]/10 text-3xl align-middle cursor-pointer"
                 style={{ borderRadius: "50%" }}
+                onClick={() => updateNumberOfRooms(true, index)} 
               >
-                <Add onClick={() => updateNumberOfRooms(true, index)} />
-              </span>
+                <Add />
+              </button>
             </div>}
           </div>
         </div>

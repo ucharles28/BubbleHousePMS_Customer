@@ -55,8 +55,7 @@ export default function HotelDetails() {
     };
 
     const updateNumberOfRooms = async (isAdd, index) => {
-        debugger
-        const obj = { ...selectRooms }
+    const obj = { ...selectRooms }
         if (!obj[index] && Number(hotel.roomTypes[index].numberOfAvailableRooms) > 0) {
             obj[index] = 1;
         } else {

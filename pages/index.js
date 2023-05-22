@@ -38,7 +38,7 @@ export default function Home() {
     const [dateRange, setDateRange] = useState([
         {
             startDate: new Date(),
-            endDate: new Date(new Date().setDate(new Date().getDate() + 0)),
+            endDate: new Date(new Date().setDate(new Date().getDate() + 1)),
             key: "selection",
         },
     ]);
