@@ -55,7 +55,7 @@ export default function HotelDetails() {
     };
 
     const updateNumberOfRooms = async (isAdd, index) => {
-    const obj = { ...selectRooms }
+        const obj = { ...selectRooms }
         if (!obj[index] && Number(hotel.roomTypes[index].numberOfAvailableRooms) > 0) {
             obj[index] = 1;
         } else {
@@ -397,7 +397,6 @@ export default function HotelDetails() {
                         <p className="text-base font-medium pb-2 border-b-[1.5px]">Most popular facilities</p>
 
                         {<Amenities amenities={hotel.amenities} />}
-                        {/* {<Amenities amenities={hotel.amenities} />} */}
                     </div>
 
                     <div className="flex flex-col gap-4 w-full">
@@ -416,13 +415,17 @@ export default function HotelDetails() {
                             </div>
                         </Link>
 
-                        <div className="w-full border-[1.5px] rounded-md px-3 py-2 flex gap-2 items-center">
-                            <p className="text-sm font-medium">Property policy</p>
-                        </div>
+                        <Link href='/hotel/policy'>
+                            <div className="w-full border-[1.5px] rounded-md px-3 py-2 flex gap-2 items-center">
+                                <p className="text-sm font-medium text-sec-main">Property policy</p>
+                            </div>
+                        </Link>
 
-                        <div className="w-full border-[1.5px] rounded-md px-3 py-2 flex gap-2 items-center">
-                            <p className="text-sm font-medium">FAQ's</p>
-                        </div>
+                        <Link href='/hotel/faq'>
+                            <div className="w-full border-[1.5px] rounded-md px-3 py-2 flex gap-2 items-center">
+                                <p className="text-sm font-medium text-sec-main">FAQ's</p>
+                            </div>
+                        </Link>
 
                     </div>
 
