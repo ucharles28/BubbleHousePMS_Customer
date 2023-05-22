@@ -24,30 +24,8 @@ export default function ConfirmBooking() {
     const confirmPayment = async () => {
         if (query) {
             setIsLoading(true)
-            const response = await fetch(`https://uzomacharles.bsite.net/api/Payment/VerifyPayment?reference=${query.reference}`, {
-                method: 'GET',
-                // headers: {
-                //   Authorization: `Bearer ${token}`,
-                // },
-              })
-                .then(async (res) => {
-                  const responseObject = {
-                    successful: res.ok,
-                    data: await res?.json(),
-                  };
-                  return responseObject;
-                })
-                .catch((error) => {
-                  // return error;
-                  const responseObject = {
-                    successful: false,
-                    data: 'Unable to send request. Please try again later',
-                  };
-                  return responseObject;
-                });
-            // const response = await get(`Payment/VerifyPayment?reference=${query.reference}`)
+            const response = await get(`Payment/VerifyPayment?reference=${query.reference}`)
             if (response.successful) {
-                console.log(response.data)
                 setBooking(response.data)
                 setNumberOfDays(dateDiffInDays(new Date(response.data.checkInDate), new Date(response.data.checkOutDate)))
             }

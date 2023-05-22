@@ -108,7 +108,7 @@ export default function HotelDetails() {
     };
 
     useEffect(() => {
-        if (query) {
+        if (query.hotelId) {
             getHotelDetails(query)
             setDateRange([
                 {
