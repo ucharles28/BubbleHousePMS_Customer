@@ -2,6 +2,7 @@ import Meta from "../components/Meta";
 // import '../dist/output.css';
 import "../styles/tailwind.css";
 import "antd/dist/antd.css";
+import 'aos/dist/aos.css';
 import nProgress from "nprogress";
 import "../styles/nprogress.css";
 import "../styles/app.css";

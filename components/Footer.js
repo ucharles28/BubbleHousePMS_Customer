@@ -37,7 +37,7 @@ const Footer = () => {
 
     return (
         <div className="font-poppins">
-            <div className='w-full bg-gray-100/50 flex flex-col items-center justify-end border-t border-sec-main/10 pt-16 lg:px-16 px-4 z-10'>
+            <div className='w-full bg-gray-100/50 flex flex-col items-center justify-end pt-16 lg:px-16 px-4 z-10'>
 
                 <div className='lg:flex lg:flex-row lg:gap-2 grid grid-cols-1 gap-6 w-full mb-10'>
 
