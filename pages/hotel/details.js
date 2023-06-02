@@ -13,7 +13,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Skeleton } from "@mui/material";
 import { BounceLoader, ClipLoader } from "react-spinners";
 import { format } from "date-fns";
 // import { DateRange } from "@mui/icons-material";
@@ -28,6 +28,7 @@ export default function HotelDetails() {
     const { user } = useUser();
 
     const [hotel, setHotel] = useState();
+    const [nearbyHotels, setNearbyHotels] = useState([]);
     const [roomTypeImages, setRoomTypeImages] = useState();
     const [selectRooms, setSelectedRooms] = useState({});
     const [roomImages, setRoomImages] = useState([]);
@@ -154,7 +155,8 @@ export default function HotelDetails() {
         if (user) {
             const responses = await Promise.all([
                 post(`Hotel/BookingDetails`, request),
-                get(`SavedHotel?customerId=${user.id}&hotelId=${query.hotelId}`)
+                get(`SavedHotel?customerId=${user.id}&hotelId=${query.hotelId}`),
+                get(`Hotel/Nearby/${query.hotelId}`),
             ])
 
             if (responses[0].successful) {
@@ -164,6 +166,10 @@ export default function HotelDetails() {
 
             if (responses[1].successful) {
                 setIsSaved(responses[1].data)
+            }
+
+            if (responses[2].successful) {
+                setNearbyHotels(responses[2].data)
             }
 
         } else {
@@ -415,13 +421,25 @@ export default function HotelDetails() {
                             </div>
                         </Link>
 
-                        <Link href='/hotel/policy'>
+                        <Link href={
+                            {
+                                pathname: '/hotel/policy',
+                                query: {
+                                    hotelId: query.hotelId
+                                }
+                            }
+                        }>
                             <div className="w-full border-[1.5px] rounded-md px-3 py-2 flex gap-2 items-center">
                                 <p className="text-sm font-medium text-sec-main">Property policy</p>
                             </div>
                         </Link>
 
-                        <Link href='/hotel/faq'>
+                        <Link href={{
+                            pathname: '/hotel/faq',
+                            query: {
+                                hotelId: query.hotelId
+                            }
+                        }}>
                             <div className="w-full border-[1.5px] rounded-md px-3 py-2 flex gap-2 items-center">
                                 <p className="text-sm font-medium text-sec-main">FAQ's</p>
                             </div>
@@ -561,7 +579,99 @@ export default function HotelDetails() {
 
                 <div className="flex flex-col pt-20 gap-4 lg:px-24 px-4">
                     <p className="text-lg font-medium text-sec-main">Nearby Hotels to {hotel.name}</p>
-                    <HotelList />
+                    <div className="lg:flex lg:flex-row grid grid-cols-1">
+                        {!isLoading ? (<Carousel
+                            containerClass="container"
+                            responsive={responsive}
+                            draggable={true}
+                            infinite={true}
+                            className='max-w-full'
+                        >
+                            {nearbyHotels.map((hotel, index) => (
+                                <Link key={index} href={{
+                                    pathname: '/hotel/details',
+                                    query: {
+                                        hotelId: hotel.id,
+                                        startDate: String(dateRange[0].startDate),
+                                        endDate: String(dateRange[0].endDate),
+                                        adults: numberOfAdults,
+                                        children: numberOfChildren,
+                                        rooms: numberOfRooms,
+                                    }
+                                }}>
+
+                                    <div key={hotel.id} className="flex flex-col w-full gap-2">
+                                        <img
+                                            src={hotel.imageUrl}
+                                            className="object-cover lg:w-64 w-full h-60 rounded-md"
+                                        />
+                                        <div className="gap-2 lg:gap-4">
+                                            <p className="font-normal lg:text-sm text-base truncate block w-full lg:w-60 md:w-56">{hotel.name}</p>
+                                            <p className="lg:text-xs text-sm text-sec-main/70 truncate block w-full lg:w-60">{hotel.address.line}</p>
+                                            <p className="lg:text-xs text-sm text-sec-main/70">Starting from  <span className="text-sec-main font-medium">NGN {hotel.averagePrice}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </Link>
+                            ))}
+                        </Carousel>
+                        ) : (
+                            <div className="lg:flex lg:flex-row grid grid-cols-1 gap-4">
+                                <div className="w-full text-center">
+                                    <Skeleton variant="rounded" width={250} height={250} />
+                                    <div className="my-3">
+                                        {/* <p className="font-bold">{hotel.name}</p> */}
+                                        {/* <small>{hotel.address}</small> */}
+                                        {/* <p>
+                Starting from <strong>{hotel.price}</strong>
+              </p> */}
+                                        <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+                                        <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+                                        <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+                                    </div>
+                                </div>
+                                <div className="w-full text-center">
+                                    <Skeleton variant="rounded" width={250} height={250} />
+                                    <div className="my-3">
+                                        {/* <p className="font-bold">{hotel.name}</p> */}
+                                        {/* <small>{hotel.address}</small> */}
+                                        {/* <p>
+                Starting from <strong>{hotel.price}</strong>
+              </p> */}
+                                        <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+                                        <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+                                        <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+                                    </div>
+                                </div>
+                                <div className="w-full text-center">
+                                    <Skeleton variant="rounded" width={250} height={250} />
+                                    <div className="my-3">
+                                        {/* <p className="font-bold">{hotel.name}</p> */}
+                                        {/* <small>{hotel.address}</small> */}
+                                        {/* <p>
+                Starting from <strong>{hotel.price}</strong>
+              </p> */}
+                                        <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+                                        <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+                                        <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+                                    </div>
+                                </div>
+                                <div className="w-full text-center">
+                                    <Skeleton variant="rounded" width={250} height={250} />
+                                    <div className="my-3">
+                                        {/* <p className="font-bold">{hotel.name}</p> */}
+                                        {/* <small>{hotel.address}</small> */}
+                                        {/* <p>
+                Starting from <strong>{hotel.price}</strong>
+              </p> */}
+                                        <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+                                        <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+                                        <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
                 </div>
 
             </div> : <div className="w-full">
