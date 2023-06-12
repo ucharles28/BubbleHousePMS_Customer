@@ -322,9 +322,9 @@ export default function Home() {
                                                 </div>
 
                                                 <div className="flex flex-col text-sec-main gap-1">
-                                                    <span className="text-sec-main font-medium text-base block truncate w-32 lg:w-56 md:w-56">{hotel.name}</span>
-                                                    <span className="text-sm text-sec-conBg block truncate lg:w-56 md:w-56">{hotel.address.line}</span>
-                                                    <span className="text-xs text-sec-conBg block truncate lg:w-56 md:w-56">Starting from  <span className="text-sec-main font-medium">NGN {hotel.averagePrice}</span>
+                                                    <span className="text-sec-main font-medium text-base block truncate w-auto">{hotel.name}</span>
+                                                    <span className="text-sm font-normal text-sec-conBg block truncate w-auto">{hotel.address.line}</span>
+                                                    <span className="text-xs font-light text-sec-conBg block truncate w-auto">Starting from  <span className="text-sec-main font-normal">NGN {hotel.averagePrice}</span>
                                                     </span>
                                                 </div>
                                             </div>
@@ -359,15 +359,15 @@ export default function Home() {
                                                 rooms: numberOfRooms,
                                             }
                                         }}>
-                                            <div className="flex flex-col gap-3 mx-1 group">
+                                            <div className="flex flex-col gap-3 mx-1.5 group">
                                                 <div className='flex overflow-hidden rounded-md'>
                                                     <img src={hotel.imageUrl} className="object-cover w-[353px] h-[353px] md:w-[235.6px] md:h-[235.6px] rounded-md group-hover:scale-110 group-hover:transition-all overflow-hidden" alt="mybcloud" />
                                                 </div>
 
                                                 <div className="flex flex-col text-sec-main gap-1">
-                                                    <span className="text-sec-main font-medium text-base block truncate w-32 lg:w-56 md:w-56">{hotel.name}</span>
-                                                    <span className="text-sm text-sec-conBg block truncate lg:w-56 md:w-56">{hotel.address.line}</span>
-                                                    <span className="text-xs text-sec-conBg block truncate lg:w-56 md:w-56">Starting from  <span className="text-sec-main font-medium">NGN {hotel.averagePrice}</span>
+                                                    <span className="text-sec-main font-medium text-base block truncate w-auto">{hotel.name}</span>
+                                                    <span className="text-sm font-normal text-sec-conBg block truncate w-auto">{hotel.address.line}</span>
+                                                    <span className="text-xs font-light text-sec-conBg block truncate w-auto">Starting from  <span className="text-sec-main font-normal">NGN {hotel.averagePrice}</span>
                                                     </span>
                                                 </div>
                                             </div>
@@ -402,15 +402,15 @@ export default function Home() {
                                                 rooms: numberOfRooms,
                                             }
                                         }}>
-                                            <div className="flex flex-col gap-3 mx-1 group">
+                                            <div className="flex flex-col gap-3 md:mx-1.5 group">
                                                 <div className='flex overflow-hidden rounded-md'>
                                                     <img src={hotel.imageUrl} className="object-cover w-[353px] h-[353px] md:w-[235.6px] md:h-[235.6px] rounded-md group-hover:scale-110 group-hover:transition-all overflow-hidden" alt="mybcloud" />
                                                 </div>
 
                                                 <div className="flex flex-col text-sec-main gap-1">
-                                                    <span className="text-sec-main font-medium text-base block truncate w-32 lg:w-56 md:w-56">{hotel.name}</span>
-                                                    <span className="text-sm text-sec-conBg block truncate lg:w-56 md:w-56">{hotel.address.line}</span>
-                                                    <span className="text-xs text-sec-conBg block truncate lg:w-56 md:w-56">Starting from  <span className="text-sec-main font-medium">NGN {hotel.averagePrice}</span>
+                                                    <span className="text-sec-main font-medium text-base block truncate w-auto">{hotel.name}</span>
+                                                    <span className="text-sm font-normal text-sec-conBg block truncate w-auto">{hotel.address.line}</span>
+                                                    <span className="text-xs font-light text-sec-conBg block truncate w-auto">Starting from  <span className="text-sec-main font-normal">NGN {hotel.averagePrice}</span>
                                                     </span>
                                                 </div>
                                             </div>
