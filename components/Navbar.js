@@ -69,19 +69,19 @@ export default function Navbar() {
         <div className="flex justify-end items-center">
           {!user ? (
             <div className="flex gap-3">
-              <button
+              {/* <button
                 type="button"
                 onClick={gotoLogin}
                 className="text-center justify-end font-medium flex items-center px-4 py-2 rounded-md text-sm leading-6 bg-pri-cont hover:bg-pri-main text-sec-main"
               >
                 Log In
-              </button>
+              </button> */}
               <button
                 type="button"
                 onClick={gotoSignUp}
-                className="text-center justify-end font-medium flex items-center px-4 py-2 rounded-md text-sm leading-6 bg-pri-cont hover:bg-pri-main text-sec-main"
+                className="text-center justify-end font-normal px-4 py-3 rounded-md text-sm leading-6 border border-pri-cont hover:bg-pri-main text-pri-adark hover:text-sec-main tracking-wide"
               >
-                Register
+                Sign in / Register
               </button>
             </div>
           ) : (
