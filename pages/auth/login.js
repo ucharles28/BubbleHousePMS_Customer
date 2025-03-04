@@ -265,7 +265,7 @@ export default function Login() {
 
                             {!isLoadingSocial ? <div className='flex items-center justify-center gap-4 mt-3'>
 
-                                <FacebookLogin
+                                {/*<FacebookLogin
                                     appId="687573586008281"
                                     autoLoad={true}
                                     fields="name,email,picture"
@@ -274,7 +274,7 @@ export default function Login() {
 
                                         return (<RiFacebookFill className='cursor-pointer' onClick={(e) => renderProps.onClick(e)} color='#4267B2' size={24} />)
                                     }}
-                                    callback={responseFacebook} />
+                                    callback={responseFacebook} />*/}
                                 {/* <FaTwitter color='#1DA1F2' className='cursor-pointer' size={24} /> */}
                                 <FcGoogle className='cursor-pointer' onClick={() => googleAuthLogin()} size={24} />
                             </div> : <div className='flex items-center justify-center '>
