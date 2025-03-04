@@ -160,7 +160,7 @@ export default function SignUp() {
                                             Full Name
                                         </label>
                                         <Form.Control
-                                            type="email"
+                                            type="text"
                                             placeholder="Full Name"
                                             role="input"
                                             value={fullName}
