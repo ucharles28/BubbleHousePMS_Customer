@@ -27,7 +27,8 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <div className="font-poppins">
-      <GoogleOAuthProvider clientId="922531234913-c1fo824rqu7148itrumhd7rf49krs093.apps.googleusercontent.com">
+
+      <GoogleOAuthProvider clientId="93183711763-q06sgd1u4vg3dvdaibjs7dt8orh34487.apps.googleusercontent.com">
         <UserContext.Provider value={user}>
           <Meta />
           <Component {...pageProps} />
