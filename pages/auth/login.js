@@ -50,6 +50,12 @@ export default function Login() {
 
         const response = await post('Auth/Customer/SignIn', request)
         if (response.successful) {
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem(
+                'tokenExpiry',
+                JSON.stringify(response.data.tokenExpiryDate)
+            );
+            localStorage.setItem('user', JSON.stringify(response.data));
             router.push("/")
         } else {
             alert(response.data)
