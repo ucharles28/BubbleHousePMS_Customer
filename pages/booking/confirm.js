@@ -22,7 +22,8 @@ export default function ConfirmBooking() {
     }, [query])
 
     const confirmPayment = async () => {
-        if (query) {
+        if (Object.keys(query).length > 0) {
+            console.log('the query', query)
             setIsLoading(true)
             const response = await get(`Payment/VerifyPayment?reference=${query.reference}`)
             if (response.successful) {

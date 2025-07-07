@@ -4,15 +4,17 @@ import Footer from '../../components/Footer';
 import Image from 'next/image';
 import lagos from '../../public/images/img/lagos.png';
 import { useRouter } from "next/router";
-import { get } from '../../helpers/ApiRequest';
+import { get, post } from '../../helpers/ApiRequest';
 import { BounceLoader } from "react-spinners";
 import { format } from "date-fns";
+import { message } from 'antd';
 
 function BookingDetails() {
     const router = useRouter();
     const { query } = router;
     const [booking, setBooking] = useState();
     const [isLoading, setIsLoading] = useState(false);
+    const [buttonIsLoading, setButtonIsLoading] = useState(false);
 
     const getBookingDetails = async () => {
         if (query) {
@@ -20,11 +22,34 @@ function BookingDetails() {
             const response = await get(`Booking/${query.id}`)
 
             if (response.successful) {
+                console.log((Number(response.data.status) !== 2 && Number(response.data.status) !== 3))
                 setBooking(response.data)
             }
             setIsLoading(false)
         }
 
+    }
+
+    const cancelBooking = async () => {
+        setButtonIsLoading(true)
+        const response = await post(`Booking/Cancel`, query.id)
+
+        if (response.successful) {
+            message.success('Booking cancelled successfully')
+            router.reload()
+        } else {
+            message.error(response.data)
+        }
+        setButtonIsLoading(false)
+    }
+
+    function dateDiffInDays(a, b) {
+        const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+        // Discard the time and time-zone information.
+        const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+        const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+        return Math.floor((utc2 - utc1) / _MS_PER_DAY);
     }
 
     const getTotalRooms = (roomTypes) => {
@@ -105,9 +130,14 @@ function BookingDetails() {
                             </div>
 
                             <div className='flex lg:flex-row flex-col items-center w-full gap-2'>
-                                <button type='button' className='p-3 bg-[#ffcc00]/70 hover:bg-[#f5c400] w-full text-sm rounded-md'>Cancel booking</button>
+                                {(Number(booking.status) !== 2 && Number(booking.status) !== 3) && <button type='button' onClick={cancelBooking} className='p-3 bg-[#ffcc00]/70 hover:bg-[#f5c400] w-full text-sm rounded-md'>
+                                    {buttonIsLoading ? <div className='flex w-full justify-center'>
+                                        <BounceLoader size={18} color="#ffffff" className='text-center' />
+                                    </div> :
+                                        <span>Cancel booking</span>}
+                                </button>}
 
-                                <button type='button' className='p-3 border-[1.5px] border-[#ffcc00]/70 hover:bg-[#ffcc00]/70 hover:border-0 w-full text-sm rounded-md'>Make changes to booking</button>
+                                {/* <button type='button' className='p-3 border-[1.5px] border-[#ffcc00]/70 hover:bg-[#ffcc00]/70 hover:border-0 w-full text-sm rounded-md'>Make changes to booking</button> */}
 
                             </div>
 
@@ -188,7 +218,7 @@ function BookingDetails() {
                                 <p className="text-sec-main/70">Guest</p>
                                 <p className="font-medium">{booking.totalAdults} adults{booking.totalChildren > 0 ? `, ${booking.totalChildren} child` : null}</p>
                                 <p className="text-sec-main/70">Reservation</p>
-                                <p className="font-medium">{numberOfDays} nights, {getTotalRooms(booking.roomTypes)} rooms</p>
+                                <p className="font-medium">{dateDiffInDays(new Date(booking.checkInDate), new Date(booking.checkOutDate))} nights, {getTotalRooms(booking.roomTypes)} rooms</p>
                             </div>
 
                         </div>
