@@ -32,18 +32,31 @@ const HotelSearch = ({ numberOfAdults, setNumberOfAdults, numberOfChildren, setN
   const [value, setValue] = useState("");
 
   const onChange = async (event) => {
-    setSearchIsLoading(true);
     const query = event.target.value;
     setValue(query);
 
-    const responses = await Promise.all([
-      getPlacesPredition(query),
-      get(`Hotel/Query/${query}`),
-    ]);
+    // Only search if query has at least 2 characters
+    if (query.length < 2) {
+      setPlaces([]);
+      setHotels([]);
+      setSearchIsLoading(false);
+      return;
+    }
 
-    if (responses[1].successful) {
-      setHotels(responses[1].data);
-      console.log(responses[1].data);
+    setSearchIsLoading(true);
+
+    try {
+      const responses = await Promise.all([
+        getPlacesPredition(query),
+        get(`Hotel/Query/${query}`),
+      ]);
+
+      if (responses[1] && responses[1].successful) {
+        setHotels(responses[1].data);
+        console.log(responses[1].data);
+      }
+    } catch (error) {
+      console.error('Search error:', error);
     }
 
     setSearchIsLoading(false);
@@ -67,7 +80,7 @@ const HotelSearch = ({ numberOfAdults, setNumberOfAdults, numberOfChildren, setN
 
   useEffect(() => {
     loadScript(
-      `https://maps.googleapis.com/maps/api/js?key=AIzaSyB8QN-9BQ2Gto1h0GfSOG78AzL-qHhDyPg&libraries=places`,
+      `https://maps.googleapis.com/maps/api/js?key=AIzaSyBw8ucsDTRTHVwWrhqoc14KFqQNsaQJ6RM&libraries=places`,
       () => handleScriptLoad()
     );
   }, []);
@@ -96,20 +109,37 @@ const HotelSearch = ({ numberOfAdults, setNumberOfAdults, numberOfChildren, setN
 
   function getPlacesPredition(query) {
     let result = [];
-    const service = new google.maps.places.AutocompleteService();
-    service.getPlacePredictions(
-      {
-        input: query,
-        types: ["(cities)"],
-        componentRestrictions: {
-          country: "ng",
+
+    // Check if Google Maps API is loaded
+    if (typeof google === 'undefined' || !google.maps || !google.maps.places) {
+      console.error('Google Maps API not loaded yet');
+      return result;
+    }
+
+    try {
+      const service = new google.maps.places.AutocompleteService();
+      service.getPlacePredictions(
+        {
+          input: query,
+          types: ["(cities)"],
+          componentRestrictions: {
+            country: "ng",
+          },
         },
-      },
-      (suggestions) => {
-        console.log(suggestions);
-        setPlaces(suggestions);
-      }
-    );
+        (suggestions, status) => {
+          console.log('Predictions:', suggestions, 'Status:', status);
+          if (status === google.maps.places.PlacesServiceStatus.OK && suggestions) {
+            setPlaces(suggestions);
+          } else {
+            console.error('Places API error:', status);
+            setPlaces([]);
+          }
+        }
+      );
+    } catch (error) {
+      console.error('Error getting place predictions:', error);
+    }
+
     return result;
   }
 
@@ -190,16 +220,25 @@ const HotelSearch = ({ numberOfAdults, setNumberOfAdults, numberOfChildren, setN
             </div>
           </div>
           {openDate && (
-            <DateRange
-              onChange={(item) => setDateRange([item.selection])}
-              showSelectionPreview={true}
-              moveRangeOnFirstSelection={false}
-              months={1}
-              ranges={dateRange}
-              // direction="horizontal"
-              rangeColors={['#ffcc00']}
-              className={['absolute md:top-[50%] md:bg-white bottom-[50%] -left-[5%] md:-left-[15%] z-10']}
-            />
+            <div className='absolute md:top-[100%] top-[100%] left-0 md:left-0 bg-white rounded-lg shadow-lg' style={{ zIndex: 999999 }}>
+              <DateRange
+                onChange={(item) => setDateRange([item.selection])}
+                showSelectionPreview={true}
+                moveRangeOnFirstSelection={false}
+                months={1}
+                ranges={dateRange}
+                // direction="horizontal"
+                rangeColors={['#ffcc00']}
+              />
+              <div className="flex justify-end p-3 border-t">
+                <button
+                  onClick={datePickerHandler}
+                  className="px-6 py-2 bg-[#ffcc00] hover:bg-[#f5c400] text-sec-main font-medium rounded-md text-sm transition-colors"
+                >
+                  Done
+                </button>
+              </div>
+            </div>
           )}
         </div>
 
@@ -256,8 +295,7 @@ const HotelSearch = ({ numberOfAdults, setNumberOfAdults, numberOfChildren, setN
 
       </div>
 
-      {searchIsLoading ||
-        (places && places.length > 0 && (
+      {(searchIsLoading || (places && places.length > 0) || (hotels && hotels.length > 0)) && (
           <div className={styles.dropdown}>
             {searchIsLoading && (
               <div className="flex flex-col items-end m-0 p-0 justify-start">
@@ -269,38 +307,38 @@ const HotelSearch = ({ numberOfAdults, setNumberOfAdults, numberOfChildren, setN
                 />
               </div>
             )}
-            {!searchIsLoading && places.length > 0 && (
+            {!searchIsLoading && places && places.length > 0 && (
               <div className={styles.dropdownRowTitle}>
                 <ul key={"location"}>
                   <li>Locations</li>
                 </ul>
               </div>
             )}
-            {!searchIsLoading &&
+            {!searchIsLoading && places &&
               places.map((item, index) => (
-                <div className={styles.dropdownRow}>
-                  <ul onClick={() => onSelectPlace(item)} key={index}>
+                <div className={styles.dropdownRow} key={index}>
+                  <ul onClick={() => onSelectPlace(item)}>
                     <li>{item.description}</li>
                   </ul>
                 </div>
               ))}
-            {!searchIsLoading && hotels.length > 0 && (
+            {!searchIsLoading && hotels && hotels.length > 0 && (
               <div className={styles.dropdownRowTitle}>
                 <ul key={"hotels"}>
                   <li>Hotels</li>
                 </ul>
               </div>
             )}
-            {!searchIsLoading &&
+            {!searchIsLoading && hotels &&
               hotels.map((item, index) => (
-                <div className={styles.dropdownRow}>
-                  <ul onClick={() => onSelectHotel(item)} key={index}>
+                <div className={styles.dropdownRow} key={index}>
+                  <ul onClick={() => onSelectHotel(item)}>
                     <li>{item.name}</li>
                   </ul>
                 </div>
               ))}
           </div>
-        ))}
+        )}
 
     </div>
   );

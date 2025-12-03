@@ -186,7 +186,7 @@ export default function Home() {
     return (
         <div className='h-screen font-poppins'>
             <Navbar />
-            <div className="w-full bg-[url('https://res.cloudinary.com/drpsnmeoc/image/upload/v1680477527/hero_3x_aylkxh.png')] bg-cover bg-no-repeat bg-[bottom] py-24">
+            <div className="w-full bg-[url('https://res.cloudinary.com/drpsnmeoc/image/upload/v1680477527/hero_3x_aylkxh.png')] bg-cover bg-no-repeat bg-[bottom] py-24 relative z-50">
                 <div className="flex flex-col items-center gap-12 md:pt-40 pt-24 pb-20 md:px-0 px-4" data-aos="zoom-in-up" data-aos-delay='100' >
 
                     <div className="flex flex-col text-white items-center text-center space-y-2">
@@ -199,7 +199,7 @@ export default function Home() {
                 </div>
             </div>
 
-            <section className="bg-gray-100 bg-opacity-75 w-full py-20" data-aos='zoom-in'>
+            <section className="bg-gray-100 bg-opacity-75 w-full py-20 relative z-10" data-aos='zoom-in'>
                 <div className="container flex flex-col justify-center items-center w-full gap-6 mx-auto md:px-6 px-4">
                     <div className='flex flex-col items-center justify-center'>
                         <h1 className='text-2xl md:text-3xl font-semibold text-sec-main capitalize'>

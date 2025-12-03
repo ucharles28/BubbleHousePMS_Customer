@@ -1,0 +1,135 @@
+/* Overrides for react-date-range to ensure opaque background and clickable days */
+
+.rdrCalendarWrapper,
+.react-date-range .rdrCalendarWrapper {
+  background: #ffffff !important;
+  color: #111 !important;
+  z-index: 999999 !important;
+  border-radius: 8px 8px 0 0 !important;
+  pointer-events: auto !important;
+  padding: 10px !important;
+}
+
+.rdrMonth {
+  background: transparent !important;
+}
+
+.rdrDayNumber,
+.rdrDay:not(.rdrDayDisabled) {
+  color: #111 !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  font-weight: 500 !important;
+}
+
+.rdrDayNumber span {
+  color: #111 !important;
+  font-weight: 500 !important;
+}
+
+.rdrDayDisabled,
+.rdrDayDisabled .rdrDayNumber {
+  opacity: 0.45 !important;
+  pointer-events: none !important;
+}
+
+.rdrDayToday .rdrDayNumber {
+  color: #111 !important;
+}
+
+.rdrSelected .rdrDayNumber,
+.rdrStartEdge .rdrDayNumber,
+.rdrEndEdge .rdrDayNumber {
+  color: #111 !important;
+}
+
+/* Ensure day cells are clickable and show pointer */
+.rdrDay {
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  background: #ffffff !important;
+}
+
+.rdrDay:hover {
+  background: #f5f5f5 !important;
+}
+
+/* Ensure the entire date range component has high z-index */
+.react-date-range {
+  z-index: 999999 !important;
+  position: relative !important;
+  background: #ffffff !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35) !important;
+  border-radius: 8px !important;
+}
+
+/* Narrow scope: when our component applies these tailwind classes */
+.absolute.z-50.rdrCalendarWrapper,
+.rdrCalendarWrapper.absolute.z-50 {
+  z-index: 999999 !important;
+}
+
+/* Stronger, portal-scoped overrides */
+[data-date-portal="1"] .rdrCalendarWrapper,
+[data-date-portal="1"] .rdrDay,
+[data-date-portal="1"] .rdrDayNumber,
+[data-date-portal="1"] .rdrDay:not(.rdrDayDisabled) {
+  pointer-events: auto !important;
+  color: #111 !important;
+  opacity: 1 !important;
+}
+
+[data-date-portal="1"] {
+  z-index: 2147483647 !important;
+}
+
+/* Improve visibility of month names and navigation */
+.rdrMonthName {
+  color: #111 !important;
+  font-weight: 600 !important;
+}
+
+.rdrNextPrevButton {
+  background: #f5f5f5 !important;
+  pointer-events: auto !important;
+}
+
+.rdrNextPrevButton:hover {
+  background: #e0e0e0 !important;
+}
+
+.rdrWeekDay {
+  color: #666 !important;
+  font-weight: 500 !important;
+}
+
+/* Ensure selected dates have better contrast */
+.rdrInRange {
+  background: #fff5cc !important;
+}
+
+.rdrStartEdge, .rdrEndEdge {
+  background: #ffcc00 !important;
+}
+
+.rdrStartEdge .rdrDayNumber span,
+.rdrEndEdge .rdrDayNumber span {
+  color: #111 !important;
+  font-weight: 600 !important;
+}
+
+/* Force the date range picker to always be on top of all page sections */
+.rdrDateRangeWrapper {
+  z-index: 999999 !important;
+}
+
+/* Ensure all date picker elements are above page content */
+.rdrDefinedRangesWrapper,
+.rdrDateDisplayWrapper,
+.rdrMonthAndYearWrapper,
+.rdrMonths,
+.rdrMonthsVertical,
+.rdrMonthsHorizontal {
+  z-index: 999999 !important;
+  position: relative !important;
+}

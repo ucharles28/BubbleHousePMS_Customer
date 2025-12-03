@@ -34,7 +34,13 @@ export default function Home() {
   const [hotelResults, setHotelResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [openView, setOpenView] = useState(false);
-  const [dateRange, setDateRange] = useState();
+  const [dateRange, setDateRange] = useState([
+    {
+      startDate: new Date(),
+      endDate: new Date(new Date().setDate(new Date().getDate() + 1)),
+      key: "selection",
+    },
+  ]);
   const [hotel, setHotel] = useState("");
   const [openDate, setOpenDate] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -58,8 +64,8 @@ export default function Home() {
       pathname: "/hotel/details",
       query: {
         hotelId: id,
-        startDate: String(dateRange[0].startDate),
-        endDate: String(dateRange[0].endDate),
+        startDate: dateRange && dateRange[0] ? String(dateRange[0].startDate) : '',
+        endDate: dateRange && dateRange[0] ? String(dateRange[0].endDate) : '',
         adults: numberOfAdults,
         children: numberOfChildren,
         rooms: numberOfRooms,
@@ -73,17 +79,23 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (query) {
-      const a = [
-        {
-          startDate: new Date(query.startDate),
-          endDate: new Date(query.endDate),
-          key: "selection",
-        },
-      ];
+    if (query && Object.keys(query).length > 0) {
+      const startDateObj = new Date(query.startDate);
+      const endDateObj = new Date(query.endDate);
 
-      console.log(a);
-      setDateRange(a);
+      // Only update dateRange if both dates are valid
+      if (!isNaN(startDateObj.getTime()) && !isNaN(endDateObj.getTime()) && startDateObj < endDateObj) {
+        const a = [
+          {
+            startDate: startDateObj,
+            endDate: endDateObj,
+            key: "selection",
+          },
+        ];
+
+        console.log(a);
+        setDateRange(a);
+      }
 
       setLocation(query.location);
       setHotel(query.hotel);
@@ -147,7 +159,7 @@ export default function Home() {
                 <div className="flex flex-col w-full">
                   <p className="text-xs md:text-[0.63rem] mb-[0] text-sec-main/60">Check in</p>
                   <p className="text-sm md:text-xs mb-[0] text-sec-main">
-                    {dateRange &&
+                    {dateRange && dateRange[0] && dateRange[0].startDate && !isNaN(new Date(dateRange[0].startDate).getTime()) &&
                       `${format(dateRange[0].startDate, "dd-MM-yyy")}`}
                   </p>
                 </div>
@@ -161,20 +173,29 @@ export default function Home() {
                 <div className="flex flex-col w-full">
                   <p className="text-xs md:text-[0.63rem] mb-[0] text-sec-main/60">Check out</p>
                   <p className="text-sm md:text-xs mb-[0] text-sec-main">
-                    {dateRange &&
+                    {dateRange && dateRange[0] && dateRange[0].endDate && !isNaN(new Date(dateRange[0].endDate).getTime()) &&
                       `${format(dateRange[0].endDate, "dd-MM-yyy")}`}
                   </p>
                 </div>
               </div>
-              {openDate && (
-                <DateRange
-                  // editableDateInputs={true}
-                  onChange={(item) => setDateRange([item.selection])}
-                  moveRangeOnFirstSelection={false}
-                  ranges={dateRange}
-                  rangeColors={['#ffcc00']}
-                  className="absolute top-[90px] lg:top-[60px] lg:left-[30%]"
-                />
+              {openDate && dateRange && dateRange[0] && dateRange[0].startDate && dateRange[0].endDate && (
+                <div className="absolute top-[90px] lg:top-[60px] lg:left-[30%] bg-white rounded-lg shadow-lg" style={{ zIndex: 999999 }}>
+                  <DateRange
+                    // editableDateInputs={true}
+                    onChange={(item) => setDateRange([item.selection])}
+                    moveRangeOnFirstSelection={false}
+                    ranges={dateRange}
+                    rangeColors={['#ffcc00']}
+                  />
+                  <div className="flex justify-end p-3 border-t">
+                    <button
+                      onClick={datePickerHandler}
+                      className="px-6 py-2 bg-[#ffcc00] hover:bg-[#f5c400] text-sec-main font-medium rounded-md text-sm transition-colors"
+                    >
+                      Done
+                    </button>
+                  </div>
+                </div>
               )}
 
               <div
