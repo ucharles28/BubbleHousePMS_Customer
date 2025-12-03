@@ -9,6 +9,7 @@ import "../styles/app.css";
 import "../styles/carousel.css";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
+import "../styles/date-range-overrides.css"; // overrides for calendar (must import after library css)
 import Router from "next/router";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { UserContext } from "../context/user";

@@ -304,7 +304,7 @@ function PersonalInfo({
                         type="text"
                         // placeholder="First name"
                         // value={{...formData, firstName}}
-                        value={formData.firstName}
+                        value={formData.firstName + " " + formData.lastName}
                         onChange={(event) =>
                           setFormData({
                             ...formData,
