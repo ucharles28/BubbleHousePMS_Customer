@@ -43,7 +43,7 @@ export default function ConfirmBooking() {
     }
 
     const printReceipt = () => {
-        window.open(`https://uzomacharles.bsite.net/api/Payment/Receipt/${booking.id}`, '_blank');
+        window.open(`${process.env.NEXT_PUBLIC_REACT_API_BASE_URL}Payment/Receipt/${booking.id}`, '_blank');
     }
 
     function dateDiffInDays(a, b) {
