@@ -112,7 +112,7 @@ export default function ConfirmBooking() {
                         <p className="text-sec-main/70">Phone Number</p>
                         <p className="font-medium">{booking.phone}</p>
                         <p className="text-sec-main/70">Date</p>
-                        <p className="font-medium">08 Jan 2023</p>
+                        <p className="font-medium">{format(new Date(booking.createdDate), "dd MMM, yyy")}</p>
                     </div>
 
                 </div>
