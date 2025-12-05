@@ -18,10 +18,12 @@ function PersonalInfo({
   const router = useRouter();
   const [modal, setModal] = useState(false);
   const [isBooking, setIsBooking] = useState(false);
+  const [isSuccessful, setIsSuccessful] = useState(false);
   const toggleModal = () => {
-    if (isBooking && modal) {
-      return;
-    }
+    debugger
+    // if (isBooking && modal) {
+    //   return;
+    // }
     setModal(!modal);
   };
   const bookRooms = async () => {
@@ -81,17 +83,21 @@ function PersonalInfo({
     const response = await post("Booking/Reserve", request);
     debugger;
     if (response.successful) {
+      setIsBooking(false);
+      setIsSuccessful(true);
       if (bookingInfo.isReservation === "false") {
         window.location.href = response.data.item2
       }
     } else {
       setIsBooking(false);
-
-    setTimeout(() => {
-      router.push("/");
-    }, 2000);
+      toggleModal();
+      alert('Booking failed. Please try again later.');
+      
+      // setTimeout(() => {
+      //   router.push("/");
+      // }, 2000);
     }
-    
+
   };
 
   return (
@@ -348,7 +354,7 @@ function PersonalInfo({
           </div>
         </div>
       </div>
-      {modal && (
+      {modal && (isSuccessful || isBooking) &&(
         <div
           onClick={toggleModal}
           className="fixed inset-0 z-50 overflow-y-auto bg-gray-900/50 bg-blend-overlay flex items-center m-0 lg:px-0 px-4"
@@ -356,17 +362,17 @@ function PersonalInfo({
           <div className="shadow-lg rounded-2xl p-4 bg-white lg:w-[360px] w-full m-auto pb-[96px] px-[52px] pt-[43px]">
             <div className="w-full h-full text-center">
               <div className="flex h-full flex-col items-center justify-between">
-                {isBooking ? (
+                {isBooking && !isSuccessful && (
                   <>
                     <BounceLoader
                       size={140}
-                      color="#FFCC00"/>
+                      color="#FFCC00" />
                     <div className="flex flex-col mt-6 gap-2">
                       <p className="text-lg font-medium text-sec-main">Hold on a sec</p>
                       <p className="text-base text-sec-main/70">Confirming your booking</p>
                     </div>
                   </>
-                ) : (
+                )}  {!isBooking && isSuccessful && (
                   <>
                     <svg
                       width="140"
